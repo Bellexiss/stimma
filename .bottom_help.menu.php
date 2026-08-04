@@ -1,0 +1,74 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Інформація",
+		"/pro-nas/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Замовлення",
+		"/yak-zrobiti-zamovlennya/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Гарантія та повернення",
+		"/garantiya-ta-povernennya/",
+		Array(),
+		Array(), 
+		""
+	),
+	Array(
+		"Оплата та доставка",
+		"/dostavka-ta-oplata/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Розмірна сітка",
+		"/razmirna-sitka/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Сертифікати",
+		"/sertifikati/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Відгуки",
+		"/vidguki/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Про нас",
+		"/pro-nas/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Статті",
+		"/news/",
+		Array(),
+		Array(),
+		""
+	),
+	/*Array(
+		"Архів колекцій",
+		"/collection/",
+		Array(),
+		Array(),
+		""
+	),*/
+);
+?>

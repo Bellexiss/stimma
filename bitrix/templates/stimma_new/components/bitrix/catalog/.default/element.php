@@ -1,0 +1,1370 @@
+<? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+
+/** @var array $arParams */
+/** @var array $arResult */
+/** @global CMain $APPLICATION */
+/** @global CUser $USER */
+/** @global CDatabase $DB */
+/** @var CBitrixComponentTemplate $this */
+/** @var string $templateName */
+/** @var string $templateFile */
+/** @var string $templateFolder */
+/** @var string $componentPath */
+/** @var CBitrixComponent $component */
+
+use Bitrix\Main\Loader;
+use Bitrix\Main\ModuleManager;
+
+$bIndex = (strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false) || isset($_GET['google']);
+
+$this->setFrameMode(true);
+
+if (isset($arParams['USE_COMMON_SETTINGS_BASKET_POPUP']) && $arParams['USE_COMMON_SETTINGS_BASKET_POPUP'] == 'Y')
+	$basketAction = (isset($arParams['COMMON_ADD_TO_BASKET_ACTION']) ? array($arParams['COMMON_ADD_TO_BASKET_ACTION']) : array());
+else
+	$basketAction = (isset($arParams['DETAIL_ADD_TO_BASKET_ACTION']) ? $arParams['DETAIL_ADD_TO_BASKET_ACTION'] : array());
+
+$isSidebar = ($arParams['SIDEBAR_DETAIL_SHOW'] == 'Y' && !empty($arParams['SIDEBAR_PATH']));
+?>
+		<?
+		$componentElementParams = array(
+			'B_INDEX' => $bIndex,
+			'IS_NEW' => $arParams['IS_NEW'],
+			'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
+			'IBLOCK_ID' => $arParams['IBLOCK_ID'],
+			'PROPERTY_CODE' => (isset($arParams['DETAIL_PROPERTY_CODE']) ? $arParams['DETAIL_PROPERTY_CODE'] : []),
+			'META_KEYWORDS' => $arParams['DETAIL_META_KEYWORDS'],
+			'META_DESCRIPTION' => $arParams['DETAIL_META_DESCRIPTION'],
+			'BROWSER_TITLE' => $arParams['DETAIL_BROWSER_TITLE'],
+			'SET_CANONICAL_URL' => $arParams['DETAIL_SET_CANONICAL_URL'],
+			'BASKET_URL' => $arParams['BASKET_URL'],
+			'SHOW_SKU_DESCRIPTION' => $arParams['SHOW_SKU_DESCRIPTION'],
+			'ACTION_VARIABLE' => $arParams['ACTION_VARIABLE'],
+			'PRODUCT_ID_VARIABLE' => $arParams['PRODUCT_ID_VARIABLE'],
+			'SECTION_ID_VARIABLE' => $arParams['SECTION_ID_VARIABLE'],
+			'CHECK_SECTION_ID_VARIABLE' => (isset($arParams['DETAIL_CHECK_SECTION_ID_VARIABLE']) ? $arParams['DETAIL_CHECK_SECTION_ID_VARIABLE'] : ''),
+			'PRODUCT_QUANTITY_VARIABLE' => $arParams['PRODUCT_QUANTITY_VARIABLE'],
+			'PRODUCT_PROPS_VARIABLE' => $arParams['PRODUCT_PROPS_VARIABLE'],
+			'CACHE_TYPE' => $arParams['CACHE_TYPE'],
+			'CACHE_TIME' => $arParams['CACHE_TIME'],
+			'CACHE_GROUPS' => $arParams['CACHE_GROUPS'],
+			'SET_TITLE' => $arParams['SET_TITLE'],
+			'SET_LAST_MODIFIED' => $arParams['SET_LAST_MODIFIED'],
+			'MESSAGE_404' => $arParams['~MESSAGE_404'],
+			'SET_STATUS_404' => $arParams['SET_STATUS_404'],
+			'SHOW_404' => $arParams['SHOW_404'],
+			'FILE_404' => $arParams['FILE_404'],
+			'PRICE_CODE' => $arParams['~PRICE_CODE'],
+			'USE_PRICE_COUNT' => $arParams['USE_PRICE_COUNT'],
+			'SHOW_PRICE_COUNT' => $arParams['SHOW_PRICE_COUNT'],
+			'PRICE_VAT_INCLUDE' => $arParams['PRICE_VAT_INCLUDE'],
+			'PRICE_VAT_SHOW_VALUE' => $arParams['PRICE_VAT_SHOW_VALUE'],
+			'USE_PRODUCT_QUANTITY' => $arParams['USE_PRODUCT_QUANTITY'],
+			'PRODUCT_PROPERTIES' => (isset($arParams['PRODUCT_PROPERTIES']) ? $arParams['PRODUCT_PROPERTIES'] : []),
+			'ADD_PROPERTIES_TO_BASKET' => (isset($arParams['ADD_PROPERTIES_TO_BASKET']) ? $arParams['ADD_PROPERTIES_TO_BASKET'] : ''),
+			'PARTIAL_PRODUCT_PROPERTIES' => (isset($arParams['PARTIAL_PRODUCT_PROPERTIES']) ? $arParams['PARTIAL_PRODUCT_PROPERTIES'] : ''),
+			'LINK_IBLOCK_TYPE' => $arParams['LINK_IBLOCK_TYPE'],
+			'LINK_IBLOCK_ID' => $arParams['LINK_IBLOCK_ID'],
+			'LINK_PROPERTY_SID' => $arParams['LINK_PROPERTY_SID'],
+			'LINK_ELEMENTS_URL' => $arParams['LINK_ELEMENTS_URL'],
+
+			'OFFERS_CART_PROPERTIES' => (isset($arParams['OFFERS_CART_PROPERTIES']) ? $arParams['OFFERS_CART_PROPERTIES'] : []),
+			'OFFERS_FIELD_CODE' => $arParams['DETAIL_OFFERS_FIELD_CODE'],
+			'OFFERS_PROPERTY_CODE' => (isset($arParams['DETAIL_OFFERS_PROPERTY_CODE']) ? $arParams['DETAIL_OFFERS_PROPERTY_CODE'] : []),
+			'OFFERS_SORT_FIELD' => $arParams['OFFERS_SORT_FIELD'],
+			'OFFERS_SORT_ORDER' => $arParams['OFFERS_SORT_ORDER'],
+			'OFFERS_SORT_FIELD2' => $arParams['OFFERS_SORT_FIELD2'],
+			'OFFERS_SORT_ORDER2' => $arParams['OFFERS_SORT_ORDER2'],
+
+			'ELEMENT_ID' => $arResult['VARIABLES']['ELEMENT_ID'],
+			'ELEMENT_CODE' => $arResult['VARIABLES']['ELEMENT_CODE'],
+			'SECTION_ID' => $arResult['VARIABLES']['SECTION_ID'],
+			'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE'],
+			'SECTION_URL' => $arResult['FOLDER'].$arResult['URL_TEMPLATES']['section'],
+			'DETAIL_URL' => $arResult['FOLDER'].$arResult['URL_TEMPLATES']['element'],
+			'CONVERT_CURRENCY' => $arParams['CONVERT_CURRENCY'],
+			'CURRENCY_ID' => $arParams['CURRENCY_ID'],
+			'HIDE_NOT_AVAILABLE' => $arParams['HIDE_NOT_AVAILABLE'],
+			'HIDE_NOT_AVAILABLE_OFFERS' => $arParams['HIDE_NOT_AVAILABLE_OFFERS'],
+			'USE_ELEMENT_COUNTER' => $arParams['USE_ELEMENT_COUNTER'],
+			'SHOW_DEACTIVATED' => $arParams['SHOW_DEACTIVATED'],
+			'USE_MAIN_ELEMENT_SECTION' => $arParams['USE_MAIN_ELEMENT_SECTION'],
+			'STRICT_SECTION_CHECK' => (isset($arParams['DETAIL_STRICT_SECTION_CHECK']) ? $arParams['DETAIL_STRICT_SECTION_CHECK'] : ''),
+			'ADD_PICT_PROP' => $arParams['ADD_PICT_PROP'],
+			'LABEL_PROP' => $arParams['LABEL_PROP'],
+			'LABEL_PROP_MOBILE' => $arParams['LABEL_PROP_MOBILE'],
+			'LABEL_PROP_POSITION' => $arParams['LABEL_PROP_POSITION'],
+			'OFFER_ADD_PICT_PROP' => $arParams['OFFER_ADD_PICT_PROP'],
+			'OFFER_TREE_PROPS' => (isset($arParams['OFFER_TREE_PROPS']) ? $arParams['OFFER_TREE_PROPS'] : []),
+			'PRODUCT_SUBSCRIPTION' => $arParams['PRODUCT_SUBSCRIPTION'],
+			'SHOW_DISCOUNT_PERCENT' => $arParams['SHOW_DISCOUNT_PERCENT'],
+			'DISCOUNT_PERCENT_POSITION' => (isset($arParams['DISCOUNT_PERCENT_POSITION']) ? $arParams['DISCOUNT_PERCENT_POSITION'] : ''),
+			'SHOW_OLD_PRICE' => $arParams['SHOW_OLD_PRICE'],
+			'SHOW_MAX_QUANTITY' => $arParams['SHOW_MAX_QUANTITY'],
+			'MESS_SHOW_MAX_QUANTITY' => (isset($arParams['~MESS_SHOW_MAX_QUANTITY']) ? $arParams['~MESS_SHOW_MAX_QUANTITY'] : ''),
+			'RELATIVE_QUANTITY_FACTOR' => (isset($arParams['RELATIVE_QUANTITY_FACTOR']) ? $arParams['RELATIVE_QUANTITY_FACTOR'] : ''),
+			'MESS_RELATIVE_QUANTITY_MANY' => (isset($arParams['~MESS_RELATIVE_QUANTITY_MANY']) ? $arParams['~MESS_RELATIVE_QUANTITY_MANY'] : ''),
+			'MESS_RELATIVE_QUANTITY_FEW' => (isset($arParams['~MESS_RELATIVE_QUANTITY_FEW']) ? $arParams['~MESS_RELATIVE_QUANTITY_FEW'] : ''),
+			'MESS_BTN_BUY' => (isset($arParams['~MESS_BTN_BUY']) ? $arParams['~MESS_BTN_BUY'] : ''),
+			'MESS_BTN_ADD_TO_BASKET' => (isset($arParams['~MESS_BTN_ADD_TO_BASKET']) ? $arParams['~MESS_BTN_ADD_TO_BASKET'] : ''),
+			'MESS_BTN_SUBSCRIBE' => (isset($arParams['~MESS_BTN_SUBSCRIBE']) ? $arParams['~MESS_BTN_SUBSCRIBE'] : ''),
+			'MESS_BTN_DETAIL' => (isset($arParams['~MESS_BTN_DETAIL']) ? $arParams['~MESS_BTN_DETAIL'] : ''),
+			'MESS_NOT_AVAILABLE' => (isset($arParams['~MESS_NOT_AVAILABLE']) ? $arParams['~MESS_NOT_AVAILABLE'] : ''),
+			'MESS_BTN_COMPARE' => (isset($arParams['~MESS_BTN_COMPARE']) ? $arParams['~MESS_BTN_COMPARE'] : ''),
+			'MESS_PRICE_RANGES_TITLE' => (isset($arParams['~MESS_PRICE_RANGES_TITLE']) ? $arParams['~MESS_PRICE_RANGES_TITLE'] : ''),
+			'MESS_DESCRIPTION_TAB' => (isset($arParams['~MESS_DESCRIPTION_TAB']) ? $arParams['~MESS_DESCRIPTION_TAB'] : ''),
+			'MESS_PROPERTIES_TAB' => (isset($arParams['~MESS_PROPERTIES_TAB']) ? $arParams['~MESS_PROPERTIES_TAB'] : ''),
+			'MESS_COMMENTS_TAB' => (isset($arParams['~MESS_COMMENTS_TAB']) ? $arParams['~MESS_COMMENTS_TAB'] : ''),
+			'MAIN_BLOCK_PROPERTY_CODE' => (isset($arParams['DETAIL_MAIN_BLOCK_PROPERTY_CODE']) ? $arParams['DETAIL_MAIN_BLOCK_PROPERTY_CODE'] : ''),
+			'MAIN_BLOCK_OFFERS_PROPERTY_CODE' => (isset($arParams['DETAIL_MAIN_BLOCK_OFFERS_PROPERTY_CODE']) ? $arParams['DETAIL_MAIN_BLOCK_OFFERS_PROPERTY_CODE'] : ''),
+			'USE_VOTE_RATING' => $arParams['DETAIL_USE_VOTE_RATING'],
+			'VOTE_DISPLAY_AS_RATING' => (isset($arParams['DETAIL_VOTE_DISPLAY_AS_RATING']) ? $arParams['DETAIL_VOTE_DISPLAY_AS_RATING'] : ''),
+			'USE_COMMENTS' => $arParams['DETAIL_USE_COMMENTS'],
+			'BLOG_USE' => (isset($arParams['DETAIL_BLOG_USE']) ? $arParams['DETAIL_BLOG_USE'] : ''),
+			'BLOG_URL' => (isset($arParams['DETAIL_BLOG_URL']) ? $arParams['DETAIL_BLOG_URL'] : ''),
+			'BLOG_EMAIL_NOTIFY' => (isset($arParams['DETAIL_BLOG_EMAIL_NOTIFY']) ? $arParams['DETAIL_BLOG_EMAIL_NOTIFY'] : ''),
+			'VK_USE' => (isset($arParams['DETAIL_VK_USE']) ? $arParams['DETAIL_VK_USE'] : ''),
+			'VK_API_ID' => (isset($arParams['DETAIL_VK_API_ID']) ? $arParams['DETAIL_VK_API_ID'] : 'API_ID'),
+			'FB_USE' => (isset($arParams['DETAIL_FB_USE']) ? $arParams['DETAIL_FB_USE'] : ''),
+			'FB_APP_ID' => (isset($arParams['DETAIL_FB_APP_ID']) ? $arParams['DETAIL_FB_APP_ID'] : ''),
+			'BRAND_USE' => (isset($arParams['DETAIL_BRAND_USE']) ? $arParams['DETAIL_BRAND_USE'] : 'N'),
+			'BRAND_PROP_CODE' => (isset($arParams['DETAIL_BRAND_PROP_CODE']) ? $arParams['DETAIL_BRAND_PROP_CODE'] : ''),
+			'DISPLAY_NAME' => (isset($arParams['DETAIL_DISPLAY_NAME']) ? $arParams['DETAIL_DISPLAY_NAME'] : ''),
+			'IMAGE_RESOLUTION' => (isset($arParams['DETAIL_IMAGE_RESOLUTION']) ? $arParams['DETAIL_IMAGE_RESOLUTION'] : ''),
+			'PRODUCT_INFO_BLOCK_ORDER' => (isset($arParams['DETAIL_PRODUCT_INFO_BLOCK_ORDER']) ? $arParams['DETAIL_PRODUCT_INFO_BLOCK_ORDER'] : ''),
+			'PRODUCT_PAY_BLOCK_ORDER' => (isset($arParams['DETAIL_PRODUCT_PAY_BLOCK_ORDER']) ? $arParams['DETAIL_PRODUCT_PAY_BLOCK_ORDER'] : ''),
+			'ADD_DETAIL_TO_SLIDER' => (isset($arParams['DETAIL_ADD_DETAIL_TO_SLIDER']) ? $arParams['DETAIL_ADD_DETAIL_TO_SLIDER'] : ''),
+			'TEMPLATE_THEME' => (isset($arParams['TEMPLATE_THEME']) ? $arParams['TEMPLATE_THEME'] : ''),
+			'ADD_SECTIONS_CHAIN' => (isset($arParams['ADD_SECTIONS_CHAIN']) ? $arParams['ADD_SECTIONS_CHAIN'] : ''),
+			'ADD_ELEMENT_CHAIN' => (isset($arParams['ADD_ELEMENT_CHAIN']) ? $arParams['ADD_ELEMENT_CHAIN'] : ''),
+			'DISPLAY_PREVIEW_TEXT_MODE' => (isset($arParams['DETAIL_DISPLAY_PREVIEW_TEXT_MODE']) ? $arParams['DETAIL_DISPLAY_PREVIEW_TEXT_MODE'] : ''),
+			'DETAIL_PICTURE_MODE' => (isset($arParams['DETAIL_DETAIL_PICTURE_MODE']) ? $arParams['DETAIL_DETAIL_PICTURE_MODE'] : array()),
+			'ADD_TO_BASKET_ACTION' => $basketAction,
+			'ADD_TO_BASKET_ACTION_PRIMARY' => (isset($arParams['DETAIL_ADD_TO_BASKET_ACTION_PRIMARY']) ? $arParams['DETAIL_ADD_TO_BASKET_ACTION_PRIMARY'] : null),
+			'SHOW_CLOSE_POPUP' => isset($arParams['COMMON_SHOW_CLOSE_POPUP']) ? $arParams['COMMON_SHOW_CLOSE_POPUP'] : '',
+			'DISPLAY_COMPARE' => (isset($arParams['USE_COMPARE']) ? $arParams['USE_COMPARE'] : ''),
+			'COMPARE_PATH' => $arResult['FOLDER'].$arResult['URL_TEMPLATES']['compare'],
+			'USE_COMPARE_LIST' => 'Y',
+			'BACKGROUND_IMAGE' => (isset($arParams['DETAIL_BACKGROUND_IMAGE']) ? $arParams['DETAIL_BACKGROUND_IMAGE'] : ''),
+			'COMPATIBLE_MODE' => (isset($arParams['COMPATIBLE_MODE']) ? $arParams['COMPATIBLE_MODE'] : ''),
+			'DISABLE_INIT_JS_IN_COMPONENT' => (isset($arParams['DISABLE_INIT_JS_IN_COMPONENT']) ? $arParams['DISABLE_INIT_JS_IN_COMPONENT'] : ''),
+			'SET_VIEWED_IN_COMPONENT' => (isset($arParams['DETAIL_SET_VIEWED_IN_COMPONENT']) ? $arParams['DETAIL_SET_VIEWED_IN_COMPONENT'] : ''),
+			'SHOW_SLIDER' => (isset($arParams['DETAIL_SHOW_SLIDER']) ? $arParams['DETAIL_SHOW_SLIDER'] : ''),
+			'SLIDER_INTERVAL' => (isset($arParams['DETAIL_SLIDER_INTERVAL']) ? $arParams['DETAIL_SLIDER_INTERVAL'] : ''),
+			'SLIDER_PROGRESS' => (isset($arParams['DETAIL_SLIDER_PROGRESS']) ? $arParams['DETAIL_SLIDER_PROGRESS'] : ''),
+			'USE_ENHANCED_ECOMMERCE' => (isset($arParams['USE_ENHANCED_ECOMMERCE']) ? $arParams['USE_ENHANCED_ECOMMERCE'] : ''),
+			'DATA_LAYER_NAME' => (isset($arParams['DATA_LAYER_NAME']) ? $arParams['DATA_LAYER_NAME'] : ''),
+			'BRAND_PROPERTY' => (isset($arParams['BRAND_PROPERTY']) ? $arParams['BRAND_PROPERTY'] : ''),
+
+			'USE_GIFTS_DETAIL' => $arParams['USE_GIFTS_DETAIL']?: 'Y',
+			'USE_GIFTS_MAIN_PR_SECTION_LIST' => $arParams['USE_GIFTS_MAIN_PR_SECTION_LIST']?: 'Y',
+			'GIFTS_SHOW_DISCOUNT_PERCENT' => $arParams['GIFTS_SHOW_DISCOUNT_PERCENT'],
+			'GIFTS_SHOW_OLD_PRICE' => $arParams['GIFTS_SHOW_OLD_PRICE'],
+			'GIFTS_DETAIL_PAGE_ELEMENT_COUNT' => $arParams['GIFTS_DETAIL_PAGE_ELEMENT_COUNT'],
+			'GIFTS_DETAIL_HIDE_BLOCK_TITLE' => $arParams['GIFTS_DETAIL_HIDE_BLOCK_TITLE'],
+			'GIFTS_DETAIL_TEXT_LABEL_GIFT' => $arParams['GIFTS_DETAIL_TEXT_LABEL_GIFT'],
+			'GIFTS_DETAIL_BLOCK_TITLE' => $arParams['GIFTS_DETAIL_BLOCK_TITLE'],
+			'GIFTS_SHOW_NAME' => $arParams['GIFTS_SHOW_NAME'],
+			'GIFTS_SHOW_IMAGE' => $arParams['GIFTS_SHOW_IMAGE'],
+			'GIFTS_MESS_BTN_BUY' => $arParams['~GIFTS_MESS_BTN_BUY'],
+			'GIFTS_PRODUCT_BLOCKS_ORDER' => $arParams['LIST_PRODUCT_BLOCKS_ORDER'],
+			'GIFTS_SHOW_SLIDER' => $arParams['LIST_SHOW_SLIDER'],
+			'GIFTS_SLIDER_INTERVAL' => isset($arParams['LIST_SLIDER_INTERVAL']) ? $arParams['LIST_SLIDER_INTERVAL'] : '',
+			'GIFTS_SLIDER_PROGRESS' => isset($arParams['LIST_SLIDER_PROGRESS']) ? $arParams['LIST_SLIDER_PROGRESS'] : '',
+
+			'GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_PAGE_ELEMENT_COUNT'],
+			'GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_BLOCK_TITLE'],
+			'GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE' => $arParams['GIFTS_MAIN_PRODUCT_DETAIL_HIDE_BLOCK_TITLE'],
+		);
+
+		if (isset($arParams['USER_CONSENT']))
+			$componentElementParams['USER_CONSENT'] = $arParams['USER_CONSENT'];
+
+		if (isset($arParams['USER_CONSENT_ID']))
+			$componentElementParams['USER_CONSENT_ID'] = $arParams['USER_CONSENT_ID'];
+
+		if (isset($arParams['USER_CONSENT_IS_CHECKED']))
+			$componentElementParams['USER_CONSENT_IS_CHECKED'] = $arParams['USER_CONSENT_IS_CHECKED'];
+
+		if (isset($arParams['USER_CONSENT_IS_LOADED']))
+			$componentElementParams['USER_CONSENT_IS_LOADED'] = $arParams['USER_CONSENT_IS_LOADED'];
+
+        $tpl = isset($_GET['new']) || true ? 'new' : '';
+
+        ?><div class="card-page" ><?
+		$elementId = $APPLICATION->IncludeComponent(
+			'bitrix:catalog.element',
+            $tpl,
+			$componentElementParams,
+			$component
+		);
+
+        ?>
+    <div class="list-section list-section-recomend">
+        <div class="wrapper">
+            <div class="list-section-block">
+
+
+
+
+
+    <?
+		$GLOBALS['CATALOG_CURRENT_ELEMENT_ID'] = $elementId;
+
+        $params = [
+            'IBLOCK_TYPE' => 'aspro_max_catalog',
+            'IBLOCK_ID' => '21',
+            'ELEMENT_SORT_FIELD' => 'ID',
+            'ELEMENT_SORT_ORDER' => 'desc',
+            'ELEMENT_SORT_FIELD2' => 'sort',
+            'ELEMENT_SORT_ORDER2' => 'asc',
+            'PROPERTY_CODE' => [
+                0 => 'HIT',
+                1 => 'BRAND',
+                2 => 'CML2_ARTICLE',
+                3 => 'PROP_2104',
+                4 => 'PODBORKI',
+                5 => 'PROP_2033',
+                6 => 'COLOR_REF2',
+                7 => 'PROP_305',
+                8 => 'PROP_352',
+                9 => 'PROP_317',
+                10 => 'PROP_357',
+                11 => 'PROP_2102',
+                12 => 'PROP_318',
+                13 => 'PROP_159',
+                14 => 'PROP_349',
+                15 => 'PROP_327',
+                16 => 'PROP_2052',
+                17 => 'PROP_370',
+                18 => 'PROP_336',
+                19 => 'PROP_2115',
+                20 => 'PROP_346',
+                21 => 'PROP_2120',
+                22 => 'PROP_2053',
+                23 => 'PROP_363',
+                24 => 'PROP_320',
+                25 => 'PROP_2089',
+                26 => 'PROP_325',
+                27 => 'PROP_2103',
+                28 => 'PROP_2085',
+                29 => 'PROP_300',
+                30 => 'PROP_322',
+                31 => 'PROP_362',
+                32 => 'PROP_365',
+                33 => 'PROP_359',
+                34 => 'PROP_284',
+                35 => 'PROP_364',
+                36 => 'PROP_356',
+                37 => 'PROP_343',
+                38 => 'PROP_2083',
+                39 => 'PROP_314',
+                40 => 'PROP_348',
+                41 => 'PROP_316',
+                42 => 'PROP_350',
+                43 => 'PROP_333',
+                44 => 'PROP_332',
+                45 => 'PROP_360',
+                46 => 'PROP_353',
+                47 => 'PROP_347',
+                48 => 'PROP_25',
+                49 => 'PROP_2114',
+                50 => 'PROP_301',
+                51 => 'PROP_2101',
+                52 => 'PROP_2067',
+                53 => 'PROP_323',
+                54 => 'PROP_324',
+                55 => 'PROP_355',
+                56 => 'PROP_304',
+                57 => 'PROP_358',
+                58 => 'PROP_319',
+                59 => 'PROP_344',
+                60 => 'PROP_328',
+                61 => 'PROP_338',
+                62 => 'PROP_2065',
+                63 => 'PROP_366',
+                64 => 'PROP_302',
+                65 => 'PROP_303',
+                66 => 'PROP_2054',
+                67 => 'PROP_341',
+                68 => 'PROP_223',
+                69 => 'PROP_283',
+                70 => 'PROP_354',
+                71 => 'PROP_313',
+                72 => 'PROP_2066',
+                73 => 'PROP_329',
+                74 => 'PROP_342',
+                75 => 'PROP_367',
+                76 => 'PROP_2084',
+                77 => 'PROP_340',
+                78 => 'PROP_351',
+                79 => 'PROP_368',
+                80 => 'PROP_369',
+                81 => 'PROP_331',
+                82 => 'PROP_337',
+                83 => 'PROP_345',
+                84 => 'PROP_339',
+                85 => 'PROP_310',
+                86 => 'PROP_309',
+                87 => 'PROP_330',
+                88 => 'PROP_2017',
+                89 => 'PROP_335',
+                90 => 'PROP_321',
+                91 => 'PROP_308',
+                92 => 'PROP_206',
+                93 => 'PROP_334',
+                94 => 'PROP_2100',
+                95 => 'PROP_311',
+                96 => 'PROP_2132',
+                97 => 'SHUM',
+                98 => 'PROP_361',
+                99 => 'PROP_326',
+                100 => 'PROP_315',
+                101 => 'PROP_2091',
+                102 => 'PROP_2026',
+                103 => 'PROP_307',
+                104 => 'PROP_2027',
+                105 => 'PROP_2098',
+                106 => 'PROP_2122',
+                107 => 'PROP_24',
+                108 => 'PROP_2049',
+                109 => 'PROP_22',
+                110 => 'PROP_2095',
+                111 => 'PROP_2044',
+                112 => 'PROP_162',
+                113 => 'PROP_2055',
+                114 => 'PROP_2069',
+                115 => 'PROP_2062',
+                116 => 'PROP_2061',
+                117 => 'CML2_LINK',
+                118 => 'RZMER',
+                119 => 'SOSTAV_SITE_RU',
+                120 => 'SOSTAV_SITE_UA',
+            ],
+            'PROPERTY_CODE_MOBILE' => '',
+            'META_KEYWORDS' => '-',
+            'META_DESCRIPTION' => '-',
+            'BROWSER_TITLE' => '-',
+            'SET_LAST_MODIFIED' => 'Y',
+            'INCLUDE_SUBSECTIONS' => 'Y',
+            'BASKET_URL' => '/basket/',
+            'ACTION_VARIABLE' => 'action',
+            'PRODUCT_ID_VARIABLE' => 'id',
+            'SECTION_ID_VARIABLE' => 'SECTION_ID',
+            'PRODUCT_QUANTITY_VARIABLE' => 'quantity',
+            'PRODUCT_PROPS_VARIABLE' => 'prop',
+            'FILTER_NAME' => 'MAX_SMART_FILTER',
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => '3600000',
+            'CACHE_FILTER' => 'Y',
+            'CACHE_GROUPS' => 'Y',
+            'SET_TITLE' => 'N',
+            'MESSAGE_404' => '',
+            'SET_STATUS_404' => 'Y',
+            'SHOW_404' => 'Y',
+            'FILE_404' => '',
+            'DISPLAY_COMPARE' => 'Y',
+            'PAGE_ELEMENT_COUNT' => '10',
+            'LINE_ELEMENT_COUNT' => '4',
+            'PRICE_CODE' => [0 => 'BASE',],
+            'USE_PRICE_COUNT' => 'N',
+            'SHOW_PRICE_COUNT' => '1',
+            'PRICE_VAT_INCLUDE' => 'Y',
+            'USE_PRODUCT_QUANTITY' => 'Y',
+            'ADD_PROPERTIES_TO_BASKET' => 'N',
+            'PARTIAL_PRODUCT_PROPERTIES' => 'Y',
+            'PRODUCT_PROPERTIES' => '',
+            'DISPLAY_TOP_PAGER' => 'N',
+            'DISPLAY_BOTTOM_PAGER' => 'N',
+            'PAGER_TITLE' => 'Товары',
+            'PAGER_SHOW_ALWAYS' => 'N',
+            'PAGER_TEMPLATE' => 'main',
+            'PAGER_DESC_NUMBERING' => 'N',
+            'PAGER_DESC_NUMBERING_CACHE_TIME' => '36000',
+            'PAGER_SHOW_ALL' => 'N',
+            'PAGER_BASE_LINK_ENABLE' => 'N',
+            'PAGER_BASE_LINK' => null,
+            'PAGER_PARAMS_NAME' => null,
+            'LAZY_LOAD' => 'N',
+            'MESS_BTN_LAZY_LOAD' => null,
+            'LOAD_ON_SCROLL' => 'N',
+            'OFFERS_CART_PROPERTIES' => '',
+            'OFFERS_FIELD_CODE' => [0 => 'NAME',
+                                    1 => 'CML2_LINK',
+                                    2 => 'DETAIL_PAGE_URL',
+                                    3 => '',],
+            'OFFERS_PROPERTY_CODE' => [0 => 'ARTICLE',
+                                       1 => 'SPORT',
+                                       2 => 'SIZES2',
+                                       3 => 'MORE_PHOTO',
+                                       4 => 'VOLUME',
+                                       5 => 'SIZES',
+                                       6 => 'SIZES5',
+                                       7 => 'SIZES4',
+                                       8 => 'SIZES3',
+                                       9 => 'COLOR_REF',
+                                       10 => 'RAZMER',],
+            'OFFERS_SORT_FIELD' => 'ID',
+            'OFFERS_SORT_ORDER' => 'desc',
+            'OFFERS_SORT_FIELD2' => 'sort',
+            'OFFERS_SORT_ORDER2' => 'asc',
+            'OFFERS_LIMIT' => '10',
+            'SECTION_ID' => '347',
+            'SECTION_CODE' => 'zhenskaya_odezhda',
+            'SECTION_URL' => '/catalog/#SECTION_CODE_PATH#/',
+            'DETAIL_URL' => '/catalog/#SECTION_CODE_PATH#/#ELEMENT_CODE#/',
+            'USE_MAIN_ELEMENT_SECTION' => 'Y',
+            'CONVERT_CURRENCY' => 'Y',
+            'CURRENCY_ID' => 'UAH',
+            'HIDE_NOT_AVAILABLE' => 'N',
+            'HIDE_NOT_AVAILABLE_OFFERS' => 'N',
+            'LABEL_PROP' => '',
+            'LABEL_PROP_MOBILE' => null,
+            'LABEL_PROP_POSITION' => null,
+            'ADD_PICT_PROP' => 'MORE_PHOTO',
+            'PRODUCT_DISPLAY_MODE' => 'Y',
+            'PRODUCT_BLOCKS_ORDER' => 'price,props,sku,quantityLimit,quantity,buttons,compare',
+            'PRODUCT_ROW_VARIANTS' => '[{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false}]',
+            'ENLARGE_PRODUCT' => 'STRICT',
+            'ENLARGE_PROP' => '',
+            'SHOW_SLIDER' => 'Y',
+            'SLIDER_INTERVAL' => '3000',
+            'SLIDER_PROGRESS' => 'N',
+            'OFFER_ADD_PICT_PROP' => 'MORE_PHOTO',
+            'OFFER_TREE_PROPS' => [0 => 'COLOR_REF',
+                                   1 => 'RAZMER',],
+            'PRODUCT_SUBSCRIPTION' => 'Y',
+            'SHOW_DISCOUNT_PERCENT' => 'Y',
+            'DISCOUNT_PERCENT_POSITION' => null,
+            'SHOW_OLD_PRICE' => 'Y',
+            'SHOW_MAX_QUANTITY' => 'N',
+            'MESS_SHOW_MAX_QUANTITY' => '',
+            'RELATIVE_QUANTITY_FACTOR' => '',
+            'MESS_RELATIVE_QUANTITY_MANY' => '',
+            'MESS_RELATIVE_QUANTITY_FEW' => '',
+            'MESS_BTN_BUY' => 'Купить',
+            'MESS_BTN_ADD_TO_BASKET' => 'В корзину',
+            'MESS_BTN_SUBSCRIBE' => 'Подписаться',
+            'MESS_BTN_DETAIL' => 'Подробнее',
+            'MESS_NOT_AVAILABLE' => 'Нет в наличии',
+            'MESS_BTN_COMPARE' => 'Сравнение',
+            'USE_ENHANCED_ECOMMERCE' => 'N',
+            'DATA_LAYER_NAME' => '',
+            'BRAND_PROPERTY' => '',
+            'TEMPLATE_THEME' => 'blue',
+            'ADD_SECTIONS_CHAIN' => 'N',
+            'ADD_TO_BASKET_ACTION' => 'ADD',
+            'SHOW_CLOSE_POPUP' => 'N',
+            'COMPARE_PATH' => '',
+            'COMPARE_NAME' => 'CATALOG_COMPARE_LIST',
+            'USE_COMPARE_LIST' => 'Y',
+            'BACKGROUND_IMAGE' => '-',
+            'COMPATIBLE_MODE' => 'Y',
+            'DISABLE_INIT_JS_IN_COMPONENT' => 'N',
+            'WRAP_CLASS' => 'main-googs-list',
+            'BLOCK_CLASS' => 'main-googs-item-cont',
+        ];
+
+		if ($elementId > 0 && !$bIndex)
+		{
+
+            /*$element = CIBlockElement::GetByID($elementId) -> Fetch();
+
+            $offer = CIBlockElement::GetList([],['IBLOCK_ID'=>25,'PROPERTY_CML2_LINK'=>$elementId]) -> GetNextElement();
+            $fields = $offer->GetFields();
+            $props = $offer->GetProperties();
+
+            $sid = $fields['IBLOCK_SECTION_ID'];
+            ?><pre><?=print_r($props['COLOR_REF']['VALUE'], 1)?></pre><?*/
+            global $arViewed;
+            $sid = CIBlockElement::GetByID($elementId) -> Fetch()['IBLOCK_SECTION_ID'];
+
+            if(strpos($APPLICATION->GetCurPage(), '/podarochnyy_sertifikat/') === false)
+            {
+                $thisEl = CIBlockElement::GetList([],['IBLOCK_ID'=>21,'ID' => $elementId],false,false,['ID','IBLOCK_ID','PROPERTY_COLOR'])->Fetch();
+                $block = CIBlockElement::GetList(['rand'=>'asc'],['IBLOCK_ID'=>21,'SECTION_ID'=>$sid,'INCLUDE_SUBSECTIONS'=>'Y','PROPERTY_COLOR' => $thisEl['PROPERTY_COLOR_VALUE'],'>SORT'=>0,'ACTIVE'=>'Y','catalog_AVAILABLE'=>'Y'],false,['nTopCount'=>8],['ID','IBLOCK_ID','PROPERTY_COLOR']);
+                $cnt = 0;
+                $ids = [];
+                while ($record = $block->Fetch())
+                {
+                    $ids[$record['ID']] = $record['ID'];
+                    $cnt++;
+                }
+
+                if(count($ids) < 8)
+                {
+                    $block = CIBlockElement::GetList(['rand'=>'asc'],['IBLOCK_ID'=>21,'SECTION_ID'=>$sid,'INCLUDE_SUBSECTIONS'=>'Y','>SORT'=>0,'ACTIVE'=>'Y','catalog_AVAILABLE'=>'Y'],false,['nTopCount'=>8],['ID','IBLOCK_ID','PROPERTY_COLOR']);
+                    while ($record = $block->Fetch())
+                    {
+                        $ids[$record['ID']] = $record['ID'];
+                        if(count($ids) == 8) break;
+                    }
+                }
+                if(!empty($ids))
+                {
+                    //$arViewed = ['SECTION_ID' => $sid];
+                    global $arViewed;
+                    $arViewed = ['ID' => $ids];
+                    $params['FILTER_NAME'] = 'arViewed';
+                    $params['ONLY_SECOND'] = true;
+                    $params['PAGE_ELEMENT_COUNT'] = 8;
+                    $params['BLOCK_CLASS']= 'goods-slider-item';
+                    $params['WRAP_CLASS']= 'goods-slider';
+                    ?>
+                    <div class="list-section-title-block">
+                        <div class="list-section-title">
+                            <?=LANGUAGE_ID=='ua'?'Вам сподобається':'Вам понравиться'?>
+                        </div>
+                    </div>
+                    <div class="list-section-elements">
+                        <?/*<div class="goods-slider">
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg1.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio1">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio1">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio1">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio1">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіночий лонгслів Stimma Саймін Теракотовий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                799 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg2.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio2">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio2">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio2">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio2">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіноча куртка Stimma Анір
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                3 699 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg3.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio3">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio3">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio3">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio3">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіноча сукня Stimma Памо коричневий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                1 999 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg4.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio4">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio4">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio4">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio4">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіночий блейзер Stimma Альріл коричневий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                2 999 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg1.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio5">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio5">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio5">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio5">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіночий лонгслів Stimma Саймін Теракотовий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                799 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg2.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio6">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio6">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio6">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio6">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіноча куртка Stimma Анір
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                3 699 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg3.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio7">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio7">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio7">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio7">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіноча сукня Stimma Памо коричневий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                1 999 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goods-slider-item">
+                            <div class="catalog-item">
+                                <div class="catalog-item-top">
+                                    <div class="catalog-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg4.png">
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-favorite">
+                                        <a href="#">
+                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="catalog-item-more-info">
+                                        <div class="catalog-item-btn-buy">
+                                            <a href="#">
+                                                Додати до кошика
+                                            </a>
+                                        </div>
+                                        <div class="catalog-item-size-list">
+                                            <label>
+                                                <input type="radio" name="radio8">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio8">
+                                                <span class="catalog-item-size">
+                                                            S
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio8">
+                                                <span class="catalog-item-size">
+                                                            M
+                                                        </span>
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="radio8">
+                                                <span class="catalog-item-size">
+                                                            XS
+                                                        </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="catalog-item-info">
+                                    <a href="#" class="catalog-item-name">
+                                        Жіночий блейзер Stimma Альріл коричневий
+                                    </a>
+                                    <div class="catalog-item-details">
+                                        <div class="catalog-item-price-block">
+                                            <div class="catalog-item-price">
+                                                2 999 ₴
+                                            </div>
+                                        </div>
+                                        <div class="catalog-item-color-block">
+                                            <a href="#" style="background:#CB594F ;">
+                                            </a>
+                                            <a href="#" style="background:#8B5231 ;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*/?>
+                        <?
+                        $APPLICATION->IncludeComponent(
+                                "bitrix:catalog.section",
+                                "main",
+                                $params,
+                                false
+                        );
+                        ?>
+                    </div>
+
+                    <?/*
+                <div class="main-googs-list ">
+                    <div class="main-googs-item-cont">
+                        <div class="catalog-item-block">
+                            <div class="catalog-item-img">
+                                <a href="#">
+                                    <img src="/bitrix/templates/aspro_max/images/mgimg.png">
+                                </a>
+                                <div class="catalog-item-size-list">
+                                    <div class="catalog-item-size no-size">
+                                        XS
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        S
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        M
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        L
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        XL
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        XXL
+                                    </div>
+                                </div>
+                                <div class="catalog-item-favorite">
+                                    <a href="#">
+                                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.5059 18L19.7299 10.6017C21.0134 9.4487 21.881 7.86335 21.9879 6.13388C22.083 4.65662 21.6433 2.98719 19.7418 1.8222C15.5347 -0.747996 11.6723 3.38353 11.4941 4.9929C11.3158 3.38353 7.4534 -0.747996 3.24635 1.8222C1.35674 2.98719 0.917023 4.65662 1.0121 6.13388C1.11906 7.86335 1.98661 9.4487 3.27012 10.6017L11.5059 18Z" stroke="#3D441D" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="catalog-item-name-block">
+                                <a href="#" class="catalog-item-name">Жіноча сукня Stimma Коріс</a>
+                                <div class="catalog-item-sale">SALE</div>
+                            </div>
+                            <div class="catalog-item-info">
+                                <div class="catalog-item-price">
+                                    <div class="catalog-item-price-currency">990 грн</div>
+                                    <div class="catalog-item-price-old">1300  грн</div>
+                                </div>
+                                <div class="catalog-item-colors">
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color active">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-googs-item-cont">
+                        <div class="catalog-item-block">
+                            <div class="catalog-item-img">
+                                <a href="#">
+                                    <img src="/bitrix/templates/aspro_max/images/mgimg.png">
+                                </a>
+                                <div class="catalog-item-size-list">
+                                    <div class="catalog-item-size no-size">
+                                        XS
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        S
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        M
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        L
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        XL
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        XXL
+                                    </div>
+                                </div>
+                                <div class="catalog-item-favorite">
+                                    <a href="#">
+                                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.5059 18L19.7299 10.6017C21.0134 9.4487 21.881 7.86335 21.9879 6.13388C22.083 4.65662 21.6433 2.98719 19.7418 1.8222C15.5347 -0.747996 11.6723 3.38353 11.4941 4.9929C11.3158 3.38353 7.4534 -0.747996 3.24635 1.8222C1.35674 2.98719 0.917023 4.65662 1.0121 6.13388C1.11906 7.86335 1.98661 9.4487 3.27012 10.6017L11.5059 18Z" stroke="#3D441D" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="catalog-item-name-block">
+                                <a href="#" class="catalog-item-name">Жіноча сукня Stimma Коріс</a>
+                                <div class="catalog-item-sale">SALE</div>
+                            </div>
+                            <div class="catalog-item-info">
+                                <div class="catalog-item-price">
+                                    <div class="catalog-item-price-currency">990 грн</div>
+                                    <div class="catalog-item-price-old">1300  грн</div>
+                                </div>
+                                <div class="catalog-item-colors">
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color active">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-googs-item-cont">
+                        <div class="catalog-item-block">
+                            <div class="catalog-item-img">
+                                <a href="#">
+                                    <img src="/bitrix/templates/aspro_max/images/mgimg.png">
+                                </a>
+                                <div class="catalog-item-size-list">
+                                    <div class="catalog-item-size no-size">
+                                        XS
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        S
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        M
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        L
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        XL
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        XXL
+                                    </div>
+                                </div>
+                                <div class="catalog-item-favorite">
+                                    <a href="#">
+                                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.5059 18L19.7299 10.6017C21.0134 9.4487 21.881 7.86335 21.9879 6.13388C22.083 4.65662 21.6433 2.98719 19.7418 1.8222C15.5347 -0.747996 11.6723 3.38353 11.4941 4.9929C11.3158 3.38353 7.4534 -0.747996 3.24635 1.8222C1.35674 2.98719 0.917023 4.65662 1.0121 6.13388C1.11906 7.86335 1.98661 9.4487 3.27012 10.6017L11.5059 18Z" stroke="#3D441D" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="catalog-item-name-block">
+                                <a href="#" class="catalog-item-name">Жіноча сукня Stimma Коріс</a>
+                                <div class="catalog-item-sale">SALE</div>
+                            </div>
+                            <div class="catalog-item-info">
+                                <div class="catalog-item-price">
+                                    <div class="catalog-item-price-currency">990 грн</div>
+                                    <div class="catalog-item-price-old">1300  грн</div>
+                                </div>
+                                <div class="catalog-item-colors">
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color active">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-googs-item-cont">
+                        <div class="catalog-item-block">
+                            <div class="catalog-item-img">
+                                <a href="#">
+                                    <img src="/bitrix/templates/aspro_max/images/mgimg.png">
+                                </a>
+                                <div class="catalog-item-size-list">
+                                    <div class="catalog-item-size no-size">
+                                        XS
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        S
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        M
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        L
+                                    </div>
+                                    <div class="catalog-item-size ">
+                                        XL
+                                    </div>
+                                    <div class="catalog-item-size no-size">
+                                        XXL
+                                    </div>
+                                </div>
+                                <div class="catalog-item-favorite">
+                                    <a href="#">
+                                        <svg width="23" height="19" viewBox="0 0 23 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.5059 18L19.7299 10.6017C21.0134 9.4487 21.881 7.86335 21.9879 6.13388C22.083 4.65662 21.6433 2.98719 19.7418 1.8222C15.5347 -0.747996 11.6723 3.38353 11.4941 4.9929C11.3158 3.38353 7.4534 -0.747996 3.24635 1.8222C1.35674 2.98719 0.917023 4.65662 1.0121 6.13388C1.11906 7.86335 1.98661 9.4487 3.27012 10.6017L11.5059 18Z" stroke="#3D441D" stroke-width="2" stroke-miterlimit="10" stroke-linejoin="round"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="catalog-item-name-block">
+                                <a href="#" class="catalog-item-name">Жіноча сукня Stimma Коріс</a>
+                                <div class="catalog-item-sale">SALE</div>
+                            </div>
+                            <div class="catalog-item-info">
+                                <div class="catalog-item-price">
+                                    <div class="catalog-item-price-currency">990 грн</div>
+                                    <div class="catalog-item-price-old">1300  грн</div>
+                                </div>
+                                <div class="catalog-item-colors">
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color active">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                    <a href="#" class="catalog-item-color">
+                                        <img src="/bitrix/templates/aspro_max/images/colorimg.png">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                */?>
+                    <?
+                }
+            }
+
+
+
+
+        }
+        ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <?
+            /*
+            if(isset($_SESSION['VIEWED']) && !empty($_SESSION['VIEWED']) && !$bIndex)
+            {
+                global $arViewed;
+                $arViewed = ['ID' => $_SESSION['VIEWED']];
+                $params['FILTER_NAME'] = 'arViewed';
+                $params['ONLY_SECOND'] = true;
+                $params['PAGE_ELEMENT_COUNT'] = 10;
+                ?>
+                <div class="main-googs-wraper mgw5">
+                    <div class="main-googs-wraper-title"><?=LANGUAGE_ID == 'ua' ? 'Ви переглядали' : 'Вы просматривали'?></div>
+                    <?
+                    $APPLICATION->IncludeComponent(
+                        "bitrix:catalog.section",
+                        "main",
+                        $params,
+                        false
+                    );
+                    ?>
+                </div>
+                <?
+            }
+            */
+
+		?>
+
+
+

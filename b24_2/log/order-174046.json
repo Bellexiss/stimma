@@ -1,0 +1,108 @@
+2022-06-23 11:31:18
+{
+    "id": 174046,
+    "type": "order",
+    "parent_id": 0,
+    "status": "on-hold",
+    "currency": "UAH",
+    "version": "5.4.1",
+    "prices_include_tax": false,
+    "date_created": "2022-06-23 14:31:16",
+    "date_modified": "2022-06-23 14:31:16",
+    "discount_total": "0",
+    "discount_tax": "0",
+    "shipping_total": "0",
+    "shipping_tax": "0",
+    "cart_tax": "0",
+    "total": "1069",
+    "total_tax": "0",
+    "customer_id": 2,
+    "order_key": "wc_order_u9NhJXuI7yYMp",
+    "billing": {
+        "first_name": "avivi",
+        "last_name": "test",
+        "company": "",
+        "address_1": "Новая Почта",
+        "address_2": "1",
+        "city": "avivi",
+        "state": "",
+        "postcode": "",
+        "country": "",
+        "email": "avivi@test.com.ua",
+        "phone": "+38(999)3322110"
+    },
+    "shipping": {
+        "first_name": "",
+        "last_name": "",
+        "company": "",
+        "address_1": "",
+        "address_2": "",
+        "city": "",
+        "state": "",
+        "postcode": "",
+        "country": ""
+    },
+    "payment_method": "cheque",
+    "payment_method_title": "Наложенный платеж. Недоступно!",
+    "transaction_id": "",
+    "customer_ip_address": "77.121.182.202",
+    "customer_user_agent": "Mozilla\/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko\/20100101 Firefox\/101.0",
+    "created_via": "checkout",
+    "date_completed": null,
+    "date_paid": null,
+    "cart_hash": "8ffc332ead66863cb34311d51c675ef2",
+    "number": "174046",
+    "meta_data": [
+        {
+            "id": 5422335,
+            "key": "is_vat_exempt",
+            "value": "no"
+        },
+        {
+            "id": 5422336,
+            "key": "wpml_language",
+            "value": "ru"
+        },
+        {
+            "id": 5422340,
+            "key": "_new_order_email_sent",
+            "value": "true"
+        }
+    ],
+    "line_items": [
+        {
+            "id": 144245,
+            "order_id": 174046,
+            "name": "Женский кардиган Stimma Кватро 9031 - S, молочный\/пудра",
+            "product_id": 169617,
+            "variation_id": 169690,
+            "quantity": 1,
+            "tax_class": "",
+            "subtotal": "1069",
+            "subtotal_tax": "0",
+            "total": "1069",
+            "total_tax": "0",
+            "taxes": {
+                "total": [],
+                "subtotal": []
+            },
+            "meta_data": [
+                {
+                    "id": 1638941,
+                    "key": "pa_razmer",
+                    "value": "s"
+                },
+                {
+                    "id": 1638942,
+                    "key": "pa_cvet",
+                    "value": "molochnyj-pudra"
+                }
+            ]
+        }
+    ],
+    "tax_lines": [],
+    "shipping_lines": [],
+    "fee_lines": [],
+    "coupon_lines": [],
+    "order_comments": "avivi test 1"
+}

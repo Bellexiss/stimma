@@ -1,0 +1,162 @@
+.auth-page{
+	margin: 0 auto;
+	max-width: 1220px;
+	width: 100%;
+	padding-bottom: 150px;
+}
+
+.auth-tabs-cont{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	gap: 20px;
+	width: 100%;
+	margin-bottom: 60px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--black);
+}
+
+.auth-link{
+	font-family: var(--family2);
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 45px;
+	text-align: center;
+	transition: .5s all ease-in-out;
+	color: var(--lightgray);
+}
+
+.auth-link.active, .auth-link:hover{
+	color: var(--graphite);
+}
+
+
+.auth-form{
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	margin: 0 auto;
+	max-width: 910px;
+}
+
+.auth-form .form-block{
+	margin-bottom: 0;
+}
+
+.auth-inputs{
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.auth-inputs-group{
+	display: flex;
+	align-items: center;
+	gap: 20px;
+}
+
+.auth-inputs-group .form-block{
+	flex: 0 0 calc(50% - 10px);
+	max-width: calc(50% - 10px);
+}
+
+.auth-form .filter.licence_block, .auth-form .filter.offer_block{
+	padding: 0;
+}
+
+.auth-btn-block .info-btn{
+	width: 100%;
+}
+
+.auth-forgot-pass{
+	text-align: center;
+}
+
+.auth-forgot-pass a{
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: center;
+	text-decoration: underline;
+}
+
+.auth-alternative{
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.auth-alternative-sep{
+	color: var(--graphite);
+	border-bottom: 1px solid var(--black);
+	padding-bottom: 10px;
+	font-family: var(--family2);
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 45px;
+	text-align: center;
+}
+
+.auth-alternative-list{
+	gap: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.auth-alternative-item{
+	flex: 0 0 calc(50% - 10px);
+	max-width: calc(50% - 10px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 17px;
+	background: var(--white-semi);
+	height: 60px;
+}
+
+.auth-alternative-item .icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.auth-reg-text{
+	margin-bottom: 40px;
+	color: var(--graphite);
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 150%;
+	text-align: center;
+}
+
+@media(max-width: 600px){
+	.auth-inputs-group{
+		flex-direction: column;	
+	}
+
+	.auth-inputs-group .form-block{
+		flex: 0 0 auto;
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.auth-inputs{
+		gap: 20px;
+	}
+
+	.auth-form{
+		gap: 30px;
+	}
+
+	.auth-page{
+		padding-bottom: 50px;
+	}
+
+	.auth-reg-text{
+		font-size: 14px;
+	}
+
+	.auth-tabs-cont{
+		margin-bottom: 30px;
+	}
+}

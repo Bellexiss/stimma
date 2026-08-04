@@ -1,0 +1,32 @@
+[
+    {
+        "product": "131153",
+        "xml_id": "64b4af3a-d284-11ef-b15e-fd7e3c15d5e6",
+        "quantity": 52
+    },
+    {
+        "product": "134518",
+        "xml_id": "674ef391-193c-11f0-b164-fb78286b5185",
+        "quantity": 13
+    },
+    {
+        "product": "140643",
+        "xml_id": "4c9033f1-9787-11f0-b174-9df5c4f5e15b",
+        "quantity": 15
+    },
+    {
+        "product": "138931",
+        "xml_id": "cf9fea61-7460-11f0-b16c-e1db060b0202",
+        "quantity": 10
+    },
+    {
+        "product": "136708",
+        "xml_id": "e72cd7bb-4528-11f0-b16b-d8176d32bcac",
+        "quantity": 4
+    },
+    {
+        "product": "003101",
+        "xml_id": "13ecfdd3-79e1-11f0-b16c-e1db060b0202",
+        "quantity": 13
+    }
+]

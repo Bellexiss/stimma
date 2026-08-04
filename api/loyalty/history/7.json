@@ -1,0 +1,1000 @@
+        [{
+            "date": "20251015T000000",
+            "product": "111133",
+            "xml_id": "b1026bce-a9d0-11f0-b8b7-2cf05dad434d",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ NewWay"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "111133",
+            "xml_id": "b1026bd2-a9d0-11f0-b8b7-2cf05dad434d",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ NewWay"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "111133",
+            "xml_id": "e4e77bde-5399-11ee-bcf9-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "111133",
+            "xml_id": "ba77ed6f-5dbf-11ee-bcfa-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ Проспект"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "111133",
+            "xml_id": "1351ab92-3a03-11ef-bd4b-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ Проспект"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "111133",
+            "xml_id": "6609d1ff-6db1-11ef-bd8c-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "111133",
+            "xml_id": "2a0b3e45-87a4-11ef-bd8f-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ РайОн"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "111133",
+            "xml_id": "4a99a651-9441-11ef-bd91-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "111133",
+            "xml_id": "516da1f3-dd3b-11ef-bdd0-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "111133",
+            "xml_id": "a9b46bc7-7427-11f0-bde2-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "111133",
+            "xml_id": "4b588f9f-81ae-11f0-bde2-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "111133",
+            "xml_id": "e7a3cf7f-a829-11f0-bde6-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "111133",
+            "xml_id": "879a0163-a9a5-11f0-bde6-00d861d9c265",
+            "quantity": "1",
+            "sum": "10",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112851",
+            "xml_id": "4545748d-936f-11ef-af07-00d8619c45c8",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "Вінниця"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112851",
+            "xml_id": "8524eaba-a834-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "112861",
+            "xml_id": "83a35e13-a5db-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112862",
+            "xml_id": "e5558632-32fb-11f0-9f7a-8a884ba094c0",
+            "quantity": "-1",
+            "sum": "-2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112862",
+            "xml_id": "0ee4bd53-1fea-11ef-a88a-00d861aa6e61",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "112862",
+            "xml_id": "37c3a421-c426-11ef-ac44-2cf05d55b303",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "Ужгород (стріт)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "112862",
+            "xml_id": "83a35e13-a5db-11f0-b176-ae752512c461",
+            "quantity": "-1",
+            "sum": "-2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112863",
+            "xml_id": "bea1930d-a800-11f0-a3c4-f02f74213eea",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "Івано-Франківськ  (Велес)"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "112863",
+            "xml_id": "57d38119-7ff5-11f0-b16c-e1db060b0202",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "112932",
+            "xml_id": "c5a0146c-a99a-11f0-b629-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "999",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "113691",
+            "xml_id": "2ff751a7-1a64-11ef-980f-fc349714580e",
+            "quantity": "1",
+            "sum": "1349",
+            "Warehouse": "Хмельницький Оазис"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "113691",
+            "xml_id": "ac09d45b-a8e0-11f0-b628-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "1349",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "113692",
+            "xml_id": "d1e774e2-a9c1-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "1349",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "113692",
+            "xml_id": "09f35c01-a8e1-11f0-bde6-00d861d9c265",
+            "quantity": "1",
+            "sum": "1349",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "113698",
+            "xml_id": "70c9636b-737e-11f0-97b8-fc349712b671",
+            "quantity": "1",
+            "sum": "1349",
+            "Warehouse": "Чернігів ЦУМ"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "115411",
+            "xml_id": "4ac29af6-7a3c-11ef-b5e1-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "2699",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "115942",
+            "xml_id": "4744a020-eb6e-11ef-9acb-305a3a45331a",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Луцьк(Порт-сіті)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "115952",
+            "xml_id": "1050d9fb-b08e-11ef-8768-309c237f4a53",
+            "quantity": "-1",
+            "sum": "-399",
+            "Warehouse": "Київ Піраміда"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "115961",
+            "xml_id": "fd7f1d18-a805-11f0-9b64-305a3a45331a",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Луцьк ЦУМ"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "116378",
+            "xml_id": "fac03f40-3c02-11ee-b4b6-309c23d2557f",
+            "quantity": "1",
+            "sum": "599",
+            "Warehouse": "Чернігів ЦУМ"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "116408",
+            "xml_id": "bb46976f-42a5-11f0-ac52-2cf05d55b303",
+            "quantity": "1",
+            "sum": "599",
+            "Warehouse": "Ужгород (стріт)"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "116851",
+            "xml_id": "a33d1a74-dc50-11ee-9ad4-50ebf69facce",
+            "quantity": "1",
+            "sum": "1139",
+            "Warehouse": "Луцьк ЦУМ"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "117172",
+            "xml_id": "dd310b6a-7ff5-11f0-b16c-e1db060b0202",
+            "quantity": "1",
+            "sum": "299",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "117182",
+            "xml_id": "4e07c3d4-a807-11f0-8791-309c237f4a53",
+            "quantity": "1",
+            "sum": "299",
+            "Warehouse": "Київ Піраміда"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "117688",
+            "xml_id": "1accf1a2-19c5-11f0-a905-7c10c9be0486",
+            "quantity": "1",
+            "sum": "499",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "117921",
+            "xml_id": "7f853087-a8de-11f0-9530-f02f74213ef7",
+            "quantity": "1",
+            "sum": "499",
+            "Warehouse": "Львів (King Cross)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "117942",
+            "xml_id": "7f853087-a8de-11f0-9530-f02f74213ef7",
+            "quantity": "1",
+            "sum": "499",
+            "Warehouse": "Львів (King Cross)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119018",
+            "xml_id": "83cce13a-7337-11ef-bd8d-00d861d9c265",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119022",
+            "xml_id": "f96c433f-a3e2-11ee-8721-309c237f4a53",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "Київ Піраміда"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "119028",
+            "xml_id": "d3d952d4-24b8-11ef-a85f-7c10c9be0486",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "119028",
+            "xml_id": "8636a692-a9c4-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119031",
+            "xml_id": "db806d42-a05f-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119038",
+            "xml_id": "e6d5f050-a91b-11f0-a935-7c10c9be0486",
+            "quantity": "1",
+            "sum": "699",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "119372",
+            "xml_id": "09e7dcfb-a99d-11f0-9af2-50ebf69facce",
+            "quantity": "1",
+            "sum": "1799",
+            "Warehouse": "Луцьк(Порт-сіті)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119372",
+            "xml_id": "c177f2db-94b5-11ed-b218-00d861abf948",
+            "quantity": "1",
+            "sum": "1799",
+            "Warehouse": "Житомир Михайлівська"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "119408",
+            "xml_id": "95fad5bb-0ea5-11ef-9788-309c237f4a45",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "119412",
+            "xml_id": "f207971b-a807-11f0-9af2-50ebf69facce",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Луцьк(Порт-сіті)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "119412",
+            "xml_id": "aca61146-a990-11f0-a6e4-04421a323428",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Одеса Острів"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "120403",
+            "xml_id": "e6d5f050-a91b-11f0-a935-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "120891",
+            "xml_id": "2a0b3e45-87a4-11ef-bd8f-00d861d9c265",
+            "quantity": "1",
+            "sum": "1599",
+            "Warehouse": "Київ РайОн"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123012",
+            "xml_id": "e7a3cf85-a829-11f0-bde6-00d861d9c265",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123039",
+            "xml_id": "fd5e1711-5de1-11ed-8512-50ebf69fa385",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "Львів(Victoria Gardens)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "123651",
+            "xml_id": "2194dc89-a4e9-11f0-9530-f02f74213ef7",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123651",
+            "xml_id": "d37826ed-ddf3-11ee-9bed-a036bc3b3f9c",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "123651",
+            "xml_id": "c645c7df-e78d-11ef-9d03-a036bc3b3f9c",
+            "quantity": "-1",
+            "sum": "-1499",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "123653",
+            "xml_id": "a1073c10-a8d8-11f0-a934-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "123663",
+            "xml_id": "a837fa62-b6d3-11ef-af0e-00d8619c45c8",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Вінниця"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123663",
+            "xml_id": "71e91305-a833-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123664",
+            "xml_id": "6d830242-5ad8-11ef-a68d-04421a323428",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Одеса Острів"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "123671",
+            "xml_id": "c5a01468-a99a-11f0-b629-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123673",
+            "xml_id": "da3ea075-c9ad-11ef-a8c5-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1499",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "123874",
+            "xml_id": "07e0e0dd-a8df-11f0-a6e4-04421a323428",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "Одеса Острів"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "123874",
+            "xml_id": "e7969502-a802-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "2099",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "124724",
+            "xml_id": "e933c62e-a9c8-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "999",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "124942",
+            "xml_id": "aca61142-a990-11f0-a6e4-04421a323428",
+            "quantity": "1",
+            "sum": "799",
+            "Warehouse": "Одеса Острів"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "125054",
+            "xml_id": "34a55b5d-73de-11ed-8532-50ebf69fa385",
+            "quantity": "-1",
+            "sum": "-1999",
+            "Warehouse": "Львів(Victoria Gardens)"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "125054",
+            "xml_id": "5dc44ffb-e075-11ef-a8c9-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1999",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125064",
+            "xml_id": "8f363399-9856-11f0-b174-9df5c4f5e15b",
+            "quantity": "-1",
+            "sum": "-1999",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "125064",
+            "xml_id": "69a46c4b-9215-11f0-b263-00d861abf948",
+            "quantity": "1",
+            "sum": "1999",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125271",
+            "xml_id": "81130607-5e37-11f0-b617-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "1130",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "125415",
+            "xml_id": "9f81ff2c-ceb6-11ed-8676-50ebf69fa385",
+            "quantity": "1",
+            "sum": "1699",
+            "Warehouse": "Львів (King Cross)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "125422",
+            "xml_id": "96312c16-15af-11ef-9c50-a036bc3b3f9c",
+            "quantity": "1",
+            "sum": "1899",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "125424",
+            "xml_id": "dbc34835-a8d0-11f0-b26b-00d861abf948",
+            "quantity": "1",
+            "sum": "1899",
+            "Warehouse": "Житомир"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125433",
+            "xml_id": "49310410-3611-11f0-ac52-2cf05d55b303",
+            "quantity": "1",
+            "sum": "1899",
+            "Warehouse": "Ужгород (стріт)"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125673",
+            "xml_id": "cb8e5cdb-a835-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "999",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "125718",
+            "xml_id": "7c7bcdeb-a8db-11f0-9609-c03fd5adec06",
+            "quantity": "1",
+            "sum": "1999",
+            "Warehouse": "Дніпро Appolo"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125752",
+            "xml_id": "3b8dc650-a824-11f0-9608-c03fd5adec06",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "Дніпро Appolo"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125758",
+            "xml_id": "2db7fbaa-a816-11f0-aaf2-00d861f93937",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "Дніпро Караван"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "125768",
+            "xml_id": "27509a39-a9a5-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "125771",
+            "xml_id": "d09484f0-591c-11ee-977a-fc349714580e",
+            "quantity": "1",
+            "sum": "1249",
+            "Warehouse": "Хмельницький 100 метрівка"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126003",
+            "xml_id": "09f35c08-a8e1-11f0-bde6-00d861d9c265",
+            "quantity": "1",
+            "sum": "4999",
+            "Warehouse": "Київ СкайМол"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126092",
+            "xml_id": "e42b15ad-4767-11f0-a148-00d861aa61b2",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126092",
+            "xml_id": "73b3e406-92fa-11f0-b174-9df5c4f5e15b",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126093",
+            "xml_id": "5dc44ffb-e075-11ef-a8c9-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126093",
+            "xml_id": "36244abe-8fd4-11f0-b16d-c446d9b2a86b",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Дніпро Appolo"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126101",
+            "xml_id": "e6ff1606-8607-11ee-a834-7c10c9be0486",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126101",
+            "xml_id": "73b3e406-92fa-11f0-b174-9df5c4f5e15b",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Київ Лавіна"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126102",
+            "xml_id": "fa209e23-5ab0-11ee-871e-309c237f4a53",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Київ Піраміда"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126102",
+            "xml_id": "0222d803-2f03-11f0-9afc-305a3a45331a",
+            "quantity": "1",
+            "sum": "1079",
+            "Warehouse": "Луцьк(Порт-сіті)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126183",
+            "xml_id": "1428e813-af95-11ee-97b5-fc349714580e",
+            "quantity": "1",
+            "sum": "999",
+            "Warehouse": "Хмельницький Оазис"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126203",
+            "xml_id": "7288f896-878e-11ef-96ab-f02f74213ec8",
+            "quantity": "1",
+            "sum": "1699",
+            "Warehouse": "Полтава"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126213",
+            "xml_id": "38c9f3f9-56c9-11ee-8c55-50ebf6ec4c75",
+            "quantity": "1",
+            "sum": "1699",
+            "Warehouse": "Хмельницький 100 метрівка"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126231",
+            "xml_id": "c2fc7381-a804-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126231",
+            "xml_id": "fffecada-a9c1-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126232",
+            "xml_id": "8c443498-a8f7-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126232",
+            "xml_id": "51e5e7dc-aa13-11ee-b233-00d861abf948",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Житомир"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126233",
+            "xml_id": "5dc44ffb-e075-11ef-a8c9-7c10c9be0486",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126233",
+            "xml_id": "f0f925e9-a84f-11f0-a933-7c10c9be0486",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Одеса"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126234",
+            "xml_id": "56911ad6-a833-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126242",
+            "xml_id": "cfd6b0a1-a8dc-11f0-8733-50ebf69fa385",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Львів(Victoria Gardens)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126242",
+            "xml_id": "9178287e-a99a-11f0-97d1-fc349712b671",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Чернігів ЦУМ"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126242",
+            "xml_id": "ba4fc531-7ff4-11f0-b16c-e1db060b0202",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126243",
+            "xml_id": "40760f0a-bd1a-11ef-a6ad-04421a323428",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Одеса Острів"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126243",
+            "xml_id": "2f32419e-82e7-11ef-b5e4-7c10c9be2da2",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126244",
+            "xml_id": "45119ecc-23dd-11ef-a85d-7c10c9be0486",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126244",
+            "xml_id": "471c749c-6600-11f0-ac55-2cf05d55b303",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "Ужгород (стріт)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126244",
+            "xml_id": "39b517d8-a9c1-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126254",
+            "xml_id": "8f363399-9856-11f0-b174-9df5c4f5e15b",
+            "quantity": "-1",
+            "sum": "-399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126254",
+            "xml_id": "e7969502-a802-11f0-b176-ae752512c461",
+            "quantity": "1",
+            "sum": "399",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126282",
+            "xml_id": "a33d1a74-dc50-11ee-9ad4-50ebf69facce",
+            "quantity": "1",
+            "sum": "1439",
+            "Warehouse": "Луцьк ЦУМ"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126283",
+            "xml_id": "a29e8bd1-a5c4-11f0-9607-c03fd5adec06",
+            "quantity": "-1",
+            "sum": "-1439",
+            "Warehouse": "Дніпро Appolo"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126283",
+            "xml_id": "24e13e5a-7498-11ee-9ad2-50ebf69facce",
+            "quantity": "1",
+            "sum": "1439",
+            "Warehouse": "Луцьк ЦУМ"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126323",
+            "xml_id": "11e68a0f-7ff4-11f0-b16c-e1db060b0202",
+            "quantity": "1",
+            "sum": "690",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126404",
+            "xml_id": "b14d6e4d-a8c8-11f0-96d5-f02f74213ec8",
+            "quantity": "1",
+            "sum": "1439",
+            "Warehouse": "Полтава"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126404",
+            "xml_id": "0a0da4f7-783a-11f0-b16c-e1db060b0202",
+            "quantity": "-1",
+            "sum": "-1439",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126404",
+            "xml_id": "0d146f19-d642-11ef-bdcf-00d861d9c265",
+            "quantity": "1",
+            "sum": "1439",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126572",
+            "xml_id": "0222d803-2f03-11f0-9afc-305a3a45331a",
+            "quantity": "1",
+            "sum": "1199",
+            "Warehouse": "Луцьк(Порт-сіті)"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126572",
+            "xml_id": "be758f3b-408f-11ed-ae69-00d8619c45c8",
+            "quantity": "1",
+            "sum": "1299",
+            "Warehouse": "Вінниця"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126572",
+            "xml_id": "0bebe419-7ff4-11f0-b16c-e1db060b0202",
+            "quantity": "1",
+            "sum": "690",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251015T000000",
+            "product": "126573",
+            "xml_id": "0bebe419-7ff4-11f0-b16c-e1db060b0202",
+            "quantity": "2",
+            "sum": "1380",
+            "Warehouse": "ИнтернетМагазин"
+        },
+        {
+            "date": "20251013T000000",
+            "product": "126574",
+            "xml_id": "640affea-64e2-11ee-871e-309c237f4a53",
+            "quantity": "1",
+            "sum": "1199",
+            "Warehouse": "Київ Піраміда"
+        },
+        {
+            "date": "20251014T000000",
+            "product": "126574",
+            "xml_id": "07e0e0dd-a8df-11f0-a6e4-04421a323428",
+            "quantity": "1",
+            "sum": "1199",
+            "Warehouse": "Одеса Острів"
+        }]

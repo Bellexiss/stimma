@@ -1,0 +1,31 @@
+<?
+$MESS['AUTH_LOGIN_BUTTON'] = 'Увійти';
+$MESS['AUTH_REMEMBER_ME'] = 'Запам’ятати мене';
+$MESS['AUTH_FORGOT_PASSWORD_2'] = 'Забули пароль?';
+$MESS['AUTH_REGISTER'] = 'Реєстрація';
+$MESS['AUTH_REGISTER_NEW'] = 'Реєстрація';
+$MESS['AUTH_LOGOUT_BUTTON'] = 'Выйти';
+$MESS['AUTH_PROFILE'] = 'Мой профиль';
+$MESS['AUTH_A_INTERNAL'] = 'Встроенная авторизація';
+$MESS['AUTH_A_OPENID'] = 'OpenID';
+$MESS['AUTH_OPENID'] = 'OpenID';
+$MESS['AUTH_A_LIVEID'] = 'LiveID';
+$MESS['AUTH_LIVEID_LOGIN'] = 'Log In';
+$MESS['CAPTCHA_PROMT'] = 'Введите код';
+$MESS['RELOAD'] = 'Обновить';
+$MESS['AUTH_REMEMBER_SHORT'] = 'Запам’ятати мене';
+$MESS['SOCSERV_AS_USER_FORM'] = 'Быстрый вход через соцсети';
+$MESS['AUTH_SECURE_NOTE'] = 'Перед отправкой формы авторизации пароль будет зашифрован в браузере. Это позволит избежать передачи пароля в открытом виде.';
+$MESS['AUTH_NONSECURE_NOTE'] = 'Пароль будет отправлен в открытом виде. Включите JavaScript в браузере, чтобы зашифровать пароль перед отправкой.';
+$MESS['AUTH_ERROR'] = 'Невірний логін або пароль';
+$MESS['REFRESH'] = 'Поменять картинку';
+$MESS['auth_phone_number_or_login'] = 'Введите логин или номер телефона';
+$MESS['auth_phone_number'] = 'Номер телефона';
+$MESS['auth_login'] = 'Логін';
+$MESS['auth_password'] = 'Пароль';
+$MESS['auth_password2'] = 'Подтвердите, что это ваш аккаунт и введите пароль';
+$MESS['auth_password_continue'] = 'Продолжить';
+$MESS['auth_get_sms_code'] = 'Выслать код';
+$MESS['auth_sms_code'] = 'Код авторизации из СМС';
+$MESS['auth_code_sent'] = 'На ваш номер было выслано СМС с кодом авторизации.';
+?>

@@ -1,0 +1,74 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Информация", 
+		"/ru/pro-nas/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Заказ",
+		"/ru/yak-zrobiti-zamovlennya/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Гарантия и возврат", 
+		"/ru/garantiya-ta-povernennya/", 
+		Array(), 
+		Array(),
+		"" 
+	),
+	Array(
+		"Оплата и доставка",
+		"/ru/dostavka-ta-oplata/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Размерная сетка", 
+		"/ru/razmirna-sitka/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Сертификаты", 
+		"/ru/sertifikati/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Отзывы", 
+		"/ru/vidguki/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"О нас", 
+		"/ru/pro-nas/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Статьи", 
+		"/ru/news/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	/*Array(
+		"Архив коллекций", 
+		"/ru/collection/", 
+		Array(), 
+		Array(), 
+		"" 
+	)*/
+);
+?>

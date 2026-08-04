@@ -1,0 +1,53 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Акції",
+		"/sale/", 
+		Array(), 
+		Array("ICON"=> "icon_discount"), 
+		"" 
+	),
+	Array(
+		"Послуги",
+		"/services/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Проєкти",
+		"/blog/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Проєкти",
+		"/projects/",
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Як купити",
+		"/help/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Компанія",
+		"/company/",
+		Array(),
+		Array(),
+		""
+	),
+	Array(
+		"Наші магазини",
+		"/contacts/",
+		Array(),
+		Array(),
+		""
+	)
+);
+?>

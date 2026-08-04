@@ -1,0 +1,767 @@
+.sama-sobi-banner{
+
+}
+
+.sama-sobi-img-mob{
+	display: none;
+}
+
+.sama-sobi-banner .info-page-banner-img:before{
+	content: none;
+}
+
+.sama-sobi-banner .info-page-banner-title-block{
+	color: var(--graphite);
+	gap: 20px;
+	padding-bottom: 8.9%;
+}
+
+.sama-sobi-banner-btn{
+	padding-top: 20px;
+}
+
+.sama-sobi-banner .info-page-banner-semititle{
+	max-width: 953px;
+	padding: 0 40px;
+}
+
+@media(max-width: 1000px){
+	.sama-sobi-banner .info-page-banner-semititle{
+		display: none;
+	}
+
+	.sama-sobi-banner .info-page-banner-title-block{
+		padding-bottom: 115px;
+		gap: 50px;
+	}
+
+	.sama-sobi-banner .info-page-banner-img img{
+	    right: -157px;
+	    left: unset;
+	    max-height: 100%;
+	    height: auto;
+	    width: auto;
+	    max-width: unset;
+	}
+}
+
+@media(max-width: 600px){
+	.sama-sobi-banner.info-page-banner{
+		aspect-ratio: unset;
+		height: unset;
+	}
+
+	.sama-sobi-banner .info-page-banner-img img:not(.sama-sobi-img-mob){
+		display: none;
+	}
+
+	.info-page-banner-img img.sama-sobi-img-mob{
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+		right: unset;
+		left: 0;
+		top: 0;
+	}
+
+	.sama-sobi-banner .info-page-banner-title-block{
+		gap: 0;
+		padding-bottom: 79px;
+	}
+}
+
+/*  */
+
+.sama-sobi-section{
+	padding: 50px 0;
+}
+
+.sama-sobi-tutorial-cont.sama-sobi-section{
+	padding-top: 100px;
+}
+
+.sama-sobi-block{
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+.sama-sobi-title-block{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.sama-sobi-title-btn{
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--graphite);
+	font-weight: 600;
+	font-size: 18px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+}
+
+.sama-sobi-title-btn .icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sama-sobi-btn-block{
+	padding-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.sama-sobi-title{
+	color: var(--black);
+	font-family: var(--family2);
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 120%;
+}
+
+.sama-sobi-tutorial-list{
+	display: flex;
+	gap: 18px;
+}
+
+.sama-sobi-tutorial-item{
+	flex: 0 0 calc(100% / 3 - 12px);
+	max-width: calc(100% / 3 - 12px);
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+	padding: 30px 30px 48px;
+	background: var(--white-semi);
+}
+
+.sama-sobi-tutorial-item-icon{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.sama-sobi-tutorial-item-icon .icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sama-sobi-tutorial-text-block{
+	display: flex;
+	flex-direction: column;
+	gap: 25px;
+}
+
+.sama-sobi-tutorial-item-title{
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 154%;
+	color: var(--black);
+}
+
+.sama-sobi-tutorial-text{
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 165%;
+	color: var(--black);
+}
+
+
+@media(max-width: 1000px){
+	.sama-sobi-tutorial-list{
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.sama-sobi-tutorial-item{
+		flex: 0 0 auto;
+		max-width: 688px;
+		width: 100%;
+		position: relative;
+		min-height: 237px;
+		padding: 10px 51px 10px 61px;
+		justify-content: center;
+	}
+
+	.sama-sobi-tutorial-item-icon{
+		position: absolute;
+		top: 16px;
+		right: 16px;
+	}
+
+	.sama-sobi-tutorial-item-icon svg{
+		height: auto;
+		width: 34px;
+	}
+
+	.sama-sobi-tutorial-cont.sama-sobi-section{
+		padding-top: 75px;
+	}
+}
+
+@media(max-width: 600px){
+	.sama-sobi-section{
+		padding: 25px 0;
+	}
+
+	.sama-sobi-tutorial-cont.sama-sobi-section{
+		padding-top: 30px;
+	}
+
+	.sama-sobi-title{
+		font-size: 24px;
+		line-height: 150%;
+	}
+
+	.sama-sobi-tutorial-item{
+	    padding: 24px 21px 18px 22px;
+	    min-height: 270px;
+	}
+
+	.sama-sobi-tutorial-item-title{
+		font-size: 20px;
+		max-width: 242px;
+	}
+
+	.sama-sobi-tutorial-text{
+		font-size: 14px;
+	}
+
+	.sama-sobi-tutorial-item-icon{
+		top: 15px;
+		right: 16px;
+	}
+
+	.sama-sobi-tutorial-item-title br{
+		display: none;
+	}
+
+}
+
+/*  */
+
+.sama-sobi-loyalty-block{
+	display: flex;
+	gap: 20px;
+	overflow-x: auto;
+}
+
+
+.sama-sobi-loyalty-item-block{
+	max-width: 445px;
+	width: 445px;
+	flex: 0 0 445px;
+}
+
+.sama-sobi-loyalty-item{
+	position: relative;
+}
+
+.sama-sobi-loyalty-bg{
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	z-index: 1;
+	background: var(--border-h);
+}
+
+.sama-sobi-loyalty-bg img{
+	position: absolute;
+	z-index: 1;
+	width: 445px;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: unset;
+}
+
+.sama-sobi-loyalty-bg:before{
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0) 38.33%, rgba(255, 255, 255, 0.79) 44.71%, #F5F5F5 70.25%);
+	z-index: 2;
+}
+
+.sama-sobi-loyalty-info{
+	display: flex;
+	flex-direction: column;
+	padding: 329px 16px 21px;
+	position: relative;
+	z-index: 2;
+}
+
+.sama-sobi-loyalty-rang{
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	gap: 9px;
+	padding: 13px;
+	background: var(--peach);
+	color: var(--white);
+	white-space: nowrap;
+}
+
+.sama-sobi-loyalty-rang-key{
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 100%;
+}
+
+.sama-sobi-loyalty-rang-value{
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 18px;
+}
+
+.sama-sobi-loyalty-list{
+	display: flex;
+	flex-direction: column;
+}
+
+.sama-sobi-loyalty-list-item{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 8px 0;
+	border-bottom: 1px solid var(--loal-b);
+}
+
+.sama-sobi-loyalty-list-item:last-child{
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.sama-sobi-loyalty-key{
+	color: var(--graphite);
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	max-width: 306px;
+}
+
+.sama-sobi-loyalty-value{
+	color: var(--graphite);
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.sama-sobi-loyalty-value .icon{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sama-sobi-loyalty-nav{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	position: absolute;
+	z-index: 2;
+	top: 218px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: none;
+}
+
+.sama-sobi-loyalty-nav .slick-dots, .sama-sobi-loyalty-nav .slider-dots {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.sama-sobi-loyalty-nav .slick-dots li{
+	display: none;
+}
+
+.sama-sobi-loyalty-nav .slick-dots .slick-active{
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
+
+.sama-sobi-loyalty-nav .slick-dots button{
+	padding: 0;
+	color: var(--graphite);
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 100%;
+	text-align: center;
+	background: transparent;
+	border: 0;
+}
+
+.sama-sobi-loyalty-nav .slick-arrow{
+	position: static;
+	transform: none;
+	width: auto;
+	height: auto;
+	color: var(--graphite);
+}
+
+.sama-sobi-loyalty-nav .slick-arrow.slick-disabled{
+	color: var(--lightgray);
+	display: flex!important;
+}
+
+.sama-sobi-loyalty-cont{
+	position: relative;
+}
+
+.sama-sobi-loyalty-ps{
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 19px;
+	color: var(--graphite);
+}
+
+@media(max-width: 1400px){
+
+	
+}
+
+@media(max-width: 1000px){
+
+	.sama-sobi-loyalty-key, .sama-sobi-loyalty-value{
+		font-size: 14px;
+	}
+
+	.sama-sobi-loyalty-rang-key{
+		font-size: 20px;
+	}
+
+	.sama-sobi-loyalty-rang-value{
+		font-size: 14px;
+    	line-height: 16px;
+	}
+
+	.sama-sobi-loyalty-ps{
+		font-size: 16px;
+	}
+}
+
+@media(max-width: 600px){
+	.sama-sobi-loyalty-info{
+		padding: 254px 13px 8px;
+	}
+
+	.sama-sobi-loyalty-item{
+		flex: 0 0 auto;
+		width: 100%;
+	}
+
+	.sama-sobi-loyalty-nav{
+		display: flex;
+	}
+
+	.sama-sobi-loyalty-ps{
+		font-size: 14px;
+	}
+
+	.sama-sobi-loyalty-item-block{
+		width: 100%;
+		max-width: unset;
+	}
+
+	.sama-sobi-loyalty-block{
+		overflow: hidden;
+	}
+}
+
+/*  */
+
+.sama-sobi-accum-cont{
+	display: flex;
+	gap: 20px;
+}
+
+.sama-sobi-accum-item{
+	flex: 0 0 calc(25% - 15px);
+	max-width: calc(25% - 15px);
+	position: relative;
+}
+
+.sama-sobi-accum-text{
+	position: absolute;
+	z-index: 2;
+	left: 14px;
+	right: 14px;
+	bottom: 15px;
+	color: var(--white);
+	background: var(--accum-bg);
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 150%;
+	text-align: center;
+	padding: 12px 5px;
+}
+
+.sama-sobi-accum-tooltip{
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.sama-sobi-accum-tooltip-icon{
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.sama-sobi-accum-tooltip-dropdown-cont{
+	top: 100%;
+	right: 0;
+	position: absolute;
+	padding-top: 18px;
+	display: none;
+}
+
+.sama-sobi-accum-tooltip:hover .sama-sobi-accum-tooltip-dropdown-cont, .sama-sobi-accum-tooltip.opened .sama-sobi-accum-tooltip-dropdown-cont{
+	display: flex;
+}
+
+.sama-sobi-accum-tooltip-dropdown{
+	padding: 8px 11px;
+	background: var();
+	border: 1px solid var(--peach);
+	color: var(--graphite);
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 18px;
+	width: 220px;
+	background: var(--white);
+	position: relative;
+}
+
+.sama-sobi-accum-tooltip-dropdown:before{
+	content: "";
+	position: absolute;
+	border-bottom: 16px solid var(--peach);
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	bottom: 100%;
+	right: 3px;
+	z-index: 1;
+}
+
+.sama-sobi-accum-tooltip-dropdown:after{
+	content: "";
+	position: absolute;
+	border-bottom: 14px solid var(--white);
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+	bottom: 100%;
+	right: 4px;
+	z-index: 2;
+}
+
+@media(max-width: 1400px){
+	.sama-sobi-accum-cont{
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.sama-sobi-accum-item{
+		flex: 0 0 445px;
+		max-width: 455px;
+	}
+}
+
+@media(max-width: 1000px){
+	.sama-sobi-accum-item{
+		flex: 0 0 calc(50% - 10px);
+		max-width: calc(50% - 10px);
+	}
+
+	.sama-sobi-accum-text{
+		font-size: 18px;
+	}
+
+	.sama-sobi-accum-text .logo svg{
+		width: 160px;
+		height: auto;
+	}
+}
+
+@media(max-width: 600px){
+	.sama-sobi-accum-text{
+		position: static;
+		padding: 11px 0;
+		font-size: 16px;
+		flex-grow: 1;
+		display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+	}
+
+	.sama-sobi-accum-item{
+		flex-direction: column;
+		display: flex;
+	}
+
+	.sama-sobi-accum-tooltip{
+		top: 8px;
+		right: 9px;
+	}
+
+	.sama-sobi-accum-tooltip-icon svg{
+		width: 21px;
+		height: auto;
+	}
+}
+
+/*  */
+
+@media(max-width: 1000px){
+	.sama-sobi-title-btn-block{
+		display: none;
+	}
+}
+
+/*  */
+
+.sama-sobi-icon-block{
+	display: flex;
+	gap: 18px;
+}
+
+.sama-sobi-icon-item{
+	display: flex;
+	flex-direction: column;
+	gap: 36px;
+	align-items: center;
+	justify-content: center;
+	padding: 67px 20px 50px;
+	flex: 0 0 calc(100% / 3 - 12px);
+	max-width: calc(100% / 3 - 12px);
+	background: var(--white-semi);
+}
+
+.sama-sobi-icon-img{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sama-sobi-icon-text-block{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.sama-sobi-icon-title{
+	max-width: 252px;
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 100%;
+	text-align: center;
+}
+
+.sama-sobi-icon-text{
+	text-align: center;
+	color: var(--graphite);
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 100%;
+}
+
+@media(max-width: 1000px){
+	.sama-sobi-icon-block{
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sama-sobi-icon-item{
+		flex: 0 0 auto;
+		max-width: 688px;
+		width: 100%;
+		flex-direction: row;
+		align-items: center;
+		gap: 40px;
+		min-height: 200px;
+		padding: 0 39px;
+		justify-content: flex-start;
+	}
+
+	.sama-sobi-icon-text-block{
+		text-align: left;
+		gap: 15px;
+		align-items: flex-start;
+	}
+
+	.sama-sobi-icon-title{
+		font-size: 24px;
+		text-align: left;
+		max-width: unset;
+	}
+
+	.sama-sobi-icon-text{
+		font-size: 18px;
+		text-align: left;
+	}
+}
+
+@media(max-width: 600px){
+	.sama-sobi-icon-item{
+		flex-direction: column;
+		gap: 10px;
+		align-items: center;
+		justify-content: center;
+		min-height: 209px;
+		padding: 20px;
+	}
+
+	.sama-sobi-icon-img svg{
+		width: 75px;
+		height: auto;
+	}
+
+	.sama-sobi-icon-text-block{
+		align-items: center;
+		gap: 8px;
+	}
+
+	.sama-sobi-icon-title{
+		text-align: center;
+		font-size: 20px;
+	}
+
+	.sama-sobi-icon-text{
+		text-align: center;
+		font-size: 18px;
+	}
+}
+
+/*  */
+
+.discount-container-sama-sobi.discount-container{
+	padding: 0;
+}
+
+.discount-container-sama-sobi .discount-bg{
+	background: transparent;
+}
+
+.discount-container-sama-sobi .discount-block{
+	padding: 70px 0 60px;
+}
+
+@media(max-width: 600px){
+	.discount-container-sama-sobi .discount-block{
+		padding: 25px 0;
+	}
+}

@@ -1,0 +1,1 @@
+Я погоджуюсь на <a href="/pravova-informatsiya/" target="_blank">обробку персональних даних</a>

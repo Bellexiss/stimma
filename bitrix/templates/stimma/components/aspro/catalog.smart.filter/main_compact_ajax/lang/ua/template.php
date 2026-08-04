@@ -1,0 +1,23 @@
+<?
+$MESS["CT_BCSF_FILTER_TITLE"] = "Вибір за параметрами:";
+$MESS["CT_BCSF_FILTER_FROM"] = "Від";
+$MESS["CT_BCSF_FILTER_TO"] = "До";
+$MESS["CT_BCSF_SET_FILTER"] = "Показати";
+$MESS ['CT_BCSF_SET_FILTER_TI'] = 'товар';
+$MESS ['CT_BCSF_SET_FILTER_TR'] = 'товару';
+$MESS ['CT_BCSF_SET_FILTER_TRM'] = 'товарів';
+$MESS["CT_BCSF_DEL_FILTER"] = "Скинути";
+$MESS["CT_BCSF_FILTER_COUNT"] = "Обрано: #ELEMENT_COUNT#";
+$MESS["CT_BCSF_FILTER_SHOW"] = "Показати";
+$MESS["CT_BCSF_FILTER_ALL"] = "Всі";
+$MESS ['PRICE'] = 'Цена';
+$MESS['FILTER_TITLE_COMPACT'] = 'Фільтр';
+$MESS['FILTER_EXPAND_VALUES'] = 'Показати все';
+$MESS['FILTER_HIDE_VALUES'] = 'Згорнути';
+$MESS['HINT'] = 'Замітка';
+$MESS['SELECTED'] = 'Знайдено: ';
+$MESS['CLEAR_VALUE'] = 'Скинути';
+$MESS ['FILTER_TITLE'] = "Фільтр";
+$MESS['FILTER_EXPAND_VALUES'] = 'Показати все';
+$MESS['FILTER_HIDE_VALUES'] = 'Згорнути';
+?>
