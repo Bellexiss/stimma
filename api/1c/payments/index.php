@@ -28,22 +28,19 @@ while ($record = $res->Fetch())
             $xml = new SimpleXMLElement($xmlData);
             $smchId = (string)$xml->transactions->transaction->smch_id;
             //PR($smchId);  
-            if($smchId == 15740){
+            if($smchId == 15740)
                 $rs = 'UA803052990000026001016022063';
-            }elseif($smchId == 15283){
+            elseif($smchId == 15283)
                 $rs = 'UA823052990000026005046018753';
-            }
-            elseif($smchId == 16924){
+            elseif($smchId == 16924)
                 $rs = 'UA823052990000026008046009242';
-            }
             elseif($smchId == 16932)
-            {
                 $rs = 'UA313052990000026001046004772';
-            }
             elseif($smchId == 18597)
-            {
                 $rs = 'UA663052990000026002036015242';
-            }
+            elseif($smchId == 18729)
+                $rs = 'UA063052990000026000016013244';
+
             /*if($setting_fop != 'Y'){
                 $rs = 'UA803052990000026001016022063';
             }*/
@@ -53,7 +50,7 @@ while ($record = $res->Fetch())
                 'create_at' => $matches2[1],
                 'rs' => $rs
             ];
-        }
+            }
     }
     else
     {
@@ -63,22 +60,19 @@ while ($record = $res->Fetch())
         $smchId = (string)$xml->transactions->transaction->smch_id;
         preg_match('/<timestamp>(.*)<\/timestamp>/',$record['UF_DATA'],$matches2);
         //PR($smchId);
-        if($smchId == 15740){
+        if($smchId == 15740)
             $rs = 'UA803052990000026001016022063';
-        }elseif($smchId == 15283){
+        elseif($smchId == 15283)
             $rs = 'UA823052990000026005046018753';
-        }
-        elseif($smchId == 16924){
+        elseif($smchId == 16924)
             $rs = 'UA823052990000026008046009242';
-        }
         elseif($smchId == 16932)
-        {
             $rs = 'UA313052990000026001046004772';
-        }
         elseif($smchId == 18597)
-        {
             $rs = 'UA663052990000026002036015242';
-        }
+        elseif($smchId == 18729)
+            $rs = 'UA063052990000026000016013244';
+
         /*if($setting_fop != 'Y'){
             $rs = 'UA803052990000026001016022063';
         }*/

@@ -7,33 +7,6 @@ use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
 
-$users = CUser::GetList($by='ID',$order='DESC', ['ACTIVE'=>'Y','GROUPS_ID'=>[9]]);
-?>
-<table>
-<?
-$n=1;
-$need = strtotime('16.07.2026 00:00:00');
-while ($user = $users->Fetch())
-{
-    if(!$user['EMAIL'] || strpos($user['EMAIL'],'.ru') !== false) continue;
-    if(!$user['EMAIL'] || strpos($user['EMAIL'],'stimma.com.ua') !== false) continue;
-
-    $time = strtotime($user['DATE_REGISTER']);
-
-    //if($time < $need) continue;
-        ?>
-    <tr>
-        <td><?=$n?></td>
-        <td><?=$user['DATE_REGISTER']?></td>
-        <td><?=$user['EMAIL']?></td>
-    </tr>
-    <?
-    $n++;
-}
-?>
-</table>
-<?
-die();
 /*$response=addUserTo1C('380969762816', '', '', '');
 ?><pre>$response last <?=print_r($response,1)?></pre><?
 die();*/

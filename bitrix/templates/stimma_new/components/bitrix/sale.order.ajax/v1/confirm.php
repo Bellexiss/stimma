@@ -420,7 +420,7 @@ if($amount-$minus_price > 0)
                         <info>{"dogovor":'.$orderID.',"view_params": {
         "retry_button": true
     }}</info>
-                        <smch_id>15283</smch_id>
+                        <smch_id>18729</smch_id>
                     </transaction>
                 </transactions>
                 <trademark>{"ru":"Stimma","ua":"Stimma","en":"Stimma"}</trademark>
@@ -489,7 +489,7 @@ if($order['PAYED'] == 'Y' || isset($_GET['SUCCESS']))
                         </div>*/?>
                         <div class="order-end-number">
                             Замовлення вже у нас - скоро зв'яжемось для підтвердження.
-                            дата, твоє замовлення №
+                            <?=date('d.m.Y H:i', strtotime($orderData['DATE_INSERT']))?>, твоє замовлення № <?=$arResult['ORDER']['ID']?>
                             <a href="#" onclick="return false;">#<?=$arResult['ORDER']['ID']?></a>
                         </div>
                     </div>
@@ -850,7 +850,6 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
 
         $phone = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $_GET['ORDER_ID'] . ' and ORDER_PROPS_ID = 3')->Fetch()['VALUE'];
         $phone = preg_replace('/\D/', '', $phone);
-
         if (preg_match('/^0\d{9}$/', $phone)) {
             $phone = '38' . $phone;
         }
@@ -1109,12 +1108,7 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
 
         try {
             $result = sendPost($baseUrl . '/payment/create', $payload);
-            Bitrix\Main\Diag\Debug::writeToFile('start', '------------------', '/_debug_pay_PRIVAT.txt');
-            Bitrix\Main\Diag\Debug::writeToFile(var_export($products, 1), 'PRODUCTS', '/_debug_pay_PRIVAT.txt');
-            Bitrix\Main\Diag\Debug::writeToFile($signature, 'SIGNATURE', '/_debug_pay_PRIVAT.txt');
-            Bitrix\Main\Diag\Debug::writeToFile(var_export($payload, 1), 'PAYLOAD', '/_debug_pay_PRIVAT.txt');
-            Bitrix\Main\Diag\Debug::writeToFile(var_export($result, 1), 'RESPONSE PRIVAT CONFIRM.PHP', '/_debug_pay_PRIVAT.txt');
-            Bitrix\Main\Diag\Debug::writeToFile('end', '------------------', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile(var_export($result, 1), 'RESPONSE PRIVAT CONFIRM.PHP', '/_debug_pay_monobank.txt');
 
             // Проверяем сигнатуру ответа
 

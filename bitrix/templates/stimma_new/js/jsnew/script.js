@@ -931,7 +931,57 @@ $(document).ready(function () {
     });
 
 
+              const $track = $('.main-advantages-block'); // Переконайся, що клас вказано вірно
+              
+              if (!$track.length) return; // Захист, якщо елемента немає на сторінці
 
+              // Зберігаємо початковий чистий HTML
+              const originalHTML = $track.html();
+              
+              let isCloned = false;
+              let singleWidth = 0;
+
+              function updateState() {
+                // window.innerWidth точно збігається з CSS @media (max-width: 999px)
+                const isMobile = window.innerWidth < 1000;
+
+                if (isMobile) {
+                  // Якщо менше 1000px і клон ще не створено
+                  if (!isCloned) {
+                    $track.append(originalHTML);
+                    isCloned = true;
+                  }
+                  // Рахуємо ширину одного блоку (загальна ширина / 2)
+                  singleWidth = $track.outerWidth() / 2;
+                } else {
+                  // Якщо 1000px і більше — прибираємо клон і скидаємо трансформацію
+                  if (isCloned) {
+                    $track.html(originalHTML);
+                    isCloned = false;
+                  }
+                  $track.css('transform', '');
+                }
+              }
+
+              // Запускаємо перевірку одразу після побудови DOM
+              updateState();
+
+              // Перераховуємо після повного завантаження стилів і картинок (для точної ширини)
+              $(window).on('load resize', function() {
+                updateState();
+              });
+
+              // Логіка скролу
+              $(window).on('scroll', function() {
+                if (window.innerWidth < 1000 && singleWidth > 0) {
+                  let scrollTop = $(window).scrollTop();
+                  
+                  // Коефіцієнт 0.5 визначає швидкість руху
+                  let moveX = (scrollTop * 0.5) % singleWidth;
+
+                  $track.css('transform', 'translateX(-' + moveX + 'px)');
+                }
+              });
 
   
 });

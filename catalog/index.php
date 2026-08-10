@@ -1,7 +1,7 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetPageProperty("description", "Придбати Розпродаж. ⭐ Ціна від 199 грн. ⚡ Швидка доставка по Україні ⭐ ТМ «Стимма» – модний жіночий одяг.");
 $APPLICATION->SetPageProperty("title", "Розпродаж від 199 грн. Купити Розпродаж від ТМ «Стимма» | Харків, Київ, Дніпро, Одеса, Львів");
-	
+
 	if(isset($_GET['newstimma'])  || NEW_STIMMA)
     {
 

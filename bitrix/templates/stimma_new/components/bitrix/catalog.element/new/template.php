@@ -14,6 +14,7 @@ use Bitrix\Main\Localization\Loc;
  * @var string $templateFolder
  */
 
+$jsSizes = [];
 $selected = $arResult['SELECTED_OFFER'];
 $tree = $arResult['TREE_PROPS'];
 $this->setFrameMode(true);
@@ -763,6 +764,16 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                         }
                         else
                         {
+                            if(!$isAcsesuaries && !$shoes)
+                            {
+                                ?>
+                                <div class="card-size-list-block">
+                                    <button class="card-size-list-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#size-canvas">
+                                        Розмірна сітка та заміри виробу
+                                    </button>
+                                </div>
+                                <?
+                            }
                             ?>
                             <div class="card-prop-block">
                                 <div class="card-size-block" data-entity="scu-values" data-code="RAZMER" style="<?=$isAcsesuaries || $bonusProduct ? 'display:none;' : ''?>">
@@ -793,16 +804,27 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     foreach ($sizes as $indexOFfer => $value)
                                     {
                                         ?>
-                                        <label>
+                                        <label data-size-check="<?=$value['value']?>">
                                             <input type="radio" name="card-radio" <?=$value['active'] ? 'checked' : ''?>>
                                             <span class="card-size-item" data-entity="scu-value" data-id="<?=mb_strtolower($value['offer_id'])?>" data-img="<?=$value['imag']?>" data-img2="<?=$value['imag_2']?>" data-original="<?=$value['original']?>">
-                                            <?=$value['value']?>
-                                        </span>
+                                                <?=$value['value']?>
+                                            </span>
                                         </label>
                                         <?
                                     }
                                     ?>
                                 </div>
+                                <?
+                                if(!$isAcsesuaries && !$shoes)
+                                {
+                                    ?>
+                                    <div class="card-warning-block" >
+                                        <b>Зверніть увагу:</b> <span data-entity="og_block"><?/*ОГ - 82-92, ОБ - 94-98*/?></span>
+                                    </div>
+                                    <?
+                                }
+                                ?>
+
                                 <?if(isset($_GET['new_color']) || true)
                                 {?>
                                     <div class="card-color-type-block">
@@ -1073,12 +1095,8 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     </div>
                                 </div>
                                 <?
-                                if(!$isAcsesuaries && !$shoes)
+                                /*if(!$isAcsesuaries && !$shoes)
                                 {
-                                    if(isset($_GET['sitka']))
-                                    {
-                                        ?><pre><?=print_r($sizesSetka, 1)?></pre><?
-                                    }
                                     ?>
                                     <div class="accordion-item">
                                         <div class="accordion-header">
@@ -1316,50 +1334,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                                     <td>110-114</td>
                                                                 </tr>
                                                                 </tr>
-                                                                <?/*
-                                                        <tr>
-                                                            <td>40</td>
-                                                            <td>XS</td>
-                                                            <td>80-84</td>
-                                                            <td>62-66</td>
-                                                            <td>90-94</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>42</td>
-                                                            <td>S</td>
-                                                            <td>84-88</td>
-                                                            <td>66-70</td>
-                                                            <td>94-98</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>44</td>
-                                                            <td>M</td>
-                                                            <td>88-92</td>
-                                                            <td>70-74</td>
-                                                            <td>98-102</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>46</td>
-                                                            <td>L</td>
-                                                            <td>92-96</td>
-                                                            <td>74-78</td>
-                                                            <td>102-106</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>48</td>
-                                                            <td>XL</td>
-                                                            <td>96-100</td>
-                                                            <td>78-82</td>
-                                                            <td>106-110</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>50</td>
-                                                            <td>XXL</td>
-                                                            <td>100-104</td>
-                                                            <td>82-86</td>
-                                                            <td>110-114</td>
-                                                        </tr>
-                                                        */?>
+
                                                                 </tbody>
                                                             </table>
                                                             <?
@@ -1371,11 +1346,11 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         </div>
                                     </div>
                                     <?
-                                }
+                                }*/
                                 ?>
 
                                 <?
-                                if($arResult['TABLE'])
+                                /*if($arResult['TABLE'])
                                 {
                                     ?>
                                     <div class="accordion-item">
@@ -1407,7 +1382,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         </div>
                                     </div>
                                     <?
-                                }
+                                }*/
 
                                 if($arResult['OFFERS'][0]['PROPERTIES']['RAZMERNOST_'.strtoupper(LANGUAGE_ID)]['VALUE'] || $arResult['OFFERS'][0]['PROPERTIES']['PARAM_MODEL']['VALUE'])
                                 {
@@ -1770,9 +1745,479 @@ if(!empty($dopObrazElement))
     <?
 }
 ?>
+    <div class="offcanvas offcanvas-end size-canvas" tabindex="-1" id="size-canvas" >
+        <div class="offcanvas-header">
+            <div class="size-header-title">
+                <?=LANGUAGE_ID=='ua' ? 'Перевір свій розмір' : 'Проверь свой размер'?>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+		    <span class="icon">
+		        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+		            <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
+		        </svg>
+		    </span>
+            </button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="size-body-block">
+                <div class="size-table-cont">
+                    <div class="size-table-title-block">
+                        <div class="size-table-title">
+                            <?=LANGUAGE_ID=='ua' ? 'Розмірна сітка' : 'Размерная сетка'?>
+                        </div>                        
+                        <div class="size-table-info">
+                            <?=LANGUAGE_ID=='ua' ? 'Розміри зазначені в см' : 'Размеры указаны в см'?>
+                        </div>
+                    </div>
+                    <div class="size-table-block">
+                        <?
+                        if(
+                            isset($sizesSetka['XXS']) ||
+                            isset($sizesSetka['XS']) ||
+                            isset($sizesSetka['S']) ||
+                            isset($sizesSetka['M']) ||
+                            isset($sizesSetka['L']) ||
+                            isset($sizesSetka['XL']) ||
+                            isset($sizesSetka['XXL']) ||
+                            isset($sizesSetka['ONE SIZE']) ||
+                            isset($sizesSetka['32']) ||
+                            isset($sizesSetka['34']) ||
+                            isset($sizesSetka['36']) ||
+                            isset($sizesSetka['38']) ||
+                            isset($sizesSetka['40']) ||
+                            isset($sizesSetka['42']) ||
+                            isset($sizesSetka['44'])
+                        )
+                        {
+                            $jsSizes = [
+                                'XXS' => ['76-80','86-90','58-62'],
+                                'XS' => ['80-84','90-94','62-66'],
+                                'S' => ['84-88','94-98','66-70'],
+                                'M' => ['88-92','98-102','70-74'],
+                                'L' => ['92-96','102-106','74-78'],
+                                'XL' => ['96-100','106-110','78-82'],
+                                'XXL' => ['100-104','110-114','82-86'],
+                                '32' => ['76-80','86-90','58-62'],
+                                '34' => ['80-84','90-94','62-66'],
+                                '36' => ['84-88','94-98','66-70'],
+                                '38' => ['88-92','98-102','70-74'],
+                                '40' => ['92-96','102-106','74-78'],
+                                '42' => ['96-100','106-110','78-82'],
+                                '44' => ['100-104','110-114','82-86'],
+                            ];
+                            ?>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                </tr>
+                                <tr>
+                                    <td>32</td>
+                                    <td>XXS</td>
+                                    <td>76-80</td>
+                                    <td>58-62</td>
+                                    <td>86-90</td>
+                                </tr>
+                                <tr>
+                                    <td>34</td>
+                                    <td>XS</td>
+                                    <td>80-84</td>
+                                    <td>62-66</td>
+                                    <td>90-94</td>
+                                </tr>
+                                <tr>
+                                    <td>36</td>
+                                    <td>S</td>
+                                    <td>84-88</td>
+                                    <td>66-70</td>
+                                    <td>94-98</td>
+                                </tr>
+                                <tr>
+                                    <td>38</td>
+                                    <td>M</td>
+                                    <td>88-92</td>
+                                    <td>70-74</td>
+                                    <td>98-102</td>
+                                </tr>
+                                <tr>
+                                    <td>40</td>
+                                    <td>L</td>
+                                    <td>92-96</td>
+                                    <td>74-78</td>
+                                    <td>102-106</td>
+                                </tr>
+                                <tr>
+                                    <td>42</td>
+                                    <td>XL</td>
+                                    <td>96-100</td>
+                                    <td>78-82</td>
+                                    <td>106-110</td>
+                                </tr>
+                                <tr>
+                                    <td>44</td>
+                                    <td>XXL</td>
+                                    <td>100-104</td>
+                                    <td>82-86</td>
+                                    <td>110-114</td>
+                                </tr>
 
+                                </tbody>
+                            </table>
+                            <?
+                        }
+                        elseif (
+                            isset($sizesSetka['XXS-XS']) ||
+                            isset($sizesSetka['S-M']) ||
+                            isset($sizesSetka['L-XL']) ||
+                            isset($sizesSetka['32-34']) ||
+                            isset($sizesSetka['36-38']) ||
+                            isset($sizesSetka['40-42'])
+                        )
+                        {
+                            $jsSizes = [
+                                'XXS' => ['76-84','86-94','58-66'],
+                                'XS' => ['76-84','86-94','58-66'],
+                                'XXS-XS' => ['76-84','86-94','58-66'],
+                                'S' => ['84-92','94-102','66-74'],
+                                'M' => ['84-92','94-102','66-74'],
+                                'S-M' => ['84-92','94-102','66-74'],
+                                'L' => ['92-100','102-110','74-82'],
+                                'XL' => ['92-100','102-110','74-82'],
+                                'L-XL' => ['92-100','102-110','74-82'],
+                            ];
+                            ?>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                </tr>
+                                <tr>
+                                    <td>32-34</td>
+                                    <td>XXS-XS</td>
+                                    <td>76-84</td>
+                                    <td>58-66</td>
+                                    <td>86-94</td>
+                                </tr>
+                                <tr>
+                                    <td>36-38</td>
+                                    <td>S-М</td>
+                                    <td>84-92</td>
+                                    <td>66-74</td>
+                                    <td>94-102</td>
+                                </tr>
+                                <tr>
+                                    <td>40-42</td>
+                                    <td>L- XL</td>
+                                    <td>92-100</td>
+                                    <td>74-82</td>
+                                    <td>102-110</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <?
+                        }
+                        elseif (
+                            isset($sizesSetka['XS-S']) ||
+                            isset($sizesSetka['M-L']) ||
+                            isset($sizesSetka['XL- XXL']) ||
+                            isset($sizesSetka['34-36']) ||
+                            isset($sizesSetka['38-40']) ||
+                            isset($sizesSetka['42-44'])
+                        )
+                        {
+                            $jsSizes = [
+                                'XS' => ['80-88','90-98','62-70'],
+                                'S' => ['80-88','90-98','62-70'],
+                                'XS-S' => ['80-88','90-98','62-70'],
+                                '34-36' => ['80-88','90-98','62-70'],
+                                'M' => ['88-96','98-106','70-78'],
+                                'L' => ['88-96','98-106','70-78'],
+                                'M-L' => ['88-96','98-106','70-78'],
+                                '38-40' => ['88-96','98-106','70-78'],
+                                'XL' => ['96-104','106-114','78-86'],
+                                'XXL' => ['96-104','106-114','78-86'],
+                                'XL-XXL' => ['96-104','106-114','78-86'],
+                                '42-44' => ['96-104','106-114','78-86'],
+                            ];
+                            ?>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                </tr>
+                                <tr>
+                                    <td>34-36</td>
+                                    <td>XS- S</td>
+                                    <td>80-88</td>
+                                    <td>62-70</td>
+                                    <td>90-98</td>
+                                </tr>
+                                <tr>
+                                    <td>38-40</td>
+                                    <td>M- L</td>
+                                    <td>88-96</td>
+                                    <td>70-78</td>
+                                    <td>98-106</td>
+                                </tr>
+                                <tr>
+                                    <td>42-44</td>
+                                    <td>XL- XXL</td>
+                                    <td>96-104</td>
+                                    <td>78-86</td>
+                                    <td>106-114</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <?
+                        }
+                        else
+                        {
+                            $jsSizes = [
+                                'XXS' => ['76-80','86-90','58-62'],
+                                'XS' => ['80-84','90-94','62-66'],
+                                'S' => ['84-88','94-98','66-70'],
+                                'M' => ['88-92','98-102','70-74'],
+                                'L' => ['92-96','102-106','74-78'],
+                                'XL' => ['96-100','106-110','78-82'],
+                                'XXL' => ['100-104','110-114','82-86'],
+                            ];
+                            ?>
+                            <table>
+                                <tbody><tr>
+                                    <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                <tr>
+                                    <td>32</td>
+                                    <td>XXS</td>
+                                    <td>76-80</td>
+                                    <td>58-62</td>
+                                    <td>86-90</td>
+                                </tr>
+                                <tr>
+                                    <td>34</td>
+                                    <td>XS</td>
+                                    <td>80-84</td>
+                                    <td>62-66</td>
+                                    <td>90-94</td>
+                                </tr>
+                                <tr>
+                                    <td>36</td>
+                                    <td>S</td>
+                                    <td>84-88</td>
+                                    <td>66-70</td>
+                                    <td>94-98</td>
+                                </tr>
+                                <tr>
+                                    <td>38</td>
+                                    <td>M</td>
+                                    <td>88-92</td>
+                                    <td>70-74</td>
+                                    <td>98-102</td>
+                                </tr>
+                                <tr>
+                                    <td>40</td>
+                                    <td>L</td>
+                                    <td>92-96</td>
+                                    <td>74-78</td>
+                                    <td>102-106</td>
+                                </tr>
+                                <tr>
+                                    <td>42</td>
+                                    <td>XL</td>
+                                    <td>96-100</td>
+                                    <td>78-82</td>
+                                    <td>106-110</td>
+                                </tr>
+                                <tr>
+                                    <td>44</td>
+                                    <td>XXL</td>
+                                    <td>100-104</td>
+                                    <td>82-86</td>
+                                    <td>110-114</td>
+                                </tr>
+                                </tr>
+                                <?/*
+                                                        <tr>
+                                                            <td>40</td>
+                                                            <td>XS</td>
+                                                            <td>80-84</td>
+                                                            <td>62-66</td>
+                                                            <td>90-94</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>42</td>
+                                                            <td>S</td>
+                                                            <td>84-88</td>
+                                                            <td>66-70</td>
+                                                            <td>94-98</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>44</td>
+                                                            <td>M</td>
+                                                            <td>88-92</td>
+                                                            <td>70-74</td>
+                                                            <td>98-102</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>46</td>
+                                                            <td>L</td>
+                                                            <td>92-96</td>
+                                                            <td>74-78</td>
+                                                            <td>102-106</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>48</td>
+                                                            <td>XL</td>
+                                                            <td>96-100</td>
+                                                            <td>78-82</td>
+                                                            <td>106-110</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>50</td>
+                                                            <td>XXL</td>
+                                                            <td>100-104</td>
+                                                            <td>82-86</td>
+                                                            <td>110-114</td>
+                                                        </tr>
+                                                        */?>
+                                </tbody>
+                            </table>
+                            <?
+                        }
+                        ?>
+                        <?/*
+                        <table>
+                            <tr>
+                                <th>
+                                    БЮСТ (СМ)
+                                </th>
+                                <th>
+                                    ТАЛІЯ (СМ)
+                                </th>
+                                <th>
+                                    СТЕГНА (СМ)
+                                </th>
+                                <th>
+                                    РОЗМІР
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    80-86
+                                </td>
+                                <td>
+                                    62-68
+                                </td>
+                                <td>
+                                    88-94
+                                </td>
+                                <td>
+                                    XS-S
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    86-92
+                                </td>
+                                <td>
+                                    68-74
+                                </td>
+                                <td>
+                                    94-100
+                                </td>
+                                <td>
+                                    M-L
+                                </td>
+                            </tr>
+                        </table>
+                        */?>
+                    </div>
+                    <div class="size-table-title-block" style="margin-top: 20px;">
+                        <div class="size-table-title">
+                            <?=LANGUAGE_ID=='ua' ? 'Заміри виробу' : ''?>
+                        </div>
+                        <div class="size-table-info">
+                            <?=LANGUAGE_ID=='ua' ? 'Розміри зазначені в см' : ''?>
+                        </div>
+                    </div>
+                    <div class="size-table-block size-table-block-left">
+                        <?
+                        if($arResult['TABLE'])
+                        {
+                            ?>
+                            <table>
+                                <?
+                                foreach ($arResult['TABLE'] as $index => $items)
+                                {
+                                    ?>
+                                    <tr>
+                                        <?
+                                        foreach ($items as $index2 => $item)
+                                        {
+                                            ?><td><?=!$index && !$index2 ?  ''  : $item?></td><?
+                                        }
+                                        ?>
+                                    </tr>
+                                    <?
+                                }
+                                ?>
+                            </table>
+                            <?
+                        }
+                        ?>
+                    </div>
+                    <?/*
+                    <div class="size-table-help">
+                        <a href="#" class="">Потрібна допомога?</a>
+                    </div>
+                    */?>
+                </div>
+                <div class="size-help-cont"  style="margin-top: 20px;">
+                    <div class="size-help-title" style="font-size:22px;">
+                        Інструкція з вимірювання
+                    </div>
+                    <div class="size-help-item">
+                        <div class="size-help-item-title">
+                            ОБХВАТ ГРУДЕЙ
+                        </div>
+                        <div class="size-help-item-text">
+                            Виміряйте свій обхват грудей за допомогою сантиметрової стрічки, провівши її під пахвами і по самій виступаючій частині Необхідно, щоб мірна стрічка прилягала до тіла і була паралельна до землі.
+                        </div>
+                    </div>
+                    <div class="size-help-item">
+                        <div class="size-help-item-title">
+                            ОБХВАТ ТАЛІЇ
+                        </div>
+                        <div class="size-help-item-text">
+                            Щоб виміряти обхват талії, спочатку підніміть або зніміть сорочку, потім встаньте прямо і видихніть. У цьому положенні тримайте край мірної стрічки на пупці і оберніть її навколо найвужчої частини талії. Переконайтеся, що мірна стрічка щільно прилягала до тіла і паралельна до землі.
+                        </div>
+                    </div>
+                    <div class="size-help-item">
+                        <div class="size-help-item-title">
+                            ОБХВАТ СТЕГОН
+                        </div>
+                        <div class="size-help-item-text">
+                            Поставте ноги разом і оберніть навколо своїх стегон сантиметрову стрічку, провівши її по точках сідниць, що найбільш виступають. Мірна стрічка повинна бути паралельною до землі та щільно прилягати до тіла.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
+        var jsSizes = <?=CUtil::PhpToJSObject($jsSizes)?>;
         var treeProps = <?=CUtil::PhpToJSObject($tree['props'])?>;
         var treeOffers = <?=CUtil::PhpToJSObject($tree['offers'])?>;
         var treeOffersIds = <?=CUtil::PhpToJSObject($tree['offers_ids'])?>;

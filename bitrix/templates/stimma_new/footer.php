@@ -896,7 +896,7 @@ if(!$bIndex)
                                             <td colspan="2" style="text-align: center;">Розмір</td>
                                             <td>Обхват грудей</td>
                                             <td>Обхват талії</td>
-                                            <td>Обхват стегон</td>
+                                            <td>Обхват бедер</td>
                                         </tr>
                                         <tr>
                                             <td>40</td>
@@ -2110,7 +2110,7 @@ if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex && false)
 							        			</div>
 							        			<div class="size-calc-item item3">
 							        				<div class="size-calc-key">
-                                                        <?=LANGUAGE_ID=='ua' ? 'ОБХВАТ СТЕГОН' : 'ОБХВАТ БЕДЕР'?>
+                                                        <?=LANGUAGE_ID=='ua' ? 'ОБХВАТ БЕДЕР' : 'ОБХВАТ БЕДЕР'?>
 							        				</div>
 							        				<div class="size-calc-slider-cont">
 							        					<div class="size-calc-slider"></div>
@@ -2938,6 +2938,109 @@ if(isset($_GET['stimz']))
         </div>
     </div>
 </div>
+<?/*
+<div class="offcanvas offcanvas-end size-canvas" tabindex="-1" id="size-canvas" >
+  <div class="offcanvas-header">
+	    <div class="size-header-title">
+			РОЗМІРНА ТАБЛИЦЯ            
+	    </div>
+	    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
+		    <span class="icon">
+		        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+		            <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
+		        </svg>
+		    </span>
+	    </button>
+	</div>
+  <div class="offcanvas-body">
+  	<div class="size-body-block">
+  		<div class="size-table-cont">
+  			<div class="size-table-info">
+  				Розміри зазначені в см
+  			</div>
+  			<div class="size-table-block">
+  				<table>
+  					<tr>
+  						<th>
+  							БЮСТ (СМ)
+  						</th>
+  						<th>
+  							ТАЛІЯ (СМ)
+  						</th>
+  						<th>
+							СТЕГНА (СМ)
+  						</th>
+  						<th>
+							РОЗМІР
+  						</th>
+  					</tr>
+  					<tr>
+  						<td>
+  							80-86
+  						</td>
+  						<td>
+  							62-68
+  						</td>
+  						<td>
+  							88-94
+  						</td>
+  						<td>
+  							XS-S
+  						</td>
+  					</tr>
+  					<tr>
+  						<td>
+  							86-92
+  						</td>
+  						<td>
+							68-74
+  						</td>
+  						<td>
+							94-100
+  						</td>
+  						<td>
+							M-L
+  						</td>
+  					</tr>
+  				</table>
+  			</div>
+  			<div class="size-table-help">
+  				<a href="#" class="">Потрібна допомога?</a>
+  			</div>
+  		</div>
+  		<div class="size-help-cont">
+  			<div class="size-help-title">
+  				Інструкція з вимірювання
+  			</div>
+  			<div class="size-help-item">
+  				<div class="size-help-item-title">
+					Груди
+  				</div>
+  				<div class="size-help-item-text">
+					Сантиметрова стрічка повинна проходити горизонтально через найбільш виступаючі точки грудей, лопаток і пахвові западини.
+  				</div>
+  			</div>
+  			<div class="size-help-item">
+  				<div class="size-help-item-title">
+  					Талія
+  				</div>
+  				<div class="size-help-item-text">
+  					Вимірюється в найвужчій частині тулуба. Стрічка або резинка, яку ми зав'язали навколо талії перед зняттям мірок, допоможе визначити точне місце її розташування.
+  				</div>
+  			</div>
+  			<div class="size-help-item">
+  				<div class="size-help-item-title">
+  					Стегна
+  				</div>
+  				<div class="size-help-item-text">
+  					Мірка знімається по найбільш опуклим точкам сідниць та найширшій частині стегон.
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  </div>
+</div>
+*/?>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
