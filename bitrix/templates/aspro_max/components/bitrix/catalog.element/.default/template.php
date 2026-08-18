@@ -909,7 +909,7 @@ if(strpos($APPLICATION->GetCurPage(), '/podarochnyy_sertifikat/') !== false)
 
                             <p>Якщо товар не підійшов, можна легко оформити заявку повернення в застосунку Нової Пошти. Послуга безкоштовна</p>
 
-                            <p><a style="text-decoration: underline;" href="https://www.stimma.com.ua/pro-nas/garantiya-ta-povernennya/">Як це працює?</a> </p>
+                            <p><a style="text-decoration: underline;" href="https://dev.stimma.ua/pro-nas/garantiya-ta-povernennya/">Як це працює?</a> </p>
 
                             <p>Термін повернення та обміну товару здійснюється протягом 14 календарних днів з моменту продажу, відповідно до законодавства України, за умови збереження цілісності упаковки та оригінальності товару. Вживаний товар обміну та поверненню не підлягає.</p>
                             <?
@@ -958,7 +958,7 @@ if(strpos($APPLICATION->GetCurPage(), '/podarochnyy_sertifikat/') !== false)
 
                             <p>Если товар не подошел, можна легко оформить заявку на возврат в приложении Новой Почты. Услуга бесплатная.</p>
 
-                            <p><a style="text-decoration: underline;" href="https://www.stimma.com.ua/ru/pro-nas/garantiya-ta-povernennya/">Как это работает?</a></p>
+                            <p><a style="text-decoration: underline;" href="https://dev.stimma.ua/ru/pro-nas/garantiya-ta-povernennya/">Как это работает?</a></p>
 
                             <p>Срок возврата и обмена товара осуществляется на протяжении 14 дней с момента продажи, согласно к законодательству Украины, за условия сохранения целостности упаковки. Подержанный товар не подлежит обмену и возврату.</p>
                             <?
@@ -1316,7 +1316,7 @@ if(strpos($APPLICATION->GetCurPage(), '/podarochnyy_sertifikat/') !== false)
 
                                 <p>Якщо товар не підійшов, можна легко оформити заявку повернення в застосунку Нової Пошти. Послуга безкоштовна</p>
 
-                                <p><a style="text-decoration: underline;" href="https://www.stimma.com.ua/pro-nas/garantiya-ta-povernennya/">Як це працює? </a> </p>
+                                <p><a style="text-decoration: underline;" href="https://dev.stimma.ua/pro-nas/garantiya-ta-povernennya/">Як це працює? </a> </p>
 
                                 <p>Термін повернення та обміну товару здійснюється протягом 14 календарних днів з моменту продажу, відповідно до законодавства України, за умови збереження цілісності упаковки та оригінальності товару. Вживаний товар обміну та поверненню не підлягає.</p>
                                 <?
@@ -1365,7 +1365,7 @@ if(strpos($APPLICATION->GetCurPage(), '/podarochnyy_sertifikat/') !== false)
 
                                 <p>Если товар не подошел, можна легко оформить заявку на возврат в приложении Новой Почты. Услуга бесплатная.</p>
 
-                                <p><a style="text-decoration: underline;" href="https://www.stimma.com.ua/ru/pro-nas/garantiya-ta-povernennya/">Как это работает? </a> </p>
+                                <p><a style="text-decoration: underline;" href="https://dev.stimma.ua/ru/pro-nas/garantiya-ta-povernennya/">Как это работает? </a> </p>
 
                                 <p>Срок возврата и обмена товара осуществляется на протяжении 14 дней с момента продажи, согласно к законодательству Украины, за условия сохранения целостности упаковки. Подержанный товар не подлежит обмену и возврату.</p>
                                 <?
@@ -1578,7 +1578,7 @@ while($section = $res->Fetch())
 <?
 $slider = [];
 foreach ($arResult['SLIDER'] as $index => $item)
-    $slider[] = '"https://stimma.com.ua'.$item['ORIGINAL'].'"';
+    $slider[] = '"https://dev.stimma.ua'.$item['ORIGINAL'].'"';
 
 $review = $jsonReview = [];
 $res = CIBlockSection::GetList([], ['IBLOCK_ID' => 35, 'ACTIVE' => 'Y', 'UF_PRODUCT' => $arResult['ID']]);

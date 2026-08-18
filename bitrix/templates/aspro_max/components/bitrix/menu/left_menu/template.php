@@ -36,7 +36,7 @@
 </div>
 <?/*
 <div class="menu_left_banner">
-	<a href="https://www.stimma.com.ua/<?=LANGUAGE_ID=='ru' ? 'ru/' : ''?>auth/registration/?register=yes&backurl=/">
+	<a href="https://dev.stimma.ua/<?=LANGUAGE_ID=='ru' ? 'ru/' : ''?>auth/registration/?register=yes&backurl=/">
 		<img src="/bitrix/templates/aspro_max/images/baner-desc.jpg">
 	</a>
 </div>

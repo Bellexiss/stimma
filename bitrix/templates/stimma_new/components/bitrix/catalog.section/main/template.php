@@ -124,7 +124,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                 {
                     ?>
                     </div>
-                        <div class="catalog-new-banner">
+                        <div class="catalog-new-banner claude_photo">
                             <?
                             if(isset($_GET['p']) && false)
                             {
@@ -243,7 +243,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                 }
                 ?>
                 <div number_index="<?=$index?>" my_index="<?=$myIndex?>-<?=$arItem['UF_SIZE']?>-<?=$arItem['ID']?>" data-entity="scu" class="<?=$arParams['BLOCK_CLASS'] ? $arParams['BLOCK_CLASS'] : 'catalog-grid-item'?> <?//=$dopClass?>" data-item="<?=$arItem['ID']?>" offer-item="<?=$arItem['OFFERS'][0]['ID']?>" style="">
-                    <div class="catalog-item <?=$stims ? 'catalog-item-stimz' : ''?>" data-entity="scu-values">
+                    <div class="catalog-item claude_photo <?=$stims ? 'catalog-item-stimz' : ''?>" data-entity="scu-values">
 
                         <div class="catalog-item-top">
 

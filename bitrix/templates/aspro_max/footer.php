@@ -451,7 +451,7 @@ while($record = $res -> Fetch())
                                 {
                                     global $maxNUmbers;
                                     // todo тут домен треба змінити
-                                    //$APPLICATION -> SetPageProperty('canonical', 'https://www.stimma.com.ua'.$APPLICATION -> GetCurPage().'?'.$param.'='.$value);
+                                    //$APPLICATION -> SetPageProperty('canonical', 'https://dev.stimma.ua'.$APPLICATION -> GetCurPage().'?'.$param.'='.$value);
 
                                     $h1 = $APPLICATION -> GetTitle();
 

@@ -60,9 +60,9 @@ $bIncludedModule = true;
 	<title><?$APPLICATION->ShowTitle()?></title>
 <?global $arTheme?>
     <?$page = str_replace('/ru/', '/', $APPLICATION -> GetCurPage())?>
-    <link rel="alternate" hreflang="x-default" href="<?='https://dev.stimma.ua'.$page?>" />
-    <link rel="alternate" hreflang="uk" href="<?='https://dev.stimma.ua'.$page?>" />
-    <link rel="alternate" hreflang="ru" href="<?='https://dev.stimma.ua/ru'.$page?>" />
+    <link rel="alternate" hreflang="x-default" href="<?='https://www.stimma.com.ua'.$page?>" />
+    <link rel="alternate" hreflang="uk" href="<?='https://www.stimma.com.ua'.$page?>" />
+    <link rel="alternate" hreflang="ru" href="<?='https://www.stimma.com.ua/ru'.$page?>" />
     <link rel="shortcut icon" href="/upload/CMax/95f/ewzwz7j9wwwn3jf0i974xt1thzfog3p6.svg" />
     <?
     if($bIndex)

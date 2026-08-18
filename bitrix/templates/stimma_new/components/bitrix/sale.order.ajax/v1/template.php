@@ -1603,7 +1603,7 @@ else
                         <div class="order-total-cont">
                             <div class="order-total-block">
                                 <div class="order-prom-block">
-                                    <input type="text" name="coupon" placeholder="Промокод" class="form-control " value="<?=$_SESSION['COUPON']?>">
+                                    <input type="text" name="coupon" placeholder="Маю промокод/сертифікат" class="form-control " value="<?=$_SESSION['COUPON']?>">
                                     <a href="#" class="info-btn info-btn-black set_coupon"><?=LANGUAGE_ID == 'ua' ? 'Застосувати' : 'Применить'?></a>
                                     <?/*<select class="form-select">
                                     <option>Додати сертифікат або промокод</option>

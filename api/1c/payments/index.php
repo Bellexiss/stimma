@@ -55,7 +55,7 @@ while ($record = $res->Fetch())
     else
     {
         $xmlData = $record['UF_DATA']; // или напрямую XML-строка
-
+      
         $xml = new SimpleXMLElement($xmlData);
         $smchId = (string)$xml->transactions->transaction->smch_id;
         preg_match('/<timestamp>(.*)<\/timestamp>/',$record['UF_DATA'],$matches2);

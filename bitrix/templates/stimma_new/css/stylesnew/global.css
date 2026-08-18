@@ -1563,6 +1563,8 @@ body .filter.label_block input+label {
   top: 10px;
 }
 
+
+
 @media(max-width: 600px){
   .bonus-modal-desc{
     display: none;
@@ -1784,8 +1786,10 @@ body .filter.label_block input+label {
   transform: translate(-50%);
 }
 
-.bonus-modal-btn-abs .form-control{
+.bonus-modal-input .form-control{
   background: var(--white);
+  padding: 0 20px;
+  height: 40px;
 
 }
 
@@ -1801,8 +1805,110 @@ body .filter.label_block input+label {
   border-color: var(--graphite);
 }
 
-@media(max-width: 1000px){
+.modal-banner-bottom .bonus-modal-btn-abs{
+  position: relative;
+  transform: none;
+  top: 0;
+  left: 0;
+  flex-direction: row;
+  gap: 0;
+  justify-content: center;
+}
 
+.modal-banner-new .modal-dialog-centered{
+  align-items: flex-end;
+  max-width: 770px;
+}
+
+.modal-banner-new .modal-content{
+  border-radius: 12px;
+}
+
+.modal-banner-block{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.modal-banner-bottom{
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.modal-banner-left{
+  flex: 0 0 100px;
+  max-width: 100px;
+}
+
+.modal-banner-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-banner-disc{
+  flex: 0 0 70px;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  background: var(--peach);
+  text-transform: uppercase;
+  font-size: 22px;
+  font-family: var(--family2);
+}
+
+.modal-banner-disc-text{
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  font-family: var(--family2);
+}
+
+.modal-banner-right{
+  flex: 0 0 calc(100% - 110px);
+  max-width: calc(100% - 110px);
+  padding-top: 20px;
+}
+
+.modal-banner-text{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-banner-text-top{
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.modal-banner-text-bottom{
+  font-size: 18px;
+}
+
+.modal-banner-block .bonus-modal-input{
+  flex-grow: 1;
+}
+
+.modal-banner-block .bonus-modal-btn-abs .info-btn{
+  height: 40px;
+  width: auto;
+  padding: 0 20px;
+}
+
+@media(max-width: 1000px){
+  .modal-banner-new .modal-dialog-centered{
+    width: calc(100% - 20px);
+  }
+
+  .modal-banner-block .form-control{
+    padding: 0 18px;
+    height: 40px;
+  }
 }
 
 @media(max-width: 600px){
@@ -1813,6 +1919,53 @@ body .filter.label_block input+label {
   .bonus-modal-btn-abs .info-btn{
     max-width: 100%;
     width: 100%;
+  }
+
+  .modal-banner-info{
+    gap: 5px;
+  }
+
+  .modal-banner-block .bonus-modal-btn-abs{
+    max-width: 100%;
+  }
+
+  .modal-banner-block .bonus-modal-btn-abs .info-btn{
+    width: 100px;
+    flex: 0 0 100px;
+    max-width: unset;
+  }
+
+  .modal-banner-block .form-control{
+  }
+
+  .modal-banner-disc{
+    flex: 0 0 60px;
+    max-width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+
+  .modal-banner-text-top{
+    font-size: 16px;
+  }
+
+  .modal-banner-text-bottom{
+    font-size: 14px;
+  }
+
+  .modal-banner-block{
+    gap: 5px;
+  }
+
+  .modal-banner-right{
+    padding-top: 15px;
+    flex: 0 0 calc(100% - 85px);
+    max-width: calc(100% - 85px);
+  }
+
+  .modal-banner-left{
+    flex: 0 0 80px;
+    max-width: 80px;
   }
 }
 

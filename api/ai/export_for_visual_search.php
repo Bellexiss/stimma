@@ -10,7 +10,7 @@
  */
 
 define('API_KEY', '781a1629e59a0ceecdbcfd602a5af92fe2938a4ae2328bbe1109b8bc1e392ca4');
-define('SITE_DOMAIN', 'https://www.stimma.com.ua');
+define('SITE_DOMAIN', 'https://stimma.ua');
 define('IBLOCK_ID', 21);
 define('MAX_IMAGES_PER_PRODUCT', 10);
 define('OUTPUT_FILE', dirname(__FILE__) . '/catalog.json');

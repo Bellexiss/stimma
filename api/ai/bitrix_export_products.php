@@ -462,7 +462,7 @@ while($ob = $res->GetNextElement()) {
 
     // Сбор картинок
     $images = [];
-    $domain = 'https://stimma.com.ua'; // Замените на ваш домен если нужно
+    $domain = 'https://stimma.ua'; // Замените на ваш домен если нужно
 
     if ($arFields['DETAIL_PICTURE']) {
         $path = CFile::GetPath($arFields['DETAIL_PICTURE']);
@@ -639,7 +639,7 @@ if (!empty($productIds)) {
 
             // Картинка предложения
             $offerImages = [];
-            $domain = 'https://stimma.com.ua';
+            $domain = 'https://stimma.ua';
 
             if ($arOfferFields['DETAIL_PICTURE']) {
                 $path = CFile::GetPath($arOfferFields['DETAIL_PICTURE']);

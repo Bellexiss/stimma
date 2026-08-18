@@ -381,7 +381,7 @@ $merchant_id = '5334';
 $merchant_secret = '158884b6494b43b860abd0982eedd743e964251d';
 $salt = sha1(microtime(true));
 $sign = hash_hmac('sha512', $salt, $merchant_secret);
-$urlBack = 'https://www.stimma.com.ua/order/?ORDER_ID=';
+$urlBack = 'https://stimma.ua/order/?ORDER_ID=';
 
 
 if ( isset($order['USER_DESCRIPTION']) && (int)$order['USER_DESCRIPTION'] > 0) {
@@ -877,7 +877,7 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
                 ],
             ],
             'products' => $products,
-            'result_callback' => 'https://www.stimma.com.ua/pay_result_mono/',
+            'result_callback' => 'https://stimma.ua/pay_result_mono/',
         ];
         $requestBody = json_encode($requestBody, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         $signature = calculateSignature('8807dfd0-be80-43fb-b3ed-20749244b96b', $requestBody);
@@ -919,7 +919,7 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
         'sum'   => 1500.00,
         ],
         ],
-        'result_callback' => 'https://www.stimma.com.ua/pay_result_mono/',
+        'result_callback' => 'https://stimma.ua/pay_result_mono/',
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         $signature = calculateSignature('8807dfd0-be80-43fb-b3ed-20749244b96b', $requestBody);
@@ -983,8 +983,8 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
         //$storeId = '4AAD1369CF734B64B70F'; // - Тестові
         //$password = '75bef16bfdce4d0e9c0ad5a19b9940df'; // - Тестові
         $baseUrl = 'https://payparts2.privatbank.ua/ipp/v2';
-        $responseUrl = 'https://www.stimma.com.ua/pay_result_pb/';
-        $redirectUrl = 'https://www.stimma.com.ua/order/?ORDER_ID=' . $order['ID'] . '&SUCCESS=Y';
+        $responseUrl = 'https://stimma.ua/pay_result_pb/';
+        $redirectUrl = 'https://stimma.ua/order/?ORDER_ID=' . $order['ID'] . '&SUCCESS=Y';
 
         // Преобразует 1500.00 → 150000 (убирает плавающую точку)
         function withoutFloatingPoint($amount) {
@@ -1108,7 +1108,12 @@ if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
 
         try {
             $result = sendPost($baseUrl . '/payment/create', $payload);
-            Bitrix\Main\Diag\Debug::writeToFile(var_export($result, 1), 'RESPONSE PRIVAT CONFIRM.PHP', '/_debug_pay_monobank.txt');
+            Bitrix\Main\Diag\Debug::writeToFile('start', '------------------', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile(var_export($products, 1), 'PRODUCTS', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile($signature, 'SIGNATURE', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile(var_export($payload, 1), 'PAYLOAD', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile(var_export($result, 1), 'RESPONSE PRIVAT CONFIRM.PHP', '/_debug_pay_PRIVAT.txt');
+            Bitrix\Main\Diag\Debug::writeToFile('end', '------------------', '/_debug_pay_PRIVAT.txt');
 
             // Проверяем сигнатуру ответа
 

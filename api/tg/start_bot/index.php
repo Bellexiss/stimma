@@ -5,7 +5,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 $post = $_POST;
 
 /*$botToken = '7515142533:AAEXnqvbyGE4aDzSaW3q3nelSpW2MdZh7fk'; // Замените на свой токен
-$webhookUrl = 'https://www.stimma.com.ua/api/tg/start_bot/'; // Замените на свой HTTPS URL
+$webhookUrl = 'https://stimma.ua/api/tg/start_bot/'; // Замените на свой HTTPS URL
 $url = "https://api.telegram.org/bot{$botToken}/setWebhook?url=" . urlencode($webhookUrl);
 // Выполняем запрос
 $response = file_get_contents($url);

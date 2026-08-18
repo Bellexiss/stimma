@@ -23,19 +23,8 @@ checkGlobalRedirect();
         $_SESSION['FAVORITE'][$record['UF_PRODUCT_ID']] = $record['UF_PRODUCT_ID'];
 }
 
-
-
-
-$currtime = strtotime(date('d.m.Y H:i:s'));
-$startAction =strtotime('16.08.2026 00:00:01');
-$endAction = strtotime('23.08.2026 23:59:59');
-
-$rizn = isset($_SESSION['DATE_CLAUDE']) ? $currtime-$_SESSION['DATE_CLAUDE'] : 3000;
-
-$isJulyAction = $currtime >= $startAction && $currtime <= $endAction && $rizn > 1800 ? 1 : 0;
-
-//if ($isJulyAction) $_SESSION['DATE_CLAUDE'] = $currtime;
-$isJulyAction=false;
+?>
+<?
 IncludeTemplateLangFile(__FILE__);
 global $APPLICATION, $arRegion, $arSite, $arTheme, $bIndexBot, $bIframeMode;
 $arSite = CSite::GetByID(SITE_ID)->Fetch();
@@ -144,39 +133,51 @@ $basketCount = getBasketCount();
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/footer.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Політика, Угода , Гарантія та повернення, Доставка, Про Нас, Статі , Статі детально, Співпраця(переваги), Співпраця ( Опт), Співпраця (роздріб), догляд  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/text-page.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     
     <!-- Хлібні крихти  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/breadcrambs.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     
     <!-- Пагінація  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/pagination.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     
     <!-- Авторизація і Регістрація -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/auth.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Головна  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/main.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     
     <!-- Елемент каталогу  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog-element.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     
     <!-- Карточка товару, сертифікат -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/card.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Сама собі стіма -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/sama-sobi.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Каталог -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Кошик -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/order.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Пошук  -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/search.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <!-- Особистий кабінет -->
+
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/personal.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
     <?use Bitrix\Main\Page\Asset;?>
@@ -191,18 +192,6 @@ $basketCount = getBasketCount();
     <?Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jsnew/easyzoom.js');?>
     <?Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jsnew/script.js?v='.strtotime(date('d.m.Y H:i:s')));?>
     <?Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/custom.js?v='.strtotime(date('d.m.Y H:i:s')));?>
-
-    <?
-    if($isJulyAction)
-    {
-        $randPhoto = rand(1,20);
-        ?>
-        <script>window.july_action = <?=$isJulyAction?>;</script>
-        <script>window.numberClaude = <?=$randPhoto?>;</script>
-        <?Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jsnew/july_action.js?v='.strtotime(date('d.m.Y H:i:s')));?>
-        <?
-    }
-    ?>
 
     <!-- New Js #1 -->
     <?/*<script src="<?=SITE_TEMPLATE_PATH?>/js/jquery.js"></script>*/?>

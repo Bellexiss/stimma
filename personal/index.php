@@ -8,6 +8,7 @@ $APPLICATION->SetTitle("Особистий кабінет");
         global $USER,$DB;
 
 
+
         $ru=LANGUAGE_ID=='ru'?'/ru':'';
 
         if(!$USER->IsAuthorized())
@@ -18,20 +19,63 @@ $APPLICATION->SetTitle("Особистий кабінет");
         {
             if(!empty($_POST))
             {
+                ?><pre><?=print_r($_POST['dost'], 1)?></pre><?
                 foreach($_POST['dost'] as $dId => $item)
                 {
                     $find = $DB->Query('select * from user_adresses where UF_UID='.$USER->GetID() . ' and UF_DELIVERY_ID = ' . $dId);
                     if($find = $find->Fetch())
                     {
+
+
                         if($dId == 18)
-                            $DB->Query('update user_adresses set UF_CITY="'.$item['city'].'", UF_STREET='.$item['street'] . ', UF_DOM='.$item['dom'] . ', UF_KV='.$item['kv'] . ' where ID = ' . $find['ID']);
+                        {
+                            $fields=[];
+
+                            if(!empty($item['city']))
+                                $fields[] = 'UF_CITY="' . $DB->ForSQL($item['city']) . '"';
+                            if(!empty($item['street']))
+                                $fields[] = 'UF_STREET="' . $DB->ForSQL($item['street']) . '"';
+                            if(!empty($item['dom']))
+                                $fields[] = 'UF_DOM="' . $DB->ForSQL($item['dom']) . '"';
+                            if(!empty($item['kv']))
+                                $fields[] = 'UF_KV="' . $DB->ForSQL($item['kv']) . '"';
+
+                            if(!empty($fields))
+                                $DB->Query('update user_adresses set UF_CITY=' . implode(', ', $fields) . ' where ID = ' . $find['ID']);
+                        }
                         else
                             $DB->Query('update user_adresses set UF_CITY_ID="'.$item['city'].'", UF_VIDD_ID='.$item['vidd'] . ' where ID = ' . $find['ID']);
                     }
                     else
                     {
                         if($dId == 18)
-                            $DB->Query('insert into user_adresses (UF_UID,UF_DELIVERY_ID,UF_CITY,UF_STREET,UF_DOM,UF_KV) values ('.$USER->GetID() . ',' . $dId . ',"' . $item['city'] . '","' . $item['street'] . '","' . $item ['dom']. '","' . $item ['kv']. '")');
+                        {
+                            $fields=[];
+
+                            if(!empty($item['city']))
+                                $fields[] = 'UF_CITY="' . $DB->ForSQL($item['city']) . '"';
+                            if(!empty($item['street']))
+                                $fields[] = 'UF_STREET="' . $DB->ForSQL($item['street']) . '"';
+                            if(!empty($item['dom']))
+                                $fields[] = 'UF_DOM="' . $DB->ForSQL($item['dom']) . '"';
+                            if(!empty($item['kv']))
+                                $fields[] = 'UF_KV="' . $DB->ForSQL($item['kv']) . '"';
+
+                            if(!empty($fields))
+                            {
+                                $columns = [];
+                                $values = [];
+
+                                foreach($fields as $field => $value)
+                                {
+                                    $columns[] = $field;
+                                    $values[] = '"' . $DB->ForSQL($value) . '"';
+                                }
+
+                                $DB->Query('insert into user_adresses (' . implode(', ', $columns) . ') values (' . implode(', ', $values) . ')');
+                            }
+
+                        }
                         else
                             $DB->Query('insert into user_adresses (UF_UID,UF_DELIVERY_ID,UF_CITY_ID,UF_VIDD_ID) values ('.$USER->GetID() . ',' . $dId . ',"' . $item['city'] . '","' . $item['vidd'] . '")');
                     }
@@ -128,6 +172,9 @@ $APPLICATION->SetTitle("Особистий кабінет");
                                     <div class="personal-content-title">
                                         <?=LANGUAGE_ID=='ua'?'Контактні дані':'Контактные данные'?>
                                     </div>
+                                </div>
+                                <div class="personal-content-title-block">
+                                        Ваш пін-код підтримки: <?=$USER->GetID()?>
                                 </div>
                                 <div class="personal-form-cont">
                                     <form method="post" action="/personal/">

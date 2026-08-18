@@ -49,9 +49,9 @@ $bIncludedModule = (\Bitrix\Main\Loader::includeModule("aspro.max"));?>
 	<title><?$APPLICATION->ShowTitle()?></title>
 
     <?$page = str_replace('/ru/', '/', $APPLICATION -> GetCurPage())?>
-    <link rel="alternate" hreflang="x-default" href="<?='https://dev.stimma.ua'.$page?>" />
-    <link rel="alternate" hreflang="uk" href="<?='https://dev.stimma.ua'.$page?>" />
-    <link rel="alternate" hreflang="ru" href="<?='https://dev.stimma.ua/ru'.$page?>" />
+    <link rel="alternate" hreflang="x-default" href="<?='https://www.stimma.com.ua'.$page?>" />
+    <link rel="alternate" hreflang="uk" href="<?='https://www.stimma.com.ua'.$page?>" />
+    <link rel="alternate" hreflang="ru" href="<?='https://www.stimma.com.ua/ru'.$page?>" />
     <link rel="shortcut icon" href="/favicon.jpg" />
 
     <?$APPLICATION->ShowMeta("viewport");?>

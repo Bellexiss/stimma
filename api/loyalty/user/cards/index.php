@@ -113,7 +113,7 @@ foreach ($userList as $userItem)
         ], "no_user_found", '/log_1c/no_user_cards.txt');
 
         $email = str_replace('+','',$normalizedPhone);
-        $email .= '@stimma.com.ua';
+        $email .= '@stimma.ua';
         $code = rand(100000,999999);
 
         $arFields = Array(

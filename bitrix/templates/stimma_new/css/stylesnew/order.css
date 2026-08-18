@@ -1059,7 +1059,13 @@
 	}
 
 	.order-detail-block{
-		padding: 15px;
+		/*padding: 15px;*/
+		padding: 10px 5px;
+		gap: 5px;
+	}
+
+	.order-detail-text-dropdown{
+		gap: 5px;
 	}
 
 	.order-detail-text-del{
@@ -1109,6 +1115,13 @@
 
 	.order-total-info-block{
 		padding: 14px 15px 27px;
+	}
+
+	.order-total-info-block .form-btn{
+	    position: fixed;
+	    left: 0;
+	    right: 0;
+	    bottom: 61px;
 	}
 
 	.order-total-price-key, .order-total-price-value{
@@ -1183,7 +1196,8 @@
 	}
 
 	.order-detail-comment-input .form-control{
-		min-height: 100px;
+		/*min-height: 100px;*/
+		min-height: 60px;
 	}
 
 	.order-prom-block{

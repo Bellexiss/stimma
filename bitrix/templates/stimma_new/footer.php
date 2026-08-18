@@ -18,8 +18,8 @@ if ($curPage == '/') {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "STIMMA",
-  "url": "https://www.stimma.com.ua/",
-  "logo": "https://www.stimma.com.ua/upload/CMax/95f/ewzwz7j9wwwn3jf0i974xt1thzfog3p6.svg",
+  "url": "https://stimma.ua/",
+  "logo": "https://stimma.ua/upload/CMax/95f/ewzwz7j9wwwn3jf0i974xt1thzfog3p6.svg",
   "sameAs": [
     "https://www.facebook.com/stimma2016/",
     "https://www.instagram.com/stimma_official/",
@@ -129,7 +129,7 @@ global $USER;
 			</div>
 		<?}?>
 
-		<footer id="footer">
+		<footer id="footer" style="<?=strpos($APPLICATION->GetCurPage(), '/order/') !== false ? 'display:none;' : ''?>">
 			<?/*include_once(str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.'include/footer_include/under_footer.php'));*/?>
 			<?/*include_once(str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.'include/footer_include/top_footer.php'));*/?>
 			<div class="wrapper">
@@ -398,7 +398,7 @@ global $USER;
 		                            </a>       
 	                        	</li>
 	                        	<li>
-                            		<a href="mailto:stimmacomua@gmail.com">
+                            		<a href="mailto:online@stimma.com.ua">
 		                                <span class="icon">
 		                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 		                                        <path d="M15.8583 3.17969L11.0059 8.00091L15.8583 12.8221C15.946 12.6388 15.9993 12.4361 15.9993 12.2197V3.78216C15.9993 3.56569 15.946 3.36303 15.8583 3.17969Z" fill="var(--white)"></path>
@@ -407,7 +407,7 @@ global $USER;
 		                                        <path d="M10.3447 8.66406L9.658 9.35072C8.74428 10.2644 7.2575 10.2644 6.34378 9.35072L5.65716 8.66406L0.804688 13.4853C0.988031 13.573 1.19069 13.6262 1.40716 13.6262H14.5947C14.8111 13.6262 15.0138 13.573 15.1971 13.4853L10.3447 8.66406Z" fill="var(--white)"></path>
 		                                    </svg>
 		                                </span>
-		                                Stimmacomua@gmail.com
+                                        online@stimma.com.ua
 		                            </a>                            
 	                        	</li>
 	                        </ul>
@@ -2002,16 +2002,16 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isAprilAction)
     setcookie("show_marketing_img", 'y', time()+(3600*7), "/");
 }
 
-if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex && false)
+if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex)
 {
     ?>
     <button type="button" class="btn btn-primary show popupsubs2" data-bs-toggle="modal" data-bs-target="#action-modal_marketing_img" style="display: none;"></button>
 
-    <div class="modal fade modal-banner" id="action-modal_marketing_img"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade modal-banner modal-banner-new" id="action-modal_marketing_img"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
                     <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/stimma_pop_desctop.jpg?v=2" alt="">
@@ -2026,6 +2026,42 @@ if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex && false)
                             </button>
                         </div>
                         <div class="subscribe_result"></div>
+                    </form> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
+                    </button>
+                    <form action="" class="modal-banner-block">
+                    	<div class="modal-banner-left">
+                    		<div class="modal-banner-info">
+                    			<div class="modal-banner-disc">
+                    				-10%
+                    			</div>
+                    			<div class="modal-banner-disc-text">
+                    				На першу купівлю*
+                    			</div>
+                    		</div>
+                    	</div>
+                    	<div class="modal-banner-right">
+                    		<div class="modal-banner-text">
+                    			<div class="modal-banner-text-top">
+                    				Долучайся, щоб якнайшвидше дізнаватися про нові речі та акції.
+                    			</div>
+                    			<div class="modal-banner-text-bottom">
+                    				*Знижка діє один раз та не поширюється на товари з розділу SALE. <br> Промокод не сумується з іншими акціями.
+                    			</div>
+                    			<div class="bonus-modal-input">
+	                                <input type="text" name="subscribe_email" class="form-control" placeholder="Email">
+	                            </div>
+                    		</div>
+                    	</div>
+                    	<div class="modal-banner-bottom">
+	                        <div class="bonus-modal-btn-abs">
+	                            <button class="info-btn subscribe_me">
+	                                Я з вами
+	                            </button>
+	                        </div>
+	                        <div class="subscribe_result"></div>
+                    	</div>
                     </form>
 
                 </div>
@@ -3074,7 +3110,7 @@ global $USER;
 /*if(!$USER->IsAdmin() && strpos($APPLICATION->GetCurPage(),'/order/') !== false)
 {
     ?>
-    <!-- Hotjar Tracking Code for https://stimma.com.ua -->
+    <!-- Hotjar Tracking Code for https://stimma.ua -->
     <script>
         (function(h,o,t,j,a,r){
             h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
@@ -3349,7 +3385,7 @@ dataLayer.push({
                                 {
                                     global $maxNUmbers;
                                     // todo тут домен треба змінити
-                                    //$APPLICATION -> SetPageProperty('canonical', 'https://www.stimma.com.ua'.$APPLICATION -> GetCurPage().'?'.$param.'='.$value);
+                                    //$APPLICATION -> SetPageProperty('canonical', 'https://stimma.ua'.$APPLICATION -> GetCurPage().'?'.$param.'='.$value);
 
                                     $h1 = $APPLICATION -> GetTitle();
 
@@ -3453,11 +3489,11 @@ dataLayer.push({
 
                         global $canonical;
                         if(isset($_GET['PAGEN_1']))
-                            $APPLICATION -> SetPageProperty('canonical', 'https://www.stimma.com.ua'.$APPLICATION -> GetCurPage().'?PAGEN_1='.$_GET['PAGEN_1']);
+                            $APPLICATION -> SetPageProperty('canonical', 'https://stimma.ua'.$APPLICATION -> GetCurPage().'?PAGEN_1='.$_GET['PAGEN_1']);
                         elseif($APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/dzhinsy_bryuki_shorty/legginsy/zhenskie-legginsy-stimma-meydi-7/')
-                            $APPLICATION -> SetPageProperty('canonical', 'https://www.stimma.com.ua/ru/catalog/zhenskaya_odezhda/dzhinsy_bryuki_shorty/legginsy/zhenskie-legginsy-stimma-meydi-7/');
+                            $APPLICATION -> SetPageProperty('canonical', 'https://stimma.ua/ru/catalog/zhenskaya_odezhda/dzhinsy_bryuki_shorty/legginsy/zhenskie-legginsy-stimma-meydi-7/');
                         elseif($APPLICATION->GetCurPage() == '/catalog/zhenskaya_odezhda/sportivnaya_odezhda/sportivnye_losiny/zhenskie-legginsy-stimma-meydi-7/')
-                            $APPLICATION -> SetPageProperty('canonical', 'https://www.stimma.com.ua/catalog/zhenskaya_odezhda/sportivnaya_odezhda/sportivnye_losiny/zhenskie-legginsy-stimma-meydi-7/');
+                            $APPLICATION -> SetPageProperty('canonical', 'https://stimma.ua/catalog/zhenskaya_odezhda/sportivnaya_odezhda/sportivnye_losiny/zhenskie-legginsy-stimma-meydi-7/');
                         elseif($canonical)
                             $APPLICATION -> SetPageProperty('canonical', $canonical);
                         else

@@ -448,7 +448,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                             if(strpos(strtolower($item['SMALL']),'.m4v')!==false || strpos(strtolower($item['SMALL']),'.mp4')!==false || strpos(strtolower($item['SMALL']),'.MP4')!==false)
                                             {
                                                 ?>
-                                                <a href="#imgn<?=$index?>" class="card-little-slider-item" aria-label="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>">
+                                                <a href="#imgn<?=$index?>" class="card-little-slider-item claude_photo" aria-label="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>">
                                                     <div class="card-little-slider-img">
                                                         <img src="<?=SITE_TEMPLATE_PATH?>/images/frame_video.png" alt="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>, фото <?=$indexSlider?><?/*=$colorName?> - <?=$arResult['OFFERS'][0]['DISPLAY_PROPERTIES']['COLOR_REF']['DISPLAY_VALUE']*/?>">
                                                     </div>
@@ -458,7 +458,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                             else
                                                 {
                                                     ?>
-                                                    <a href="#imgn<?=$index?>" class="card-little-slider-item" aria-label="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>">
+                                                    <a href="#imgn<?=$index?>" class="card-little-slider-item claude_photo" aria-label="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>">
                                                         <div class="card-little-slider-img">
                                                             <img src="<?=convertToWebP($item['SMALL'])?>" alt="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>, фото <?=$indexSlider?><?/*=$colorName?> - <?=$arResult['OFFERS'][0]['DISPLAY_PROPERTIES']['COLOR_REF']['DISPLAY_VALUE']*/?>">
                                                         </div>
@@ -485,7 +485,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         if(strpos(strtolower($item['BIG']),'.m4v')!==false || strpos(strtolower($item['BIG']),'.mp4')!==false || strpos(strtolower($item['BIG']),'.MP4')!==false)
                                          {
                                             ?>
-                                            <div class="card-big-slider-item" id="imgn<?=$index?>">
+                                            <div class="card-big-slider-item claude_photo" id="imgn<?=$index?>">
                                                 <div class="card-big-slider-img">
                                                     <video
                                                             autoplay
@@ -506,7 +506,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         else
                                         {
                                             ?>
-                                            <div class="card-big-slider-item" id="imgn<?=$index?>">
+                                            <div class="card-big-slider-item claude_photo" id="imgn<?=$index?>">
                                                 <div class="card-big-slider-img">
                                                     <span class="card-big-slider-img-zoom">
                                                         <img  src="<?=convertToWebP($item['BIG'])?>" alt="<?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] : $arResult['NAME']?>, фото <?=$indexSlider?> <?/*=$colorName?> - <?=$arResult['OFFERS'][0]['DISPLAY_PROPERTIES']['COLOR_REF']['DISPLAY_VALUE']*/?>">
@@ -538,7 +538,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                     <div class="card-info-block">
                         <div class="card-name-block">
 
-                            <h1 class="card-name" data-entity="name_card">
+                            <h1 class="card-name claude_photo" data-entity="name_card">
                                 <?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['NAME_UA']['VALUE'] . ' ' . $arResult['COLORS_FOR_CHANGE'][$arResult['PROPERTIES']['COLOR']['VALUE']] . $ccName : $arResult['NAME'] . ' ' . $arResult['COLORS_FOR_CHANGE'][$arResult['PROPERTIES']['COLOR']['VALUE']] .$ccName?>
                             </h1>
                             <?
@@ -553,7 +553,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             ?>
 
                         </div>
-                        <div class="card-price-block" data-entity="price_card">
+                        <div class="card-price-block claude_photo" data-entity="price_card">
                             <?
                             if($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['PRICES']['BASE']['DISCOUNT_VALUE'] > $arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE'])
                             {
@@ -604,7 +604,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                         </div>
                         <?if($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE'] >= 3000 && $chast)
                             {?>
-                                <div class="card-buy-parts">
+                                <div class="card-buy-parts claude_photo">
                                     <div class="card-buy-parts-icons">
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1.92004 11.1955C1.06831 9.81362 0.794053 8.15752 1.15549 6.57872C1.51693 4.99993 2.48561 3.62276 3.85589 2.73957L7.28454 7.95419L1.92004 11.1955Z"/>
@@ -624,7 +624,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             ?>
                         <?//if(isset($_GET['infom']))
                         {?>
-                            <div class="card-infom-cont">
+                            <div class="card-infom-cont claude_photo">
                                 <div class="card-infom-block">
                                     <span class="bonus">+<?=number_format($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE'], 0,'.',' ')?> стімзів</span> для учасників програми лояльності <a href="<?=$ru?>/sama_sobi/">Сама собі STIMMA</a>
                                 </div>
@@ -710,7 +710,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                     <?=LANGUAGE_ID=='ua'?'Термін дії сертифіката 3 місяці з дати отримання листа.<br> Якщо сума чека перевищує номінал сертифіката — необхідно доплатити різницю. Доплату можна здійснити на сайті або накладеним платежем при отриманні замовлення. Якщо сума чека менше номіналу — залишок зберігається на балансі.':'Срок действия сертификата 3 месяца с даты получения письма.<br> Если сумма чека превышает номинал сертификата — необходимо доплатить разницу. Доплату можно осуществить на сайте или наложенным платежом при получении заказа. Если сумма чека меньше номинала — остаток сохраняется на балансе.'?>
                                                 </p>
                                                 <p>
-                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.com.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.com.ua и в <a href="#">официальном инстаграме</a>.'?>
+                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.ua и в <a href="#">официальном инстаграме</a>.'?>
                                                 </p>
                                                 <p>
                                                     <?=LANGUAGE_ID=='ua'?'Сертифікат діє на всі позиції представлені на сайті за умови наявності товару.':'Сертификат действует на все позиции представленные на сайте при условии наличия товара.'?>
@@ -730,7 +730,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                     <?=LANGUAGE_ID=='ua'?'Термін дії сертифіката 3 місяці з дати отримання листа.<br> Якщо сума чека перевищує номінал сертифіката — необхідно доплатити різницю. Доплату можна здійснити на сайті або накладеним платежем при отриманні замовлення. Якщо сума чека менше номіналу — залишок зберігається на балансі.':'Срок действия сертификата 3 месяца с даты получения письма.<br> Если сумма чека превышает номинал сертификата — необходимо доплатить разницу. Доплату можно осуществить на сайте или наложенным платежом при получении заказа. Если сумма чека меньше номинала — остаток сохраняется на балансе.'?>
                                                 </p>
                                                 <p>
-                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.com.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.com.ua и в <a href="#">официальном инстаграме</a>.'?>
+                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.ua и в <a href="#">официальном инстаграме</a>.'?>
                                                 </p>
                                                 <p>
                                                     <?=LANGUAGE_ID=='ua'?'Сертифікат діє на всі позиції представлені на сайті за умови наявності товару.':'Сертификат действует на все позиции представленные на сайте при условии наличия товара.'?>
@@ -750,7 +750,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                     <?=LANGUAGE_ID=='ua'?'Термін дії сертифіката 3 місяці з дати отримання листа.<br> Якщо сума чека перевищує номінал сертифіката — необхідно доплатити різницю. Доплату можна здійснити на сайті або накладеним платежем при отриманні замовлення. Якщо сума чека менше номіналу — залишок зберігається на балансі.':'Срок действия сертификата 3 месяца с даты получения письма.<br> Если сумма чека превышает номинал сертификата — необходимо доплатить разницу. Доплату можно осуществить на сайте или наложенным платежом при получении заказа. Если сумма чека меньше номинала — остаток сохраняется на балансе.'?>
                                                 </p>
                                                 <p>
-                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.com.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.com.ua и в <a href="#">официальном инстаграме</a>.'?>
+                                                    <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.ua и в <a href="#">официальном инстаграме</a>.'?>
                                                 </p>
                                                 <p>
                                                     <?=LANGUAGE_ID=='ua'?'Сертифікат діє на всі позиції представлені на сайті за умови наявності товару.':'Сертификат действует на все позиции представленные на сайте при условии наличия товара.'?>
@@ -767,7 +767,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             if(!$isAcsesuaries && !$shoes)
                             {
                                 ?>
-                                <div class="card-size-list-block">
+                                <div class="card-size-list-block claude_photo" >
                                     <button class="card-size-list-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#size-canvas">
                                         Розмірна сітка та заміри виробу
                                     </button>
@@ -775,7 +775,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 <?
                             }
                             ?>
-                            <div class="card-prop-block">
+                            <div class="card-prop-block claude_photo">
                                 <div class="card-size-block" data-entity="scu-values" data-code="RAZMER" style="<?=$isAcsesuaries || $bonusProduct ? 'display:none;' : ''?>">
                                     <?
 
@@ -880,14 +880,14 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             if(UA && isset($arResult['OFFERS'][0]['PROPERTIES']['WAITTIME_'.strtoupper(LANGUAGE_ID)]) && trim($arResult['OFFERS'][0]['PROPERTIES']['WAITTIME_'.strtoupper(LANGUAGE_ID)]['VALUE']) != '')
                             {
                                 ?>
-                                <div class="card-delivery-info">
+                                <div class="card-delivery-info claude_photo">
                                     <?= $arResult['OFFERS'][0]['PROPERTIES']['WAITTIME_'.strtoupper(LANGUAGE_ID)]['VALUE'] ?>
                                     <?/*Збільшений термін очікування — <span>14-21 робочих днів</span>*/?>
                                 </div>
                                 <?
                             }
                             ?>
-                            <div class="card-buy-btn-block">
+                            <div class="card-buy-btn-block claude_photo">
                                 <?
                                 if($arResult['SKIP_OFFERS'])
                                 {
@@ -975,7 +975,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     '.' => '.'.PHP_EOL,
                             ];
                             ?>
-                            <div class="card-accordion-block">
+                            <div class="card-accordion-block claude_photo">
                             <div class="accordion accordion-flush" id="card-accord">
                                 <div class="accordion-item">
                                     <div class="accordion-header">
@@ -1411,7 +1411,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                         ?>
                     </div>
                 </div>
-                <div class="card-mob-controls-cont">
+                <div class="card-mob-controls-cont claude_photo">
                     <div class="card-mob-controls-block">
                         
                         <div class="card-mob-btn-buy">
@@ -2233,7 +2233,7 @@ if(!empty($dopObrazElement))
 <?
 $slider = [];
 foreach ($arResult['SLIDER'] as $index => $item)
-    $slider[] = '"https://stimma.com.ua'.$item['ORIGINAL'].'"';
+    $slider[] = '"https://stimma.ua'.$item['ORIGINAL'].'"';
 
 $review = $jsonReview = [];
 $res = CIBlockSection::GetList([], ['IBLOCK_ID' => 35, 'ACTIVE' => 'Y', 'UF_PRODUCT' => $arResult['ID']]);

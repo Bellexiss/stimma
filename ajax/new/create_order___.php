@@ -462,7 +462,7 @@ if ($ORDER_ID > 0)
                 'number'=>$number,
                 'name'=>$product['NAME'],
                 'quantity'=>intval($recordBasket['QUANTITY']),
-                'link'=>'https://www.stimma.com.ua'.$link['DETAIL_PAGE_URL'],
+                'link'=>'https://stimma.ua'.$link['DETAIL_PAGE_URL'],
             ];
             $number++;
         }

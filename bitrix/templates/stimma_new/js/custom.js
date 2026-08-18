@@ -983,7 +983,7 @@ $(document).ready(function()
         var send_date_receiver = $('[name=send_date_receiver]').val();
         var send_desire = $('[name=send_desire]').val();
 
-        if(bysert) id = $(this).attr('data-id');
+        if(bysert || $(this).hasClass('current_claude_photo')) id = $(this).attr('data-id');
 
         //cnt = parseInt($('.card-counter').find('input').val());
         cnt = 1;

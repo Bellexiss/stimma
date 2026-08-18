@@ -296,7 +296,7 @@ if($type == 1 || $type == 2)
             }
 
 
-            $url = str_replace('https://www.stimma.com.ua/','/',$_POST['url']);
+            $url = str_replace('https://stimma.ua/','/',$_POST['url']);
             $cacheUrl = explode('/',$url);
             unset($cacheUrl[count($cacheUrl)-2]);
             $cacheUrl = implode('/',$cacheUrl);

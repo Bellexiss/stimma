@@ -1978,7 +1978,7 @@ function generateFeedGoogle()
     $header = '<?xml version="1.0" encoding="UTF-8"?>';
     $header .= '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">';
     $header .= '<title>STIMMA</title>';
-    $header .= '<link rel="self" href="https://stimma.com.ua"/>';
+    $header .= '<link rel="self" href="https://stimma.ua"/>';
     //$header .= '<updated>20011-07-11T12:00:00Z</updated> ';
     $header .= '<updated>'.date('d.m.Y H:i:s').'</updated> ';
     $header .= '<currency code = "UAH" rate = "1" main = "1"/>';
@@ -2115,10 +2115,10 @@ function generateFeedGoogle()
             foreach ($Props['PHOTO_GALLERY']['VALUE'] as $index => $prop)
             {
                 $imgProp = CFile::GetFileArray($prop)['SRC'];
-                $additionalPhoto .= '<g:additional_image_link>https://stimma.com.ua'.$imgProp.'</g:additional_image_link>';
+                $additionalPhoto .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
 
                 if(strpos($imgProp,'.m4v') === false)
-                    $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.com.ua'.$imgProp.'</g:additional_image_link>';
+                    $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
             }
 
         }
@@ -2168,8 +2168,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2191,8 +2191,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPriceFB.'
@@ -2214,8 +2214,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2237,8 +2237,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPriceFB.'
@@ -2259,8 +2259,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhotoTikTok.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2282,8 +2282,8 @@ function generateFeedGoogle()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhotoTikTok.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2326,7 +2326,7 @@ function generateFeedGoogleNew()
     $header = '<?xml version="1.0" encoding="UTF-8"?>';
     $header .= '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">';
     $header .= '<title>STIMMA</title>';
-    $header .= '<link rel="self" href="https://stimma.com.ua"/>';
+    $header .= '<link rel="self" href="https://stimma.ua"/>';
     //$header .= '<updated>20011-07-11T12:00:00Z</updated> ';
     $header .= '<updated>'.date('d.m.Y H:i:s').'</updated> ';
     $header .= '<currency code = "UAH" rate = "1" main = "1"/>';
@@ -2474,10 +2474,10 @@ function generateFeedGoogleNew()
             foreach ($Props['PHOTO_GALLERY']['VALUE'] as $index => $prop)
             {
                 $imgProp = CFile::GetFileArray($prop)['SRC'];
-                $additionalPhoto .= '<g:additional_image_link>https://stimma.com.ua'.$imgProp.'</g:additional_image_link>';
+                $additionalPhoto .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
 
                 if(strpos($imgProp,'.m4v') === false && strpos($imgProp,'.mp4') === false && strpos($imgProp,'.MP4') === false)
-                    $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.com.ua'.$imgProp.'</g:additional_image_link>';
+                    $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
             }
 
         }
@@ -2536,8 +2536,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$sizeID.'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2561,8 +2561,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$sizeID.'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2589,8 +2589,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2612,8 +2612,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2636,8 +2636,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPriceFB.'
@@ -2659,8 +2659,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhoto.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPriceFB.'
@@ -2682,8 +2682,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameUA.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.com.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhotoTikTok.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2705,8 +2705,8 @@ function generateFeedGoogleNew()
 		<g:id>'.$fields['ID'].'</g:id>
 		<g:title>'.$nameRU.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://www.stimma.com.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.com.ua'.$img.'</g:image_link>
+		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
+		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
 		'.$additionalPhotoTikTok.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
@@ -2796,7 +2796,7 @@ function generateXMLs()
     $headerYML = '<?xml version="1.0" encoding="utf-8"?><!DOCTYPE yml_catalog SYSTEM "shops.dtd">';
     $headerYML .= '<yml_catalog date="'.date('Y-d-m H:i').'">';
     $headerYML .= '<shop>';
-    $headerYML .= '<name>STIMMA</name><company>Швейная компания СТИММА</company><url>https://www.stimma.com.ua/</url>';
+    $headerYML .= '<name>STIMMA</name><company>Швейная компания СТИММА</company><url>https://stimma.ua/</url>';
     $headerYML .= '<currencies>	<currency id="UAH" rate="1"/>	<currency id="USD" rate="NBU" />	<currency id="RUB" rate="CBRF" />	<currency id="EUR" rate="NBU" /></currencies>';
 
     $contentYML = '';
@@ -2834,20 +2834,20 @@ function generateXMLs()
     }
     foreach ($products as $index => $product)
     {
-        $link = 'https://www.stimma.com.ua/catalog/'.$sections[$product['IBLOCK_SECTION_ID']]['CODE'].'/';
+        $link = 'https://stimma.ua/catalog/'.$sections[$product['IBLOCK_SECTION_ID']]['CODE'].'/';
         if($sections[$product['IBLOCK_SECTION_ID']]['IBLOCK_SECTION_ID'])
             $link .= $sections[$sections[$product['IBLOCK_SECTION_ID']]['IBLOCK_SECTION_ID']]['CODE'].'/';
         $link .= $product['CODE'].'/';
         $img = CFile::GetFileArray($product['PREVIEW_PICTURE'])['SRC'];
         $text = $product['PREVIEW_TEXT'] ? $product['PREVIEW_TEXT'] : $product['DETAIL_TEXT'];
 
-        $picture = '<picture>https://stimma.com.ua'.$img.'</picture>';
+        $picture = '<picture>https://stimma.ua'.$img.'</picture>';
         $faceBookImg = $picture;
         $resPicture = $DB -> Query('select * from b_iblock_element_property where IBLOCK_ELEMENT_ID = ' . $product['ID'] . ' and IBLOCK_PROPERTY_ID = 239');
         while ($record = $resPicture -> Fetch())
         {
             $img = CFile::GetFileArray($record['VALUE'])['SRC'];
-            $picture .= '<picture>https://stimma.com.ua'.$img.'</picture>';
+            $picture .= '<picture>https://stimma.ua'.$img.'</picture>';
         }
 
         foreach ($product['OFFERS'] as $indexOffer => $arItem)
@@ -3808,15 +3808,15 @@ function sendNewEmailToClient($id, $send = true)
                                 <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                         <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                            <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                             </a>
                                         </td>
                                         <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                     <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                        <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                     </td>
                                                 </tr>
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -3928,15 +3928,15 @@ function sendNewEmailToClient($id, $send = true)
                                 <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                         <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                            <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                             </a>
                                         </td>
                                         <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                     <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                        <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                     </td>
                                                 </tr>
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -3971,7 +3971,7 @@ function sendNewEmailToClient($id, $send = true)
                                         Якщо ти ще не оплатила замовлення, ти можеш зробити це онлайн
                                     </td>
                                     <td style="box-sizing: border-box; margin: 0; padding: 10px 0;">
-                                        <a href="https://www.stimma.com.ua/order/?ORDER_ID=<?=$id?>" style="box-sizing: border-box; margin: 0; padding: 7px 10px; font-size: 20px; text-decoration: none; text-transform: uppercase; border-radius: 50px; color: #ffffff; background: #9ca848;">
+                                        <a href="https://stimma.ua/order/?ORDER_ID=<?=$id?>" style="box-sizing: border-box; margin: 0; padding: 7px 10px; font-size: 20px; text-decoration: none; text-transform: uppercase; border-radius: 50px; color: #ffffff; background: #9ca848;">
                                           СПЛАТИТИ  
                                         </a>
                                     </td>
@@ -4163,15 +4163,15 @@ function sendForgetBasketEmailToClient()
                                     <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                         <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                             <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                                <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                    <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                                 </a>
                                             </td>
                                             <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                                 <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
                                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                         <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                            <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                         </td>
                                                     </tr>
                                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -4251,15 +4251,15 @@ function sendForgetBasketEmailToClient()
                                     <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                         <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                             <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                                <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                    <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                                 </a>
                                             </td>
                                             <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                                 <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
                                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                         <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                            <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                         </td>
                                                     </tr>
                                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -4399,15 +4399,15 @@ function sendEmailToClient(\Bitrix\Main\Event $event)
                                 <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #3d441d; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                         <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                            <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                             </a>
                                         </td>
                                         <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #3d441d;" width="100%">
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                     <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                        <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #3d441d; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #3d441d; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                     </td>
                                                 </tr>
                                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -4526,7 +4526,7 @@ function generateSitemap()
     global $DB;
 
     $files = [];
-    $domen = 'https://www.stimma.com.ua';
+    $domen = 'https://stimma.ua';
 
     $header = '<?xml version="1.0" encoding="UTF-8"?>';
     $header .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
@@ -5229,7 +5229,7 @@ function generateYMLCatalog()
 <shop>
     <name>STIMMA</name>
     <company>STIMMA</company>
-    <url>https://www.stimma.com.ua</url>
+    <url>https://stimma.ua</url>
     <currencies>
         <currency id="UAH" rate="1"/>
     </currencies>';
@@ -5263,12 +5263,12 @@ function generateYMLCatalog()
                 $img = CFile::GetFileArray($item['PREVIEW_PICTURE'])['SRC'];
 
                 if($img)
-                    $picture = '<picture>https://stimma.com.ua'.$img.'</picture>';
+                    $picture = '<picture>https://stimma.ua'.$img.'</picture>';
                 /*$resPicture = $DB -> Query('select * from b_iblock_element_property where IBLOCK_ELEMENT_ID = ' . $item['ID'] . ' and IBLOCK_PROPERTY_ID = 239');
                 while ($record = $resPicture -> Fetch())
                 {
                     $img = CFile::GetFileArray($record['VALUE'])['SRC'];
-                    $picture .= '<picture>https://stimma.com.ua'.$img.'</picture>';
+                    $picture .= '<picture>https://stimma.ua'.$img.'</picture>';
                 }*/
                 #############
 
@@ -5283,7 +5283,7 @@ function generateYMLCatalog()
                     $picture=[];
                     foreach($item['PROPERTIES']['PHOTO_GALLERY']['VALUE'] as $index => $photo)
                     {
-                        $picture[] = '<picture>https://www.stimma.com.ua'.CFile::GetFileArray($photo)['SRC'].'</picture>';
+                        $picture[] = '<picture>https://stimma.ua'.CFile::GetFileArray($photo)['SRC'].'</picture>';
                     }
                     $picture = implode('',$picture);
                 }

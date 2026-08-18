@@ -119,15 +119,15 @@ sendNewEmailToClient(47699);
                             <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
                                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                     <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                        <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                            <img src="https://www.stimma.com.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                        <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
                                         </a>
                                     </td>
                                     <td style="box-sizing: border-box; padding: 0; margin: 0;">
                                         <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
                                             <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                                                 <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                    <a href="https://www.stimma.com.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                    <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
                                                 </td>
                                             </tr>
                                             <tr style="box-sizing: border-box; padding: 0; margin: 0;">
