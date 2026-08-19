@@ -320,7 +320,7 @@ if(LANGUAGE_ID == 'ua')
     $fromTo = [
         'Обхват грудей' => 'Обхват грудей',
         'Обхват талії' => 'Обхват талії',
-        'Обхват бедер' => 'Обхват бедер',
+        'Обхват стегон' => 'Обхват стегон',
         'Ширина плечей по спинці' => 'Ширина плечей по спинці',
         'Довжина рукава' => 'Довжина рукава',
         'Довжина виробу по спинці' => 'Довжина виробу по спинці',
@@ -350,7 +350,7 @@ else
     $fromTo = [
         'Обхват грудей' => 'Обхват груди',
         'Обхват талії' => 'Обхват талии',
-        'Обхват бедер' => 'Обхват бедер',
+        'Обхват стегон' => 'Обхват стегон',
         'Ширина плечей по спинці' => 'ширина плеч по спинке',
         'Довжина рукава' => 'длина рукава',
         'Довжина виробу по спинці' => 'Длина изделия по спинке',
@@ -1133,7 +1133,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват бедер'?></th>
+                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>32</td>
@@ -1205,7 +1205,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                                      <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                                                      <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                                                      <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват бедер'?></th>
+                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                                                  </tr>
                                                                  <tr>
                                                                      <td>32-34</td>
@@ -1248,7 +1248,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват бедер'?></th>
+                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>34-36</td>
@@ -1283,7 +1283,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват бедер'?></th>
+                                                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                                                 <tr>
                                                                     <td>32</td>
                                                                     <td>XXS</td>
@@ -1812,7 +1812,7 @@ if(!empty($dopObrazElement))
                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                 </tr>
                                 <tr>
                                     <td>32</td>
@@ -1895,7 +1895,7 @@ if(!empty($dopObrazElement))
                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                 </tr>
                                 <tr>
                                     <td>32-34</td>
@@ -1952,7 +1952,7 @@ if(!empty($dopObrazElement))
                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                 </tr>
                                 <tr>
                                     <td>34-36</td>
@@ -1996,7 +1996,7 @@ if(!empty($dopObrazElement))
                                     <th colspan="2" style="text-align: center;"><?=LANGUAGE_ID=='ua' ? 'Розмір' : 'Размер'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват грудей' : 'Обхват груди'?></th>
                                     <th><?=LANGUAGE_ID=='ua' ? 'Обхват талії' : 'Обхват талии'?></th>
-                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват бедер' : 'Обхват бедер'?></th>
+                                    <th><?=LANGUAGE_ID=='ua' ? 'Обхват стегон' : 'Обхват стегон'?></th>
                                 <tr>
                                     <td>32</td>
                                     <td>XXS</td>

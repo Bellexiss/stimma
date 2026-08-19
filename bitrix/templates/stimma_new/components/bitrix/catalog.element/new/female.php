@@ -15,7 +15,7 @@
 
 
         <div class="size-table-td">
-            Обхват <br><?=LANGUAGE_ID == 'ua' ? 'СТЕГОН' : 'БЕДЕР'?>
+            Обхват <br><?=LANGUAGE_ID == 'ua' ? 'СТЕГОН' : 'СТЕГОН'?>
         </div>
     </div>
     <div class="size-table-tr size-table-body">

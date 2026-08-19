@@ -896,7 +896,7 @@ if(!$bIndex)
                                             <td colspan="2" style="text-align: center;">Розмір</td>
                                             <td>Обхват грудей</td>
                                             <td>Обхват талії</td>
-                                            <td>Обхват бедер</td>
+                                            <td>Обхват стегон</td>
                                         </tr>
                                         <tr>
                                             <td>40</td>
@@ -2146,7 +2146,7 @@ if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex)
 							        			</div>
 							        			<div class="size-calc-item item3">
 							        				<div class="size-calc-key">
-                                                        <?=LANGUAGE_ID=='ua' ? 'ОБХВАТ БЕДЕР' : 'ОБХВАТ БЕДЕР'?>
+                                                        <?=LANGUAGE_ID=='ua' ? 'ОБХВАТ СТЕГОН' : 'ОБХВАТ СТЕГОН'?>
 							        				</div>
 							        				<div class="size-calc-slider-cont">
 							        					<div class="size-calc-slider"></div>
