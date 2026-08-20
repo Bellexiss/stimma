@@ -974,6 +974,12 @@ function getBasketNewHtml($basket = false)
     global $DB,$APPLICATION,$USER;
     ob_start();
 
+    $currtime = strtotime(date('d.m.Y H:i:s'));
+    $startAction =strtotime('21.08.2026 00:00:01');
+    $endAction = strtotime('23.08.2026 23:59:59');
+    $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
+
+
     $param = UA ? '/' : '/ru/';
     if(!$basket)
         $basket = getBasket($param);
@@ -1431,6 +1437,11 @@ function getBasketNewHtml($basket = false)
 
                         if(LANGUAGE_ID == 'ua')
                             $arItem['PRODUCT']['NAME'] = CIBlockElement::GetProperty(25, $arItem['PRODUCT_ID'],'sort', 'asc', array('CODE' => 'NAME_UA')) -> Fetch()['VALUE'];
+                        if(!$arItem['PRODUCT']['NAME'])
+                            $arItem['PRODUCT']['NAME'] = CIBlockElement::GetProperty(21, $arItem['PRODUCT_ID'],'sort', 'asc', array('CODE' => 'NAME_UA')) -> Fetch()['VALUE'];
+
+                        if($arItem['PRODUCT_ID'] == 47170 && $isJulyAction)
+                            $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
 
                         $Uah[]= (int)$arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] * (int)$arItem['QUANTITY'];
                         ?>
@@ -1471,6 +1482,9 @@ function getBasketNewHtml($basket = false)
                                                         'CATALOG_GROUP_ID' => 1
                                                     ]
                                                 )->Fetch();
+
+                                                if($isJulyAction && $arItem['PRODUCT_ID'] == 47170)
+                                                    $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
                                                 ?>
                                                     <?
                                                 if($price['PRICE'] > $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'])
@@ -1498,7 +1512,7 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
-                                    <div class="basket-header-counter">
+                                    <div class="basket-header-counter" style="<?=$isJulyAction && $arItem['PRODUCT_ID'] == 47170 ? 'display:none;' : ''?>">
                                         <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
                                             <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
@@ -1563,6 +1577,9 @@ function getBasketNewHtml($basket = false)
                                 $basket['ITEMS'][$activeIndex]['PRICE'] -= 800;
                         }
                     }
+                    if($isJulyAction && $TOTAL_UAH_PRICE >= 3000)
+                        $percentJuly = $TOTAL_UAH_PRICE*0.16;
+
                     ?>
                 </div>
             </div>
@@ -1577,6 +1594,29 @@ function getBasketNewHtml($basket = false)
                 </div>
             </div>
             <?
+            if($isJulyAction && $percentJuly)
+            {
+                ?>
+                <div class="basket-header-total">
+                    <div class="basket-header-total-key">
+                        Знижка
+                    </div>
+                    <div class="basket-header-total-value">
+                        <?=FormatCurrency(-$percentJuly,'UAH')?>
+                    </div>
+                </div>
+                <div class="basket-header-total">
+                    <div class="basket-header-total-key">
+                        Разом
+                    </div>
+                    <div class="basket-header-total-value">
+                        <?=FormatCurrency($TOTAL_UAH_PRICE-$percentJuly,'UAH')?>
+                    </div>
+                </div>
+
+                <?
+                ?><span>Готово — твої -16% уже в кошику.</span><?
+            }
             if($isAprilAction)
             {
                 if(count(array_unique($allQuantityLeftSection)) == 1)

@@ -7,7 +7,7 @@ $res = $DB -> Query('select * from main_colors');
 while($record = $res -> Fetch())
     $mainColors[$record['UF_NAME']] = $record['UF_NAME_UA'];
 
-
+global $isJulyAction;
 
 global $APPLICATION;
 $curPage = $APPLICATION->GetCurPage(false);
@@ -1796,6 +1796,109 @@ if(!empty($looksIds))
 
 
 <?
+//if(!isset($_COOKIE['show_banka_mess']) && !$bIndex && false)
+if($isJulyAction)
+{
+    ?>
+    <button type="button" class="btn btn-primary show show_banka_mess" data-bs-toggle="modal" data-bs-target="#action-modaljuly" style="display:none;">
+        тицьни
+    </button>
+
+    <div class="modal fade" id="action-modaljuly"  role="dialog"  aria-hidden="true" style="display:none">
+        <div class="modal-dialog modal-dialog-centered action-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="action-modal-cont">
+                        <div class="action-modal-block">
+                            <div class="action-modal-text">
+                                <?=LANGUAGE_ID == 'ua' ?
+                                    'Ти така уважна та кмітлива, що знайшла ще одну святкову хмаринку! ☁️ <br> Свій подаруночок ти вже отримала 🤍
+А тепер розповідай про хмаринки подрузі - можливо, наступна чекатиме саме на неї!'
+                                    :
+                                    'Ты такая внимательная и сообразительная, что нашла ещё одно праздничное облачко! ☁️ <br> Свой подарочек ты уже получила 🤍
+А теперь расскажи про облачка подруге — возможно, следующее будет ждать именно её!'
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary show show_banka_mess_no" data-bs-toggle="modal" data-bs-target="#action-modaljuly-no" style="display:none;">
+        тицьни
+    </button>
+
+    <div class="modal fade" id="action-modaljuly-no"  role="dialog"  aria-hidden="true" style="display:none">
+        <div class="modal-dialog modal-dialog-centered action-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="action-modal-cont">
+                        <div class="action-modal-block">
+                            <div class="action-modal-text">
+                                <?=LANGUAGE_ID == 'ua' ?
+                                    'Авторизуйся та отримуй свій подарунок 🤍'
+                                    :
+                                    'Авторизируйся и получи свой подарок 🤍'
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?/*
+    <div class="modal fade" id="action-modal"  role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered action-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="action-modal-cont">
+                        <div class="action-modal-img">
+                            <img src="/bitrix/templates/stimma/images/popup_subs.jpg?v=1">
+                        </div>
+                        <div class="action-modal-block">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
+                            </button>
+                            <div class="action-modal-title"><?=LANGUAGE_ID == 'ua' ? 'ЗАРЕЄСТРУЙТЕСЯ ТА ОТРИМАЙТЕ ЗНИЖКУ 10%' : 'ЗАРЕГИСТРИРУЙТЕСЬ И ПОЛУЧИТЕ СКИДКУ 10%'?></div>
+                            <div class="action-modal-form">
+                                <div style="color: red;display:none;" class="show_action_error"><?=LANGUAGE_ID == 'ua' ? 'Такий користувач вже існує' : 'Такой пользователь уже существует'?></div>
+                                <div style="display:none;" class="show_action_success"><?=LANGUAGE_ID == 'ua' ? 'Промокод надіслано на ваш email' : 'Промокод выслан вам на Email'?></div>
+                                <form>
+                                    <div class="action-modal-inp">
+                                        <input type="text" placeholder="Ваш E-mail" name="register_email">
+                                    </div>
+                                    <div class="action-modal-inp">
+                                        <input type="text" placeholder="<?=LANGUAGE_ID=='ua' ? 'Ваш пароль для входу в аккаунт' :'Ваш пароль для входа в аккаунт'?>" name="register_pass">
+                                    </div>
+                                    <div class="action-modal-btn register_action">
+                                        <button><?=LANGUAGE_ID=='ua'?'Зареєструватися':'Зарегистрироваться'?></button>
+                                    </div>
+                                    <div class="coupon_code_show"></div>
+                                </form>
+                            </div>
+                            <div class="action-modal-text">
+                                <?=LANGUAGE_ID == 'ua' ?
+                                    '* знижка доступна клієнтам, які вперше зареєструвались на сайті. (через вікно поп-апу)<br>Для використання введіть код у полі "промокод" (знижка не діє на товар з розділу SALE)'
+                                    :
+                                    '* скидка доступна клиентам, которые сначала зарегистрировались на сайте. (через окно поп-апа)<br>Для использования введите код в поле "промокод (скидка не действует на товар из раздела SALE)'?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    */?>
+
+    <?
+    //setcookie("show_banka_mess", 'y', time()+86400, "/");
+}
+
+
 if(!isset($_COOKIE['show_subs_form']) && !$bIndex && false)
 {
     ?>
@@ -1974,7 +2077,7 @@ if(!isset($_COOKIE['show_subs_form']) && !$bIndex && false)
 
 $isAprilAction = strtotime(date('20.04.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('31.05.2026 23:59:59'));
 
-if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isAprilAction)
+if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isJulyAction)
 {
     ?>
     <button type="button" class="btn btn-primary show popupsubs" data-bs-toggle="modal" data-bs-target="#action-modal_marketing_img" style="display: none;"></button>
@@ -1982,12 +2085,12 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isAprilAction)
     <div class="modal fade modal-banner" id="action-modal_marketing_img"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-body">
+                <div class="modal-body p-0">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
-                    <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/april_desctop.jpg?v=2" alt="">
-                    <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/april_mobile.jpg?v=2" alt="">
+                    <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/july_action.PNG?v=3" alt="">
+                    <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/july_action_mob.png?v=2" alt="">
                 </div>
             </div>
         </div>

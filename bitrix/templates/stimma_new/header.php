@@ -27,15 +27,18 @@ checkGlobalRedirect();
 
 
 $currtime = strtotime(date('d.m.Y H:i:s'));
-$startAction =strtotime('16.08.2026 00:00:01');
+$startAction = strtotime('21.08.2026 00:00:01');
 $endAction = strtotime('23.08.2026 23:59:59');
 
 $rizn = isset($_SESSION['DATE_CLAUDE']) ? $currtime-$_SESSION['DATE_CLAUDE'] : 3000;
 
+global $isJulyAction;
 $isJulyAction = $currtime >= $startAction && $currtime <= $endAction && $rizn > 1800 ? 1 : 0;
+$fuserID = Bitrix\Sale\Fuser::getId();
+$isBanka = $DB->Query('select * from b_sale_basket where PRODUCT_ID = 47170 and FUSER_ID = ' . $fuserID . ' limit 1')->Fetch();
 
 //if ($isJulyAction) $_SESSION['DATE_CLAUDE'] = $currtime;
-$isJulyAction=false;
+//$isJulyAction=false;
 IncludeTemplateLangFile(__FILE__);
 global $APPLICATION, $arRegion, $arSite, $arTheme, $bIndexBot, $bIframeMode;
 $arSite = CSite::GetByID(SITE_ID)->Fetch();
@@ -79,6 +82,7 @@ $basketCount = getBasketCount();
 
     <!-- <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/styles.css"> -->
 
+    <meta name="google-site-verification" content="T5kBM8Wp5zJaMgfHMsKRgpfb_TUXeiqDMxdwIh5uYsU" />
 
     <?//$APPLICATION->ShowMeta("viewport");?>
 	<?$APPLICATION->ShowMeta("HandheldFriendly");?>
@@ -199,6 +203,8 @@ $basketCount = getBasketCount();
         ?>
         <script>window.july_action = <?=$isJulyAction?>;</script>
         <script>window.numberClaude = <?=$randPhoto?>;</script>
+        <script>window.isBanka = <?=isset($isBanka['ID']) ? 1 : 0?>;</script>
+        <script>window.user_id = <?=$USER->GetID()?>;</script>
         <?Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jsnew/july_action.js?v='.strtotime(date('d.m.Y H:i:s')));?>
         <?
     }

@@ -27,6 +27,7 @@ if($USER->IsAuthorized())
 else
     $balance=0;
 
+global $isJulyAction;
 
 $useCoupon = 1;
 $isSert = false;
@@ -1656,6 +1657,20 @@ else
                                             }
                                             ?>
                                             <?
+                                            if($isJulyAction && isset($arResult['JULY_PERCENT']))
+                                            {
+                                                $minus_price = round($arResult['JULY_PERCENT']);
+                                                ?>
+                                                <div class="order-total-price-item">
+                                                    <div class="order-total-price-key">
+                                                        Знижка
+                                                    </div>
+                                                    <div class="order-total-price-value">
+                                                        -<?=$minus_price?> ₴
+                                                    </div>
+                                                </div>
+                                                <?
+                                            }
                                             if($arResult['IS_ACTION_APRIL_2026'] == 1 && $isAprilAction)
                                             {
                                                 $minus_price += 800;

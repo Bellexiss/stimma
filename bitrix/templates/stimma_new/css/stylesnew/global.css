@@ -2124,4 +2124,15 @@ body .filter.label_block input+label {
   .size-header-title{
     font-size: 20px;
   }
-} 
+}
+
+.claude_photo{
+  position: relative;
+}
+
+.claude_photo .current_claude_photo{
+  position: absolute;
+  max-height: 25px;
+  z-index: 2;
+  top: 0;
+}

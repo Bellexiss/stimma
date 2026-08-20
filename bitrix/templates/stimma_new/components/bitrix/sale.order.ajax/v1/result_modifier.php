@@ -635,6 +635,72 @@ if (!in_array(9, $uGroups))
     }
 }
 
+// -16% грн для замовлення від 3000 з 21,08,2026 до 23,08,2026 включно
+global $isJulyAction;
+if($isJulyAction)
+{
+    if (!in_array(9, $uGroups))
+    {
+        if(($isJulyAction || $USER->IsAdmin()))
+        {
+            global $DB,$USER;
+
+            $uGroups = explode(',',$USER -> GetGroups());
+            $allAmountLeft = 3000;
+            $activeIndex = -1;
+            $quantityProduct = 0;
+
+            if(!in_array(9,$uGroups))
+            {
+                $allSum = $countInAction = 0;
+                foreach($arResult['JS_DATA']['GRID']['ROWS'] as $index => $Row)
+                {
+                    $productInfo = \CCatalogSKU::GetProductInfo($Row['data']['PRODUCT_ID']);
+
+                    if ($productInfo)
+                    {
+                        $findMain = $DB->Query('select * from b_iblock_element_property where IBLOCK_ELEMENT_ID = ' . $Row['data']['PRODUCT_ID'] . ' and IBLOCK_PROPERTY_ID = 390');
+                        if($findMain = $findMain->Fetch())
+                            $productId = $findMain['VALUE'];
+                        else $productId = $Row['data']['PRODUCT_ID'];
+                    }
+                    else
+                        $productId = $Row['data']['PRODUCT_ID'];
+
+                    $isSale = $DB->Query('select * from b_iblock_section_element where IBLOCK_ELEMENT_ID = ' . $productId . ' and IBLOCK_SECTION_ID in (352,361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311)'); // sale + Аксесури + Бонусна шафа
+                    $isSale = $isSale->Fetch() ? true : false;
+
+                    if(!$isSale)
+                    {
+                        $fetch=$DB->Query('select * from basket_stims where UF_ID = ' . $Row['data']['ID']);
+                        $isSale = $fetch->Fetch() ? true : false;
+                    }
+
+                    if(!$isSale)
+                    {
+
+                        $product = $DB->Query('select * from b_iblock_element where ID = ' . $productId)->Fetch();
+
+                        $allSum += $Row['data']['PRICE']*$Row['data']['QUANTITY'];
+                    }
+                    else
+                        $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['IS_SALE'] = true;
+                }
+
+                if($allSum >= 3000)
+                {
+                    $percent = $allSum * 0.16;
+                    $sqls = [];
+                    $sqls[]='update b_sale_order set PRICE = PRICE - '.$percent.', DISCOUNT_VALUE = '.$percent.' where ID = #ORDER_ID#';
+                    $arResult['SQLS_ORDER'] = $sqls;
+                    $arResult['JULY_PERCENT'] = $percent;
+                }
+            }
+        }
+    }
+}
+
+
 /*
  // 2+1
 if(isset($_GET['sub']))
