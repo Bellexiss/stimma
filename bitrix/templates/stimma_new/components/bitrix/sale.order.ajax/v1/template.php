@@ -56,6 +56,7 @@ $basketProducts=[];
 
         $mainIDs = [];
         $product = CCatalogProduct::GetByID($pId);
+
         if(isset($_GET['show']))
         {
             ?><pre>1 -> <?=print_r($pId, 1)?></pre><?

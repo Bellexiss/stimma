@@ -1440,7 +1440,7 @@ function getBasketNewHtml($basket = false)
                         if(!$arItem['PRODUCT']['NAME'])
                             $arItem['PRODUCT']['NAME'] = CIBlockElement::GetProperty(21, $arItem['PRODUCT_ID'],'sort', 'asc', array('CODE' => 'NAME_UA')) -> Fetch()['VALUE'];
 
-                        if($arItem['PRODUCT_ID'] == 47170 && $isJulyAction)
+                        if(($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) && $isJulyAction)
                             $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
 
                         $Uah[]= (int)$arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] * (int)$arItem['QUANTITY'];
@@ -1483,7 +1483,7 @@ function getBasketNewHtml($basket = false)
                                                     ]
                                                 )->Fetch();
 
-                                                if($isJulyAction && $arItem['PRODUCT_ID'] == 47170)
+                                                if($isJulyAction && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171))
                                                     $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
                                                 ?>
                                                     <?
@@ -1512,7 +1512,7 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
-                                    <div class="basket-header-counter" style="<?=$isJulyAction && $arItem['PRODUCT_ID'] == 47170 ? 'display:none;' : ''?>">
+                                    <div class="basket-header-counter" style="<?=$isJulyAction && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) ? 'display:none;' : ''?>">
                                         <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
                                             <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>

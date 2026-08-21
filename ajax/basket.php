@@ -44,7 +44,7 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
     $endAction = strtotime('23.08.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
-    if($id == 47170 && $isJulyAction) $price = 0.01;
+    if(($id == 47170 || $id == 47171) && $isJulyAction) $price = 0.01;
 
     $status = CSaleBasket::Add(array(
                                 'PRODUCT_ID' => $_REQUEST['id'],
