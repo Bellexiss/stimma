@@ -14,7 +14,7 @@ $(document).ready(function()
         if(!window.user_id)
             $($randomPhoto).append('<img class="current_claude_photo isnoauth" src="/bitrix/templates/stimma_new/images/claude/claude'+window.numberClaude+'.png">');
         else if(!window.isBanka)
-            $($randomPhoto).append('<img class="current_claude_photo buy_product" data-id="47170" src="/bitrix/templates/stimma_new/images/claude/claude'+window.numberClaude+'.png">');
+            $($randomPhoto).append('<img class="current_claude_photo buy_product" data-id="47171" src="/bitrix/templates/stimma_new/images/claude/claude'+window.numberClaude+'.png">');
         else
             $($randomPhoto).append('<img class="current_claude_photo isbanka" src="/bitrix/templates/stimma_new/images/claude/claude'+window.numberClaude+'.png">');
             //$($randomPhoto).append('<img class="current_claude_photo buy_product" data-id="47170" src="/bitrix/templates/stimma_new/images/claude/claude'+window.numberClaude+'.png">');

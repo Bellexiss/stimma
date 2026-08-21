@@ -35,7 +35,7 @@ $rizn = isset($_SESSION['DATE_CLAUDE']) ? $currtime-$_SESSION['DATE_CLAUDE'] : 3
 global $isJulyAction;
 $isJulyAction = $currtime >= $startAction && $currtime <= $endAction && $rizn > 1800 ? 1 : 0;
 $fuserID = Bitrix\Sale\Fuser::getId();
-$isBanka = $DB->Query('select * from b_sale_basket where PRODUCT_ID = 47170 and FUSER_ID = ' . $fuserID . ' limit 1')->Fetch();
+$isBanka = $DB->Query('select * from b_sale_basket where PRODUCT_ID in (47170,47171) and FUSER_ID = ' . $fuserID . ' limit 1')->Fetch();
 
 //if ($isJulyAction) $_SESSION['DATE_CLAUDE'] = $currtime;
 //$isJulyAction=false;
