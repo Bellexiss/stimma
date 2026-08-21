@@ -1645,6 +1645,7 @@
 
     .main-advantages-cont{
         padding: 5px 0;
+        overflow: hidden;
     }
 
     .main-advantages-text{
