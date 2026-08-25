@@ -3,16 +3,23 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Авторизация");
 
 $ru=LANGUAGE_ID=='ru'?'/ru':'';
-
+global $DB;
 if(isset($_POST['reset_password']))
 {
     $email=$_POST['email'];
-    $find = CUser::GetList($by = "ID", $order = "ASC", array("EMAIL" => $email), array("SELECT" => ['UF_*']));
+
+    $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$email.'%\' or EMAIL like \'%'.$email.'%\' or LOGIN like \'%'.$email.'%\'');
+
     if($find = $find->Fetch())
     {
-        $checkWord = uniqid();
+        $email = $find['EMAIL'];
 
-        $fields = [
+        $find = CUser::GetList($by = "ID", $order = "ASC", array("EMAIL" => $email), array("SELECT" => ['UF_*']));
+        if($find = $find->Fetch())
+        {
+            $checkWord = uniqid();
+
+            $fields = [
                 'SITE_NAME' => 'Stimma',
                 'EMAIL' => $email,
                 'MESSAGE' => 'Ви зробили запит на відновлення паролю. Якщо це були не ви, проігноруйте це повідомлення.',
@@ -20,19 +27,20 @@ if(isset($_POST['reset_password']))
                 'LAST_NAME' => $find['LAST_NAME'],
                 'CHECKWORD' => $checkWord,
                 'USER_EMAIL' => $email,
-        ];
+            ];
 
-        $user = new CUser;
-        $user->Update($find['ID'], ['UF_CHECKWORD' => $checkWord]);
+            $user = new CUser;
+            $user->Update($find['ID'], ['UF_CHECKWORD' => $checkWord]);
 
-        if(CEvent::SendImmediate('USER_PASS_REQUEST', 's1', $fields, "Y",3))
-            LocalRedirect($APPLICATION->GetCurPageParam('send=Y', array('send')));
+            if(CEvent::SendImmediate('USER_PASS_REQUEST', 's1', $fields, "Y",3))
+                LocalRedirect($APPLICATION->GetCurPageParam('send=Y', array('send')));
+            else
+                LocalRedirect($APPLICATION->GetCurPageParam('send=N', array('send')));
+        }
         else
-            LocalRedirect($APPLICATION->GetCurPageParam('send=N', array('send')));
-    }
-    else
-    {
-        LocalRedirect($APPLICATION->GetCurPageParam('error=Користувач з таким email не знайдений', array('send')));
+        {
+            LocalRedirect($APPLICATION->GetCurPageParam('error=Користувач з таким email не знайдений', array('send')));
+        }
     }
 }
 

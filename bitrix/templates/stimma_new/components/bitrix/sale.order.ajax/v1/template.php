@@ -1631,7 +1631,24 @@ else
                                                 Доставка:
                                             </div>
                                             <div class="order-total-price-value">
-                                                По тарифам ТК
+                                                <?
+                                                if($USER->IsAuthorized())
+                                                {
+                                                    if($balance >= 5000 && $alLSum-$minus_price >= 1500)
+                                                    {
+                                                        ?>Безкоштовно<?
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>По тарифам ТК<?
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ?>По тарифам ТК<?
+                                                }
+                                                ?>
+
                                             </div>
                                         </div>
                                         <?/*<div class="order-total-price-item">
@@ -1756,9 +1773,22 @@ else
                                             <?
                                         }
                                         ?>
-                                        <button class="info-btn info-btn-black create_order">
-                                            <?=UA?'Перейти до оплати':'Перейти к оплате'?>
-                                        </button>
+                                        <?
+                                        if($arResult['JULY_ACTION'] && $totalCount == 1)
+                                        {
+                                            ?>
+                                            <div style="text-align: center;color:red;"><?=LANGUAGE_ID == 'ua' ? 'Додайте в кошик ще товарів' : 'Добавьте в корзину еще товаров'?></div>
+                                            <?
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                            <button class="info-btn info-btn-black create_order">
+                                                <?=UA?'Перейти до оплати':'Перейти к оплате'?>
+                                            </button>
+                                            <?
+                                        }
+                                        ?>
                                     </div>
                                     <div class="form-bottom-text">
                                         Натискаючи на кнопку Перейти до оплати, ви погоджуєтеся з <a href="<?=$ru?>/include/licenses_detail.php">Політикою конфіденційності</a>

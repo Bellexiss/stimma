@@ -641,7 +641,7 @@ if($isJulyAction)
 {
     if (!in_array(9, $uGroups))
     {
-        if(($isJulyAction || $USER->IsAdmin()))
+        if(1)
         {
             global $DB,$USER;
 
@@ -656,6 +656,9 @@ if($isJulyAction)
                 foreach($arResult['JS_DATA']['GRID']['ROWS'] as $index => $Row)
                 {
                     $productInfo = \CCatalogSKU::GetProductInfo($Row['data']['PRODUCT_ID']);
+
+                    if($isJulyAction && ($Row['data']['PRODUCT_ID'] == 47170 || $Row['data']['PRODUCT_ID'] == 47171))
+                        $arResult['JULY_ACTION'] = true;
 
                     if ($productInfo)
                     {
@@ -678,7 +681,6 @@ if($isJulyAction)
 
                     if(!$isSale)
                     {
-
                         $product = $DB->Query('select * from b_iblock_element where ID = ' . $productId)->Fetch();
 
                         $allSum += $Row['data']['PRICE']*$Row['data']['QUANTITY'];
@@ -687,7 +689,7 @@ if($isJulyAction)
                         $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['IS_SALE'] = true;
                 }
 
-                if($allSum >= 3000)
+                if($isJulyAction && $allSum >= 3000)
                 {
                     $percent = $allSum * 0.16;
                     $sqls = [];

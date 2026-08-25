@@ -16,6 +16,12 @@ while ($record = $res->Fetch())
 {
     if($record['UF_ORDER_ID']>0)
     {
+        if(!$record['UF_DATA'])
+        {
+            $DB->Query('update payments set UF_TO_1C = 1 where ID = ' . $record['ID']);
+            continue;
+        }
+
         $smchId = '';
         if(!empty($record['UF_DATA']) && strpos($record['UF_DATA'], '<status>5</status>') !== false)
         {
@@ -54,8 +60,14 @@ while ($record = $res->Fetch())
     }
     else
     {
+        if(!$record['UF_DATA'])
+        {
+            $DB->Query('update payments set UF_TO_1C = 1 where ID = ' . $record['ID']);
+            continue;
+        }
+
         $xmlData = $record['UF_DATA']; // или напрямую XML-строка
-      
+
         $xml = new SimpleXMLElement($xmlData);
         $smchId = (string)$xml->transactions->transaction->smch_id;
         preg_match('/<timestamp>(.*)<\/timestamp>/',$record['UF_DATA'],$matches2);

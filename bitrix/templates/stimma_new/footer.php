@@ -2093,8 +2093,8 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isJulyAction)
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
-                    <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/july_action.PNG?v=3" alt="">
-                    <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/july_action_mob.png?v=2" alt="">
+                    <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/july_action.png?v=4" alt="">
+                    <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/july_action_mob.png?v=3" alt="">
                 </div>
             </div>
         </div>

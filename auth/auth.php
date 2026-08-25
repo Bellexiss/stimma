@@ -13,6 +13,7 @@ if(!empty($_POST))
 
             $remember = isset($_POST['remember_me']) ? 'Y' : 'N';
             $arAuthResult = $USER->Login($user['LOGIN'], $_POST['CLIENT']['PASSWORD'], $remember);
+
             if($arAuthResult['TYPE'] != 'ERROR')
                 LocalRedirect($APPLICATION->GetCurPageParam());
             else
@@ -41,16 +42,73 @@ if(!empty($_POST))
         $confirmPassword = $_POST['CLIENT_NEW']['REPEAT_PASSWORD'];
         $email = $_POST['CLIENT_NEW']['EMAIL'];
 
-        $arResult = $USER->Register($login, $name, $last_name, $password, $confirmPassword, $email);
-
-        $uadd = new CUser;
-        if($arResult>0)
+        # Пошук існуючого користувча
+        $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$login.'%\' or EMAIL like \'%'.$login.'%\' or LOGIN like \'%'.$login.'%\'');
+        if($find = $find->Fetch())
         {
-            if($_POST['CLIENT_NEW']['UF_UGROUP'] == 26)
-                $uadd->Update($arResult, ['UF_UGROUP' => 26]);
+            $arResult['TYPE'] = 'ERROR';
+            $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Такий користувач вже існує '.$find['ID'] : 'Такой пользователь уже существует';
+        }
+        else
+        {
+            $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$email.'%\' or EMAIL like \'%'.$email.'%\' or LOGIN like \'%'.$email.'%\'');
+            if($find = $find->Fetch())
+            {
+                $arResult['TYPE'] = 'ERROR';
+                $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Такий користувач вже існує '.$find['ID'] : 'Такой пользователь уже существует';
+            }
+        }
+        # /Пошук існуючого користувча
 
-            LocalRedirect($APPLICATION->GetCurPageParam('status=ok',['status']));
-            exit();
+        if($arResult['TYPE'] != 'ERROR')
+        {
+            $arResult = $USER->Register($login, $name, $last_name, $password, $confirmPassword, $email);
+
+            $uadd = new CUser;
+            if($arResult>0)
+            {
+                if($_POST['CLIENT_NEW']['UF_UGROUP'] == 26)
+                    $uadd->Update($arResult, ['UF_UGROUP' => 26]);
+
+                if(!empty(trim($email)))
+                {
+                    CModule::IncludeModule('sale');
+                    $PERIOD = '90 days';
+                    $activeFrom = new \Bitrix\Main\Type\DateTime();
+                    $activeTo = new \Bitrix\Main\Type\DateTime();
+                    $activeTo = $activeTo->add($PERIOD);
+
+                    $p1 = rand(100,999);
+                    $p2 = rand(100,999);
+                    $p3 = rand(100,999);
+                    $coupon = $p1.'-'.$p2.'-'.$p3;
+                    //$coupon = $p2.'-'.$p4;
+                    //Персональний промокод ____
+                    $addDb = \Bitrix\Sale\Internals\DiscountCouponTable::add(array(
+                                                                                 'DISCOUNT_ID' => 35,
+                                                                                 'COUPON' => $coupon,
+                                                                                 'TYPE' => \Bitrix\Sale\Internals\DiscountCouponTable::TYPE_ONE_ORDER,
+                                                                                 //'ACTIVE_FROM' => $activeFrom,
+                                                                                 //'ACTIVE_TO' => $activeTo,
+                                                                                 'MAX_USE' => 1,
+                                                                                 'USER_ID' => '',//$arFields['ID'],
+                                                                                 'DESCRIPTION' => 'for registration #'.$arResult
+                                                                             ));
+
+                    $text = '<div style="text-align: center;">Ваша знижка - 10% на перше замовлення. <br>Персональний промокод '.$coupon.'</div>';
+                    $fields = [
+                        'MY_EMAIL' => $email,
+                        'TEXT' => $text
+                    ];
+
+                    CEvent::SendImmediate('BS_DISCOUNT_REGISTER', 's1', $fields, "Y",104);
+                }
+
+
+
+                LocalRedirect($APPLICATION->GetCurPageParam('status=ok',['status']));
+                exit();
+            }
         }
     }
 }
@@ -79,7 +137,7 @@ if(!empty($_POST))
             if(isset($_GET['status']) && $_GET['status']== 'ok')
             {
                 ?><div style="color: green; text-align: center; margin-bottom: 15px;" class="error_message">
-                    <?=LANGUAGE_ID=='ua'?'Ви успішно зареєструвалися':'Вы успешно зарегистрировались'?>
+                    <?=LANGUAGE_ID=='ua'?'Ви успішно зареєструвалися. Промокод на першу покупку був висланий на вказаний Email':'Вы успешно зарегистрировались. Промокод на первую покупку был выслан на указанный Email'?>
                 </div><?
             }
             ?>
