@@ -40,8 +40,8 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
 
 
     $currtime = strtotime(date('d.m.Y H:i:s'));
-    $startAction =strtotime('21.08.2026 00:00:01');
-    $endAction = strtotime('23.08.2026 23:59:59');
+    $startAction =strtotime('01.09.2026 00:00:01');
+    $endAction = strtotime('30.09.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
     if(($id == 47170 || $id == 47171) && $isJulyAction) $price = 0.01;

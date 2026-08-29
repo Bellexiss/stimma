@@ -43,13 +43,18 @@ if(!empty($_POST))
         $email = $_POST['CLIENT_NEW']['EMAIL'];
 
         # Пошук існуючого користувча
-        $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$login.'%\' or EMAIL like \'%'.$login.'%\' or LOGIN like \'%'.$login.'%\'');
-        if($find = $find->Fetch())
+        $loginError = false;
+        if(!empty($login))
         {
-            $arResult['TYPE'] = 'ERROR';
-            $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Такий користувач вже існує '.$find['ID'] : 'Такой пользователь уже существует';
+            $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$login.'%\' or EMAIL like \'%'.$login.'%\' or LOGIN like \'%'.$login.'%\'');
+            if($find = $find->Fetch())
+            {
+                $loginError=true;
+                $arResult['TYPE'] = 'ERROR';
+                $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Такий користувач вже існує '.$find['ID'] : 'Такой пользователь уже существует';
+            }
         }
-        else
+        elseif(!empty($email) && !$loginError)
         {
             $find = $DB->Query('select * from b_user where PERSONAL_PHONE like \'%'.$email.'%\' or EMAIL like \'%'.$email.'%\' or LOGIN like \'%'.$email.'%\'');
             if($find = $find->Fetch())

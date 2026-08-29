@@ -29,6 +29,9 @@ else
 
 global $isJulyAction;
 
+$isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
+
+
 $useCoupon = 1;
 $isSert = false;
 $onlySert = true;
@@ -206,6 +209,20 @@ if($USER->IsAuthorized())
 
         $dost[$record['UF_DELIVERY_ID']] = $record;
     }
+}
+
+
+$alLSum=$totalCount=0;
+$totalBonus = 0;
+$totalBonusPrice = $ids = [];
+$totalSum = [];
+foreach($basket as $index => $item)
+{
+    $ids = $item['PRODUCT_ID'];
+    $totalCount++;
+    $item = $item['data'];
+    $price = CCatalogProduct::GetOptimalPrice($item['PRODUCT_ID'])['RESULT_PRICE'];
+    $alLSum += $item['PRICE'] * $item['QUANTITY'];
 }
 ?>
 
@@ -598,7 +615,7 @@ else
                 $basket[$index]['data']['DPU'] = $dpu['DETAIL_PAGE_URL'];
                 $basket[$index]['data']['BONUS'] = $item['data']['BONUS'];
             }
-            $alLSum = $alLQuantity = 0;
+            //$alLSum = $alLQuantity = 0;
 
         ?>
     <?
@@ -642,238 +659,7 @@ else
                 <div class="wrapper">
                     <div class="order-cont">
                         <div class="order-detail-cont">
-                            <div class="order-detail-elements">
-                                <?
-                                $alLSum=$totalCount=0;
-                                $totalBonus = 0;
-                                $totalBonusPrice = $ids = [];
-                                $totalSum = [];
-                                foreach($basket as $index => $item)
-                                {
-                                    $ids = $item['PRODUCT_ID'];
-                                    $totalCount++;
-                                    $item = $item['data'];
-                                    $price = CCatalogProduct::GetOptimalPrice($item['PRODUCT_ID'])['RESULT_PRICE'];
-                                    $alLSum += $item['PRICE']*$item['QUANTITY'];
-
-                                    $product = CIBlockElement::GetByID($item['PRODUCT_ID'])->GetNextElement();
-                                    ?>
-                                    <div class="order-item">
-                                        <div class="order-item-img">
-                                            <a href="<?=$item['DPU']?>">
-                                                <img src="<?=$item['PREVIEW_PICTURE_SRC']?>">
-                                            </a>
-                                        </div>
-                                        <div class="order-item-info-block">
-                                            <div class="order-item-info">
-                                                <div class="order-item-prop-block">
-                                                    <a href="<?=$item['DPU']?>" class="order-item-name">
-                                                        <?=$item['NAME']?>
-                                                    </a>
-                                                    <?
-                                                    if(isset($withStims[$item['ID']]))
-                                                    {
-                                                        ?>
-                                                        <div class="order-item-price-block">
-                                                            <div class="basket-header-item-price-bonus">
-                                                                <?=$withStims[$item['ID']]['UF_STIMS']?>
-                                                                <span class="icon">
-                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <circle cx="11" cy="11" r="11" fill="#FE9D56"></circle>
-                                                                        <path d="M16.8827 12.5402C16.8827 13.0704 16.7849 13.5382 16.593 13.9318C16.4028 14.3199 16.1462 14.6519 15.8278 14.9207C15.5201 15.1803 15.1613 15.3911 14.7603 15.5458C14.3827 15.6915 13.9808 15.8055 13.5673 15.8851C13.16 15.9629 12.7429 16.0145 12.3285 16.038C11.9239 16.0625 11.5337 16.0742 11.1677 16.0742C10.2061 16.0742 9.30099 15.9928 8.47841 15.8326C7.65942 15.6725 6.92296 15.4707 6.29055 15.231L5.98377 15.1143V11.6952L6.68615 12.0888C7.27639 12.4181 7.96083 12.6814 8.72151 12.8687C9.48757 13.0578 10.32 13.1537 11.1955 13.1537C11.7095 13.1537 12.1293 13.1265 12.4433 13.0741C12.8147 13.0107 13.0192 12.9383 13.125 12.8886C13.282 12.8153 13.3206 12.7646 13.3215 12.7646C13.3358 12.742 13.343 12.7266 13.3457 12.7185C13.3421 12.7167 13.3322 12.7058 13.3143 12.6913C13.2488 12.6371 13.1223 12.5556 12.89 12.4724C12.672 12.3937 12.4092 12.3195 12.1114 12.2516C11.7983 12.1811 11.4646 12.1096 11.113 12.039C10.7542 11.9666 10.3855 11.8879 10.0061 11.8047C9.61585 11.7178 9.23282 11.6147 8.86593 11.498C8.49277 11.3795 8.13306 11.2383 7.79846 11.0791C7.44503 10.9108 7.12838 10.7072 6.85838 10.4747C6.57402 10.2286 6.34617 9.93908 6.18022 9.61427C6.00889 9.2768 5.92188 8.88685 5.92188 8.45529C5.92188 7.9631 6.01248 7.5261 6.19009 7.15696C6.36501 6.79235 6.60541 6.47749 6.90412 6.22054C7.19207 5.97264 7.52756 5.76997 7.90162 5.61707C8.25416 5.47231 8.63091 5.35831 9.02112 5.27869C9.40236 5.20088 9.79346 5.1466 10.1828 5.11765C10.5658 5.08869 10.9345 5.07422 11.278 5.07422C11.6575 5.07422 12.054 5.09412 12.4558 5.13212C12.8532 5.17012 13.2524 5.22441 13.6399 5.29407C14.023 5.36193 14.4006 5.44245 14.7639 5.53293C15.1227 5.6234 15.4609 5.71931 15.7695 5.81974L16.0969 5.9265V9.24604L15.4169 8.91219C15.2537 8.83166 15.0285 8.73666 14.7487 8.63081C14.4715 8.52586 14.1503 8.42452 13.7951 8.32952C13.4408 8.23453 13.0497 8.154 12.6326 8.08976C12.2208 8.02643 11.7929 7.99476 11.3606 7.99476C11.0098 7.99476 10.7075 8.00562 10.4626 8.02734C10.2222 8.04905 10.0204 8.0771 9.86253 8.10967C9.68761 8.14586 9.59432 8.18114 9.54678 8.20286C9.53153 8.2101 9.51897 8.21643 9.50731 8.22276C9.58086 8.27162 9.70376 8.33586 9.90021 8.40281C10.1227 8.4779 10.3864 8.55119 10.686 8.61905C11.0018 8.69052 11.3364 8.76381 11.6898 8.83981C12.0495 8.91671 12.42 9.00085 12.8021 9.09223C13.1941 9.18542 13.5789 9.2958 13.9458 9.42066C14.3217 9.54732 14.6823 9.69751 15.016 9.8658C15.3676 10.0431 15.6825 10.2548 15.9516 10.4946C16.235 10.7479 16.462 11.0438 16.6261 11.3749C16.7966 11.7187 16.8827 12.1105 16.8827 12.5402Z" fill="white"></path>
-                                                                    </svg>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <?
-                                                    }
-                                                    else
-                                                    {
-                                                        ?>
-                                                        <div class="order-item-price-block">
-                                                            <?
-                                                            if($price['BASE_PRICE'] > $item['PRICE'])
-                                                            {
-                                                                ?><div class="order-list-price-old"><?=FormatCurrency($price['BASE_PRICE']*$item['QUANTITY'],'UAH')?></div><?
-                                                            }
-                                                            ?>
-                                                            <div class="order-item-price">
-                                                                <?=FormatCurrency($item['QUANTITY']*$item['PRICE'], 'UAH')?>
-                                                            </div>
-                                                        </div>
-                                                        <?
-                                                    }
-                                                    ?>
-                                                    
-                                                </div>
-                                                <div class="order-item-prop-cont">
-                                                    <div class="order-item-prop">
-                                                        <div class="order-item-size">
-                                                            <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
-                                                            <?/*
-                                                        <select class="form-select">
-                                                            <option>S</option>
-                                                            <option>M</option>
-                                                            <option>L</option>
-                                                            <option>XL</option>
-                                                        </select>
-                                                        */?>
-                                                        </div>
-                                                        <div class="order-item-color">
-                                                            Колір:
-                                                            <span style="background: <?=$colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE']?>;"> </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="order-item-control">
-                                                <div class="order-item-counter">
-                                                    <button class="order-item-counter-btn minus_count" data-id="<?=$item['ID']?>">
-                                                        <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
-                                                        </svg>
-                                                    </button>
-                                                    <input type="text" name="" value="<?=$item['QUANTITY']?>">
-                                                    <button class="order-item-counter-btn plus_count" data-id="<?=$item['ID']?>">
-                                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <rect x="6" width="1" height="13" fill="white"></rect>
-                                                            <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                                <?
-                                                if($item['ID'])
-                                                {
-                                                    ?>
-                                                    <a href="?remove=<?=$item['ID']?>"  data-leave="free" class="order-item-delete">Видалити</a>
-                                                    <?
-                                                }
-                                                ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?
-                                }
-
-                                ?>
-                                <?/*
-                            <div class="order-item">
-                                <div class="order-item-img">
-                                    <a href="#">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/headbask1.png">
-                                    </a>
-                                </div>
-                                <div class="order-item-info-block">
-                                    <div class="order-item-info">
-                                        <div class="order-item-prop-block">
-                                            <a href="#" class="order-item-name">
-                                                Жіночий бомбер Stimma Ешалін хакі
-                                            </a>
-                                            <div class="order-item-prop-cont">
-                                                <div class="order-item-prop">
-                                                    <div class="order-item-size">
-                                                        Розмір:
-                                                        <select class="form-select">
-                                                            <option>S</option>
-                                                            <option>M</option>
-                                                            <option>L</option>
-                                                            <option>XL</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="order-item-color">
-                                                        Колір:
-                                                        <span style="background: #635240;"> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="order-item-price-block">
-                                            <div class="order-item-price">
-                                                7 198 ₴
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="order-item-control">
-                                        <div class="order-item-counter">
-                                            <button class="order-item-counter-btn">
-                                                <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
-                                                </svg>
-                                            </button>
-                                            <input type="text" name="" value="1">
-                                            <button class="order-item-counter-btn">
-                                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect x="6" width="1" height="13" fill="white"></rect>
-                                                    <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <a href="#" class="order-item-delete">Видалити</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="order-item order-item-bonus">
-                                <div class="order-item-img">
-                                    <a href="#">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/headbask2.png">
-                                    </a>
-                                </div>
-                                <div class="order-item-info-block">
-                                    <div class="order-item-info">
-                                        <div class="order-item-prop-block">
-                                            <a href="#" class="order-item-name">
-                                                Жіноча сумка Stimma Глорія шоколадний
-                                            </a>
-                                            <div class="order-item-prop-cont">
-                                                <div class="order-item-size">
-                                                    Придбати за
-                                                    <select class="form-select">
-                                                        <option>стімз</option>
-                                                        <option>гривні</option>
-                                                    </select>
-                                                </div>
-                                                <div class="order-item-prop">
-                                                    <div class="order-item-color">
-                                                        Колір:
-                                                        <span style="background: #635240;"> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="order-item-price-block">
-                                            <div class="basket-header-item-price-bonus">
-                                                500
-                                                <span class="icon">
-						                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-						                                    <circle cx="11" cy="11" r="11" fill="#FE9D56"></circle>
-						                                    <path d="M16.8827 12.5402C16.8827 13.0704 16.7849 13.5382 16.593 13.9318C16.4028 14.3199 16.1462 14.6519 15.8278 14.9207C15.5201 15.1803 15.1613 15.3911 14.7603 15.5458C14.3827 15.6915 13.9808 15.8055 13.5673 15.8851C13.16 15.9629 12.7429 16.0145 12.3285 16.038C11.9239 16.0625 11.5337 16.0742 11.1677 16.0742C10.2061 16.0742 9.30099 15.9928 8.47841 15.8326C7.65942 15.6725 6.92296 15.4707 6.29055 15.231L5.98377 15.1143V11.6952L6.68615 12.0888C7.27639 12.4181 7.96083 12.6814 8.72151 12.8687C9.48757 13.0578 10.32 13.1537 11.1955 13.1537C11.7095 13.1537 12.1293 13.1265 12.4433 13.0741C12.8147 13.0107 13.0192 12.9383 13.125 12.8886C13.282 12.8153 13.3206 12.7646 13.3215 12.7646C13.3358 12.742 13.343 12.7266 13.3457 12.7185C13.3421 12.7167 13.3322 12.7058 13.3143 12.6913C13.2488 12.6371 13.1223 12.5556 12.89 12.4724C12.672 12.3937 12.4092 12.3195 12.1114 12.2516C11.7983 12.1811 11.4646 12.1096 11.113 12.039C10.7542 11.9666 10.3855 11.8879 10.0061 11.8047C9.61585 11.7178 9.23282 11.6147 8.86593 11.498C8.49277 11.3795 8.13306 11.2383 7.79846 11.0791C7.44503 10.9108 7.12838 10.7072 6.85838 10.4747C6.57402 10.2286 6.34617 9.93908 6.18022 9.61427C6.00889 9.2768 5.92188 8.88685 5.92188 8.45529C5.92188 7.9631 6.01248 7.5261 6.19009 7.15696C6.36501 6.79235 6.60541 6.47749 6.90412 6.22054C7.19207 5.97264 7.52756 5.76997 7.90162 5.61707C8.25416 5.47231 8.63091 5.35831 9.02112 5.27869C9.40236 5.20088 9.79346 5.1466 10.1828 5.11765C10.5658 5.08869 10.9345 5.07422 11.278 5.07422C11.6575 5.07422 12.054 5.09412 12.4558 5.13212C12.8532 5.17012 13.2524 5.22441 13.6399 5.29407C14.023 5.36193 14.4006 5.44245 14.7639 5.53293C15.1227 5.6234 15.4609 5.71931 15.7695 5.81974L16.0969 5.9265V9.24604L15.4169 8.91219C15.2537 8.83166 15.0285 8.73666 14.7487 8.63081C14.4715 8.52586 14.1503 8.42452 13.7951 8.32952C13.4408 8.23453 13.0497 8.154 12.6326 8.08976C12.2208 8.02643 11.7929 7.99476 11.3606 7.99476C11.0098 7.99476 10.7075 8.00562 10.4626 8.02734C10.2222 8.04905 10.0204 8.0771 9.86253 8.10967C9.68761 8.14586 9.59432 8.18114 9.54678 8.20286C9.53153 8.2101 9.51897 8.21643 9.50731 8.22276C9.58086 8.27162 9.70376 8.33586 9.90021 8.40281C10.1227 8.4779 10.3864 8.55119 10.686 8.61905C11.0018 8.69052 11.3364 8.76381 11.6898 8.83981C12.0495 8.91671 12.42 9.00085 12.8021 9.09223C13.1941 9.18542 13.5789 9.2958 13.9458 9.42066C14.3217 9.54732 14.6823 9.69751 15.016 9.8658C15.3676 10.0431 15.6825 10.2548 15.9516 10.4946C16.235 10.7479 16.462 11.0438 16.6261 11.3749C16.7966 11.7187 16.8827 12.1105 16.8827 12.5402Z" fill="white"></path>
-						                                </svg>
-						                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="order-item-control">
-                                        <div class="order-item-counter">
-                                            <button class="order-item-counter-btn">
-                                                <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
-                                                </svg>
-                                            </button>
-                                            <input type="text" name="" value="1">
-                                            <button class="order-item-counter-btn">
-                                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect x="6" width="1" height="13" fill="white"></rect>
-                                                    <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <a href="#" class="order-item-delete">Видалити</a>
-                                    </div>
-                                </div>
-                            </div>
-                            */?>
-                            </div>
+                            
                             <div class="order-detail-item">
                                 <div class="order-detail-title">
 			        				<span class="icon">
@@ -1691,14 +1477,14 @@ else
                                             }
                                             if($arResult['IS_ACTION_APRIL_2026'] == 1 && $isAprilAction)
                                             {
-                                                $minus_price += 800;
+                                                $minus_price += 1000;
                                                 ?>
                                                 <div class="order-total-price-item">
                                                     <div class="order-total-price-key">
                                                         Знижка
                                                     </div>
                                                     <div class="order-total-price-value">
-                                                        -800 ₴
+                                                        -1000 ₴
                                                     </div>
                                                 </div>
                                                 <?
@@ -1728,7 +1514,6 @@ else
                                     <div class="form-btn">
 
                                         <?
-                                        $isAprilAction = strtotime(date('20.04.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('31.05.2026 23:59:59'));
 
                                         if($stims > $balance)
                                         {
@@ -1738,7 +1523,7 @@ else
                                         {
                                             if(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) == 1)
                                             {
-                                                ?><span>Додай ще 3 речі з інших категорій одягу — і отримай -800 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Додай ще 3 речі з інших категорій одягу — і отримай -1000 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
                                             elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) < 3 && count($arResult['ALL_QUANTITY_LEFT_SECTION']) >= 3)
                                             {
@@ -1746,27 +1531,27 @@ else
                                             }
                                             elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) == 2)
                                             {
-                                                ?><span>Додай ще 2 річ з іншої категорії одягу — і твої -800 грн уже чекають.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Додай ще 2 річ з іншої категорії одягу — і твої -1000 грн уже чекають.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
-                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price < 4500 && $arResult['QUANTITY_PRODUCTS'] <= 4)
+                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price < 0 && $arResult['QUANTITY_PRODUCTS'] <= 4)
                                             {
-                                                ?><span>Додай ще 1 річ — і отримай -800 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Додай ще 1 річ — і отримай -1000 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
-                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price >= 4500 && $arResult['QUANTITY_PRODUCTS'] < 4)
+                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price >= 0 && $arResult['QUANTITY_PRODUCTS'] < 4)
                                             {
-                                                ?><span>Додай ще 1 річ — і отримай -800 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Додай ще 1 річ — і отримай -1000 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
-                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price < 4500 )
+                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price < 0 )
                                             {
-                                                ?><span>Ти вже майже у виграші. Додай ще товарів на <?=4500-($alLSum-$minus_price)?> грн, щоб отримати -800 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Ти вже майже у виграші. Додай ще товарів на <?=0-($alLSum-$minus_price)?> грн, щоб отримати -1000 грн.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
-                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price >= 4500 && $arResult['QUANTITY_PRODUCTS'] >= 4)
+                                            elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price >= 0 && $arResult['QUANTITY_PRODUCTS'] >= 4)
                                             {
-                                                ?><span>Готово — твої -800 грн уже в кошику.</span><?
+                                                ?><span>Готово — твої -1000 грн уже в кошику.</span><?
                                             }
                                             elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) == 0 && count($arResult['ALL_QUANTITY_LEFT_SECTION_ACCS']))
                                             {
-                                                ?><span>Акція діє лише на одяг. Додай речі з категорії одягу, щоб отримати -800 грн.</span><?
+                                                ?><span>Акція діє лише на одяг. Додай речі з категорії одягу, щоб отримати -1000 грн.</span><?
                                             }
                                             ?>
 
@@ -2314,11 +2099,6 @@ else
                                             {
                                                 //while (ob_get_level() > 0)
                                                 //    ob_end_flush(); // Или ob_end_clean / ob_end_flush()
-
-
-
-
-
                                                 $params = [
                                                         'IBLOCK_TYPE' => 'aspro_max_catalog',
                                                         'IBLOCK_ID' => '21',
@@ -2597,221 +2377,453 @@ else
                             }
                             ?>
                             <?/*
-                        <div class="order-dop-goods-block">
-                            <div class="order-dop-goods-title">
-                                Доповнити образ
+                                <div class="order-dop-goods-block">
+                                    <div class="order-dop-goods-title">
+                                        Доповнити образ
+                                    </div>
+                                    <div class="order-dop-goods-list">
+                                        <div class="order-dop-goods">
+                                            <div class="catalog-item">
+                                                <div class="catalog-item-top">
+                                                    <div class="catalog-item-img">
+                                                        <a href="#">
+                                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg1.png">
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-favorite">
+                                                        <a href="#">
+                                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-more-info">
+                                                        <div class="catalog-item-btn-buy">
+                                                            <a href="#">
+                                                                Додати до кошика
+                                                            </a>
+                                                        </div>
+                                                        <div class="catalog-item-size-list">
+                                                            <label>
+                                                                <input type="radio" name="radio1">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio1">
+                                                                <span class="catalog-item-size">
+        		                                                        S
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio1">
+                                                                <span class="catalog-item-size">
+        		                                                        M
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio1">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="catalog-item-info">
+                                                    <a href="#" class="catalog-item-name">
+                                                        Жіночий лонгслів Stimma Саймін Теракотовий
+                                                    </a>
+                                                    <div class="catalog-item-details">
+                                                        <div class="catalog-item-price-block">
+                                                            <div class="catalog-item-price">
+                                                                799 ₴
+                                                            </div>
+                                                        </div>
+                                                        <div class="catalog-item-color-block">
+                                                            <a href="#" style="background:#CB594F ;">
+                                                            </a>
+                                                            <a href="#" style="background:#8B5231 ;">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-dop-goods">
+                                            <div class="catalog-item">
+                                                <div class="catalog-item-top">
+                                                    <div class="catalog-item-img">
+                                                        <a href="#">
+                                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg2.png">
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-favorite">
+                                                        <a href="#">
+                                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-more-info">
+                                                        <div class="catalog-item-btn-buy">
+                                                            <a href="#">
+                                                                Додати до кошика
+                                                            </a>
+                                                        </div>
+                                                        <div class="catalog-item-size-list">
+                                                            <label>
+                                                                <input type="radio" name="radio2">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio2">
+                                                                <span class="catalog-item-size">
+        		                                                        S
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio2">
+                                                                <span class="catalog-item-size">
+        		                                                        M
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio2">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="catalog-item-info">
+                                                    <a href="#" class="catalog-item-name">
+                                                        Жіноча куртка Stimma Анір
+                                                    </a>
+                                                    <div class="catalog-item-details">
+                                                        <div class="catalog-item-price-block">
+                                                            <div class="catalog-item-price">
+                                                                3 699 ₴
+                                                            </div>
+                                                        </div>
+                                                        <div class="catalog-item-color-block">
+                                                            <a href="#" style="background:#CB594F ;">
+                                                            </a>
+                                                            <a href="#" style="background:#8B5231 ;">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-dop-goods">
+                                            <div class="catalog-item">
+                                                <div class="catalog-item-top">
+                                                    <div class="catalog-item-img">
+                                                        <a href="#">
+                                                            <img src="/bitrix/templates/stimma_new/images/imgnew/catimg3.png">
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-favorite">
+                                                        <a href="#">
+                                                            <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
+                                                            </svg>
+                                                        </a>
+                                                    </div>
+                                                    <div class="catalog-item-more-info">
+                                                        <div class="catalog-item-btn-buy">
+                                                            <a href="#">
+                                                                Додати до кошика
+                                                            </a>
+                                                        </div>
+                                                        <div class="catalog-item-size-list">
+                                                            <label>
+                                                                <input type="radio" name="radio3">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio3">
+                                                                <span class="catalog-item-size">
+        		                                                        S
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio3">
+                                                                <span class="catalog-item-size">
+        		                                                        M
+        		                                                    </span>
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="radio3">
+                                                                <span class="catalog-item-size">
+        		                                                        XS
+        		                                                    </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="catalog-item-info">
+                                                    <a href="#" class="catalog-item-name">
+                                                        Жіноча сукня Stimma Памо коричневий
+                                                    </a>
+                                                    <div class="catalog-item-details">
+                                                        <div class="catalog-item-price-block">
+                                                            <div class="catalog-item-price">
+                                                                1 999 ₴
+                                                            </div>
+                                                        </div>
+                                                        <div class="catalog-item-color-block">
+                                                            <a href="#" style="background:#CB594F ;">
+                                                            </a>
+                                                            <a href="#" style="background:#8B5231 ;">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                */?>
+                            <div class="order-detail-elements">
+                                <?
+                                $alLSum=$totalCount=0;
+                                $totalBonus = 0;
+                                $totalBonusPrice = $ids = [];
+                                $totalSum = [];
+                                foreach($basket as $index => $item)
+                                {
+                                    $ids = $item['PRODUCT_ID'];
+                                    $totalCount++;
+                                    $item = $item['data'];
+                                    $price = CCatalogProduct::GetOptimalPrice($item['PRODUCT_ID'])['RESULT_PRICE'];
+                                    $alLSum += $item['PRICE']*$item['QUANTITY'];
+
+                                    $product = CIBlockElement::GetByID($item['PRODUCT_ID'])->GetNextElement();
+                                    ?>
+                                    <div class="order-item">
+                                        <div class="order-item-img">
+                                            <a href="<?=$item['DPU']?>">
+                                                <img src="<?=$item['PREVIEW_PICTURE_SRC']?>">
+                                            </a>
+                                        </div>
+                                        <div class="order-item-info-block">
+                                            <div class="order-item-info">
+                                                <div class="order-item-prop-block">
+                                                    <a href="<?=$item['DPU']?>" class="order-item-name">
+                                                        <?=$item['NAME']?>
+                                                    </a>
+                                                    <?
+                                                    if(isset($withStims[$item['ID']]))
+                                                    {
+                                                        ?>
+                                                        <div class="order-item-price-block">
+                                                            <div class="basket-header-item-price-bonus">
+                                                                <?=$withStims[$item['ID']]['UF_STIMS']?>
+                                                                <span class="icon">
+                                                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <circle cx="11" cy="11" r="11" fill="#FE9D56"></circle>
+                                                                        <path d="M16.8827 12.5402C16.8827 13.0704 16.7849 13.5382 16.593 13.9318C16.4028 14.3199 16.1462 14.6519 15.8278 14.9207C15.5201 15.1803 15.1613 15.3911 14.7603 15.5458C14.3827 15.6915 13.9808 15.8055 13.5673 15.8851C13.16 15.9629 12.7429 16.0145 12.3285 16.038C11.9239 16.0625 11.5337 16.0742 11.1677 16.0742C10.2061 16.0742 9.30099 15.9928 8.47841 15.8326C7.65942 15.6725 6.92296 15.4707 6.29055 15.231L5.98377 15.1143V11.6952L6.68615 12.0888C7.27639 12.4181 7.96083 12.6814 8.72151 12.8687C9.48757 13.0578 10.32 13.1537 11.1955 13.1537C11.7095 13.1537 12.1293 13.1265 12.4433 13.0741C12.8147 13.0107 13.0192 12.9383 13.125 12.8886C13.282 12.8153 13.3206 12.7646 13.3215 12.7646C13.3358 12.742 13.343 12.7266 13.3457 12.7185C13.3421 12.7167 13.3322 12.7058 13.3143 12.6913C13.2488 12.6371 13.1223 12.5556 12.89 12.4724C12.672 12.3937 12.4092 12.3195 12.1114 12.2516C11.7983 12.1811 11.4646 12.1096 11.113 12.039C10.7542 11.9666 10.3855 11.8879 10.0061 11.8047C9.61585 11.7178 9.23282 11.6147 8.86593 11.498C8.49277 11.3795 8.13306 11.2383 7.79846 11.0791C7.44503 10.9108 7.12838 10.7072 6.85838 10.4747C6.57402 10.2286 6.34617 9.93908 6.18022 9.61427C6.00889 9.2768 5.92188 8.88685 5.92188 8.45529C5.92188 7.9631 6.01248 7.5261 6.19009 7.15696C6.36501 6.79235 6.60541 6.47749 6.90412 6.22054C7.19207 5.97264 7.52756 5.76997 7.90162 5.61707C8.25416 5.47231 8.63091 5.35831 9.02112 5.27869C9.40236 5.20088 9.79346 5.1466 10.1828 5.11765C10.5658 5.08869 10.9345 5.07422 11.278 5.07422C11.6575 5.07422 12.054 5.09412 12.4558 5.13212C12.8532 5.17012 13.2524 5.22441 13.6399 5.29407C14.023 5.36193 14.4006 5.44245 14.7639 5.53293C15.1227 5.6234 15.4609 5.71931 15.7695 5.81974L16.0969 5.9265V9.24604L15.4169 8.91219C15.2537 8.83166 15.0285 8.73666 14.7487 8.63081C14.4715 8.52586 14.1503 8.42452 13.7951 8.32952C13.4408 8.23453 13.0497 8.154 12.6326 8.08976C12.2208 8.02643 11.7929 7.99476 11.3606 7.99476C11.0098 7.99476 10.7075 8.00562 10.4626 8.02734C10.2222 8.04905 10.0204 8.0771 9.86253 8.10967C9.68761 8.14586 9.59432 8.18114 9.54678 8.20286C9.53153 8.2101 9.51897 8.21643 9.50731 8.22276C9.58086 8.27162 9.70376 8.33586 9.90021 8.40281C10.1227 8.4779 10.3864 8.55119 10.686 8.61905C11.0018 8.69052 11.3364 8.76381 11.6898 8.83981C12.0495 8.91671 12.42 9.00085 12.8021 9.09223C13.1941 9.18542 13.5789 9.2958 13.9458 9.42066C14.3217 9.54732 14.6823 9.69751 15.016 9.8658C15.3676 10.0431 15.6825 10.2548 15.9516 10.4946C16.235 10.7479 16.462 11.0438 16.6261 11.3749C16.7966 11.7187 16.8827 12.1105 16.8827 12.5402Z" fill="white"></path>
+                                                                    </svg>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <?
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>
+                                                        <div class="order-item-price-block">
+                                                            <?
+                                                            if($price['BASE_PRICE'] > $item['PRICE'])
+                                                            {
+                                                                ?><div class="order-list-price-old"><?=FormatCurrency($price['BASE_PRICE']*$item['QUANTITY'],'UAH')?></div><?
+                                                            }
+                                                            ?>
+                                                            <div class="order-item-price">
+                                                                <?=FormatCurrency($item['QUANTITY']*$item['PRICE'], 'UAH')?>
+                                                            </div>
+                                                        </div>
+                                                        <?
+                                                    }
+                                                    ?>
+                                                    
+                                                </div>
+                                                <div class="order-item-prop-cont">
+                                                    <div class="order-item-prop">
+                                                        <div class="order-item-size">
+                                                            <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
+                                                            <?/*
+                                                        <select class="form-select">
+                                                            <option>S</option>
+                                                            <option>M</option>
+                                                            <option>L</option>
+                                                            <option>XL</option>
+                                                        </select>
+                                                        */?>
+                                                        </div>
+                                                        <div class="order-item-color">
+                                                            Колір:
+                                                            <span style="background: <?=$colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE']?>;"> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="order-item-control">
+                                                <div class="order-item-counter">
+                                                    <button class="order-item-counter-btn minus_count" data-id="<?=$item['ID']?>">
+                                                        <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
+                                                        </svg>
+                                                    </button>
+                                                    <input type="text" name="" value="<?=$item['QUANTITY']?>">
+                                                    <button class="order-item-counter-btn plus_count" data-id="<?=$item['ID']?>">
+                                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="6" width="1" height="13" fill="white"></rect>
+                                                            <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <?
+                                                if($item['ID'])
+                                                {
+                                                    ?>
+                                                    <a href="?remove=<?=$item['ID']?>"  data-leave="free" class="order-item-delete">Видалити</a>
+                                                    <?
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?
+                                }
+
+                                ?>
+                                <?/*
+                                <div class="order-item">
+                                    <div class="order-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/headbask1.png">
+                                        </a>
+                                    </div>
+                                    <div class="order-item-info-block">
+                                        <div class="order-item-info">
+                                            <div class="order-item-prop-block">
+                                                <a href="#" class="order-item-name">
+                                                    Жіночий бомбер Stimma Ешалін хакі
+                                                </a>
+                                                <div class="order-item-prop-cont">
+                                                    <div class="order-item-prop">
+                                                        <div class="order-item-size">
+                                                            Розмір:
+                                                            <select class="form-select">
+                                                                <option>S</option>
+                                                                <option>M</option>
+                                                                <option>L</option>
+                                                                <option>XL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="order-item-color">
+                                                            Колір:
+                                                            <span style="background: #635240;"> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="order-item-price-block">
+                                                <div class="order-item-price">
+                                                    7 198 ₴
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-item-control">
+                                            <div class="order-item-counter">
+                                                <button class="order-item-counter-btn">
+                                                    <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
+                                                    </svg>
+                                                </button>
+                                                <input type="text" name="" value="1">
+                                                <button class="order-item-counter-btn">
+                                                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="6" width="1" height="13" fill="white"></rect>
+                                                        <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <a href="#" class="order-item-delete">Видалити</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="order-item order-item-bonus">
+                                    <div class="order-item-img">
+                                        <a href="#">
+                                            <img src="/bitrix/templates/stimma_new/images/imgnew/headbask2.png">
+                                        </a>
+                                    </div>
+                                    <div class="order-item-info-block">
+                                        <div class="order-item-info">
+                                            <div class="order-item-prop-block">
+                                                <a href="#" class="order-item-name">
+                                                    Жіноча сумка Stimma Глорія шоколадний
+                                                </a>
+                                                <div class="order-item-prop-cont">
+                                                    <div class="order-item-size">
+                                                        Придбати за
+                                                        <select class="form-select">
+                                                            <option>стімз</option>
+                                                            <option>гривні</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="order-item-prop">
+                                                        <div class="order-item-color">
+                                                            Колір:
+                                                            <span style="background: #635240;"> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="order-item-price-block">
+                                                <div class="basket-header-item-price-bonus">
+                                                    500
+                                                    <span class="icon">
+                                                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <circle cx="11" cy="11" r="11" fill="#FE9D56"></circle>
+                                                                <path d="M16.8827 12.5402C16.8827 13.0704 16.7849 13.5382 16.593 13.9318C16.4028 14.3199 16.1462 14.6519 15.8278 14.9207C15.5201 15.1803 15.1613 15.3911 14.7603 15.5458C14.3827 15.6915 13.9808 15.8055 13.5673 15.8851C13.16 15.9629 12.7429 16.0145 12.3285 16.038C11.9239 16.0625 11.5337 16.0742 11.1677 16.0742C10.2061 16.0742 9.30099 15.9928 8.47841 15.8326C7.65942 15.6725 6.92296 15.4707 6.29055 15.231L5.98377 15.1143V11.6952L6.68615 12.0888C7.27639 12.4181 7.96083 12.6814 8.72151 12.8687C9.48757 13.0578 10.32 13.1537 11.1955 13.1537C11.7095 13.1537 12.1293 13.1265 12.4433 13.0741C12.8147 13.0107 13.0192 12.9383 13.125 12.8886C13.282 12.8153 13.3206 12.7646 13.3215 12.7646C13.3358 12.742 13.343 12.7266 13.3457 12.7185C13.3421 12.7167 13.3322 12.7058 13.3143 12.6913C13.2488 12.6371 13.1223 12.5556 12.89 12.4724C12.672 12.3937 12.4092 12.3195 12.1114 12.2516C11.7983 12.1811 11.4646 12.1096 11.113 12.039C10.7542 11.9666 10.3855 11.8879 10.0061 11.8047C9.61585 11.7178 9.23282 11.6147 8.86593 11.498C8.49277 11.3795 8.13306 11.2383 7.79846 11.0791C7.44503 10.9108 7.12838 10.7072 6.85838 10.4747C6.57402 10.2286 6.34617 9.93908 6.18022 9.61427C6.00889 9.2768 5.92188 8.88685 5.92188 8.45529C5.92188 7.9631 6.01248 7.5261 6.19009 7.15696C6.36501 6.79235 6.60541 6.47749 6.90412 6.22054C7.19207 5.97264 7.52756 5.76997 7.90162 5.61707C8.25416 5.47231 8.63091 5.35831 9.02112 5.27869C9.40236 5.20088 9.79346 5.1466 10.1828 5.11765C10.5658 5.08869 10.9345 5.07422 11.278 5.07422C11.6575 5.07422 12.054 5.09412 12.4558 5.13212C12.8532 5.17012 13.2524 5.22441 13.6399 5.29407C14.023 5.36193 14.4006 5.44245 14.7639 5.53293C15.1227 5.6234 15.4609 5.71931 15.7695 5.81974L16.0969 5.9265V9.24604L15.4169 8.91219C15.2537 8.83166 15.0285 8.73666 14.7487 8.63081C14.4715 8.52586 14.1503 8.42452 13.7951 8.32952C13.4408 8.23453 13.0497 8.154 12.6326 8.08976C12.2208 8.02643 11.7929 7.99476 11.3606 7.99476C11.0098 7.99476 10.7075 8.00562 10.4626 8.02734C10.2222 8.04905 10.0204 8.0771 9.86253 8.10967C9.68761 8.14586 9.59432 8.18114 9.54678 8.20286C9.53153 8.2101 9.51897 8.21643 9.50731 8.22276C9.58086 8.27162 9.70376 8.33586 9.90021 8.40281C10.1227 8.4779 10.3864 8.55119 10.686 8.61905C11.0018 8.69052 11.3364 8.76381 11.6898 8.83981C12.0495 8.91671 12.42 9.00085 12.8021 9.09223C13.1941 9.18542 13.5789 9.2958 13.9458 9.42066C14.3217 9.54732 14.6823 9.69751 15.016 9.8658C15.3676 10.0431 15.6825 10.2548 15.9516 10.4946C16.235 10.7479 16.462 11.0438 16.6261 11.3749C16.7966 11.7187 16.8827 12.1105 16.8827 12.5402Z" fill="white"></path>
+                                                            </svg>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-item-control">
+                                            <div class="order-item-counter">
+                                                <button class="order-item-counter-btn">
+                                                    <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
+                                                    </svg>
+                                                </button>
+                                                <input type="text" name="" value="1">
+                                                <button class="order-item-counter-btn">
+                                                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="6" width="1" height="13" fill="white"></rect>
+                                                        <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <a href="#" class="order-item-delete">Видалити</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                */?>
                             </div>
-                            <div class="order-dop-goods-list">
-                                <div class="order-dop-goods">
-                                    <div class="catalog-item">
-                                        <div class="catalog-item-top">
-                                            <div class="catalog-item-img">
-                                                <a href="#">
-                                                    <img src="/bitrix/templates/stimma_new/images/imgnew/catimg1.png">
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-favorite">
-                                                <a href="#">
-                                                    <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-more-info">
-                                                <div class="catalog-item-btn-buy">
-                                                    <a href="#">
-                                                        Додати до кошика
-                                                    </a>
-                                                </div>
-                                                <div class="catalog-item-size-list">
-                                                    <label>
-                                                        <input type="radio" name="radio1">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio1">
-                                                        <span class="catalog-item-size">
-		                                                        S
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio1">
-                                                        <span class="catalog-item-size">
-		                                                        M
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio1">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="catalog-item-info">
-                                            <a href="#" class="catalog-item-name">
-                                                Жіночий лонгслів Stimma Саймін Теракотовий
-                                            </a>
-                                            <div class="catalog-item-details">
-                                                <div class="catalog-item-price-block">
-                                                    <div class="catalog-item-price">
-                                                        799 ₴
-                                                    </div>
-                                                </div>
-                                                <div class="catalog-item-color-block">
-                                                    <a href="#" style="background:#CB594F ;">
-                                                    </a>
-                                                    <a href="#" style="background:#8B5231 ;">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order-dop-goods">
-                                    <div class="catalog-item">
-                                        <div class="catalog-item-top">
-                                            <div class="catalog-item-img">
-                                                <a href="#">
-                                                    <img src="/bitrix/templates/stimma_new/images/imgnew/catimg2.png">
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-favorite">
-                                                <a href="#">
-                                                    <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-more-info">
-                                                <div class="catalog-item-btn-buy">
-                                                    <a href="#">
-                                                        Додати до кошика
-                                                    </a>
-                                                </div>
-                                                <div class="catalog-item-size-list">
-                                                    <label>
-                                                        <input type="radio" name="radio2">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio2">
-                                                        <span class="catalog-item-size">
-		                                                        S
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio2">
-                                                        <span class="catalog-item-size">
-		                                                        M
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio2">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="catalog-item-info">
-                                            <a href="#" class="catalog-item-name">
-                                                Жіноча куртка Stimma Анір
-                                            </a>
-                                            <div class="catalog-item-details">
-                                                <div class="catalog-item-price-block">
-                                                    <div class="catalog-item-price">
-                                                        3 699 ₴
-                                                    </div>
-                                                </div>
-                                                <div class="catalog-item-color-block">
-                                                    <a href="#" style="background:#CB594F ;">
-                                                    </a>
-                                                    <a href="#" style="background:#8B5231 ;">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="order-dop-goods">
-                                    <div class="catalog-item">
-                                        <div class="catalog-item-top">
-                                            <div class="catalog-item-img">
-                                                <a href="#">
-                                                    <img src="/bitrix/templates/stimma_new/images/imgnew/catimg3.png">
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-favorite">
-                                                <a href="#">
-                                                    <svg width="28" height="23" viewBox="0 0 28 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M14 23C13.8583 23 13.7168 22.9653 13.5899 22.8957C13.4521 22.8201 10.1779 21.0146 6.85673 18.294C4.88831 16.6816 3.31704 15.0824 2.18665 13.5408C0.723873 11.5459 -0.0117258 9.62715 0.000141317 7.83764C0.0140319 5.75534 0.799287 3.79707 2.21142 2.32351C3.6474 0.825129 5.56376 0 7.60758 0C10.2269 0 12.6218 1.39357 14 3.60115C15.3783 1.39362 17.7731 0 20.3925 0C22.3234 0 24.1656 0.744518 25.5801 2.09643C27.1323 3.58001 28.0143 5.67623 27.9998 7.84751C27.9879 9.6339 27.2385 11.5498 25.7725 13.5419C24.6386 15.0827 23.0695 16.6812 21.1088 18.2931C17.7998 21.0134 14.5492 22.8189 14.4124 22.8945C14.2849 22.9648 14.1424 23 14 23Z" fill="currentcolor"/>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                            <div class="catalog-item-more-info">
-                                                <div class="catalog-item-btn-buy">
-                                                    <a href="#">
-                                                        Додати до кошика
-                                                    </a>
-                                                </div>
-                                                <div class="catalog-item-size-list">
-                                                    <label>
-                                                        <input type="radio" name="radio3">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio3">
-                                                        <span class="catalog-item-size">
-		                                                        S
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio3">
-                                                        <span class="catalog-item-size">
-		                                                        M
-		                                                    </span>
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="radio3">
-                                                        <span class="catalog-item-size">
-		                                                        XS
-		                                                    </span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="catalog-item-info">
-                                            <a href="#" class="catalog-item-name">
-                                                Жіноча сукня Stimma Памо коричневий
-                                            </a>
-                                            <div class="catalog-item-details">
-                                                <div class="catalog-item-price-block">
-                                                    <div class="catalog-item-price">
-                                                        1 999 ₴
-                                                    </div>
-                                                </div>
-                                                <div class="catalog-item-color-block">
-                                                    <a href="#" style="background:#CB594F ;">
-                                                    </a>
-                                                    <a href="#" style="background:#8B5231 ;">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        */?>
                         </div>
                     </div>
                 </div>

@@ -547,7 +547,7 @@ if (!in_array(9, $uGroups) && false)
 // -800 грн для замовлення від 4500 та 3 товари з різних категорій , Акція була з 20,04,2026)
 $arResult['IS_ACTION_APRIL_2026'] = 0;
 $uGroups = $USER->GetUserGroupArray();
-$isAprilAction = strtotime(date('20.04.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('31.05.2026 23:59:59'));
+$isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 if (!in_array(9, $uGroups))
 {
     if(($isAprilAction || $USER->IsAdmin()))
@@ -555,7 +555,7 @@ if (!in_array(9, $uGroups))
         global $DB,$USER;
 
         $uGroups = explode(',',$USER -> GetGroups());
-        $allAmountLeft = 4500;
+        $allAmountLeft = 0;
         $allQuantityLeftSection=$allQuantityLeftSectionAccs=[];
         $activeIndex = -1;
         $excludeSections=[361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311]; // sale + Аксесури + Бонусна шафа
@@ -581,7 +581,7 @@ if (!in_array(9, $uGroups))
 
 
 
-                if($Row['data']['QUANTITY'] == 1 && $activeIndex == -1 && $Row['data']['PRICE'] > 800) // 800 - розмір знижки
+                if($Row['data']['QUANTITY'] == 1 && $activeIndex == -1 && $Row['data']['PRICE'] > 1000) // 1000 - розмір знижки
                     $activeIndex = $index;
 
                 $isSale = $DB->Query('select * from b_iblock_section_element where IBLOCK_ELEMENT_ID = ' . $productId . ' and IBLOCK_SECTION_ID in (352,361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311)'); // sale + Аксесури + Бонусна шафа
@@ -616,7 +616,7 @@ if (!in_array(9, $uGroups))
             $arResult['ALL_QUANTITY_LEFT_SECTION_ACCS'] = $allQuantityLeftSectionAccs;
             $arResult['QUANTITY_PRODUCTS'] = $quantityProduct;
 
-            if($allQuantityLeft <= 0 && $allSum >= 4500 && count(array_unique($allQuantityLeftSection)) >= 3 && $quantityProduct >= 4)
+            if($allQuantityLeft <= 0 && $allSum >= 0 && count(array_unique($allQuantityLeftSection)) >= 3 && $quantityProduct >= 4)
             {
                 //$sqls = [];
                 //$sqls[]='update b_sale_order set PRICE = PRICE - 800, DISCOUNT_VALUE = 800 where ID = #ORDER_ID#';
@@ -626,7 +626,7 @@ if (!in_array(9, $uGroups))
                     //$arResult['JS_DATA']['GRID']['ROWS'][$activeIndex]['data']['PRICE'] -= 800;
                     $row = $arResult['JS_DATA']['GRID']['ROWS'][$activeIndex];
 
-                    $sqls[] = 'update b_sale_basket set PRICE = '.($row['data']['PRICE']-800).', BASE_PRICE = '.$row['data']['BASE_PRICE'] . ' where ID = ' . $row['id'];
+                    $sqls[] = 'update b_sale_basket set PRICE = '.($row['data']['PRICE']-1000).', BASE_PRICE = '.$row['data']['BASE_PRICE'] . ' where ID = ' . $row['id'];
                 }
                 $arResult['IS_ACTION_APRIL_2026'] = 1;
                 $arResult['SQLS'] = $sqls;

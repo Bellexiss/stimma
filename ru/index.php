@@ -1238,7 +1238,7 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
         <div class="sss-info-block">
             <div class="sss-info-top">
                 <div class="sss-info-img">
-                    <img src="/bitrix/templates/stimma/images/sss-info-img1.png">
+                    <img src="/bitrix/templates/stimma_new/images/sss-info-img2.jpg">
                 </div>
                 <div class="sss-info-text-block">
                     <div class="sss-info-title">

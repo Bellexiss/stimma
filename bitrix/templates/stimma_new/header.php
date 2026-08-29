@@ -27,8 +27,8 @@ checkGlobalRedirect();
 
 
 $currtime = strtotime(date('d.m.Y H:i:s'));
-$startAction = strtotime('21.08.2026 00:00:01');
-$endAction = strtotime('23.08.2026 23:59:59');
+$startAction = strtotime('01.09.2026 00:00:01');
+$endAction = strtotime('30.09.2026 23:59:59');
 
 $rizn = isset($_SESSION['DATE_CLAUDE']) ? $currtime-$_SESSION['DATE_CLAUDE'] : 3000;
 
@@ -82,7 +82,7 @@ $basketCount = getBasketCount();
 
     <!-- <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/styles.css"> -->
 
-    <meta name="google-site-verification" content="T5kBM8Wp5zJaMgfHMsKRgpfb_TUXeiqDMxdwIh5uYsU" />
+    <meta name="google-site-verification" content="mFID9clxF5FvXcQsy63amyVXr1JaRPRTg-rHsFVDtUs" />
 
     <?//$APPLICATION->ShowMeta("viewport");?>
 	<?$APPLICATION->ShowMeta("HandheldFriendly");?>
@@ -1064,7 +1064,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/delitakate_1279.jpg">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg">
                         </div>
                     </div>
 
@@ -1294,7 +1294,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/delitakate_1279.jpg">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg">
                         </div>
                     </div>
                 </div>

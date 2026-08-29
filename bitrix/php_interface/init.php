@@ -975,8 +975,8 @@ function getBasketNewHtml($basket = false)
     ob_start();
 
     $currtime = strtotime(date('d.m.Y H:i:s'));
-    $startAction =strtotime('21.08.2026 00:00:01');
-    $endAction = strtotime('23.08.2026 23:59:59');
+    $startAction =strtotime('01.09.2026 00:00:01');
+    $endAction = strtotime('30.09.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
 
@@ -1347,13 +1347,13 @@ function getBasketNewHtml($basket = false)
                     // -800 грн для замовлення від 4500 та 3 товари з різних категорій , Акція була з 20,04,2026)
                     $arResult['IS_ACTION_APRIL_2026'] = 0;
                     $uGroups = $USER->GetUserGroupArray();
-                    $isAprilAction = strtotime(date('20.04.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('31.05.2026 23:59:59'));
+                    $isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
                     if($isAprilAction && in_array(9, $uGroups)) $isAprilAction = false;
 
 
                     if($isAprilAction)
                     {
-                        $allAmountLeft = 4500;
+                        $allAmountLeft = 0;
                         $allQuantityLeftSection=$allQuantityLeftSectionAccs=[];
                         $activeIndex = -1;
                         $excludeSections=[361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311]; // sale + Аксесури + Бонусна шафа
@@ -1390,7 +1390,7 @@ function getBasketNewHtml($basket = false)
                         {
                             $productId = $mainID;
 
-                            if($arItem['QUANTITY'] == 1 && $activeIndex == -1 && $arItem['PRICE'] > 800) // 800 - розмір знижки
+                            if($arItem['QUANTITY'] == 1 && $activeIndex == -1 && $arItem['PRICE'] > 1000) // 1000 - розмір знижки
                                 $activeIndex = $index;
 
                             $isSale = $DB->Query('select * from b_iblock_section_element where IBLOCK_ELEMENT_ID = ' . $productId . ' and IBLOCK_SECTION_ID in (352,361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311)'); // sale + Аксесури + Бонусна шафа
@@ -1420,6 +1420,7 @@ function getBasketNewHtml($basket = false)
                             else
                                 $arItem['IS_SALE'] = true;
                         }
+                        $allQuantityLeftSection = array_unique($allQuantityLeftSection);
 
 
 
@@ -1571,10 +1572,10 @@ function getBasketNewHtml($basket = false)
 
                     if($isAprilAction)
                     {
-                        if($allQuantityLeft <= 0 && $allSum >= 4500 && count(array_unique($allQuantityLeftSection)) >= 3 && $quantityProduct >= 4)
+                        if($allQuantityLeft <= 0 && $allSum >= 0 && count(array_unique($allQuantityLeftSection)) >= 3 && $quantityProduct >= 4)
                         {
                             if($activeIndex != -1)
-                                $basket['ITEMS'][$activeIndex]['PRICE'] -= 800;
+                                $basket['ITEMS'][$activeIndex]['PRICE'] -= 1000;
                         }
                     }
                     if($isJulyAction && $TOTAL_UAH_PRICE >= 3000)
@@ -1621,7 +1622,7 @@ function getBasketNewHtml($basket = false)
             {
                 if(count(array_unique($allQuantityLeftSection)) == 1)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 3 речі з інших категорій одягу — і отримай -800 грн.
+                    ?><span class="basket-header-add-more">Додай ще 3 речі з інших категорій одягу — і отримай -1000 грн.
                         <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1641,7 +1642,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) == 2)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 2 річ з іншої категорії одягу — і твої -800 грн уже чекають.
+                    ?><span class="basket-header-add-more">Додай ще 2 річ з іншої категорії одягу — і твої -1000 грн уже чекають.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1649,9 +1650,9 @@ function getBasketNewHtml($basket = false)
                         </div>
                 </span><?
                 }
-                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 4500 && $quantityProduct <= 4)
+                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 0 && $quantityProduct <= 4)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -800 грн.
+                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -1000 грн.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1659,9 +1660,9 @@ function getBasketNewHtml($basket = false)
                         </div>
                 </span><?
                 }
-                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price >= 4500 && $quantityProduct < 4)
+                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price >= 0 && $quantityProduct < 4)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -800 грн.
+                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -1000 грн.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1669,9 +1670,9 @@ function getBasketNewHtml($basket = false)
                         </div>
                 </span><?
                 }
-                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 4500 )
+                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 0 )
                 {
-                    ?><span class="basket-header-add-more">Ти вже майже у виграші. Додай ще товарів на <?=4500-($TOTAL_UAH_PRICE-$minus_price)?> грн, щоб отримати -800 грн.
+                    ?><span class="basket-header-add-more">Ти вже майже у виграші. Додай ще товарів на <?=0-($TOTAL_UAH_PRICE-$minus_price)?> грн, щоб отримати -800 грн.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1679,7 +1680,7 @@ function getBasketNewHtml($basket = false)
                         </div>
                     </span><?
                 }
-                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price >= 4500 && $quantityProduct >= 4)
+                elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price >= 0 && $quantityProduct >= 4)
                 {
                     ?>
                     <div class="basket-header-total">
@@ -1687,7 +1688,7 @@ function getBasketNewHtml($basket = false)
                             Знижка
                         </div>
                         <div class="basket-header-total-value">
-                            <?=FormatCurrency(-800,'UAH')?>
+                            <?=FormatCurrency(-1000,'UAH')?>
                         </div>
                     </div>
                     <div class="basket-header-total">
@@ -1695,16 +1696,16 @@ function getBasketNewHtml($basket = false)
                             Разом
                         </div>
                         <div class="basket-header-total-value">
-                            <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price-800,'UAH')?>
+                            <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price-1000,'UAH')?>
                         </div>
                     </div>
 
                     <?
-                    ?><span>Готово — твої -800 грн уже в кошику.</span><?
+                    ?><span>Готово — твої -1000 грн уже в кошику.</span><?
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) == 0 && count($allQuantityLeftSectionAccs))
                 {
-                    ?><span>Акція діє лише на одяг. Додай речі з категорії одягу, щоб отримати -800 грн.</span><?
+                    ?><span>Акція діє лише на одяг. Додай речі з категорії одягу, щоб отримати -1000 грн.</span><?
                 }
             }
             ?>
