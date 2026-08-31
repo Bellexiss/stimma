@@ -2079,7 +2079,7 @@ if(!isset($_COOKIE['show_subs_form']) && !$bIndex && false)
     setcookie("show_subs_form", 'y', time()+86400, "/");
 }
 
-$isAprilAction = strtotime(date('22.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
+$isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 
 if(!isset($_COOKIE['show_marketing_img_sent']) && !$bIndex && $isAprilAction)
 {
