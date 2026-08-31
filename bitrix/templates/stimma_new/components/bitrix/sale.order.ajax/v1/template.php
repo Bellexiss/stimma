@@ -29,7 +29,7 @@ else
 
 global $isJulyAction;
 
-$isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
+$isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 
 
 $useCoupon = 1;
@@ -1519,7 +1519,7 @@ else
                                         {
                                             ?><div style="text-align: center;"><?=LANGUAGE_ID=='ua'?'У вас не достатньо стімзів для покупки':'У вас недостаточно стимзов для покупки'?></div><?
                                         }
-                                        elseif($isAprilAction)
+                                        elseif($isAprilAction && false)
                                         {
                                             if(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) == 1)
                                             {
@@ -1531,7 +1531,7 @@ else
                                             }
                                             elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) == 2)
                                             {
-                                                ?><span>Додай ще 2 річ з іншої категорії одягу — і твої -1000 грн уже чекають.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
+                                                ?><span>Додай ще 2 речі з іншої категорії одягу — і твої -1000 грн уже чекають.<br><a href="/catalog/zhenskaya_odezhda/">Додати ще річ</a></span><?
                                             }
                                             elseif(count(array_unique($arResult['ALL_QUANTITY_LEFT_SECTION'])) >= 3 && $alLSum-$minus_price < 0 && $arResult['QUANTITY_PRODUCTS'] <= 4)
                                             {

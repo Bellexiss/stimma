@@ -975,8 +975,8 @@ function getBasketNewHtml($basket = false)
     ob_start();
 
     $currtime = strtotime(date('d.m.Y H:i:s'));
-    $startAction =strtotime('01.09.2026 00:00:01');
-    $endAction = strtotime('30.09.2026 23:59:59');
+    $startAction =strtotime('21.08.2026 00:00:01');
+    $endAction = strtotime('22.08.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
 
@@ -1347,7 +1347,7 @@ function getBasketNewHtml($basket = false)
                     // -800 грн для замовлення від 4500 та 3 товари з різних категорій , Акція була з 20,04,2026)
                     $arResult['IS_ACTION_APRIL_2026'] = 0;
                     $uGroups = $USER->GetUserGroupArray();
-                    $isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
+                    $isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
                     if($isAprilAction && in_array(9, $uGroups)) $isAprilAction = false;
 
 
@@ -1616,13 +1616,16 @@ function getBasketNewHtml($basket = false)
                 </div>
 
                 <?
-                ?><span>Готово — твої -16% уже в кошику.</span><?
+                ?>
+            <span class="basket-header-add-more card-infom-block" style="background: var(--beige);">
+                <span class="bonus">Готово — твої -16% уже в кошику.</span>
+            </span><?
             }
             if($isAprilAction)
             {
                 if(count(array_unique($allQuantityLeftSection)) == 1)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 3 речі з інших категорій одягу — і отримай -1000 грн.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Додай ще <span class="bonus">3 речі</span> з інших категорій одягу — і отримай <span class="bonus">-1000 грн</span>.
                         <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1632,7 +1635,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) < 3 && count($allQuantityLeftSection) >= 3)
                 {
-                    ?><span class="basket-header-add-more">Для знижки потрібні 3 речі з різних категорій одягу. Додай ще 1 річ з іншої категорії.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Для знижки потрібні 3 речі з різних категорій одягу. Додай ще <span class="bonus">1 річ</span> з іншої категорії.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1642,7 +1645,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) == 2)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 2 річ з іншої категорії одягу — і твої -1000 грн уже чекають.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Додай ще <span class="bonus">2 річ</span> з іншої категорії одягу — і твої <span class="bonus">-1000 грн</span> уже чекають.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1652,7 +1655,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 0 && $quantityProduct <= 4)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -1000 грн.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Додай ще <span class="bonus">1 річ</span> — і отримай <span class="bonus">-1000 грн</span>.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1662,7 +1665,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price >= 0 && $quantityProduct < 4)
                 {
-                    ?><span class="basket-header-add-more">Додай ще 1 річ — і отримай -1000 грн.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Додай ще <span class="bonus">1 річ</span> — і отримай <span class="bonus">-1000 грн</span>.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1672,7 +1675,7 @@ function getBasketNewHtml($basket = false)
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) >= 3 && $TOTAL_UAH_PRICE-$minus_price < 0 )
                 {
-                    ?><span class="basket-header-add-more">Ти вже майже у виграші. Додай ще товарів на <?=0-($TOTAL_UAH_PRICE-$minus_price)?> грн, щоб отримати -800 грн.
+                    ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">Ти вже майже у виграші. Додай ще товарів на <?=0-($TOTAL_UAH_PRICE-$minus_price)?> грн, щоб отримати -800 грн.
                     <div class="basket-header-btn">
                             <a href="<?=UA?'':'/ru'?>/catalog/zhenskaya_odezhda/" class="info-btn">
                                 Додати ще річ
@@ -1701,7 +1704,11 @@ function getBasketNewHtml($basket = false)
                     </div>
 
                     <?
-                    ?><span>Готово — твої -1000 грн уже в кошику.</span><?
+                    ?>
+                    <span class="basket-header-add-more card-infom-block" style="background: var(--beige);">
+                        <span class="bonus">Готово — твої -1000 грн уже в кошику.</span>
+                    </span>
+                    <?
                 }
                 elseif(count(array_unique($allQuantityLeftSection)) == 0 && count($allQuantityLeftSectionAccs))
                 {

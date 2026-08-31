@@ -2079,8 +2079,40 @@ if(!isset($_COOKIE['show_subs_form']) && !$bIndex && false)
     setcookie("show_subs_form", 'y', time()+86400, "/");
 }
 
-$isAprilAction = strtotime(date('20.04.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('31.05.2026 23:59:59'));
+$isAprilAction = strtotime(date('22.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 
+if(!isset($_COOKIE['show_marketing_img_sent']) && !$bIndex && $isAprilAction)
+{
+    ?>
+    <button type="button" class="btn btn-primary show popupsubs" data-bs-toggle="modal" data-bs-target="#action-modal_marketing_img" style="display: none;"></button>
+
+    <div class="modal fade modal-banner" id="action-modal_marketing_img"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
+                    </button>
+                    <a href="/catalog/zhenskaya_odezhda/"  class="bonus-modal-desc" >
+                        <img src="<?=SITE_TEMPLATE_PATH?>/images/pc_september.png?v=4" alt="">
+                    </a>
+                    <a href="/catalog/zhenskaya_odezhda/" class="bonus-modal-mob">
+                        <img  src="<?=SITE_TEMPLATE_PATH?>/images/mob_september.png?v=3" alt="">
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        setTimeout(function() {
+            $('.popupsubs').trigger('click');
+        }, 1);
+    </script>
+    <?
+    setcookie("show_marketing_img_sent", 'y', time()+(3600*7), "/");
+}
 if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && $isJulyAction)
 {
     ?>

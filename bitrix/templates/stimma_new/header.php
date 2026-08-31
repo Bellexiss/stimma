@@ -27,8 +27,8 @@ checkGlobalRedirect();
 
 
 $currtime = strtotime(date('d.m.Y H:i:s'));
-$startAction = strtotime('01.09.2026 00:00:01');
-$endAction = strtotime('30.09.2026 23:59:59');
+$startAction = strtotime('21.08.2026 00:00:01');
+$endAction = strtotime('22.08.2026 23:59:59');
 
 $rizn = isset($_SESSION['DATE_CLAUDE']) ? $currtime-$_SESSION['DATE_CLAUDE'] : 3000;
 

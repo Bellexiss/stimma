@@ -547,7 +547,7 @@ if (!in_array(9, $uGroups) && false)
 // -800 грн для замовлення від 4500 та 3 товари з різних категорій , Акція була з 20,04,2026)
 $arResult['IS_ACTION_APRIL_2026'] = 0;
 $uGroups = $USER->GetUserGroupArray();
-$isAprilAction = strtotime(date('27.08.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
+$isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 if (!in_array(9, $uGroups))
 {
     if(($isAprilAction || $USER->IsAdmin()))

@@ -317,7 +317,7 @@ dataLayer.push({
 });
 </script>
 <?
-if($orderData['PAY_SYSTEM_ID'] != 3)
+//if($orderData['PAY_SYSTEM_ID'] != 3)
 {
     $usdRate = COption::GetOptionString("my_module", "usd_rate",'41.7');
     ?>
