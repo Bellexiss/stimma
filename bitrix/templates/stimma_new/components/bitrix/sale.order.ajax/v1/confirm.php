@@ -323,11 +323,13 @@ dataLayer.push({
     ?>
     <script>
         fbq ( 'track', 'Purchase',
-            {value:<?=round($orderData['PRICE']/$usdRate,2)?>,
-                Currency: 'USD',
-                Content_ids: [<?=implode(',',$facebookIds)?>],
-                Content_type: 'Purchase',
-                Content_category: 'Purchase' ,
+            {
+                <?/*value:<?=round($orderData['PRICE']/$usdRate,2)?>,*/?>
+                value:<?=$orderData['PRICE']?>,
+                currency: 'USD',
+                content_ids: [<?=implode(',',$facebookIds)?>],
+                content_type: 'Purchase',
+                content_category: 'Purchase' ,
             });
     </script>
     <?

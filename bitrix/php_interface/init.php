@@ -3568,7 +3568,7 @@ function sendNewSmsToClient($id)
                 if(!$newQuantity)
                 {
                     $DB->Query('update b_catalog_product set QUANTITY = ' . $newQuantity . ', AVAILABLE = \'N\' where ID = ' . $record['ID']);
-                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID']);
+                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
                 }
                 else
                 {
@@ -3667,7 +3667,7 @@ function sendSmsToClient(\Bitrix\Main\Event $event)
                 if(!$newQuantity)
                 {
                     $DB->Query('update b_catalog_product set QUANTITY = ' . $newQuantity . ', AVAILABLE = \'N\' where ID = ' . $record['ID']);
-                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID']);
+                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] . ' and (SORT = 500 or SORT = 1000 or SORT = 0)');
                 }
                 else
                 {
@@ -4706,7 +4706,7 @@ function updateSortingProduct()
             if(!$available)
             {
                 $DB->Query('update b_catalog_product set AVAILABLE = \'N\' where ID = ' . $product['ID']);
-                $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $product['ID']);
+                $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $product['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
             }
             else
                 $DB->Query('update b_iblock_element set SORT = 500 where ID = ' . $product['ID'] . ' and (SORT = 500 or SORT = 1000 or SORT = 0)');
@@ -4718,7 +4718,7 @@ function updateSortingProduct()
         {
             $cnt++;
             if($record['SORT'] == 500)
-                $DB->Query('update b_iblock_element set SORT = 1000 where ID = ' . $record['ID']);
+                $DB->Query('update b_iblock_element set SORT = 1000 where ID = ' . $record['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
         }
 
     }

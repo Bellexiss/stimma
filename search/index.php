@@ -93,7 +93,7 @@ if(true)
                 </div>
                 <?
 
-                if(!empty($ids) && !empty($search))
+                if(!empty($ids))
                 {
                     global $favorite;
                     $favorite = ['ID' => $ids];
