@@ -1,6 +1,5 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Оформлення замовлення");
-
 global $DB;
 
 if(isset($_GET['newstimma']) || NEW_STIMMA)

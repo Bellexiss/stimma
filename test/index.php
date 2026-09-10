@@ -7,6 +7,47 @@ use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
 
+
+global $DB;
+
+$users = $DB->Query('SELECT DISTINCT u.EMAIL, u.DATE_REGISTER, u.NAME, u.LAST_NAME, u.PERSONAL_PHONE, u.PERSONAL_BIRTHDATE
+FROM b_user u
+WHERE u.DATE_REGISTER > \'2026-05-01 00:00:00\'
+  AND u.EMAIL <> \'\'
+  AND u.ID not IN (
+      SELECT USER_ID FROM b_user_group WHERE GROUP_ID = 9
+  )
+ORDER BY u.DATE_REGISTER
+');
+
+echo '<table border="1">';
+echo '<tr><th>#</th><th>Email</th><th>Ім’я</th><th>Телефон</th><th>ДР</th><th>Дата регистрации</th></tr>';
+$index=1;
+while ($user = $users->fetch())
+{
+    if(strpos($user['EMAIL'],'noemail_') !== false || strpos($user['EMAIL'],'stimma.com.ua') || strpos($user['EMAIL'],'stimma.ua') !== false) continue;
+
+    $register = strtotime($user['DATE_REGISTER']);
+
+    //$order = $DB->Query('select * from b_sale_order where USER_ID = ' . $user['ID'].' limit 1')->Fetch();
+    //if(!isset($order['ID'])) continue;
+    echo '<tr>';
+    echo '<td>'.$index.'</td>';
+    echo '<td>'.htmlspecialcharsbx($user['EMAIL']).'</td>';
+    echo '<td>'.htmlspecialcharsbx($user['NAME'].' '.$user['LAST_NAME']).'</td>';
+    echo '<td>'.htmlspecialcharsbx($user['PERSONAL_PHONE']).'</td>';
+    echo '<td>'.($user['PERSONAL_BIRTHDATE'] ? htmlspecialcharsbx(date('d.m.Y', strtotime($user['PERSONAL_BIRTHDATE']))) : '').'</td>';
+    echo '<td>'.$user['DATE_REGISTER']  .'</td>';
+    echo '</tr>';
+    $index++;
+}
+
+echo '</table>';
+die();
+
+$DB->Query('truncate table subscribers');
+die();
+
 /*$response=addUserTo1C('380969762816', '', '', '');
 ?><pre>$response last <?=print_r($response,1)?></pre><?
 die();*/

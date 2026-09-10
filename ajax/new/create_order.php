@@ -297,11 +297,11 @@ if ($ORDER_ID > 0)
         $findSertData=unserialize($findSertData['UF_SERT_DATA'], ['allowed_classes' => false]);
         $textSertData = '
 Ім’я та прізвище відправника: '.$findSertData['sert_name_sender'].' 
-Телефон відправника: '.$findSertData['sert_tel_sender'].' 
-Ім’я та прізвище отримувача: '.$findSertData['send_name_receiver'].' 
-Пошта отримувача: '.$findSertData['send_email_receiver'].' 
-Дата відправлення сертифікату: '.$findSertData['send_date_receiver'].' 
-Ваші побажання: '.$findSertData['send_desire'].' 
+ *** Телефон відправника: '.$findSertData['sert_tel_sender'].' 
+ *** Ім’я та прізвище отримувача: '.$findSertData['send_name_receiver'].' 
+ *** Пошта отримувача: '.$findSertData['send_email_receiver'].' 
+ *** Дата відправлення сертифікату: '.$findSertData['send_date_receiver'].' 
+ *** Ваші побажання: '.$findSertData['send_desire'].' 
         ';
 
         if($props['SERT_DATA'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($textSertData).'\' where ID = ' . $props['SERT_DATA']);

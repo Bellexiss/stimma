@@ -77,7 +77,8 @@ if(!empty($_POST))
 
                 if(!empty(trim($email)))
                 {
-                    CModule::IncludeModule('sale');
+                    createRegisterCoupon($email);
+                    /*CModule::IncludeModule('sale');
                     $PERIOD = '90 days';
                     $activeFrom = new \Bitrix\Main\Type\DateTime();
                     $activeTo = new \Bitrix\Main\Type\DateTime();
@@ -97,7 +98,7 @@ if(!empty($_POST))
                                                                                  //'ACTIVE_TO' => $activeTo,
                                                                                  'MAX_USE' => 1,
                                                                                  'USER_ID' => '',//$arFields['ID'],
-                                                                                 'DESCRIPTION' => 'for registration #'.$arResult
+                                                                                 'DESCRIPTION' => '(1) for registration #'.$arResult
                                                                              ));
 
                     $text = '<div style="text-align: center;">Ваша знижка - 10% на перше замовлення. <br>Персональний промокод '.$coupon.'</div>';
@@ -106,7 +107,7 @@ if(!empty($_POST))
                         'TEXT' => $text
                     ];
 
-                    CEvent::SendImmediate('BS_DISCOUNT_REGISTER', 's1', $fields, "Y",104);
+                    CEvent::SendImmediate('BS_DISCOUNT_REGISTER', 's1', $fields, "Y",104);*/
                 }
 
 

@@ -2,7 +2,11 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Авторизация");
 
-
+if(!$USER->IsAuthorized())
+{
+    LocalRedirect("/personal/");
+    exit();
+}
 
 if(isset($_GET['newstimma']) || NEW_STIMMA )
     {

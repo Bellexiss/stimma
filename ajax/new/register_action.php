@@ -52,7 +52,7 @@ if(!$user)
                                                                      //'ACTIVE_TO' => $activeTo,
                                                                      'MAX_USE' => 1,
                                                                      'USER_ID' => '',//$arFields['ID'],
-                                                                     'DESCRIPTION' => 'for registration #'.$user
+                                                                     'DESCRIPTION' => '(2) for registration #'.$user
                                                                  ));
 
         $text = '<div style="text-align: center;">Ваша знижка - 10% на перше замовлення. <br>Персональний промокод '.$coupon.'</div>';

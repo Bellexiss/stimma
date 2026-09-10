@@ -1,6 +1,10 @@
 <?
 use Bitrix\Sale\Internals\DiscountCouponTable;
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
+
+createRegisterCoupon($_POST['email'],true);
+die();
+
 $ua = strpos($_REQUEST['url'], '/ru/') === false;
 
 $msg = "";
@@ -32,7 +36,7 @@ else
     // var_dump($DB->GetError());
 
     // ID скидочного правила, к которому относится купон
-    $discountId = 43;
+    $discountId = 35;
     // Генерация кода купона (можно через CatalogGenerateCoupon())
     $codeCoupon = \CatalogGenerateCoupon();
 
@@ -72,7 +76,7 @@ else
         );
         Bitrix\Main\Diag\Debug::writeToFile('SUCCESS', "new generation " , '/debug_create_subscribe.txt');
 
-        CEvent::Send('BS_DISCOUNT_REGISTER','s1',$arEventFields);
+        CEvent::SendImmediate('BS_DISCOUNT_REGISTER','s1',$arEventFields);
     }
     else
     {
