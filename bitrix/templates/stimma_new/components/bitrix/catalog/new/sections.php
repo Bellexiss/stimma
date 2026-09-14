@@ -11,7 +11,6 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-
 if(!isset($_GET['ll']))
 {
     ?>
@@ -21,6 +20,17 @@ if(!isset($_GET['ll']))
     <?
 }
 $this->setFrameMode(true);
+
+if(empty($arResult['VARIABLES']))
+{
+    Bitrix\Iblock\Component\Tools::process404(
+        'Не найден', //Сообщение
+        true, // Нужно ли определять 404-ю константу
+        true, // Устанавливать ли статус
+        true, // Показывать ли 404-ю страницу
+        false // Ссылка на отличную от стандартной 404-ю
+    );
+}
 
 $sectionListParams = array(
 	"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
@@ -64,6 +74,7 @@ global $actionFilter;
 $actionFilter = [
         '!PROPERTY_ACTION' => false,
 ];
+
 $APPLICATION->IncludeComponent(
     "bitrix:catalog.section",
     "main",
@@ -95,7 +106,7 @@ $APPLICATION->IncludeComponent(
         "CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
         "SET_TITLE" => $arParams["SET_TITLE"],
         "MESSAGE_404" => $arParams["~MESSAGE_404"],
-        "SET_STATUS_404" => $arParams["SET_STATUS_404"],
+        "SET_STATUS_404" => empty($arResult['VARIABLES']) ? 'Y' : $arParams["SET_STATUS_404"],
         "SHOW_404" => $arParams["SHOW_404"],
         "FILE_404" => $arParams["FILE_404"],
         "DISPLAY_COMPARE" => $arParams["USE_COMPARE"],

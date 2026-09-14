@@ -279,7 +279,7 @@ while ($record = $res -> Fetch())
                 ";
              $productJson2[] = "
                 {
-                    item_id: '".$mainPID."',
+                    item_id: '".$record['PRODUCT_ID']."',
                     item_name: '".addslashes($mainFields['NAME'])."',
                     affiliation: 'STIMMA',
                     discount: ".($record['BASE_PRICE']-$record['PRICE']).", 
@@ -326,7 +326,7 @@ dataLayer.push({
             {
                 <?/*value:<?=round($orderData['PRICE']/$usdRate,2)?>,*/?>
                 value:<?=$orderData['PRICE']?>,
-                currency: 'USD',
+                currency: 'UAH',
                 content_ids: [<?=implode(',',$facebookIds)?>],
                 content_type: 'Purchase',
                 content_category: 'Purchase' ,

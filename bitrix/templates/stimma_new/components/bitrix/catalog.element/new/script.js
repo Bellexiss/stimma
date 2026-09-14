@@ -50,6 +50,11 @@ function disabledValues()
 	}
 }
 
+function setSertId(id)
+{
+	$('.buy_product').attr('data-id',id);
+}
+
 function initScu()
 {
 	setActiveItem();
@@ -130,7 +135,8 @@ $(document).ready(function()
 	var blockScu = $('[data-entity="scu"]');
 
 	var clickedSize = $('[name="card-radio"]:checked').closest('label').attr('data-size-check')
-	$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
+	if(typeof clickedSize != 'undefined')
+		$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
 
 	$(document).on('click','.buy_mobile_button',function()
 	{
@@ -141,7 +147,8 @@ $(document).ready(function()
 	$(document).on('click','[data-size-check]',function()
 	{
 		var clickedSize = $(this).attr('data-size-check');
-		$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
+		if(typeof clickedSize != 'undefined')
+			$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
 	});
 
 	//initScu();

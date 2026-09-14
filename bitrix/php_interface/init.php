@@ -275,7 +275,7 @@ AddEventHandler("main", "OnEndBufferContent", function (&$content) {
 
 function checkGlobalRedirect()
 {
-    $page = $_SERVER['SCRIPT_URL'];
+    //$page = $_SERVER['SCRIPT_URL'];
     $page = $_SERVER['REQUEST_URI'];
     $page = str_replace('?'.$_SERVER['QUERY_STRING'], '', $page);
 
@@ -312,16 +312,15 @@ function checkGlobalRedirect()
     ];
 
     $isRedirect = false; $cardRedirect = false;
+
     if (!preg_match('/\/$/', $page) && strpos($page, '.html') === false){$page = $page.'/';$isRedirect=true;}
     if (preg_match('/[A-Z]/', $page)){$page = strtolower($page);$isRedirect=true;}
     if (strpos($page, '//') !== false){$page = preg_replace('/\/{2,}/', '/',$page);$isRedirect=true;}
     if (strpos($page, '/index.php') !== false){$page = str_replace('/index.php','/', $page);$isRedirect=true;}
     if (strpos($page, '/index.html') !== false){$page = str_replace('/index.html','/', $page);$isRedirect=true;}
     if(isset($redirects[$page])){$page = $redirects[$page];$isRedirect=true;$cardRedirect=true;}
-    //if (strpos($_SERVER['SERVER_NAME'], 'www.') !== false) {$page = 'https://titanshina.ua'.$page; $isRedirect = true;}
-    //if (strpos($page, '.php') !== false){$page = str_replace('.php','/', $page);$isRedirect=true;}
+    if(strpos($page, '.html') !== false || strpos($page, '.php') !== false || strpos($page, '.yml') !== false || strpos($page, '.xml') !== false /*|| (preg_match('/[0-9]+/',$page) && !$cardRedirect)*/) $isRedirect = false;
 
-    if(strpos($page, '.html') !== false || strpos($page, '.php') !== false || strpos($page, '.yml') !== false || strpos($page, '.xml') !== false || (preg_match('/[0-9]+/',$page) && !$cardRedirect)) $isRedirect = false;
 
     if ($isRedirect)
     {
@@ -2436,6 +2435,9 @@ function generateFeedGoogleNew()
             if($quantity['QUANTITY'] > 0)
                 $available = 'in stock';
 
+            if($Props['SOON']['VALUE'] || $offersProp['SOON']['VALUE'])
+                $available = 'preorder';
+
             if(!$Props['DETAIL_TEXT_UA']['VALUE'] && $offersProp['DETAIL_TEXT_UA']['VALUE'])
                 $Props['DETAIL_TEXT_UA']['VALUE'] = $offersProp['DETAIL_TEXT_UA']['VALUE'];
 
@@ -2582,7 +2584,7 @@ function generateFeedGoogleNew()
             {
 
 
-                if($quantity['QUANTITY'] > 0)
+                //if($quantity['QUANTITY'] > 0)
                 $content .= '
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
@@ -2607,7 +2609,7 @@ function generateFeedGoogleNew()
 		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
 	</entry>
             ';
-                if($quantity['QUANTITY'] > 0)
+                //if($quantity['QUANTITY'] > 0)
                 $contentRu .= '
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
@@ -2636,7 +2638,7 @@ function generateFeedGoogleNew()
         }
         else
         {
-            if($quantity['QUANTITY'] > 0)
+            //if($quantity['QUANTITY'] > 0)
             $content .= '
             <entry>
 		<g:id>'.$fields['ID'].'</g:id>
@@ -2659,7 +2661,7 @@ function generateFeedGoogleNew()
 		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
 	</entry>
             ';
-            if($quantity['QUANTITY'] > 0)
+            //if($quantity['QUANTITY'] > 0)
             $contentRu .= '
             <entry>
 		<g:id>'.$fields['ID'].'</g:id>
@@ -6526,4 +6528,9 @@ function createRegisterCoupon($email, $json=false)
         echo json_encode(['msg' => $msg]);
     else
         return $success;
+}
+
+function getSertIDs()
+{
+    return [35434,35432,35430,35428,35425,35433,35424,35427,35429,35431];
 }

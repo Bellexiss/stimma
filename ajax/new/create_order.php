@@ -268,13 +268,13 @@ if ($ORDER_ID > 0)
 {
     $_SESSION['SALE_ORDER_ID'][] = $ORDER_ID;
 
-    $findSertData=false;
+    /*$findSertData=false;
     foreach ($idsbasket as $index => $item)
     {
         $DB -> Query('update b_sale_basket set ORDER_ID = ' . $ORDER_ID . ' where ID = ' . $item);
         if(!$findSertData)
             $findSertData = $DB->Query('select * from basket_stims where UF_ID = '.$item)->Fetch();
-    }
+    }*/
 
     $propsDB = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $ORDER_ID);
     $props = [];
@@ -292,7 +292,7 @@ if ($ORDER_ID > 0)
     if($props['NAME'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_POST['name']).'\' where ID = ' . $props['NAME']);
     else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',22, \'Імя\', \''.addslashes($_POST['name']).'\', \'NAME\', \''.$ORDER_ID.'\', \'ORDER\')');
 
-    if($findSertData && !empty($findSertData['UF_SERT_DATA']))
+    /*/*if($findSertData && !empty($findSertData['UF_SERT_DATA']))
     {
         $findSertData=unserialize($findSertData['UF_SERT_DATA'], ['allowed_classes' => false]);
         $textSertData = '
@@ -302,6 +302,18 @@ if ($ORDER_ID > 0)
  *** Пошта отримувача: '.$findSertData['send_email_receiver'].' 
  *** Дата відправлення сертифікату: '.$findSertData['send_date_receiver'].' 
  *** Ваші побажання: '.$findSertData['send_desire'].' 
+        ';*/
+
+    if(isset($_POST['is_sertificate']) && $_POST['is_sertificate'])
+    {
+        //$findSertData=unserialize($findSertData['UF_SERT_DATA'], ['allowed_classes' => false]);
+        $textSertData = '
+Ім’я та прізвище відправника: '.$_POST['sert_name_sender'].' 
+ *** Телефон відправника: '.$_POST['sert_tel_sender'].' 
+ *** Ім’я та прізвище отримувача: '.$_POST['send_name_receiver'].' 
+ *** Пошта отримувача: '.$_POST['send_email_receiver'].' 
+ *** Дата відправлення сертифікату: '.$_POST['send_date_receiver'].' 
+ *** Ваші побажання: '.$_POST['send_desire'].'  
         ';
 
         if($props['SERT_DATA'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($textSertData).'\' where ID = ' . $props['SERT_DATA']);

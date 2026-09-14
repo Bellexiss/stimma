@@ -10,7 +10,13 @@ $type = getTypeDevice();
 $res = CIBlockSection::GetList([], ['IBLOCK_ID' => 21, 'ID' => $arParams['SECTION_ID']], false, ['ID','IBLOCK_ID','NAME','UF_*']) -> Fetch();
 $sectionName = LANGUAGE_ID == 'ua' ? $res['UF_NAME_UA'] : $res['NAME'];
 
-$novinki = strpos($APPLICATION->GetCurPage(), '/catalog/novinki/') !== false;
+$novinki =
+    strpos($APPLICATION->GetCurPage(), '/catalog/novinki/') !== false
+
+;
+
+$maneken = $novinki || strpos($APPLICATION->GetCurPage(), '/catalog/rasprodazha/') !== false
+           || strpos($APPLICATION->GetCurPage(), '/catalog/khity_prodazh/') !== false;
 
 $arJsonProducts = $facebookIds = [];
 ?>
@@ -346,6 +352,12 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                                             else
                                             {
                                                 //$firstEl = $slider[0];
+                                                if($maneken)
+                                                    {
+                                                        $cache = $slider[1];
+                                                        $slider[0] = $slider[1];
+                                                        $slider[1] = $cache;
+                                                    }
                                                 foreach ($slider as $indexSlider => $itemSlider)
                                                 {
 
@@ -526,7 +538,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                                     $noImg = '/bitrix/templates/aspro_max/images/colorimg.png'; // todo Не должно быть пустого
                                     foreach ($arResult['COLOR_VARIANTS'][$arResult['COLOR_IDS'][$arItem['ID']]] as $indexProp => $prop)
                                     {
-                                        $jsonVariants[$arResult['ID']];
+                                        //$jsonVariants[$arResult['ID']];
                                         $variants[$prop['code']] = $prop;
                                         ?>
                                         <a onclick="changeData('<?=$prop['code']?>', this);return false;" style="background: <?=$arResult['ALL_MAIN_COLORS'][$prop['color']]?>;" aria-label="<?=$arResult['COLOR_LIST'][$prop['color']]?> <?=LANGUAGE_ID == 'ua' ? 'колір' : 'цвет'?>" href="#" class="<?=strtoupper($arResult['ALL_COLORS'][$prop['color']]) == '#FFFFFF' ? 'white' : ''?> <?=$indexProp == $arItem['PROPERTIES']['COLOR']['VALUE'] ? 'active' : ''?>" data-entity="scu-value" data-id="<?=$indexProp?>">

@@ -978,18 +978,18 @@ $(document).ready(function()
         var bys = $(this).hasClass('in_s') ? 1 : 0;
         var bysert = $(this).hasClass('in_sert') ? 1 : 0;
 
-        var sert_name_sender = $('[name=sert_name_sender]').val().trim();
-        var sert_tel_sender = $('[name=sert_tel_sender]').val().trim();
-        var send_name_receiver = $('[name=send_name_receiver]').val().trim();
-        var send_email_receiver = $('[name=send_email_receiver]').val().trim();
-        var send_date_receiver = $('[name=send_date_receiver]').val().trim();
-        var send_desire = $('[name=send_desire]').val();
+        //var sert_name_sender = $('[name=sert_name_sender]').val().trim();
+        //var sert_tel_sender = $('[name=sert_tel_sender]').val().trim();
+        //var send_name_receiver = $('[name=send_name_receiver]').val().trim();
+        //var send_email_receiver = $('[name=send_email_receiver]').val().trim();
+        //var send_date_receiver = $('[name=send_date_receiver]').val().trim();
+        //var send_desire = $('[name=send_desire]').val();
 
-        if(sert_name_sender=='' && bysert){error=true;$('[name=sert_name_sender]').closest('.form-block').addClass('error')}
-        if(sert_tel_sender=='' && bysert){error=true;$('[name=sert_tel_sender]').closest('.form-block').addClass('error')}
-        if(send_name_receiver=='' && bysert){error=true;$('[name=send_name_receiver]').closest('.form-block').addClass('error')}
-        if(send_email_receiver=='' && bysert){error=true;$('[name=send_email_receiver]').closest('.form-block').addClass('error')}
-        if(send_date_receiver=='' && bysert){error=true;$('[name=send_date_receiver]').closest('.form-block').addClass('error')}
+        //if(sert_name_sender=='' && bysert){error=true;$('[name=sert_name_sender]').closest('.form-block').addClass('error')}
+        //if(sert_tel_sender=='' && bysert){error=true;$('[name=sert_tel_sender]').closest('.form-block').addClass('error')}
+        //if(send_name_receiver=='' && bysert){error=true;$('[name=send_name_receiver]').closest('.form-block').addClass('error')}
+        //if(send_email_receiver=='' && bysert){error=true;$('[name=send_email_receiver]').closest('.form-block').addClass('error')}
+        //if(send_date_receiver=='' && bysert){error=true;$('[name=send_date_receiver]').closest('.form-block').addClass('error')}
 
         if(bysert || $(this).hasClass('current_claude_photo')) id = $(this).attr('data-id');
 
@@ -998,13 +998,13 @@ $(document).ready(function()
         if(!error)
         $.ajax({
             url: '/ajax/basket.php',
-            data: {'pprocess':'add','id':id, 'url':location.pathname, cnt:cnt, bys:bys,bysert:bysert,
-                sert_name_sender:sert_name_sender,
-                sert_tel_sender:sert_tel_sender,
-                send_name_receiver:send_name_receiver,
-                send_email_receiver:send_email_receiver,
-                send_date_receiver:send_date_receiver,
-                send_desire:send_desire
+            data: {'pprocess':'add','id':id, 'url':location.pathname, cnt:cnt, bys:bys,bysert:bysert//,
+                //sert_name_sender:sert_name_sender,
+                //sert_tel_sender:sert_tel_sender,
+                //send_name_receiver:send_name_receiver,
+                //send_email_receiver:send_email_receiver,
+                //send_date_receiver:send_date_receiver,
+                //send_desire:send_desire
             },
             type: 'POST',
             dataType:'json'

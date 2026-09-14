@@ -1173,7 +1173,7 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
                             $img=CFile::GetFileArray($record["PICTURE"])['SRC'];
                             ?>
                             <div class="category-list-block">
-                                <a href="<?=$ru?><?=$record['SECTION_PAGE_URL']?>" class="category-list-item">
+                                <a href="<?//=$ru?><?=$record['SECTION_PAGE_URL']?>" class="category-list-item">
                                     <div class="category-list-img">
                                         <img src="<?=$img?>?v=1">
                                     </div>
@@ -1254,7 +1254,7 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
                         <?
                         $link = "/auth/registration/?register=yes&backurl=/";
                         if ($USER->IsAuthorized())
-                            $link = "/personal/loyalty/";
+                            $link = "/ru/personal/bonus/";
                         ?>
                         <a href="<?=$link?>" class="info-btn info-btn-black">
                             <?=LANGUAGE_ID=='ua'?'Круто,  я з вами!':'Круто, я с вами!'?>

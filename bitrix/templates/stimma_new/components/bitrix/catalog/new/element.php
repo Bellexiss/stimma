@@ -14,7 +14,6 @@
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
-
 $bIndex = (strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false) || isset($_GET['google']);
 
 $this->setFrameMode(true);

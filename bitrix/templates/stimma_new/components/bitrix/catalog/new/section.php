@@ -12,7 +12,6 @@
 /** @var CBitrixComponent $component */
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
-
 global $seo;
 $seo = false;
 
@@ -119,10 +118,7 @@ else
 
 $this->setFrameMode(true);
 //$this->addExternalCss("/bitrix/css/main/bootstrap.css");
-if(isset($_GET['pp']))
-{
-    ?><pre><?=print_r($dataSeo, 1)?></pre><?
-}
+
 if(!isset($_GET['ll']))
 {
     ?>
@@ -143,6 +139,16 @@ if (0 < intval($arResult["VARIABLES"]["SECTION_ID"]))
         $url .= $sectionFind['CODE'].'/';
     }
     $APPLICATION->AddChainItem($name, $url);
+}
+else
+{
+    Bitrix\Iblock\Component\Tools::process404(
+        'Не найден', //Сообщение
+        true, // Нужно ли определять 404-ю константу
+        true, // Устанавливать ли статус
+        true, // Показывать ли 404-ю страницу
+        false // Ссылка на отличную от стандартной 404-ю
+    );
 }
 
 

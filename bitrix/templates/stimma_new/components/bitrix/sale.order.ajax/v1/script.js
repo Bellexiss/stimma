@@ -617,7 +617,8 @@ $(document).ready(function()
             {
                 if(json.status == 0)
                 {
-                    $('[name=coupon]').before('<span class="error_coupon">'+json.msg+'</span>');
+                    //$('[name=coupon]').before('<span class="error_coupon">'+json.msg+'</span>');
+					$('.order-prom-block').after('<span class="error_coupon" style="color:var(--peach);">'+json.msg+'</span>');
                 }
                 //else
                     //location.reload();
@@ -812,6 +813,23 @@ document.querySelectorAll('.form-block input').forEach(function(input) {
 		}
         console.log('error 7');
         console.log(error);
+
+		if(isSert)
+		{
+			var sert_name_sender = $('[name=sert_name_sender]').val().trim();
+			var sert_tel_sender = $('[name=sert_tel_sender]').val().trim();
+			var send_name_receiver = $('[name=send_name_receiver]').val().trim();
+			var send_email_receiver = $('[name=send_email_receiver]').val().trim();
+			var send_date_receiver = $('[name=send_date_receiver]').val().trim();
+			var send_desire = $('[name=send_desire]').val();
+
+			if(sert_name_sender==''){error=true;$('[name=sert_name_sender]').closest('.form-block').addClass('error')}
+			if(sert_tel_sender==''){error=true;$('[name=sert_tel_sender]').closest('.form-block').addClass('error')}
+			if(send_name_receiver==''){error=true;$('[name=send_name_receiver]').closest('.form-block').addClass('error')}
+			if(send_email_receiver==''){error=true;$('[name=send_email_receiver]').closest('.form-block').addClass('error')}
+			if(send_date_receiver==''){error=true;$('[name=send_date_receiver]').closest('.form-block').addClass('error')}
+		}
+
 		/*if(location.href.indexOf('cancel_create') != -1)
 		{
 			$(blockClosest).removeClass('loader');

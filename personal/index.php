@@ -19,7 +19,6 @@ $APPLICATION->SetTitle("Особистий кабінет");
         {
             if(!empty($_POST))
             {
-                ?><pre><?=print_r($_POST['dost'], 1)?></pre><?
                 foreach($_POST['dost'] as $dId => $item)
                 {
                     $find = $DB->Query('select * from user_adresses where UF_UID='.$USER->GetID() . ' and UF_DELIVERY_ID = ' . $dId);
@@ -98,8 +97,11 @@ $APPLICATION->SetTitle("Особистий кабінет");
 
                 if($savePassword)
                 {
-                    $USER->Update($USER->GetID(),['PASSWORD'=>$_POST['PASSWORD']]);
+                    $USER->Update($USER->GetID(),['PASSWORD'=>$_POST['PASSWORD'],'UF_ONE_C'=>0]);
                 }
+
+                $USER->Update($USER->GetID(),['UF_ONE_C'=>0]);
+
                 LocalRedirect("/personal/");
                 die();
             }

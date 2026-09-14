@@ -1229,7 +1229,7 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
                              <?
                             $link = "/auth/registration/?register=yes&backurl=/";
                             if ($USER->IsAuthorized())
-                                $link = "/personal/loyalty/";?>
+                                $link = "/personal/bonus/";?>
                             <a href="<?=$link?>" class="info-btn info-btn-black">
                                 <?=LANGUAGE_ID=='ua'?'Круто,  я з вами!':'Круто, я с вами!'?>
                             </a>

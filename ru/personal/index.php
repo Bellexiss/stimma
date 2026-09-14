@@ -56,6 +56,9 @@ $APPLICATION->SetTitle("Особистий кабінет");
                 {
                     $USER->Update($USER->GetID(),['PASSWORD'=>$_POST['PASSWORD']]);
                 }
+
+                $USER->Update($USER->GetID(),['UF_ONE_C'=>0]);
+
                 LocalRedirect("/personal/");
                 die();
             }

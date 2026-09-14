@@ -638,36 +638,36 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             <div class="card-sert-types">
                                 <label>
                                     <input type="radio" name="sert-price">
-                                    <span class="card-sert-price">
+                                    <span class="card-sert-price" data-id="35424" onclick="setSertId(35424);">
                                         1000₴
                                     </span>
                                 </label>
                                 <label>
                                     <input type="radio" name="sert-price">
-                                    <span class="card-sert-price">
+                                    <span class="card-sert-price" data-id="35427" onclick="setSertId(35427);">
                                         1500₴
                                     </span>
                                 </label>
                                 <label>
                                     <input type="radio" name="sert-price">
-                                    <span class="card-sert-price">
+                                    <span class="card-sert-price" data-id="35429" onclick="setSertId(35429);">
                                         2000₴
                                     </span>
                                 </label>
                                 <label>
                                     <input type="radio" name="sert-price">
-                                    <span class="card-sert-price">
+                                    <span class="card-sert-price" data-id="35431" onclick="setSertId(35431);">
                                         3000₴
                                     </span>
                                 </label>
                                 <label>
                                     <input type="radio" name="sert-price" checked>
-                                    <span class="card-sert-price">
+                                    <span class="card-sert-price" data-id="35433" onclick="setSertId(35433);">
                                         4000₴
                                     </span>
                                 </label>
                             </div>
-                            <div class="card-form-cont">
+                            <?/*<div class="card-form-cont">
                                 <form>
                                     <div class="card-form">
                                         <div class="form-block">
@@ -690,9 +690,9 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         </div>
                                     </div>
                                 </form>
-                            </div>
+                            </div>*/?>
                             <div class="card-buy-btn-block">
-                                <a href="#" class="info-btn info-btn-black buy_product in_sert" data-id="<?=$arResult['ID']?>">
+                                <a href="#" class="info-btn info-btn-black buy_product in_sert" data-id="35433">
                                     <?=LANGUAGE_ID=='ua'?'Додати до кошика':'Добавить в корзину'?>
                                 </a>
                             </div>
@@ -700,14 +700,14 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 <div class="accordion accordion-flush" id="card-accord">
                                     <div class="accordion-item">
                                         <div class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord11" aria-expanded="false" aria-controls="card-accord11">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord11" aria-expanded="true" aria-controls="card-accord11">
                                                 <?=LANGUAGE_ID=='ua'?'Умови використання онлайн-сертифікату:':'Условия использования онлайн-сертификата:'?>
                                             </button>
                                         </div>
-                                        <div id="card-accord11" class="accordion-collapse collapse" data-bs-parent="#card-accord">
+                                        <div id="card-accord11" class="accordion-collapse collapse show" data-bs-parent="#card-accord">
                                             <div class="accordion-body">
                                                 <p>
-                                                    <?=LANGUAGE_ID=='ua'?'Термін дії сертифіката 3 місяці з дати отримання листа.<br> Якщо сума чека перевищує номінал сертифіката — необхідно доплатити різницю. Доплату можна здійснити на сайті або накладеним платежем при отриманні замовлення. Якщо сума чека менше номіналу — залишок зберігається на балансі.':'Срок действия сертификата 3 месяца с даты получения письма.<br> Если сумма чека превышает номинал сертификата — необходимо доплатить разницу. Доплату можно осуществить на сайте или наложенным платежом при получении заказа. Если сумма чека меньше номинала — остаток сохраняется на балансе.'?>
+                                                    <?=LANGUAGE_ID=='ua'?'Термін дії сертифіката 3 місяці з дати отримання листа.<br> Якщо сума чека перевищує номінал сертифіката — необхідно доплатити різницю. Доплату можна здійснити на сайті. Якщо сума чека менше номіналу — залишок зберігається на балансі.':'Срок действия сертификата 3 месяца с даты получения письма.<br> Если сумма чека превышает номинал сертификата — необходимо доплатить разницу. Доплату можно осуществить на сайте. Если сумма чека меньше номинала — остаток сохраняется на балансе.'?>
                                                 </p>
                                                 <p>
                                                     <?=LANGUAGE_ID=='ua'?'Сертифікат не підлягає поверненню та обміну на грошові кошти.<br> Сертифікатом можна скористатися лише на сайті stimma.ua та в <a href="#">офіційному інстаграмі</a>.':'Сертификат не подлежит возврату и обмену на денежные средства.<br> Сертификатом можно воспользоваться только на сайте stimma.ua и в <a href="#">официальном инстаграме</a>.'?>
@@ -718,6 +718,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                             </div>
                                         </div>
                                     </div>
+                                    <?/*
                                     <div class="accordion-item">
                                         <div class="accordion-header">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord12" aria-expanded="false" aria-controls="card-accord12">
@@ -758,6 +759,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                             </div>
                                         </div>
                                     </div>
+                                    */?>
                                 </div>
                             </div>
                             <?
@@ -2356,7 +2358,7 @@ dataLayer.push({
 
         fbq ( 'track', 'ViewContent',
             {
-                currency: 'USD',
+                currency: 'UAH',
                 content_ids: '<?=$arResult['ID']?>',
                 content_name: '<?=addslashes($itemName)?>',
                 content_category: '<?=addslashes($sectionName)?>',

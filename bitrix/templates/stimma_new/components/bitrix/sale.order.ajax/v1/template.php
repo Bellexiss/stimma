@@ -31,6 +31,7 @@ global $isJulyAction;
 
 $isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 
+$sertIDs = getSertIDs();
 
 $useCoupon = 1;
 $isSert = false;
@@ -42,19 +43,22 @@ $basketProducts=[];
     $isOrder = 1;
     foreach ($arResult['JS_DATA']['GRID']['ROWS'] as $index => $row)
     {
-
         $fetch=$DB->Query('select* from basket_stims where UF_ID = ' . $row['data']['ID']);
         if($fetch=$fetch->Fetch())
         {
-            $withStims[$fetch['UF_ID']]=$fetch;
-            $stims += ($fetch['UF_STIMS']*$row['data']['QUANTITY']);
-            $minus_price+=($row['data']['PRICE']*$row['data']['QUANTITY']);
+            if($fetch['UF_STIMS'])
+            {
+                $withStims[$fetch['UF_ID']]=$fetch;
+                $stims += ($fetch['UF_STIMS']*$row['data']['QUANTITY']);
+                $minus_price+=($row['data']['PRICE']*$row['data']['QUANTITY']);    
+            }
+            
         }
         $pId = $row['data']['PRODUCT_ID'];
 
-        if(in_array($pId, [25934,25935,25936,25937,25939]))
+        if(in_array($pId, getSertIDs()))
             $isSert = true;
-        if(!in_array($pId, [25934,25935,25936,25937,25939]))
+        if(!in_array($pId, getSertIDs()))
             $onlySert = false;
 
         $mainIDs = [];
@@ -709,6 +713,66 @@ else
                                     </div>
                                 </div>
                             </div>
+                            <?
+                            if($isSert)
+                            {
+                                ?>
+                                <input type="hidden" name="is_sertificate" value="1">
+                                <div class="order-detail-item">
+                                    <div class="order-detail-title">
+			        				<span class="icon">
+			        					<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M14.5312 1.33008C10.9097 1.33008 7.96875 4.27008 7.96875 7.89258C7.96875 11.5141 10.9097 14.4551 14.5312 14.4551C18.1528 14.4551 21.0938 11.5141 21.0938 7.89258C21.0938 4.27008 18.1528 1.33008 14.5312 1.33008ZM14.5312 3.20508C17.1187 3.20508 19.2188 5.30508 19.2188 7.89258C19.2188 10.4791 17.1187 12.5801 14.5312 12.5801C11.9437 12.5801 9.84375 10.4791 9.84375 7.89258C9.84375 5.30508 11.9437 3.20508 14.5312 3.20508Z" fill="#1E1E1E"/>
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M3.28125 25.7051H15C15.5175 25.7051 15.9375 26.1251 15.9375 26.6426C15.9375 27.1601 15.5175 27.5801 15 27.5801H2.34375C1.82625 27.5801 1.40625 27.1601 1.40625 26.6426C1.40625 26.6426 1.40625 25.8691 1.40625 24.7676C1.40625 20.1073 5.18344 16.3301 9.84375 16.3301H15C15.5175 16.3301 15.9375 16.7501 15.9375 17.2676C15.9375 17.7851 15.5175 18.2051 15 18.2051H9.84375C6.21938 18.2051 3.28125 21.1432 3.28125 24.7676V25.7051Z" fill="#1E1E1E"/>
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M27.4955 21.9551C27.4955 21.4366 27.0765 21.0176 26.558 21.0176H18.2012C17.6837 21.0176 17.2637 21.4366 17.2637 21.9551V26.6426C17.2637 27.1601 17.6837 27.5801 18.2012 27.5801H26.558C27.0765 27.5801 27.4955 27.1601 27.4955 26.6426V21.9551ZM19.1387 22.8926V25.7051H25.6205V22.8926H19.1387Z" fill="#1E1E1E"/>
+											<path fill-rule="evenodd" clip-rule="evenodd" d="M22.3784 16.3301C23.3263 16.3301 24.2356 16.706 24.9059 17.3763C25.5762 18.0466 25.9531 18.956 25.9531 19.9038V21.9551C25.9531 22.4726 25.5331 22.8926 25.0156 22.8926H19.7422C19.2238 22.8926 18.8047 22.4726 18.8047 21.9551V19.9038C18.8047 17.9304 20.405 16.3301 22.3784 16.3301ZM24.0781 21.0176V19.9038C24.0781 19.4529 23.8991 19.0207 23.5803 18.7029C23.2616 18.3841 22.8294 18.2051 22.3784 18.2051C21.44 18.2051 20.6797 18.9654 20.6797 19.9038V21.0176H24.0781Z" fill="#1E1E1E"/>
+										</svg>
+			        				</span>
+                                        <?=LANGUAGE_ID=='ua'?'Дані сертифікату':'Данные сертификата'?>
+                                    </div>
+                                    <div class="order-detail-form">
+                                        <div class="form-block">
+                                           <input type="text" name="sert_name_sender" value="" class="form-control" placeholder="Ім’я та прізвище відправника*">
+                                            <span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>
+                                        </div>
+                                        <div class="form-block">
+                                           <input type="text" name="sert_tel_sender" value="" class="form-control" placeholder="Телефон відправника*">
+                                            <span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>
+                                        </div>
+                                        <div class="form-block">
+                                           <input type="text" name="send_name_receiver" value="" class="form-control" placeholder="Ім’я та прізвище отримувача*">
+                                            <span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>
+                                        </div>
+                                        <div class="form-block">
+                                           <input type="text" name="send_email_receiver" value="" class="form-control" placeholder="Пошта отримувача*">
+                                            <span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>
+                                        </div>
+                                        <div class="form-block">
+                                           <input type="text" name="send_date_receiver" value="" class="form-control" placeholder="Дата відправлення сертифікату*">
+                                            <span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>
+                                        </div>
+                                        <div class="form-block">
+                                           <input type="text" name="send_desire" value="" class="form-control" placeholder="Ваші побажання">
+                                            <?/*<span class="input-text">
+                                                <?=LANGUAGE_ID=='ua'?'Поле обов\'язкове для заповнення':'Поле обьязательное для заполнения'?>
+                                            </span>*/?>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <?
+                            }
+                            ?>
                             <div class="order-detail-item">
                                 <div class="order-detail-title">
 			        				<span class="icon">
@@ -1208,7 +1272,7 @@ else
                                     }
                                     ?>
                                     <?
-                                    if($allQuantity == 1)
+                                    if($allQuantity == 1 && !$onlySert)
                                     {
                                         ?>
                                         <label class="order-detail-element svNovaPoshta">
@@ -1390,17 +1454,18 @@ else
                         </div>
                         <div class="order-total-cont">
                             <div class="order-total-block">
-                                <div class="order-prom-block">
-                                    <input type="text" name="coupon" placeholder="Маю промокод/сертифікат" class="form-control " value="<?=$_SESSION['COUPON']?>">
-                                    <a href="#" class="info-btn info-btn-black set_coupon"><?=LANGUAGE_ID == 'ua' ? 'Застосувати' : 'Применить'?></a>
-                                    <?/*<select class="form-select">
-                                    <option>Додати сертифікат або промокод</option>
-                                    <option>промокод 1</option>
-                                    <option>промокод 1</option>
-                                    <option>промокод 1</option>
-                                    <option>промокод 1</option>
-                                </select>*/?>
-                                </div>
+                                <?
+                                if(!$onlySert)
+                                {
+                                    ?>
+                                    <div class="order-prom-block">
+                                        <input type="text" name="coupon" placeholder="Маю промокод/сертифікат" class="form-control " value="<?=$_SESSION['COUPON']?>">
+                                        <a href="#" class="info-btn info-btn-black set_coupon"><?=LANGUAGE_ID == 'ua' ? 'Застосувати' : 'Применить'?></a>
+                                    </div>
+                                    <?
+                                }
+                                ?>
+
                                 <div class="order-total-info-block">
                                     <div class="order-total-info">
                                         <div class="order-total-count">
@@ -2669,10 +2734,18 @@ else
                                                         </select>
                                                         */?>
                                                         </div>
-                                                        <div class="order-item-color">
-                                                            Колір:
-                                                            <span style="background: <?=$colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE']?>;"> </span>
-                                                        </div>
+                                                        <?
+                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs))
+                                                            {
+                                                                ?>
+                                                                <div class="order-item-color">
+                                                                    Колір:
+                                                                    <span style="background: <?=$colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE']?>;"> </span>
+                                                                </div>
+                                                                <?
+                                                            }
+                                                        ?>
+
                                                     </div>
                                                 </div>
 
@@ -2915,6 +2988,7 @@ else
     $arResult['JS_DATA']['ORDER_PROP']['properties'] = $new;
 	?>
 	<script>
+        var isSert = <?=$isSert ? 1 : 0?>;
         var dost = <?=CUtil::PhpToJSObject($dost)?>;
 		BX.message(<?=CUtil::PhpToJSObject($messages)?>);
 		/*
