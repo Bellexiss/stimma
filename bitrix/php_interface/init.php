@@ -2017,354 +2017,6 @@ function checkTable(&$arFields)
 }
 
 
-function generateFeedGoogle()
-{
-    global $DB;
-
-    $res = $DB -> Query('select * from max_color_reference');
-    while ($record = $res -> Fetch())
-        $colorRef[$record['UF_XML_ID']] = $record;
-
-    $usdRate = COption::GetOptionString("my_module", "usd_rate",'41.7');
-
-    $header = '<?xml version="1.0" encoding="UTF-8"?>';
-    $header .= '<feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0">';
-    $header .= '<title>STIMMA</title>';
-    $header .= '<link rel="self" href="https://stimma.ua"/>';
-    //$header .= '<updated>20011-07-11T12:00:00Z</updated> ';
-    $header .= '<updated>'.date('d.m.Y H:i:s').'</updated> ';
-    $header .= '<currency code = "UAH" rate = "1" main = "1"/>';
-
-    $mainColors = [];
-    $res = $DB -> Query('select * from main_colors');
-    while($record = $res -> Fetch())
-        $mainColors[$record['UF_XML_ID']] = $record['UF_NAME_UA'];
-
-    if(file_exists($_SERVER['DOCUMENT_ROOT'].'/upload/name_ua.php'))
-        require $_SERVER['DOCUMENT_ROOT'].'/upload/name_ua.php';
-
-    $sectionRes = CIBlockSection::GetList([], ['IBLOCK_ID' => 21], false, ['ID','IBLOCK_ID','UF_*']);
-    $arSections= $allSections = [];
-    while ($rec = $sectionRes -> Fetch())
-    {
-        $allSections[$rec['ID']] = $rec;
-        $arSections[$rec['ID']] = $rec['UF_NAME_UA'];
-    }
-    $content = $contentRu = $contentFB = $contentRuFB = $contentTikTok = $contentTikTokRu = '';
-    $res = CIBlockElement::GetList([], ['IBLOCK_ID' => 21, 'ACTIVE' => 'Y']);
-    while ($record = $res -> GetNextElement())
-    {
-        $fields = $record -> GetFields();
-        $Props = $record -> GetProperties();
-
-        if(!$allSections[$fields['IBLOCK_SECTION_ID']]['UF_GOOGLE_ID']) continue;
-
-        $offersPropDB = CIBlockElement::GetList([], ['IBLOCK_ID' => 25,'PROPERTY_CML2_LINK' => $fields['ID']/*,'!PROPERTY_MATERIAL' => false*/]);
-
-        $sizes = [];
-        $material = $sklad = '';
-
-        $available = 'out of stock';
-        //$available = 'in stock';
-
-        while ($offersProp = $offersPropDB->GetNextElement())
-        {
-            $offersFields = $offersProp->GetFields();
-            $offersProp = $offersProp->GetProperties();
-
-            $quantity = $DB->Query('select * from b_catalog_product where ID = ' . $offersFields['ID'])->Fetch();
-            if($quantity['QUANTITY'] > 0)
-                $available = 'in stock';
-
-            if(!$Props['DETAIL_TEXT_UA']['VALUE'] && $offersProp['DETAIL_TEXT_UA']['VALUE'])
-                $Props['DETAIL_TEXT_UA']['VALUE'] = $offersProp['DETAIL_TEXT_UA']['VALUE'];
-
-            if(!$fields['DETAIL_TEXT'] && $offersFields['DETAIL_TEXT'])
-                $fields['DETAIL_TEXT'] = $offersFields['DETAIL_TEXT'];
-
-
-
-            if($offersProp['MATERIAL']['VALUE'][0])
-                $materialRu = $offersProp['MATERIAL']['VALUE'][0];
-            if($offersProp['SOSTAV']['VALUE'])
-                $skladRu = $offersProp['SOSTAV']['VALUE'];
-            if($offersProp['RAZMER']['VALUE'])
-                $sizes[] = $offersProp['RAZMER']['VALUE'];
-
-            if(isset($name_ua['MATERIAL']['values'][$offersProp['MATERIAL']['VALUE_XML_ID'][0]]))
-                $offersProp['MATERIAL']['VALUE'][0] = $name_ua['MATERIAL']['values'][$offersProp['MATERIAL']['VALUE_XML_ID'][0]];
-
-            if(isset($name_ua['SOSTAV']['values'][$offersProp['SOSTAV']['VALUE_XML_ID']]))
-            {
-                $offersProp['SOSTAV']['VALUE'] = $name_ua['SOSTAV']['values'][$offersProp['SOSTAV']['VALUE_XML_ID']];
-            }
-
-            if($offersProp['MATERIAL']['VALUE'][0])
-                $material = $offersProp['MATERIAL']['VALUE'][0];
-            if($offersProp['SOSTAV']['VALUE'])
-                $sklad = $offersProp['SOSTAV']['VALUE'];
-            //if($offersProp['RAZMER']['VALUE'])
-            //    $sizes[] = $offersProp['RAZMER']['VALUE'];
-        }
-
-        $img = $fields['PREVIEW_PICTURE'] ? $fields['PREVIEW_PICTURE'] : $fields['DETAIL_PICTURE'];
-        $img = CFile::GetFileArray($img)['SRC'];
-
-        $price = CCatalogProduct::GetOptimalPrice($fields['ID']);
-        $basePrice = CPrice::GetBasePrice($fields['ID']);
-        $basePrice['PRICE'] = intval($basePrice['PRICE']);
-
-        $dPage = CIBlockElement::GetByID($fields['ID']) -> GetNext();
-
-        $fields['PREVIEW_TEXT'] = strip_tags($fields['PREVIEW_TEXT']);
-        $fields['DETAIL_TEXT'] = strip_tags($fields['DETAIL_TEXT']);
-        $fields['PREVIEW_TEXT'] = str_replace(['&ndash;','&lt;','&gt;'], ['-','<','>'], $fields['PREVIEW_TEXT']);
-        $fields['DETAIL_TEXT'] = str_replace(['&ndash;','&lt;','&gt;'], ['-','<','>'], $fields['DETAIL_TEXT']);
-
-        # UA
-        $text = '';
-        if ($Props['DETAIL_TEXT_UA']['VALUE']['TEXT'])
-            $text = strip_tags(htmlentities($Props['DETAIL_TEXT_UA']['VALUE']['TEXT']));
-        elseif ($Props['DETAIL_TEXT_UA']['VALUE'])
-            $text = strip_tags(htmlentities($Props['DETAIL_TEXT_UA']['VALUE']));
-
-        if($colorRef[$Props['COLOR_REF']['VALUE']]['UF_NAME_UA'])
-            $text .= ' Колір: '.$colorRef[$Props['COLOR_REF']['VALUE']]['UF_NAME_UA'].'.';
-        elseif($colorRef[$Props['COLOR']['VALUE']]['UF_NAME_UA'])
-            $text .= ' Колір: '.$colorRef[$Props['COLOR']['VALUE']]['UF_NAME_UA'].'.';
-        if(!empty($sizes))
-            $text .= ' Розміри: '.implode(',',$sizes).'.';
-        if(!empty($material))
-            $text .= ' Матеріал: '.$material.'.';
-        if(!empty($sklad))
-            $text .= ' Склад: '.$sklad.'. ';
-
-        $text = str_replace('  ',' ',$text);
-        # /UA
-
-        # RU
-        $textRu = '';
-        if ($fields['DETAIL_TEXT'])
-            $textRu = strip_tags(htmlentities($fields['DETAIL_TEXT']));
-
-        if($colorRef[$Props['COLOR_REF']['VALUE']]['UF_NAME'])
-            $textRu .= ' Цвет: '.$colorRef[$Props['COLOR_REF']['VALUE']]['UF_NAME'].'.';
-        elseif($colorRef[$Props['COLOR']['VALUE']]['UF_NAME'])
-            $textRu .= ' Цвет: '.$colorRef[$Props['COLOR']['VALUE']]['UF_NAME'].'.';
-        if(!empty($sizes))
-            $textRu .= ' Размеры: '.implode(',',$sizes).'.';
-        if(!empty($material))
-            $textRu .= ' Материал: '.$materialRu.'.';
-        if(!empty($sklad))
-            $textRu .= ' Состав: '.$skladRu.'. ';
-
-        $textRu = str_replace('  ',' ',$textRu);
-        # /RU
-
-        $additionalPhoto = $additionalPhotoTikTok = '';
-        if(!empty($Props['PHOTO_GALLERY']['VALUE']))
-        {
-            foreach ($Props['PHOTO_GALLERY']['VALUE'] as $index => $prop)
-            {
-                $imgProp = CFile::GetFileArray($prop)['SRC'];
-                $additionalPhoto .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
-
-                if(strpos($imgProp,'.m4v') === false)
-                    $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
-            }
-
-        }
-
-        $obSections = CIBlockSection::GetNavChain(false, $fields['IBLOCK_SECTION_ID'], array('NAME','ID'));
-        $chain = [];
-        while($arSection = $obSections->Fetch())
-        {
-            $chain[] = $arSections[$arSection['ID']];
-        }
-        $chain = implode(' > ',$chain);
-
-        $material = '';
-        if($offersProp['MATERIAL']['VALUE_XML_ID'][0])
-        {
-
-            //if(isset($name_ua['MATERIAL']['values'][$offersProp['MATERIAL']['VALUE_XML_ID'][0]]))
-                //$offersProp['MATERIAL']['VALUE'][0] = $name_ua['MATERIAL']['values'][$offersProp['MATERIAL']['VALUE_XML_ID'][0]];
-            //$material = '<g:material>'.$offersProp['MATERIAL']['VALUE'][0].'</g:material>';
-            $material = '<g:material>'.$material.'</g:material>';
-            $materialRu = '<g:material>'.$materialRu.'</g:material>';
-        }
-        //if($Props['MATERIAL']['VALUE'])
-        //    $material = '<g:material>'.$Props['MATERIAL']['VALUE'].'</g:material>';
-
-        $section = CIBlockSection::GetList([], ['IBLOCK_ID' => 21, 'ID' => $fields['IBLOCK_SECTION_ID']], false, ['ID','IBLOCK_ID','UF_GOOGLE_ID'])->Fetch();
-        if(!$section['UF_GOOGLE_ID']) continue;
-        $gCat = $Props['GOOGLE_CAT_ID']['VALUE'] ? $Props['GOOGLE_CAT_ID']['VALUE'] : $section['UF_GOOGLE_ID'];
-
-        $nameUA = $Props['GOOGLE_UA_NAME']['VALUE'] ? $Props['GOOGLE_UA_NAME']['VALUE'] : $Props['NAME_UA']['VALUE'];
-        $nameRU = $Props['GOOGLE_RU_NAME']['VALUE'] ? $Props['GOOGLE_RU_NAME']['VALUE'] : $fields['NAME'];
-
-        $gPrice = '';
-        if($basePrice['PRICE']>$price['RESULT_PRICE']['DISCOUNT_PRICE'])
-            $gPrice = '<g:price>'.$basePrice['PRICE'].' UAH</g:price>
-		                <g:sale_price>'.$price['RESULT_PRICE']['DISCOUNT_PRICE'].' UAH</g:sale_price>';
-        else $gPrice = '<g:price>'.$basePrice['PRICE'].' UAH</g:price>';
-
-        $gPriceFB = '';
-        if($basePrice['PRICE']>$price['RESULT_PRICE']['DISCOUNT_PRICE'])
-            $gPriceFB = '<g:price>'.round($basePrice['PRICE']/$usdRate, 2).' USD</g:price>
-		                <g:sale_price>'.round($price['RESULT_PRICE']['DISCOUNT_PRICE']/$usdRate, 2).' USD</g:sale_price>';
-        else $gPriceFB = '<g:price>'.round($basePrice['PRICE']/$usdRate, 2).' USD</g:price>';
-
-        $content .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameUA.'</g:title>
-		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPrice.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$material.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-
-        $contentFB .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameUA.'</g:title>
-		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPriceFB.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$material.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-
-        $contentRu .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameRU.'</g:title>
-		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPrice.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$materialRu.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-
-        $contentRuFB .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameRU.'</g:title>
-		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPriceFB.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$materialRu.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-        $contentTikTok .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameUA.'</g:title>
-		<g:description><![CDATA['.$text.']]></g:description>
-		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhotoTikTok.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPrice.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$material.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-
-        $contentTikTokRu .= '
-            <entry>
-		<g:id>'.$fields['ID'].'</g:id>
-		<g:title>'.$nameRU.'</g:title>
-		<g:description><![CDATA['.$textRu.']]></g:description>
-		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
-		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhotoTikTok.'
-		<g:availability>'.$available.'</g:availability>
-		'.$gPrice.'
-		<g:product_type>'.$chain.'</g:product_type>
-		<g:brand>STIMMA</g:brand>
-		<g:identifier_exists>no</g:identifier_exists>
-		<g:condition>new</g:condition>
-		<g:color>'.$mainColors[$Props['COLOR']['VALUE']].'</g:color>
-		<g:google_product_category>'.$gCat.'</g:google_product_category>
-		'.$materialRu.'
-		<g:custom_label_0>'.$Props['CUSTOM_LABEL_0']['VALUE'].'</g:custom_label_0>
-		<g:custom_label_1>'.$Props['CUSTOM_LABEL_1']['VALUE'].'</g:custom_label_1>
-		<g:custom_label_2>'.$Props['CUSTOM_LABEL_2']['VALUE'].'</g:custom_label_2>
-	</entry>
-            ';
-
-    }
-
-    $footer = '</feed>';
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/google_feed.xml', $header.$content.$footer);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/google_feed_ru.xml', $header.$contentRu.$footer);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/facebook.xml', $header.$contentFB.$footer);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/facebook_ru.xml', $header.$contentRuFB.$footer);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/tiktok.xml', $header.$contentTikTok.$footer);
-    file_put_contents($_SERVER['DOCUMENT_ROOT'].'/tiktok_ru.xml', $header.$contentTikTokRu.$footer);
-
-    return 'generateFeedGoogle();';
-}
-
 function generateFeedGoogleNew()
 {
     global $DB;
@@ -2420,7 +2072,7 @@ function generateFeedGoogleNew()
 
         $offersPropDB = CIBlockElement::GetList([], ['IBLOCK_ID' => 25,'PROPERTY_CML2_LINK' => $fields['ID']/*,'!PROPERTY_MATERIAL' => false*/]);
 
-        $sizes = [];
+        $sizes = $offers = [];
         $material = $sklad = '';
 
         $available = 'out of stock';
@@ -2467,6 +2119,9 @@ function generateFeedGoogleNew()
                 $sklad = $offersProp['SOSTAV']['VALUE'];
             if($offersProp['RAZMER']['VALUE'])
                 $sizes[$offersFields['ID']] = $offersProp['RAZMER']['VALUE'];
+
+            $offers[$offersFields['ID']] = $offersFields;
+            $offers[$offersFields['ID']]['PROPERTIES'] = $offersProp;
         }
 
         $img = $fields['PREVIEW_PICTURE'] ? $fields['PREVIEW_PICTURE'] : $fields['DETAIL_PICTURE'];
@@ -2523,13 +2178,18 @@ function generateFeedGoogleNew()
         $textRu = str_replace('  ',' ',$textRu);
         # /RU
 
-        $additionalPhoto = $additionalPhotoTikTok = '';
+        $additionalPhoto = $additionalPhotoTikTok = $additionalPhotoGoogle = '';
         if(!empty($Props['PHOTO_GALLERY']['VALUE']))
         {
             foreach ($Props['PHOTO_GALLERY']['VALUE'] as $index => $prop)
             {
                 $imgProp = CFile::GetFileArray($prop)['SRC'];
                 $additionalPhoto .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
+
+                if(strpos($imgProp,'.m4v') === false && strpos($imgProp,'.mp4') === false && strpos($imgProp,'.MP4') === false)
+                    $additionalPhotoGoogle .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
+                else
+                    $additionalPhotoGoogle .= '<g:video_link>https://stimma.ua'.$imgProp.'</g:video_link>';
 
                 if(strpos($imgProp,'.m4v') === false && strpos($imgProp,'.mp4') === false && strpos($imgProp,'.MP4') === false)
                     $additionalPhotoTikTok .= '<g:additional_image_link>https://stimma.ua'.$imgProp.'</g:additional_image_link>';
@@ -2589,11 +2249,11 @@ function generateFeedGoogleNew()
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
 		<g:id>'.$sizeID.'</g:id>
-		<g:title>'.$nameUA.'</g:title>
+		<g:title>'.$offers[$sizeID]['PROPERTIES']['NAME_UA']['VALUE'].'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
 		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
+		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
 		<g:product_type>'.$chain.'</g:product_type>
@@ -2614,11 +2274,11 @@ function generateFeedGoogleNew()
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
 		<g:id>'.$sizeID.'</g:id>
-		<g:title>'.$nameRU.'</g:title>
+		<g:title>'.$offers[$sizeID]['PROPERTIES']['NAME_RU']['VALUE'].'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
 		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
+		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
 		<g:product_type>'.$chain.'</g:product_type>
@@ -2646,7 +2306,7 @@ function generateFeedGoogleNew()
 		<g:description><![CDATA['.$text.']]></g:description>
 		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
+		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
 		<g:product_type>'.$chain.'</g:product_type>
@@ -2669,7 +2329,7 @@ function generateFeedGoogleNew()
 		<g:description><![CDATA['.$textRu.']]></g:description>
 		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
-		'.$additionalPhoto.'
+		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
 		<g:product_type>'.$chain.'</g:product_type>
@@ -5847,6 +5507,117 @@ function getOrderFor1C($order_id,$status,$debug)
             'adress'=>$delivery['adress'],
             'kasta_id'=>$kastaId,
     ];
+}
+
+
+function sendOrderTo1C($order_id=false)
+{
+    global $DB;
+
+    if(!$order_id)
+        $order_id = $DB->Query('select * from orders_1c where UF_SEND != 1 limit 1')->Fetch();
+    else
+        $order_id = $DB->Query('select * from orders_1c where UF_ORDER_ID = '.$order_id)->Fetch();
+
+    $recordId = $order_id['ID'];
+    $order_id = $order_id['UF_ORDER_ID'];
+
+    //for($i=50887; $i<=50974; $i++)
+    {
+        //$order_id=$i;
+        //if($order_id > 0)
+        {
+            //Bitrix\Main\Diag\Debug::writeToFile(date('d.m.Y H:i:s'), "--------------------------- "  , '/debug_create_order_stims_1c.txt');
+            //Bitrix\Main\Diag\Debug::writeToFile(date('d.m.Y H:i:s'), "start send to 1C order " . $order_id , '/debug_create_order_stims_1c.txt');
+
+            $data = getOrderFor1C($order_id,'N',false);
+
+            //if(!$data) continue;
+
+            //Bitrix\Main\Diag\Debug::writeToFile($data, "data for 1c ", '/debug_create_order_stims_1c.txt');
+
+            $stimsItems = [];
+            $onlyStims = false;
+            foreach ($data['items'] as $index => $bItem)
+            {
+                if($bItem['stims'])
+                {
+                    $stimsItems[] = $bItem;
+                    unset($data['items'][$index]);
+                }
+            }
+            if(empty($data['items'])) $onlyStims = true;
+
+            ?><pre>$data <?=print_r($data, 1)?></pre><?
+            ?><pre>$stimsItems <?=print_r($stimsItems, 1)?></pre><?
+
+            //Bitrix\Main\Diag\Debug::writeToFile($stimsItems, "Stims items" , '/debug_create_order_stims_1c.txt');
+
+            //$url = 'http://195.201.245.102:22022/MobClient/CreateOrder/';
+            $url = 'http://195.201.245.102:22022/sklad/hs/list/CreateOrder';
+
+            $headers = [
+                'Content-Type: application/json'
+            ];
+            if(!empty($data['items']))
+            {
+                $data['items']=array_values($data['items']);
+                //Bitrix\Main\Diag\Debug::writeToFile($data, "data for just order" , '/debug_create_order_stims_1c.txt');
+                $options = [
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => $headers,
+                    CURLOPT_CONNECTTIMEOUT => 5,  // таймаут соединения
+                    CURLOPT_TIMEOUT => 10         // таймаут выполнения
+                ];
+
+                $curl = curl_init();
+                curl_setopt_array($curl, $options);
+
+                $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                $response = curl_exec($curl);
+                ?><pre>$response <?=print_r($response, 1)?></pre><?
+                curl_close($curl);
+
+                if($response->StatusCode == 1)
+                    $DB->Query('update orders_1c set UF_SEND = 1 where ID = ' . $recordId);
+                //Bitrix\Main\Diag\Debug::writeToFile($response, "response for send 1c just order" , '/debug_create_order_stims_1c.txt');
+            }
+            else
+                //Bitrix\Main\Diag\Debug::writeToFile(date('d.m.Y H:i:s'), "dont send to 1c just order" , '/debug_create_order_stims_1c.txt');
+
+
+                if(!empty($stimsItems))
+                {
+                    $data['items']=array_values($stimsItems);
+
+                    $options = [
+                        CURLOPT_URL => $url,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POST => true,
+                        CURLOPT_POSTFIELDS => json_encode($data),
+                        CURLOPT_HTTPHEADER => $headers,
+                        CURLOPT_CONNECTTIMEOUT => 5,  // таймаут соединения
+                        CURLOPT_TIMEOUT => 10         // таймаут выполнения
+                    ];
+
+                    $curl = curl_init();
+                    curl_setopt_array($curl, $options);
+
+                    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                    $response = curl_exec($curl);
+                    ?><pre>$response stims <?=print_r($response, 1)?></pre><?
+                    curl_close($curl);
+
+                    if($response->StatusCode == 1)
+                        $DB->Query('update orders_1c set UF_SEND = 1 where ID = ' . $recordId);
+                }
+
+        }
+    }
+
 }
 
 function GetDiscount1C($promocode)

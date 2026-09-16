@@ -469,7 +469,7 @@ $skipOrderId = 44779;
 
 
 
-if($order['PAYED'] == 'Y' || isset($_GET['SUCCESS']))
+if($order['PAYED'] == 'Y' || isset($_GET['SUCCESS']) || $amount-$minus_price <= 0)
 {
     ?>
     <div class="order-end-page">
@@ -671,7 +671,7 @@ if($order['PAYED'] == 'Y' || isset($_GET['SUCCESS']))
     <?
 }
 
-if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']))
+if($order['PAYED'] != 'Y' && !isset($_GET['SUCCESS']) && $amount-$minus_price > 0)
 {
     if($order['PAY_SYSTEM_ID'] == 14)
     {
