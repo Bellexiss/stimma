@@ -883,8 +883,10 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                             {
                                 ?>
                                 <div class="card-delivery-info claude_photo">
+                                    <?if($arResult['ID'] == 61368)echo '<span class="bonus">';?>
                                     <?= $arResult['OFFERS'][0]['PROPERTIES']['WAITTIME_'.strtoupper(LANGUAGE_ID)]['VALUE'] ?>
                                     <?/*Збільшений термін очікування — <span>14-21 робочих днів</span>*/?>
+                                    <?if($arResult['ID'] == 61368)echo '</span>';?>
                                 </div>
                                 <?
                             }

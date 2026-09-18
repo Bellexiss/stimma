@@ -20,6 +20,12 @@ define('HLBLOCK_REGISTER_COUPONS', 20);
 //define('NEW_STIMMA', isset($_COOKIE['new_stimma']));
 define('NEW_STIMMA', true);
 
+$currtime = strtotime(date('d.m.Y H:i:s'));
+$startAction =strtotime('16.09.2026 00:00:01');
+$endAction = strtotime('20.09.2026 23:59:59');
+$isSepShortAction = $currtime >= $startAction && $currtime <= $endAction ? true : false;
+define('SEP_SHORT',$isSepShortAction);
+
 
 EventManager::getInstance()->addEventHandler("main", "OnAfterUserRegister", "AddUserPhoneToHL");
 function getProfileFrom1C($phone) {
@@ -1443,7 +1449,7 @@ function getBasketNewHtml($basket = false)
                         if(!$arItem['PRODUCT']['NAME'])
                             $arItem['PRODUCT']['NAME'] = CIBlockElement::GetProperty(21, $arItem['PRODUCT_ID'],'sort', 'asc', array('CODE' => 'NAME_UA')) -> Fetch()['VALUE'];
 
-                        if(($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) && $isJulyAction)
+                        if(($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) && ($isJulyAction || SEP_SHORT))
                             $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
 
                         $Uah[]= (int)$arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] * (int)$arItem['QUANTITY'];
@@ -1487,7 +1493,7 @@ function getBasketNewHtml($basket = false)
                                                     ]
                                                 )->Fetch();
 
-                                                if($isJulyAction && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171))
+                                                if(($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171))
                                                     $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
                                                 ?>
                                                     <?
@@ -1517,7 +1523,7 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
-                                    <div class="basket-header-counter" style="<?=$isJulyAction && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) ? 'display:none;' : ''?>">
+                                    <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) ? 'display:none;' : ''?>">
                                         <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
                                             <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
@@ -5617,7 +5623,7 @@ function sendOrderTo1C($order_id=false)
 
         }
     }
-
+    return 'sendOrderTo1C();';
 }
 
 function GetDiscount1C($promocode)

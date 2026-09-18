@@ -391,6 +391,10 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                             </div>
                             <div class="catalog-item-badges">
                                 <?
+                                if($arItem['ID'] == 61368 && SEP_SHORT)
+                                {
+                                    ?><div class="catalog-item-badge top-price cbia2pod" style="background-color: #9ca944;"><?=LANGUAGE_ID == 'ua' ? '+ Подарунок' : '+ Подарок'?></div><?
+                                }
                                 if($minPrice['DISCOUNT_DIFF'] && (in_array('rasprodazha', $item['PROPERTIES']['SELECTION']['VALUE_XML_ID']) || in_array('khit_prodazh', $item['PROPERTIES']['SELECTION']['VALUE_XML_ID'])))
                                 {
                                     ?><div class="catalog-item-badge discount cbia2">-<?=$minPrice['DISCOUNT_DIFF_PERCENT']?>%</div><?

@@ -35,6 +35,15 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
     $priceData = CCatalogProduct::GetOptimalPrice($id, 1, $arGroups);
     $price = $priceData['PRICE']['PRICE'];
     $element = CIBlockElement::GetByID($id)->Fetch();
+
+    if(SEP_SHORT && $_REQUEST['id'] != 47171 && $_REQUEST['id'] != 47170)
+    {
+        //$mainPID = CIBlockElement::GetProperty(25, $_REQUEST['id'],'sort', 'asc', array('CODE' => 'CML2_LINK')) -> Fetch()['VALUE'];
+        //$mainFields = CIBlockElement::GetByID($mainPID)->Fetch();
+    }
+
+
+
     $_POST['cnt'] = intval($_POST['cnt']);
     if($_POST['cnt'] < 1) $_POST['cnt'] = 1;
 
@@ -56,6 +65,38 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
                                 'NAME' => $element['NAME'],
                                 //'NOTES' => isset($_REQUEST['bys']) && $_REQUEST['bys'] ? 'S' : '',
                             ));
+    if(SEP_SHORT && in_array($_REQUEST['id'],[61369,61370,61371]))
+    {
+        $productId = 61376;
+        $fUserId = CSaleBasket::GetBasketUserID();
+
+        $dbBasket = CSaleBasket::GetList(
+            array(),
+            array(
+                'FUSER_ID' => $fUserId,
+                'PRODUCT_ID' => $productId,
+                'LID' => $site_id,
+                'ORDER_ID' => 'NULL',
+            ),
+            false,
+            false,
+            array('ID', 'PRODUCT_ID', 'QUANTITY', 'PRICE', 'CURRENCY')
+        );
+
+        if (!$basketItem = $dbBasket->Fetch())
+        {
+            $elementBonus = CIBlockElement::GetByID($productId)->Fetch();
+            $status = CSaleBasket::Add(array(
+                                           'PRODUCT_ID' => $productId,
+                                           'QUANTITY' => 1,
+                                           'PRICE' => 0.01,
+                                           'PRICE_TYPE_ID' => $priceData['PRICE']['CATALOG_GROUP_ID'],
+                                           'CURRENCY' => 'UAH',
+                                           'LID' => $site_id,
+                                           'NAME' => $elementBonus['NAME'],
+                                       ));
+        }
+    }
 
     if(isset($_REQUEST['bys']) && $_REQUEST['bys'])
     {

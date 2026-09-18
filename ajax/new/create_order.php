@@ -622,7 +622,7 @@ if($order_id > 0)
             }
         }
     }
-    else
+    elseif(!empty($stimsItems) && empty($data['items']))
         $DB->Query('update b_sale_order set CURRENCY = \'STI\' where ID = '.$order_id);
 
 }
