@@ -32,6 +32,7 @@ global $isJulyAction;
 $isAprilAction = strtotime(date('01.09.2026 00:00:00')) < strtotime(date('d.m.Y H:i:s')) && strtotime(date('d.m.Y H:i:s')) < strtotime(date('30.09.2026 23:59:59'));
 
 $sertIDs = getSertIDs();
+$sertIDs[] = 61376;
 
 $useCoupon = 1;
 $isSert = false;
@@ -69,7 +70,7 @@ $basketProducts=[];
             ?><pre>1 -> <?=print_r($pId, 1)?></pre><?
             ?><pre>2 -> <?=print_r($product['QUANTITY'], 1)?></pre><?
         }
-        if(!$product['QUANTITY'] && $pId != 35425 && $pId != 35428 && $pId != 35430 && $pId != 35432 && $pId != 35434)
+        if(!$product['QUANTITY'] && $pId != 35425 && $pId != 35428 && $pId != 35430 && $pId != 35432 && $pId != 35434 && $pId != 61376)
             $isOrder = 0;
         $p = CIBlockElement::GetByID($pId);
         if($p = $p-> GetNextElement())
@@ -79,7 +80,7 @@ $basketProducts=[];
             $mainIDs[] = $p['CML2_LINK']['VALUE'] ? $p['CML2_LINK']['VALUE'] : $pId;
             if(LANGUAGE_ID == 'ua'){if($p['NAME_UA']['VALUE'])$arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['NAME'] = $p['NAME_UA']['VALUE'];}
 
-            if(!$product['QUANTITY'] && $pId != 35425 && $pId != 35428 && $pId != 35430 && $pId != 35432 && $pId != 35434 )
+            if(!$product['QUANTITY'] && $pId != 35425 && $pId != 35428 && $pId != 35430 && $pId != 35432 && $pId != 35434 && $pId != 61376 )
             {
                 if(LANGUAGE_ID == 'ua')
                     $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['NAME'] .=' <span style="color:#900020">(Не в наявності)</span>';
@@ -2723,9 +2724,13 @@ else
                                                 </div>
                                                 <div class="order-item-prop-cont">
                                                     <div class="order-item-prop">
-                                                        <div class="order-item-size">
-                                                            <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
-                                                            <?/*
+                                                        <?
+                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs))
+                                                        {
+                                                            ?>
+                                                            <div class="order-item-size">
+                                                                <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
+                                                                <?/*
                                                         <select class="form-select">
                                                             <option>S</option>
                                                             <option>M</option>
@@ -2733,7 +2738,11 @@ else
                                                             <option>XL</option>
                                                         </select>
                                                         */?>
-                                                        </div>
+                                                            </div>
+                                                            <?
+                                                        }
+                                                        ?>
+
                                                         <?
                                                         if(!in_array($item['PRODUCT_ID'],$sertIDs))
                                                             {
@@ -2751,14 +2760,14 @@ else
 
                                             </div>
                                             <div class="order-item-control">
-                                                <div class="order-item-counter">
+                                                <div class="order-item-counter" style="<?=$item['PRODUCT_ID'] == 61376 ? 'display:none;' : ''?>">
                                                     <button class="order-item-counter-btn minus_count" data-id="<?=$item['ID']?>">
                                                         <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>
                                                         </svg>
                                                     </button>
-                                                    <input type="text" name="" value="<?=$item['QUANTITY']?>">
-                                                    <button class="order-item-counter-btn plus_count" data-id="<?=$item['ID']?>">
+                                                    <input type="text" name="" value="<?=$item['QUANTITY']?>" style="<?=$item['PRODUCT_ID'] == 61376 ? 'display:none;' : ''?>">
+                                                    <button class="order-item-counter-btn plus_count" data-id="<?=$item['ID']?>" style="<?=$item['PRODUCT_ID'] == 61376 ? 'display:none;' : ''?>">
                                                         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <rect x="6" width="1" height="13" fill="white"></rect>
                                                             <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"></rect>

@@ -595,12 +595,13 @@ if (!in_array(9, $uGroups))
 
                 if(!$isSale)
                 {
-                    $quantityProduct += $Row['data']['QUANTITY'];
+                    if($Row['data']['PRODUCT_ID'] != 61376)
+                        $quantityProduct += $Row['data']['QUANTITY'];
 
                     $product = $DB->Query('select * from b_iblock_element where ID = ' . $productId)->Fetch();
-                    if(!in_array($product['IBLOCK_SECTION_ID'], $excludeSections))
+                    if(!in_array($product['IBLOCK_SECTION_ID'], $excludeSections) && $product['IBLOCK_SECTION_ID'])
                         $allQuantityLeftSection[] = $product['IBLOCK_SECTION_ID'];
-                    else
+                    elseif($product['IBLOCK_SECTION_ID'])
                         $allQuantityLeftSectionAccs[] = $product['IBLOCK_SECTION_ID'];
 
                     $allSum += $Row['data']['PRICE']*$Row['data']['QUANTITY'];

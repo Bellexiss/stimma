@@ -22,7 +22,7 @@ define('NEW_STIMMA', true);
 
 $currtime = strtotime(date('d.m.Y H:i:s'));
 $startAction =strtotime('16.09.2026 00:00:01');
-$endAction = strtotime('20.09.2026 23:59:59');
+$endAction = strtotime('23.09.2026 00:00:01');
 $isSepShortAction = $currtime >= $startAction && $currtime <= $endAction ? true : false;
 define('SEP_SHORT',$isSepShortAction);
 
@@ -243,7 +243,7 @@ function changeValue($ib, $code, $arValuesXmlIDs, $values_ua)
 
 
 
-AddEventHandler("main", "OnEndBufferContent", function (&$content) {
+/*AddEventHandler("main", "OnEndBufferContent", function (&$content) {
 	
 	global $APPLICATION;
 	
@@ -277,7 +277,7 @@ AddEventHandler("main", "OnEndBufferContent", function (&$content) {
 		
 		
     }
-});
+});*/
 
 function checkGlobalRedirect()
 {
@@ -1493,7 +1493,7 @@ function getBasketNewHtml($basket = false)
                                                     ]
                                                 )->Fetch();
 
-                                                if(($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171))
+                                                if(($isJulyAction || SEP_SHORT) && $arItem['PRODUCT_ID'] == 61376)
                                                     $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
                                                 ?>
                                                     <?
@@ -1523,7 +1523,7 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
-                                    <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) ? 'display:none;' : ''?>">
+                                    <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376) ? 'display:none;' : ''?>">
                                         <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
                                             <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
@@ -2089,12 +2089,19 @@ function generateFeedGoogleNew()
             $offersFields = $offersProp->GetFields();
             $offersProp = $offersProp->GetProperties();
 
+            $datePreorder = '';
+
             $quantity = $DB->Query('select * from b_catalog_product where ID = ' . $offersFields['ID'])->Fetch();
             if($quantity['QUANTITY'] > 0)
                 $available = 'in stock';
 
             if($Props['SOON']['VALUE'] || $offersProp['SOON']['VALUE'])
+            {
                 $available = 'preorder';
+                $datePreorder = '<g:availability_date>'.DateTime::createFromFormat('d.m.Y', $Props['SOON_DATE']['VALUE'])
+                                                  ->setTime(9, 0, 0)
+                                                  ->format('Y-m-d\TH:i:sP').'</g:availability_date>';
+            }
 
             if(!$Props['DETAIL_TEXT_UA']['VALUE'] && $offersProp['DETAIL_TEXT_UA']['VALUE'])
                 $Props['DETAIL_TEXT_UA']['VALUE'] = $offersProp['DETAIL_TEXT_UA']['VALUE'];
@@ -2262,6 +2269,7 @@ function generateFeedGoogleNew()
 		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
+		'.$datePreorder.'
 		<g:product_type>'.$chain.'</g:product_type>
 		<g:size>'.$size.'</g:size>
 		<g:brand>STIMMA</g:brand>
@@ -2287,6 +2295,7 @@ function generateFeedGoogleNew()
 		'.$additionalPhotoGoogle.'
 		<g:availability>'.$available.'</g:availability>
 		'.$gPrice.'
+		'.$datePreorder.'
 		<g:product_type>'.$chain.'</g:product_type>
 		<g:size>'.$size.'</g:size>
 		<g:brand>STIMMA</g:brand>
@@ -5379,7 +5388,11 @@ function getOrderFor1C($order_id,$status,$debug)
 
     //$status = $order_item['UF_STATUS'];
 
+    if(!$order_id) return false;
+
     $order = $DB->Query('select * from b_sale_order where ID = '.$order_id)->Fetch();
+
+    if(!$order) return false;
 
     $orderProps = [];
     $orderPropsDB = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = '.$order_id);
@@ -5521,12 +5534,18 @@ function sendOrderTo1C($order_id=false)
     global $DB;
 
     if(!$order_id)
-        $order_id = $DB->Query('select * from orders_1c where UF_SEND != 1 limit 1')->Fetch();
+        $order_id = $DB->Query('select * from orders_1c where UF_SEND != 1 or UF_SEND is null limit 1')->Fetch();
     else
         $order_id = $DB->Query('select * from orders_1c where UF_ORDER_ID = '.$order_id)->Fetch();
 
     $recordId = $order_id['ID'];
     $order_id = $order_id['UF_ORDER_ID'];
+
+    if(!$recordId)
+    {
+        Bitrix\Main\Diag\Debug::writeToFile($recordId, "end 0 sendOrderTo1C"  , '/debug_sendOrderTo1C.txt');
+        return 'sendOrderTo1C(0);';
+    }
 
     //for($i=50887; $i<=50974; $i++)
     {
@@ -5538,7 +5557,11 @@ function sendOrderTo1C($order_id=false)
 
             $data = getOrderFor1C($order_id,'N',false);
 
-            //if(!$data) continue;
+            if(!$data)
+            {
+                $DB->Query('update orders_1c set UF_SEND = 1 where ID = ' . $recordId);
+                return 'sendOrderTo1C();';
+            }
 
             //Bitrix\Main\Diag\Debug::writeToFile($data, "data for 1c ", '/debug_create_order_stims_1c.txt');
 
@@ -5587,11 +5610,10 @@ function sendOrderTo1C($order_id=false)
                 ?><pre>$response <?=print_r($response, 1)?></pre><?
                 curl_close($curl);
 
-                if($response->StatusCode == 1)
+                if($response->StatusCode == 1 || strpos($response,'"StatusCode": 1') !== false)
                     $DB->Query('update orders_1c set UF_SEND = 1 where ID = ' . $recordId);
                 //Bitrix\Main\Diag\Debug::writeToFile($response, "response for send 1c just order" , '/debug_create_order_stims_1c.txt');
             }
-            else
                 //Bitrix\Main\Diag\Debug::writeToFile(date('d.m.Y H:i:s'), "dont send to 1c just order" , '/debug_create_order_stims_1c.txt');
 
 
@@ -5617,7 +5639,7 @@ function sendOrderTo1C($order_id=false)
                     ?><pre>$response stims <?=print_r($response, 1)?></pre><?
                     curl_close($curl);
 
-                    if($response->StatusCode == 1)
+                    if($response->StatusCode == 1 || strpos($response,'"StatusCode": 1') !== false)
                         $DB->Query('update orders_1c set UF_SEND = 1 where ID = ' . $recordId);
                 }
 

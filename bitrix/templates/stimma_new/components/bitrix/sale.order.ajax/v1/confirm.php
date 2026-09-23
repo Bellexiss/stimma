@@ -318,6 +318,8 @@ dataLayer.push({
 </script>
 <?
 //if($orderData['PAY_SYSTEM_ID'] != 3)
+$facebookFind = $DB->Query('select * from facebook_purchase where UF_ORDER_ID = ' . $arResult['ORDER']['ID'])->Fetch();
+if(!$facebookFind['UF_STATUS'])
 {
     $usdRate = COption::GetOptionString("my_module", "usd_rate",'41.7');
     ?>

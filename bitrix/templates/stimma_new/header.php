@@ -53,7 +53,7 @@ $basketCount = getBasketCount();
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=LANGUAGE_ID == 'ua' ? 'uk' : 'ru'?>" lang="<?=LANGUAGE_ID == 'ua' ? 'uk' : 'ru'?>" <?=($htmlClass ? 'class="'.$htmlClass.'"' : '')?> >
 <head>
     <?
-    if(!$bIndex)
+    if(!$bIndex && $_SERVER['HTTP_HOST'] != 'dev.stimma.ua')
     {
         ?>
         <!-- Google tag (gtag.js) -->
@@ -283,7 +283,7 @@ else
     $width = 200;
     $height = 200;
 }
-if(!$bIndex)
+if(!$bIndex && $_SERVER['HTTP_HOST'] != 'dev.stimma.ua')
 {
     ?>
     <!-- Google Tag Manager (noscript) -->

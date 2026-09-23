@@ -28,8 +28,17 @@ if(isset($json->id))
         case '-2': $status =  'F'; break;
     }
 
-    if($status)
-        CSaleOrder::Update($json->id, array('STATUS_ID'=>$status));
+    if($status !== false)
+    {
+        Bitrix\Main\Diag\Debug::writeToFile($json->id, "find status ". $status , '/test_status_order.txt');
+        //CSaleOrder::Update($json->id, array('STATUS_ID'=>$status));
+        global $DB;
+        $DB->Query('update b_sale_order set STATUS_ID = \''.$status.'\' where ID = ' . $json->id);
+    }
+    else
+    {
+        Bitrix\Main\Diag\Debug::writeToFile($json->id, "cant find status " , '/test_status_order.txt');
+    }
 }
 
 Bitrix\Main\Diag\Debug::writeToFile($json, "status_order 2 " , '/test_status_order.txt');
