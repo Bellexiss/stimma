@@ -13,38 +13,11 @@ use Bitrix\Main\Page\Frame;
 $bIndex = (strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false) || isset($_GET['google']);
 $isNewPage = $arParams["IS_NEW"] || $arParams["IS_OUTDOOR"] || $arParams["IS_EVENTS"] || $arParams["IS_LIMITED"] || $arParams["IS_CRUISE"] || $arParams["IS_SMART_OFFICE"] || $arParams["IS_COMFORT"] || $arParams["IS_CASUAL"];
 $isH1 = false;
-    /*//$APPLICATION->GetCurPage() == '/catalog/lieta/' || $APPLICATION->GetCurPage() == '/ru/catalog/lieta/' ||
-    $APPLICATION->GetCurPage() == '/catalog/movement/' || $APPLICATION->GetCurPage() == '/ru/catalog/movement/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/platya_sarafany_i_yubki/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/podarochnyy_sertifikat/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/lieta/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/bonusna_shafa/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/rasprodazha/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/sportivnaya_odezhda/khudi_i_svitshoty/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/aksessuary/noski/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/movement/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/khity_prodazh/' ||
-    //$APPLICATION->GetCurPage() == '/projects/collaboration/' ||
-    //$APPLICATION->GetCurPage() == '/projects/media/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/topy1/longslivy/korichnevyy/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/bombery/chernyy/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/bombery/bezhevyy/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/demisezonnye_kurtki/l/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/demisezonnye_kurtki/s/' ||
-    //$APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/demisezonnye_kurtki/m/' ||
-    //$APPLICATION->GetCurPage() == '/ru/projects/collaboration/' ||
-    //$APPLICATION->GetCurPage() == '/ru/projects/media/' ||
-    //$APPLICATION->GetCurPage() == '/projects/collaboration/volia-odyag-i-mistetstvo-v-kolaboratsii-stimma-ta-mikhayla-korobkova-/' ||
-    //$APPLICATION->GetCurPage() == '/projects/collaboration/svitlo-vzimku-stimma-inspiradora-predstavili-kolektsiyu-glow-in-snow/' ||
-    //$APPLICATION->GetCurPage() == '/ru/projects/collaboration/volia-odyag-i-mistetstvo-v-kolaboratsii-stimma-ta-mikhayla-korobkova-/' ||
-    //$APPLICATION->GetCurPage() == '/ru/projects/collaboration/svitlo-vzimku-stimma-inspiradora-predstavili-kolektsiyu-glow-in-snow/' ||
-    $APPLICATION->GetCurPage() == '/ru/catalog/zhenskaya_odezhda/topy1/bodi1/' ||
-    $APPLICATION->GetCurPage() == '/catalog/aksessuary/nizhnee_belye/'
-;*/
+
 if(LANGUAGE_ID == 'ua')
 {
     $section = CIBlockSection::GetList([], ['IBLOCK_ID' => $arParams['IBLOCK_ID'], 'ID' => $arResult['VARIABLES']['SECTION_ID']], false,
-     ['ID','IBLOCK_ID', 'NAME' ,'UF_*']) -> Fetch();
+     ['ID','IBLOCK_ID', 'NAME' ,'ACTIVE','UF_*']) -> Fetch();
     $originalSection = $section;
     if($section['UF_NAME_UA'])
         $section = $originalSection['NAME'] = $section['UF_NAME_UA'];
@@ -57,6 +30,18 @@ else
     $originalSection = $section;
     $section = $section['NAME'];
 }
+
+/*if($originalSection['ACTIVE'] == 'N')
+{
+    \Bitrix\Iblock\Component\Tools::process404(
+        'Не найден', //Сообщение
+        true, // Нужно ли определять 404-ю константу
+        true, // Устанавливать ли статус
+        true, // Показывать ли 404-ю страницу
+        false // Ссылка на отличную от стандартной 404-ю
+    );
+}*/
+
 global $seo,$selectedFilter;
 if(isset($_GET['kk']))
 {
@@ -77,7 +62,6 @@ if(!empty($selectedFilter))
             $seo[$index2] = str_replace('{'.$item.'}', $item, $seo[$index2]);
     }
 }
-
 
 if(LANGUAGE_ID == 'ru')
 {

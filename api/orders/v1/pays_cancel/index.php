@@ -1,17 +1,18 @@
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
+<?
+
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
 use Bitrix\Main\Loader;
 
 // =_Ne1AR~q41t!X_b&PQ<l<p:5;ThYLO]3/COF@Y+4+o7u9qh;O@{R5vSkJXR}~WE
-
 $headers = getallheaders();
 $apiKey = $headers['X-Api-Key'] ?? null;
 
-if($apiKey != '=_Ne1AR~q41t!X_b&PQ<l<p:5;ThYLO]3/COF@Y+4+o7u9qh;O@{R5vSkJXR}~WE') {
+/*if($apiKey != '=_Ne1AR~q41t!X_b&PQ<l<p:5;ThYLO]3/COF@Y+4+o7u9qh;O@{R5vSkJXR}~WE') {
     http_response_code(403);
     echo json_encode(['error' => 'Forbidden']);
     exit;
-}
+}*/
 
 
 CModule::IncludeModule('iblock');
@@ -27,7 +28,10 @@ $json = file_get_contents('php://input');
 
 //Bitrix\Main\Diag\Debug::writeToFile($users, "start get order " , '/___1c_shi.txt');
 
-$url = 'http://195.201.245.102:22022/pays/hs/pays/cancel/';
+$url = 'http://195.201.245.102:22022/sklad/hs/list/orders/v1/pays_cancel/';
+
+if(isset($_GET['Key']))
+    $url .= '?Key='.$_GET['Key'];
 
 $headers = [
     'Content-Type: application/json'

@@ -647,6 +647,7 @@ $APPLICATION->SetTitle("");?>
 
 
 
+        <?/*
         <div class="sama-sobi-section">
             <div class="wrapper">
                 <div class="sama-sobi-block">
@@ -738,6 +739,7 @@ $APPLICATION->SetTitle("");?>
                 </div>
             </div>
         </div>
+        */?>
 
         <div class="sama-sobi-section">
             <div class="wrapper">

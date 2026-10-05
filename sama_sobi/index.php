@@ -632,6 +632,7 @@ $APPLICATION->SetTitle("");?>
             </div>
         </div>
 
+        <?/*
         <div class="sama-sobi-section">
             <div class="wrapper">
                 <div class="sama-sobi-block">
@@ -643,12 +644,7 @@ $APPLICATION->SetTitle("");?>
                     <div class="sama-sobi-accum-cont">
                         <div class="sama-sobi-accum-item">
                             <div class="sama-sobi-accum-tooltip">
-                                <?/*<div class="sama-sobi-accum-tooltip-icon">
-                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12.5" cy="12.5" r="11.75" fill="#FE9D56" stroke="#FE9D56" stroke-width="1.5"/>
-                                        <path d="M11.4654 18.9652V10.5342H13.6206V18.9652H11.4654ZM11.3447 6.62036H13.724V8.74105H11.3447V6.62036Z" fill="white"/>
-                                    </svg>
-                                </div>*/?>
+
                                 <div class="sama-sobi-accum-tooltip-dropdown-cont">
                                     <div class="sama-sobi-accum-tooltip-dropdown">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
@@ -664,12 +660,7 @@ $APPLICATION->SetTitle("");?>
                         </div>
                         <div class="sama-sobi-accum-item">
                             <div class="sama-sobi-accum-tooltip">
-                                <?/*<div class="sama-sobi-accum-tooltip-icon">
-                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12.5" cy="12.5" r="11.75" fill="#FE9D56" stroke="#FE9D56" stroke-width="1.5"/>
-                                        <path d="M11.4654 18.9652V10.5342H13.6206V18.9652H11.4654ZM11.3447 6.62036H13.724V8.74105H11.3447V6.62036Z" fill="white"/>
-                                    </svg>
-                                </div>*/?>
+
                                 <div class="sama-sobi-accum-tooltip-dropdown-cont">
                                     <div class="sama-sobi-accum-tooltip-dropdown">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
@@ -685,12 +676,7 @@ $APPLICATION->SetTitle("");?>
                         </div>
                         <div class="sama-sobi-accum-item">
                             <div class="sama-sobi-accum-tooltip">
-                                <?/*<div class="sama-sobi-accum-tooltip-icon">
-                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12.5" cy="12.5" r="11.75" fill="#FE9D56" stroke="#FE9D56" stroke-width="1.5"/>
-                                        <path d="M11.4654 18.9652V10.5342H13.6206V18.9652H11.4654ZM11.3447 6.62036H13.724V8.74105H11.3447V6.62036Z" fill="white"/>
-                                    </svg>
-                                </div>*/?>
+
                                 <div class="sama-sobi-accum-tooltip-dropdown-cont">
                                     <div class="sama-sobi-accum-tooltip-dropdown">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
@@ -717,12 +703,7 @@ $APPLICATION->SetTitle("");?>
                         </div>
                         <div class="sama-sobi-accum-item">
                             <div class="sama-sobi-accum-tooltip">
-                                <?/*<div class="sama-sobi-accum-tooltip-icon">
-                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <circle cx="12.5" cy="12.5" r="11.75" fill="#FE9D56" stroke="#FE9D56" stroke-width="1.5"/>
-                                        <path d="M11.4654 18.9652V10.5342H13.6206V18.9652H11.4654ZM11.3447 6.62036H13.724V8.74105H11.3447V6.62036Z" fill="white"/>
-                                    </svg>
-                                </div>*/?>
+
                                 <div class="sama-sobi-accum-tooltip-dropdown-cont">
                                     <div class="sama-sobi-accum-tooltip-dropdown">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
@@ -740,6 +721,7 @@ $APPLICATION->SetTitle("");?>
                 </div>
             </div>
         </div>
+        */?>
 
         <div class="sama-sobi-section">
             <div class="wrapper">

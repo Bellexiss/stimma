@@ -302,20 +302,7 @@ while ($record = $res -> Fetch())
 }
 ?>
 <?// ЗАКОМЕНТИВ 05,03?>
-<script>
-dataLayer.push({ ecommerce: null });
-dataLayer.push({
-  event: "purchase",
-  ecommerce: {
-      transaction_id: "<?=$orderData['ID']?>", // id замовлення. Унікальне для кожного замовлення
-      value: <?=$orderData['PRICE']?>,
-      currency: "UAH",
-      items: [
-          <?=implode(',',$productJson2)?>
-    ]
-  }
-});
-</script>
+
 <?
 //if($orderData['PAY_SYSTEM_ID'] != 3)
 $facebookFind = $DB->Query('select * from facebook_purchase where UF_ORDER_ID = ' . $arResult['ORDER']['ID'])->Fetch();
@@ -323,6 +310,22 @@ if(!$facebookFind['UF_STATUS'])
 {
     $usdRate = COption::GetOptionString("my_module", "usd_rate",'41.7');
     ?>
+
+    <script>
+        dataLayer.push({ ecommerce: null });
+        dataLayer.push({
+            event: "purchase",
+            ecommerce: {
+                transaction_id: "<?=$orderData['ID']?>", // id замовлення. Унікальне для кожного замовлення
+                value: <?=$orderData['PRICE']?>,
+                currency: "UAH",
+                items: [
+                    <?=implode(',',$productJson2)?>
+                ]
+            }
+        });
+    </script>
+
     <script>
         fbq ( 'track', 'Purchase',
             {
@@ -334,37 +337,11 @@ if(!$facebookFind['UF_STATUS'])
                 content_category: 'Purchase' ,
             });
     </script>
+
+
     <?
+    $DB->Query('update facebook_purchase set UF_STATUS = 1 where ID = ' . $facebookFind['ID']);
 }
-?>
-    <?/*<script>
-window.dataLayer = window.dataLayer || [];
-dataLayer.push({
- 'ecommerce': {
-   'currencyCode': 'UAH',
-   'purchase': {
-     'actionField': {
-       'id': '<?=$orderData['ID']?>',
-       'affiliation': 'Online Store',
-       'type': 'Покупка через корзину',
-       'revenue': '<?=$orderData['PRICE']?>',
-       'tax': '0',
-       'shipping': '0'
-     },
-     'products': [<?=implode(',',$productJson)?>]
-   }
- },
- 'event': 'gtm-ee-event',
- 'gtm-ee-event-category': 'Enhanced Ecommerce',
- 'gtm-ee-event-action': 'Purchase',
- 'gtm-ee-event-non-interaction': 'False',
- 'dyn-rem-ids': '<?=$orderData['ID']?>',
- 'dyn-rem-pagetype': 'purchase',
- 'dyn-rem-value': '<?=$orderData['PRICE']?>',
-});
-        //sendOrder();
-    </script>*/?>
-    <?
 
     $order = $DB->Query('select * from b_sale_order where ID = '.$arResult['ORDER']['ID'])->Fetch();
 

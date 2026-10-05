@@ -2098,9 +2098,13 @@ function generateFeedGoogleNew()
             if($Props['SOON']['VALUE'] || $offersProp['SOON']['VALUE'])
             {
                 $available = 'preorder';
-                $datePreorder = '<g:availability_date>'.DateTime::createFromFormat('d.m.Y', $Props['SOON_DATE']['VALUE'])
-                                                  ->setTime(9, 0, 0)
-                                                  ->format('Y-m-d\TH:i:sP').'</g:availability_date>';
+                $date = \DateTime::createFromFormat(
+                    'd.m.Y',
+                    $Props['SOON_DATE']['VALUE']
+                );
+
+                $date->setTime(9, 0, 0);
+                $datePreorder = '<g:availability_date>'.$date->format('Y-m-d\TH:i:sP').'</g:availability_date>';
             }
 
             if(!$Props['DETAIL_TEXT_UA']['VALUE'] && $offersProp['DETAIL_TEXT_UA']['VALUE'])
@@ -2651,6 +2655,7 @@ function clearEmpty(&$content)
     $content = str_replace('2025', date('Y'), $content);
     $content = str_replace('', $minGlobalPrice, $content);
     $content = str_replace('', $maxGlobalPrice, $content);
+    $content = str_replace('/filter/clear/apply/', '/', $content);
 
     if(!$USER->IsAdmin())
     {

@@ -27,7 +27,7 @@ preg_match('/\/([a-z0-9-_]+)\/([a-z0-9-_]+-[0-9]+)\/$/',$APPLICATION->GetCurPage
             $section = $DB->Query('select * from b_iblock_section where ID = \''.$find['IBLOCK_SECTION_ID'].'\'');
             if($section = $section->Fetch())
             {
-                if($matches[1] != $section['CODE'])
+                if($matches[1] != $section['CODE'] || $section['ACTIVE'] == 'N')
                 {
                     Bitrix\Iblock\Component\Tools::process404(
                         'Не найден', //Сообщение
@@ -129,6 +129,19 @@ if(!isset($_GET['ll']))
 }
 if (0 < intval($arResult["VARIABLES"]["SECTION_ID"]))
 {
+    $checkActive = $DB->Query('select * from b_iblock_section where ID = '. $arResult["VARIABLES"]["SECTION_ID"])->Fetch();
+
+    if(!isset($checkActive['ID']) || $checkActive['ACTIVE'] == 'N')
+    {
+        Bitrix\Iblock\Component\Tools::process404(
+            'Не найден', //Сообщение
+            true, // Нужно ли определять 404-ю константу
+            true, // Устанавливать ли статус
+            true, // Показывать ли 404-ю страницу
+            false // Ссылка на отличную от стандартной 404-ю
+        );
+    }
+
     $ua = LANGUAGE_ID == 'ua';
     $url = (!$ua ? '/ru' : '').'/catalog/';
     $nav = CIBlockSection::GetNavChain(false, $arResult["VARIABLES"]["SECTION_ID"]);

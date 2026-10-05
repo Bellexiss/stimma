@@ -1,5 +1,6 @@
 <?
 include_once($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/urlrewrite.php');
+//http_response_code(404);
 CHTTP::SetStatus("404 Not Found");
 @define("ERROR_404","Y");
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
@@ -15,10 +16,12 @@ $APPLICATION->SetTitle("Страница не найдена");
 				</svg>
 			</div>
 			<div class="description">
-				<div class="subtitle404">Сторінка не знайдена</div>
-				<div class="descr_text404">Схоже, такої сторінки не існує</div>
-				<a class="btn btn-transparent-border-color btn-mainpage" onclick="history.back()">Повернутися</a>
-				<a class="btn btn-default btn-mainpage" href="<?=SITE_DIR?>"><span>На головну</span></a>
+				<div class="subtitle404"><?=LANGUAGE_ID == 'ua' ? 'Сторінка не знайдена' : 'Страница не найдена'?></div>
+				<div class="descr_text404"><?=LANGUAGE_ID == 'ua' ? 'Схоже, такої сторінки не існує' : 'Похоже, такой страницы не существует'?></div>
+				<div class="d-flex gap-3 flex-wrap justify-content-center">
+					<a class="info-btn" onclick="history.back()"><?=LANGUAGE_ID == 'ua' ? 'Повернутися' : 'Вернуться назад'?></a>
+					<a class="info-btn info-btn-black" href="<?=SITE_DIR?>"><span><?=LANGUAGE_ID == 'ua' ? 'На головну' : 'На главную'?></span></a>
+				</div>
 			</div>
 		</div>
 	</div>

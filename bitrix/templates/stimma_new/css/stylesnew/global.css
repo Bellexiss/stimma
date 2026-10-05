@@ -2136,3 +2136,34 @@ body .filter.label_block input+label {
   z-index: 2;
   top: 0;
 }
+
+.page_not_found{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 10px;
+}
+
+.page_not_found .description{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page_not_found .subtitle404{
+  font-size: 30px;
+  font-family: var(--family2);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.page_not_found .descr_text404{
+  font-size: 20px;
+  line-height: 1.2;
+  text-align: center;
+}
