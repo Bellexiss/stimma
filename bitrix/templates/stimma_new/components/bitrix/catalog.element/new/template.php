@@ -264,7 +264,7 @@ $dopObrazElement=[];
 $nav = CIBlockSection::GetNavChain(
         21,
         $arResult['IBLOCK_SECTION_ID'],
-        ['ID', 'IBLOCK_ID','NAME', 'SECTION_PAGE_URL']
+        ['ID', 'IBLOCK_ID','NAME', 'SECTION_PAGE_URL','ACTIVE']
 );
 
 $chast = true;
@@ -283,6 +283,7 @@ $ru=LANGUAGE_ID=='ru'?'/ru':'';
                 <?
                 while ($item = $nav->GetNext())
                 {
+
                     if(LANGUAGE_ID=='ua')
                     {
                         $sss=CIBlockSection::GetList([],['ID'=>$item['ID'],'IBLOCK_ID'=>21],false,['ID','IBLOCK_ID','UF_*'])->Fetch();

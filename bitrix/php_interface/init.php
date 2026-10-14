@@ -330,6 +330,7 @@ function checkGlobalRedirect()
 
     if ($isRedirect)
     {
+        if(!empty($_SERVER['QUERY_STRING'])) $page .= '?';
         LocalRedirect($page.$_SERVER['QUERY_STRING'], false, "301 Moved Permanently");
         exit();
     }
@@ -1345,6 +1346,12 @@ function getBasketNewHtml($basket = false)
             <div class="basket-header-list-cont">
                 <div class="basket-header-list">
                     <?
+                    $looksTanya = [
+                        50987=>[62123,62099],
+                        62222=>[62051,62075],
+                        62221=>[62029,62112],
+                        62220=>[62147,61938,61979],
+                    ];
                     $ids = [];
                     $Bonus = $minus_price = 0;
                     $Uah = [];
@@ -1371,8 +1378,10 @@ function getBasketNewHtml($basket = false)
                         $allSum = $countInAction = 0;
                     }
 
+
                     foreach($basket['ITEMS'] as $index => $arItem)
                     {
+                        $needSize = false;
                         $withStims =$DB->Query('select * from basket_stims where UF_ID = '.$arItem['ID'])->Fetch();
                         $ids[] = $arItem['PRODUCT_ID'];
 
@@ -1381,18 +1390,54 @@ function getBasketNewHtml($basket = false)
                         $props = $product->GetProperties();
 
                         $mainID = $props['CML2_LINK']['VALUE'];
+
                         if($mainID)
                         {
                             $mainProduct = CIBlockElement::GetByID($mainID)->GetNextElement();
                             $mainFields = $mainProduct->GetFields();
                             $mainProps = $mainProduct->GetProperties();
+
+                            if(isset($_SESSION['IS_ADDED_LOOK']['IDS']))
+                            {
+                                foreach($_SESSION['IS_ADDED_LOOK']['IDS'] as $lookId)
+                                    unset($looksTanya[$lookId][$arItem['PRODUCT_ID']]);
+                            }
                         }
                         else
                         {
+                            $needSize=true;
                             $mainID = $arItem['PRODUCT_ID'];
                             $mainFields = $fields;
                             $mainProps= $props;
+
+                            $Res = CIBlockElement::GetList([],['IBLOCK_ID'=>25,'PROPERTY_CML2_LINK'=>$mainID]);
+                            $offers=[];
+                            while ($offer = $Res->GetNextElement())
+                            {
+                                $offerFields = $offer->GetFields();
+                                $offerProps = $offer->GetProperties();
+                                if($offerProps['RAZMER']['VALUE'])
+                                    $offers[$offerFields['ID']] = $offerProps['RAZMER']['VALUE'];
+                            }
                         }
+
+                        $dontHaveLook=[];
+                        if(isset($_SESSION['IS_ADDED_LOOK']['IDS']))
+                        {
+                            foreach($_SESSION['IS_ADDED_LOOK']['IDS'] as $lookId)
+                                if(!empty($looksTanya[$lookId]))
+                                {
+                                    $elRes = $DB->Query('select * from b_iblock_element where ID in '.implode(',',$looksTanya[$lookId]));
+                                    while ($el = $elRes -> Fetch())
+                                        $dontHaveLook[] = $el['NAME'];
+                                }
+                        }
+
+                        if(!empty($dontHaveLook))
+                            $dontHaveLook = implode(', ',$dontHaveLook);
+                        else
+                            $dontHaveLook = false;
+
 
                         if($isAprilAction)
                         {
@@ -1523,19 +1568,40 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
-                                    <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376) ? 'display:none;' : ''?>">
-                                        <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
-                                            <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
-                                            </svg>
-                                        </button>
-                                        <input type="text" name="" value="<?=$arItem['QUANTITY']?>" data-id="<?=$arItem['ID']?>">
-                                        <button class="basket-header-counter-btn plus_count" data-id="<?=$arItem['ID']?>">
-                                            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <rect x="6" width="1" height="13" fill="white"/>
-                                                <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"/>
-                                            </svg>
-                                        </button>
+                                    <div class="basket-header-control-group">
+                                        <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376) ? 'display:none;' : ''?>">
+                                            <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
+                                                <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
+                                                </svg>
+                                            </button>
+                                            <input type="text" name="" value="<?=$arItem['QUANTITY']?>" data-id="<?=$arItem['ID']?>">
+                                            <button class="basket-header-counter-btn plus_count" data-id="<?=$arItem['ID']?>">
+                                                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="6" width="1" height="13" fill="white"/>
+                                                    <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <?
+                                        if($needSize && !empty($offers))
+                                        {
+                                                ?>
+                                            <div class="basket-header-size-select">
+                                                <select class="custom-select change-size" data-id="<?=$arItem['ID']?>">
+                                                    <option value="0">Оберіть розмір</option>
+                                                    <?
+                                                    foreach($offers as $idOffer => $offerSize)
+                                                    {
+                                                        ?><option value="<?=$idOffer?>"><?=$offerSize?></option><?
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <?
+                                        }
+                                        ?>
+
                                     </div>
                                     <div class="basket-header-control-item basket_favorite">
                                         <a href="#" class="basket-header-item-delete" data-id="<?=$arItem['ID']?>">
@@ -1630,6 +1696,12 @@ function getBasketNewHtml($basket = false)
             <span class="basket-header-add-more card-infom-block" style="background: var(--beige);">
                 <span class="bonus">Готово — твої -16% уже в кошику.</span>
             </span><?
+            }
+            if($dontHaveLook)
+            {
+                ?><span class="basket-header-add-more card-infom-block" style="background: var(--beige);">
+                    <span class="bonus">Додай ще <?=$dontHaveLook?>та отримай безкоштовну доставку.</span>
+                </span><?
             }
             if($isAprilAction)
             {
@@ -2260,13 +2332,15 @@ function generateFeedGoogleNew()
             foreach ($sizes as $sizeID => $size)
             {
 
+                $nameUaGoogle = preg_replace('/\s\d{6}\s/', ' ', $offers[$sizeID]['PROPERTIES']['NAME_UA']['VALUE']);
+                $nameRuGoogle = preg_replace('/\s\d{6}\s/', ' ', $offers[$sizeID]['PROPERTIES']['NAME_RU']['VALUE']);
 
                 //if($quantity['QUANTITY'] > 0)
                 $content .= '
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
 		<g:id>'.$sizeID.'</g:id>
-		<g:title>'.$offers[$sizeID]['PROPERTIES']['NAME_UA']['VALUE'].'</g:title>
+		<g:title>'.$nameUaGoogle.'</g:title>
 		<g:description><![CDATA['.$text.']]></g:description>
 		<g:link>https://stimma.ua'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>
@@ -2292,7 +2366,7 @@ function generateFeedGoogleNew()
             <entry>
 		<g:item_group_id>'.$fields['ID'].'</g:item_group_id>
 		<g:id>'.$sizeID.'</g:id>
-		<g:title>'.$offers[$sizeID]['PROPERTIES']['NAME_RU']['VALUE'].'</g:title>
+		<g:title>'.$nameRuGoogle.'</g:title>
 		<g:description><![CDATA['.$textRu.']]></g:description>
 		<g:link>https://stimma.ua/ru'.$dPage['DETAIL_PAGE_URL'].'</g:link>
 		<g:image_link>https://stimma.ua'.$img.'</g:image_link>

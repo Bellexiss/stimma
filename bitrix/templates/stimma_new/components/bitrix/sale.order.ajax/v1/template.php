@@ -1486,7 +1486,7 @@ else
                                                 <?
                                                 if($USER->IsAuthorized())
                                                 {
-                                                    if($balance >= 5000 && $alLSum-$minus_price >= 1500)
+                                                    if(($balance >= 5000 && $alLSum-$minus_price >= 1500) || $arResult['FREE_DELIVERY'])
                                                     {
                                                         ?>Безкоштовно<?
                                                     }
@@ -1497,7 +1497,14 @@ else
                                                 }
                                                 else
                                                 {
-                                                    ?>По тарифам ТК<?
+                                                    if($arResult['FREE_DELIVERY'])
+                                                    {
+                                                        ?>Безкоштовно<?
+                                                    }
+                                                    else
+                                                    {
+                                                        ?>По тарифам ТК<?
+                                                    }
                                                 }
                                                 ?>
 
@@ -2729,7 +2736,25 @@ else
                                                         {
                                                             ?>
                                                             <div class="order-item-size">
-                                                                <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
+                                                                <?/*<div class="order-item-size-select">
+                                                                    <select class="custom-select">
+                                                                        <option>Оберіть розмір</option>
+                                                                        <option>XS</option>
+                                                                        <option>S</option>
+                                                                        <option>M</option>
+                                                                        <option>L</option>
+                                                                        <option>XL</option>
+                                                                    </select>
+                                                                </div>*/?>
+                                                                <?
+                                                                if($basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE'])
+                                                                {
+                                                                    ?>
+                                                                    <?=LANGUAGE_ID=='ua'?'Розмір':'Размер'?>: <?=$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['RAZMER']['VALUE']?>
+                                                                    <?
+                                                                }
+                                                                ?>
+
                                                                 <?/*
                                                         <select class="form-select">
                                                             <option>S</option>
@@ -2744,7 +2769,7 @@ else
                                                         ?>
 
                                                         <?
-                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs))
+                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs) && $colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE'])
                                                             {
                                                                 ?>
                                                                 <div class="order-item-color">

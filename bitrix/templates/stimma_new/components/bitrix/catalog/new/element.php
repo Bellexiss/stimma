@@ -15,6 +15,43 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 $bIndex = (strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false) || isset($_GET['google']);
+?><pre><?=print_r($arResult, 1)?></pre><?
+
+$sectionElement = $DB->Query('select * from b_iblock_section where IBLOCK_ID = 21 and CODE = \''.$arResult['VARIABLES']['SECTION_CODE'].'\'')->Fetch();
+
+
+if($sectionElement['ACTIVE'] == 'N')
+{
+    Bitrix\Iblock\Component\Tools::process404(
+        'Не найден', //Сообщение
+        true, // Нужно ли определять 404-ю константу
+        true, // Устанавливать ли статус
+        true, // Показывать ли 404-ю страницу
+        false // Ссылка на отличную от стандартной 404-ю
+    );
+}
+else
+{
+    $nav = CIBlockSection::GetNavChain(
+        21,
+        $sectionElement['ID'],
+        ['ID', 'IBLOCK_ID','NAME', 'SECTION_PAGE_URL','ACTIVE']
+    );
+
+    while ($item = $nav->GetNext())
+    {
+        if($item['ACTIVE'] == 'N')
+        {
+            Bitrix\Iblock\Component\Tools::process404(
+                'Не найден', //Сообщение
+                true, // Нужно ли определять 404-ю константу
+                true, // Устанавливать ли статус
+                true, // Показывать ли 404-ю страницу
+                false // Ссылка на отличную от стандартной 404-ю
+            );
+        }
+    }
+}
 
 $this->setFrameMode(true);
 
@@ -24,7 +61,6 @@ else
 	$basketAction = (isset($arParams['DETAIL_ADD_TO_BASKET_ACTION']) ? $arParams['DETAIL_ADD_TO_BASKET_ACTION'] : array());
 
 $isSidebar = ($arParams['SIDEBAR_DETAIL_SHOW'] == 'Y' && !empty($arParams['SIDEBAR_PATH']));
-
 ?>
 		<?
 		$componentElementParams = array(

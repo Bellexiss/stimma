@@ -11,14 +11,14 @@ if(isset($json->id))
     $status = false;
     switch($json->Status)
     {
-        case '000000001': $status =  'Знайшов дешевше'; break;
+        //case '000000001': $status =  'Знайшов дешевше'; break;
         case '000000002': $status =  'sp'; break;
         case '000000003': $status =  'ro'; break;
         case '000000004': $status =  'nm'; break;
         case '000000005': $status =  'no'; break;
-        case '000000006': $status =  'відмова від отримання'; break;
+        //case '000000006': $status =  'відмова від отримання'; break;
         case '000000007': $status =  'D'; break;
-        case '000000008': $status =  'дрібний брак'; break;
+        //case '000000008': $status =  'дрібний брак'; break;
         case '000000009': $status =  'TR'; break;
         case '000000010': $status =  'nc'; break;
         case '000000011': $status =  'ts'; break;
@@ -34,6 +34,8 @@ if(isset($json->id))
         //CSaleOrder::Update($json->id, array('STATUS_ID'=>$status));
         global $DB;
         $DB->Query('update b_sale_order set STATUS_ID = \''.$status.'\' where ID = ' . $json->id);
+        Bitrix\Main\Diag\Debug::writeToFile('update b_sale_order set STATUS_ID = \''.$status.'\' where ID = ' . $json->id, "Update Status ". $status , '/test_status_order.txt');
+        
     }
     else
     {

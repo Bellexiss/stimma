@@ -130,10 +130,51 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
         $DB->Query('insert into basket_stims (UF_ID,UF_SERT_DATA) values ('.$status.', \''.serialize($arr).'\')');
     }
 }
+elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'get_the_look')
+{
+    $arGroups = $USER -> GetUserGroupArray();
+    if(in_array($id,[50987,62220,62221,62222]))
+        $_SESSION['IS_ADDED_LOOK']['IDS'] = $id;
+
+    $products = CIBlockElement::GetList(['SORT'=>'ASC'],['IBLOCK_ID'=>55,'ACTIVE'=>'Y','ID'=>$id])->GetNextElement()->GetProperties()['PRODUCTS']['VALUE'];
+    foreach($products as $index => $product)
+    {
+        $priceData = CCatalogProduct::GetOptimalPrice($product, 1, $arGroups);
+        $price = $priceData['PRICE']['PRICE'];
+        $element = CIBlockElement::GetByID($product)->Fetch();
+
+        $_POST['cnt'] = 1;
+
+        $status = CSaleBasket::Add(array(
+                                       'PRODUCT_ID' => $product,
+                                       'QUANTITY' => 1,
+                                       'PRICE' => $price,
+                                       'PRICE_TYPE_ID' => $priceData['PRICE']['CATALOG_GROUP_ID'],
+                                       'CURRENCY' => 'UAH',
+                                       'LID' => $site_id,
+                                       'NAME' => $element['NAME'],
+                                   ));
+
+        if($USER->IsAuthorized())
+        {
+            $time = date('d.m.Y H:i:s');
+            $timeX = strtotime($time);
+            $DB->Query('insert into forget_basket (UF_BASKET_ID,UF_USER_ID,UF_TIME,UF_TIME_X,UF_SEND,UF_PRODUCT_ID) values ('.$status.', '.$USER->GetID().', \''.$time.'\','.$timeX.',0,'.$product.')');
+        }
+    }
+
+
+
+
+}
 elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'delete')
 {
     CSaleBasket::Delete($_POST['id']);
     $DB->Query('delete from basket_stims where UF_ID = '.$_POST['id']);
+}
+elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'change_size')
+{
+    $DB->Query('update b_sale_basket set PRODUCT_ID = '.$_POST['val'].' where ID = '.$_POST['id']);
 }
 elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'change')
 {

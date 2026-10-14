@@ -207,6 +207,358 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
             </div>
         </div>
 
+        <?if(isset($_GET['look']) || true)
+    {
+        ?>
+        <div class="look-container" id="lookblock">
+            <div class="look-content">
+                <div class="look-bg-img">
+                    <svg width="639" height="578" viewBox="0 0 639 578" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M563.96 232.822C600.932 206.336 627.136 174.054 636.228 134.909C642.196 109.206 636.136 87.6686 620.695 69.8758C605.232 52.0583 580.337 37.9703 548.602 27.2763C485.137 5.88961 394.523 -1.85585 298.018 1.10706C201.522 4.06966 99.1824 17.7367 12.2874 39.1426C-31.1598 49.8455 -70.7377 62.4811 -103.789 76.6763C-136.847 90.8745 -163.345 106.62 -180.66 123.528C-210.72 152.874 -222.019 188.215 -210.402 223.061C-198.774 257.941 -164.144 292.463 -102.029 320.02L-101.388 320.304L-101.981 320.94L-102.12 320.978C-176.456 340.612 -222.71 366.089 -251.394 393.832C-280.066 421.565 -291.214 451.594 -295.278 480.414C-297.28 494.609 -288.758 509.921 -271.457 524.142C-254.174 538.349 -228.225 551.38 -195.649 561C-130.504 580.238 -38.9481 585.807 62.5429 559.95C166.164 533.548 219.417 504.595 246.157 478.748C259.52 465.831 266.256 453.694 269.358 443.041C272.266 433.053 271.989 424.338 270.949 417.461L270.731 416.11C268.548 403.362 256.215 385.747 231.076 371.085C205.958 356.435 168.103 344.768 115.011 343.896L115.005 342.896C201.93 340.504 323.178 327.715 427.242 295.888C479.275 279.974 526.986 259.308 563.96 232.822Z" stroke="#FE9D56"/>
+                    </svg>
+                    <svg class="svg-tables" width="461" height="571" viewBox="0 0 461 571" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M714.591 5.46068C755.182 -2.75955 792.886 -0.190915 824.536 17.978C845.263 29.8792 855.785 47.159 858.056 68.3607C860.333 89.6271 854.312 114.91 841.75 142.715C816.631 198.316 765.539 263.607 703.596 326.215C641.668 388.809 568.962 448.654 500.69 493.375C466.554 515.735 433.541 534.304 403.551 547.545C373.547 560.792 346.63 568.678 324.67 569.731C286.54 571.565 256.133 557.213 240.197 528.02C224.228 498.764 222.648 454.351 242.821 395.801L243.279 394.473L241.565 394.476L241.321 394.629C182.05 432.055 136.372 447.071 100.137 448.982C63.9342 450.892 37.0619 439.725 15.3638 424.583C4.87097 417.26 -0.0584166 402.298 1.19027 381.971C2.43612 361.69 9.82898 336.329 23.6278 308.632C51.2199 253.248 104.336 188.698 184.609 137.022C266.622 84.2277 318.964 66.7103 352.709 64.9198C369.561 64.0256 381.759 67.0549 390.708 71.5562C399.659 76.0583 405.423 82.0645 409.364 87.2216L409.364 87.2206C416.387 96.4245 420.509 115.423 414.697 141.246C408.896 167.022 393.214 199.479 360.848 235.433L362.305 236.804C417.908 180.244 501.771 107.233 587.653 57.5308C630.595 32.6792 673.997 13.6818 714.591 5.46068Z" stroke="#FE9D56" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="look-info">
+                    <div class="look-info-text-block">
+                        <div class="look-info-title" style="font-size: 40px;">
+                            GET THE LOOK з Тетяною Самбурською
+                        </div>
+                        <div class="look-info-text">
+                            Тетяна обрала 4 образи з колекції FLOW STATE, які найбільше відгукнулися їй.<br>
+                            Переглядай добірку, відкривай образи ближче та обирай свій.<br>
+                            <br>
+                            При покупці образу з добірки — безкоштовна доставка.
+                            <?/*
+                            Обирай не просто речі — створюй вайб. Чистий монохром чи сміливий мікс фактур — твій стиль диктує правила. У нашій підбірці трендовість зустрічається з характером.
+                            */?>
+                        </div>
+                    </div>
+                    <!-- <div class="look-info-btn-block">
+                        <a href="#" class="look-info-btn">
+                            готові образи
+                            <span class="icon">
+                                <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g>
+                                    <path d="M9.41846 5.50003C9.41846 5.69717 9.33635 5.89429 9.17246 6.04459L4.01268 10.7743C3.68445 11.0752 3.15229 11.0752 2.8242 10.7743C2.4961 10.4736 2.4961 9.98587 2.8242 9.68498L7.38986 5.50003L2.82435 1.31506C2.49626 1.01419 2.49626 0.526517 2.82435 0.225789C3.15245 -0.0752306 3.68461 -0.0752306 4.01284 0.225789L9.17262 4.95547C9.33653 5.10584 9.41846 5.30296 9.41846 5.50003Z" fill="currentcolor"/>
+                                    </g>
+                                </svg>
+                            </span>
+                        </a>
+                    </div -->
+                </div>
+                <?
+                $looks = $looksIds = [];
+                $res = CIBlockElement::GetList(['SORT'=>'ASC'],['IBLOCK_ID'=>55,'ACTIVE'=>'Y']);
+                while ($record = $res->GetNextElement())
+                {
+                    $fields = $record->GetFields();
+                    $props = $record->GetProperties();
+                    $looks[$fields['ID']] = $fields;
+                    $looks[$fields['ID']]['PROPERTIES'] = $props;
+                    $looksIds = array_merge($looksIds, $props['PRODUCTS']['VALUE']);
+                }
+                $params = [
+                    'LOOKS_IDS' => $looks,
+                    'IBLOCK_TYPE' => 'aspro_max_catalog',
+                    'IBLOCK_ID' => '21',
+                    'ELEMENT_SORT_FIELD' => 'ID',
+                    'ELEMENT_SORT_ORDER' => 'desc',
+                    'ELEMENT_SORT_FIELD2' => 'sort',
+                    'ELEMENT_SORT_ORDER2' => 'asc',
+                    'PROPERTY_CODE' => [
+                        0 => 'HIT',
+                        1 => 'BRAND',
+                        2 => 'CML2_ARTICLE',
+                        3 => 'PROP_2104',
+                        4 => 'PODBORKI',
+                        5 => 'PROP_2033',
+                        6 => 'COLOR_REF2',
+                        7 => 'PROP_305',
+                        8 => 'PROP_352',
+                        9 => 'PROP_317',
+                        10 => 'PROP_357',
+                        11 => 'PROP_2102',
+                        12 => 'PROP_318',
+                        13 => 'PROP_159',
+                        14 => 'PROP_349',
+                        15 => 'PROP_327',
+                        16 => 'PROP_2052',
+                        17 => 'PROP_370',
+                        18 => 'PROP_336',
+                        19 => 'PROP_2115',
+                        20 => 'PROP_346',
+                        21 => 'PROP_2120',
+                        22 => 'PROP_2053',
+                        23 => 'PROP_363',
+                        24 => 'PROP_320',
+                        25 => 'PROP_2089',
+                        26 => 'PROP_325',
+                        27 => 'PROP_2103',
+                        28 => 'PROP_2085',
+                        29 => 'PROP_300',
+                        30 => 'PROP_322',
+                        31 => 'PROP_362',
+                        32 => 'PROP_365',
+                        33 => 'PROP_359',
+                        34 => 'PROP_284',
+                        35 => 'PROP_364',
+                        36 => 'PROP_356',
+                        37 => 'PROP_343',
+                        38 => 'PROP_2083',
+                        39 => 'PROP_314',
+                        40 => 'PROP_348',
+                        41 => 'PROP_316',
+                        42 => 'PROP_350',
+                        43 => 'PROP_333',
+                        44 => 'PROP_332',
+                        45 => 'PROP_360',
+                        46 => 'PROP_353',
+                        47 => 'PROP_347',
+                        48 => 'PROP_25',
+                        49 => 'PROP_2114',
+                        50 => 'PROP_301',
+                        51 => 'PROP_2101',
+                        52 => 'PROP_2067',
+                        53 => 'PROP_323',
+                        54 => 'PROP_324',
+                        55 => 'PROP_355',
+                        56 => 'PROP_304',
+                        57 => 'PROP_358',
+                        58 => 'PROP_319',
+                        59 => 'PROP_344',
+                        60 => 'PROP_328',
+                        61 => 'PROP_338',
+                        62 => 'PROP_2065',
+                        63 => 'PROP_366',
+                        64 => 'PROP_302',
+                        65 => 'PROP_303',
+                        66 => 'PROP_2054',
+                        67 => 'PROP_341',
+                        68 => 'PROP_223',
+                        69 => 'PROP_283',
+                        70 => 'PROP_354',
+                        71 => 'PROP_313',
+                        72 => 'PROP_2066',
+                        73 => 'PROP_329',
+                        74 => 'PROP_342',
+                        75 => 'PROP_367',
+                        76 => 'PROP_2084',
+                        77 => 'PROP_340',
+                        78 => 'PROP_351',
+                        79 => 'PROP_368',
+                        80 => 'PROP_369',
+                        81 => 'PROP_331',
+                        82 => 'PROP_337',
+                        83 => 'PROP_345',
+                        84 => 'PROP_339',
+                        85 => 'PROP_310',
+                        86 => 'PROP_309',
+                        87 => 'PROP_330',
+                        88 => 'PROP_2017',
+                        89 => 'PROP_335',
+                        90 => 'PROP_321',
+                        91 => 'PROP_308',
+                        92 => 'PROP_206',
+                        93 => 'PROP_334',
+                        94 => 'PROP_2100',
+                        95 => 'PROP_311',
+                        96 => 'PROP_2132',
+                        97 => 'SHUM',
+                        98 => 'PROP_361',
+                        99 => 'PROP_326',
+                        100 => 'PROP_315',
+                        101 => 'PROP_2091',
+                        102 => 'PROP_2026',
+                        103 => 'PROP_307',
+                        104 => 'PROP_2027',
+                        105 => 'PROP_2098',
+                        106 => 'PROP_2122',
+                        107 => 'PROP_24',
+                        108 => 'PROP_2049',
+                        109 => 'PROP_22',
+                        110 => 'PROP_2095',
+                        111 => 'PROP_2044',
+                        112 => 'PROP_162',
+                        113 => 'PROP_2055',
+                        114 => 'PROP_2069',
+                        115 => 'PROP_2062',
+                        116 => 'PROP_2061',
+                        117 => 'CML2_LINK',
+                        118 => 'RZMER',
+                        119 => 'SOSTAV_SITE_RU',
+                        120 => 'SOSTAV_SITE_UA',
+                    ],
+                    'PROPERTY_CODE_MOBILE' => '',
+                    'META_KEYWORDS' => '-',
+                    'META_DESCRIPTION' => '-',
+                    'BROWSER_TITLE' => '-',
+                    'SET_LAST_MODIFIED' => 'Y',
+                    'INCLUDE_SUBSECTIONS' => 'Y',
+                    'BASKET_URL' => '/basket/',
+                    'ACTION_VARIABLE' => 'action',
+                    'PRODUCT_ID_VARIABLE' => 'id',
+                    'SECTION_ID_VARIABLE' => 'SECTION_ID',
+                    'PRODUCT_QUANTITY_VARIABLE' => 'quantity',
+                    'PRODUCT_PROPS_VARIABLE' => 'prop',
+                    'FILTER_NAME' => 'MAX_SMART_FILTER',
+                    'CACHE_TYPE' => 'A',
+                    'CACHE_TIME' => '3600000',
+                    'CACHE_FILTER' => 'Y',
+                    'CACHE_GROUPS' => 'Y',
+                    'SET_TITLE' => 'N',
+                    'MESSAGE_404' => '',
+                    'SET_STATUS_404' => 'Y',
+                    'SHOW_404' => 'Y',
+                    'FILE_404' => '',
+                    'DISPLAY_COMPARE' => 'Y',
+                    'PAGE_ELEMENT_COUNT' => '10',
+                    'LINE_ELEMENT_COUNT' => '4',
+                    'PRICE_CODE' => [0 => 'BASE',],
+                    'USE_PRICE_COUNT' => 'N',
+                    'SHOW_PRICE_COUNT' => '1',
+                    'PRICE_VAT_INCLUDE' => 'Y',
+                    'USE_PRODUCT_QUANTITY' => 'Y',
+                    'ADD_PROPERTIES_TO_BASKET' => 'N',
+                    'PARTIAL_PRODUCT_PROPERTIES' => 'Y',
+                    'PRODUCT_PROPERTIES' => '',
+                    'DISPLAY_TOP_PAGER' => 'N',
+                    'DISPLAY_BOTTOM_PAGER' => 'N',
+                    'PAGER_TITLE' => 'Товары',
+                    'PAGER_SHOW_ALWAYS' => 'N',
+                    'PAGER_TEMPLATE' => 'main',
+                    'PAGER_DESC_NUMBERING' => 'N',
+                    'PAGER_DESC_NUMBERING_CACHE_TIME' => '36000',
+                    'PAGER_SHOW_ALL' => 'N',
+                    'PAGER_BASE_LINK_ENABLE' => 'N',
+                    'PAGER_BASE_LINK' => null,
+                    'PAGER_PARAMS_NAME' => null,
+                    'LAZY_LOAD' => 'N',
+                    'MESS_BTN_LAZY_LOAD' => null,
+                    'LOAD_ON_SCROLL' => 'N',
+                    'OFFERS_CART_PROPERTIES' => '',
+                    'OFFERS_FIELD_CODE' => [0 => 'NAME',
+                                            1 => 'CML2_LINK',
+                                            2 => 'DETAIL_PAGE_URL',
+                                            3 => '',],
+                    'OFFERS_PROPERTY_CODE' => [0 => 'ARTICLE',
+                                               1 => 'SPORT',
+                                               2 => 'SIZES2',
+                                               3 => 'MORE_PHOTO',
+                                               4 => 'VOLUME',
+                                               5 => 'SIZES',
+                                               6 => 'SIZES5',
+                                               7 => 'SIZES4',
+                                               8 => 'SIZES3',
+                                               9 => 'COLOR_REF',
+                                               10 => 'RAZMER',],
+                    'OFFERS_SORT_FIELD' => 'ID',
+                    'OFFERS_SORT_ORDER' => 'desc',
+                    'OFFERS_SORT_FIELD2' => 'sort',
+                    'OFFERS_SORT_ORDER2' => 'asc',
+                    'OFFERS_LIMIT' => '10',
+                    'SECTION_ID' => '',
+                    'SECTION_CODE' => '',
+                    'SECTION_URL' => '/catalog/#SECTION_CODE_PATH#/',
+                    'DETAIL_URL' => '/catalog/#SECTION_CODE_PATH#/#ELEMENT_CODE#/',
+                    'USE_MAIN_ELEMENT_SECTION' => 'Y',
+                    'CONVERT_CURRENCY' => 'Y',
+                    'CURRENCY_ID' => 'UAH',
+                    'HIDE_NOT_AVAILABLE' => 'N',
+                    'HIDE_NOT_AVAILABLE_OFFERS' => 'N',
+                    'LABEL_PROP' => '',
+                    'LABEL_PROP_MOBILE' => null,
+                    'LABEL_PROP_POSITION' => null,
+                    'ADD_PICT_PROP' => 'MORE_PHOTO',
+                    'PRODUCT_DISPLAY_MODE' => 'Y',
+                    'PRODUCT_BLOCKS_ORDER' => 'price,props,sku,quantityLimit,quantity,buttons,compare',
+                    'PRODUCT_ROW_VARIANTS' => '[{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false}]',
+                    'ENLARGE_PRODUCT' => 'STRICT',
+                    'ENLARGE_PROP' => '',
+                    'SHOW_SLIDER' => 'Y',
+                    'SLIDER_INTERVAL' => '3000',
+                    'SLIDER_PROGRESS' => 'N',
+                    'OFFER_ADD_PICT_PROP' => 'MORE_PHOTO',
+                    'OFFER_TREE_PROPS' => [0 => 'COLOR_REF',
+                                           1 => 'RAZMER',],
+                    'PRODUCT_SUBSCRIPTION' => 'Y',
+                    'SHOW_DISCOUNT_PERCENT' => 'Y',
+                    'DISCOUNT_PERCENT_POSITION' => null,
+                    'SHOW_OLD_PRICE' => 'Y',
+                    'SHOW_MAX_QUANTITY' => 'N',
+                    'MESS_SHOW_MAX_QUANTITY' => '',
+                    'RELATIVE_QUANTITY_FACTOR' => '',
+                    'MESS_RELATIVE_QUANTITY_MANY' => '',
+                    'MESS_RELATIVE_QUANTITY_FEW' => '',
+                    'MESS_BTN_BUY' => 'Купить',
+                    'MESS_BTN_ADD_TO_BASKET' => 'В корзину',
+                    'MESS_BTN_SUBSCRIBE' => 'Подписаться',
+                    'MESS_BTN_DETAIL' => 'Подробнее',
+                    'MESS_NOT_AVAILABLE' => 'Нет в наличии',
+                    'MESS_BTN_COMPARE' => 'Сравнение',
+                    'USE_ENHANCED_ECOMMERCE' => 'N',
+                    'DATA_LAYER_NAME' => '',
+                    'BRAND_PROPERTY' => '',
+                    'TEMPLATE_THEME' => 'blue',
+                    'ADD_SECTIONS_CHAIN' => 'N',
+                    'ADD_TO_BASKET_ACTION' => 'ADD',
+                    'SHOW_CLOSE_POPUP' => 'N',
+                    'COMPARE_PATH' => '',
+                    'COMPARE_NAME' => 'CATALOG_COMPARE_LIST',
+                    'USE_COMPARE_LIST' => 'Y',
+                    'BACKGROUND_IMAGE' => '-',
+                    'COMPATIBLE_MODE' => 'Y',
+                    'DISABLE_INIT_JS_IN_COMPONENT' => 'N',
+                    'WRAP_CLASS' => 'main-googs-list',
+                    'BLOCK_CLASS' => 'main-googs-item-cont',
+                ];
+                global $arLooksIds, $looksProducts;
+                $arLooksIds=$looksIds;
+                $looksProducts=$looks;
+
+                ?>
+
+                <div class="look-list-cont swiper">
+                    <div class="swiper-wrapper">
+                        <?
+                        foreach($looks as $index => $look)
+                        {
+                            //$lookFile = CFile::GetFileArray($look['PREVIEW_PICTURE'])['SRC'];
+                            $lookFile = $img = CFile::ResizeImageGet($look['PREVIEW_PICTURE'], array('width'=>470, 'height'=>700), BX_RESIZE_IMAGE_PROPORTIONAL, true)['src'];
+                            ?>
+                            <div class="swiper-slide look-list-item-cont">
+                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal_<?=$look['ID']?>">
+                                    <div class="look-list-item-img">
+                                        <img src="<?=$lookFile?>">
+                                    </div>
+                                    <?
+                                    if(in_array($look['ID'],[50987,62220,62221,62222]))
+                                    {
+                                        ?>
+                                        <div class="look-list-item-badge">
+                                            Безкоштовна  доставка
+                                        </div>
+                                        <?
+                                    }
+                                    ?>
+
+                                </a>
+                            </div>
+                            <?
+                        }
+                        ?>
+                    </div>
+                    <div class="swiper-scrollbar look-list-scroll">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    <?}?>
+
         <div class="main-advantages-cont">
             <div class="wrapper">
                 <div class="main-advantages-block">
@@ -1380,388 +1732,7 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
             </div>
         </div>
         */?>
-        <?if(isset($_GET['look']) || true)
-        {
-            ?>
-            <div class="look-container">
-                <div class="look-content">
-                    <div class="look-bg-img">
-                        <svg width="639" height="578" viewBox="0 0 639 578" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M563.96 232.822C600.932 206.336 627.136 174.054 636.228 134.909C642.196 109.206 636.136 87.6686 620.695 69.8758C605.232 52.0583 580.337 37.9703 548.602 27.2763C485.137 5.88961 394.523 -1.85585 298.018 1.10706C201.522 4.06966 99.1824 17.7367 12.2874 39.1426C-31.1598 49.8455 -70.7377 62.4811 -103.789 76.6763C-136.847 90.8745 -163.345 106.62 -180.66 123.528C-210.72 152.874 -222.019 188.215 -210.402 223.061C-198.774 257.941 -164.144 292.463 -102.029 320.02L-101.388 320.304L-101.981 320.94L-102.12 320.978C-176.456 340.612 -222.71 366.089 -251.394 393.832C-280.066 421.565 -291.214 451.594 -295.278 480.414C-297.28 494.609 -288.758 509.921 -271.457 524.142C-254.174 538.349 -228.225 551.38 -195.649 561C-130.504 580.238 -38.9481 585.807 62.5429 559.95C166.164 533.548 219.417 504.595 246.157 478.748C259.52 465.831 266.256 453.694 269.358 443.041C272.266 433.053 271.989 424.338 270.949 417.461L270.731 416.11C268.548 403.362 256.215 385.747 231.076 371.085C205.958 356.435 168.103 344.768 115.011 343.896L115.005 342.896C201.93 340.504 323.178 327.715 427.242 295.888C479.275 279.974 526.986 259.308 563.96 232.822Z" stroke="#FE9D56"/>
-                        </svg>
-                        <svg class="svg-tables" width="461" height="571" viewBox="0 0 461 571" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M714.591 5.46068C755.182 -2.75955 792.886 -0.190915 824.536 17.978C845.263 29.8792 855.785 47.159 858.056 68.3607C860.333 89.6271 854.312 114.91 841.75 142.715C816.631 198.316 765.539 263.607 703.596 326.215C641.668 388.809 568.962 448.654 500.69 493.375C466.554 515.735 433.541 534.304 403.551 547.545C373.547 560.792 346.63 568.678 324.67 569.731C286.54 571.565 256.133 557.213 240.197 528.02C224.228 498.764 222.648 454.351 242.821 395.801L243.279 394.473L241.565 394.476L241.321 394.629C182.05 432.055 136.372 447.071 100.137 448.982C63.9342 450.892 37.0619 439.725 15.3638 424.583C4.87097 417.26 -0.0584166 402.298 1.19027 381.971C2.43612 361.69 9.82898 336.329 23.6278 308.632C51.2199 253.248 104.336 188.698 184.609 137.022C266.622 84.2277 318.964 66.7103 352.709 64.9198C369.561 64.0256 381.759 67.0549 390.708 71.5562C399.659 76.0583 405.423 82.0645 409.364 87.2216L409.364 87.2206C416.387 96.4245 420.509 115.423 414.697 141.246C408.896 167.022 393.214 199.479 360.848 235.433L362.305 236.804C417.908 180.244 501.771 107.233 587.653 57.5308C630.595 32.6792 673.997 13.6818 714.591 5.46068Z" stroke="#FE9D56" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <div class="look-info">
-                        <div class="look-info-text-block">
-                            <div class="look-info-title">
-                                Get the Look
-                            </div>
-                            <div class="look-info-text">
-                                Обирай не просто речі — створюй вайб. Чистий монохром чи сміливий мікс фактур — твій стиль диктує правила. У нашій підбірці трендовість зустрічається з характером.
-                            </div>
-                        </div>
-                        <!-- <div class="look-info-btn-block">
-                            <a href="#" class="look-info-btn">
-                                готові образи
-                                <span class="icon">
-                                    <svg width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g>
-                                        <path d="M9.41846 5.50003C9.41846 5.69717 9.33635 5.89429 9.17246 6.04459L4.01268 10.7743C3.68445 11.0752 3.15229 11.0752 2.8242 10.7743C2.4961 10.4736 2.4961 9.98587 2.8242 9.68498L7.38986 5.50003L2.82435 1.31506C2.49626 1.01419 2.49626 0.526517 2.82435 0.225789C3.15245 -0.0752306 3.68461 -0.0752306 4.01284 0.225789L9.17262 4.95547C9.33653 5.10584 9.41846 5.30296 9.41846 5.50003Z" fill="currentcolor"/>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </a>
-                        </div -->
-                    </div>
-                    <?
-                    $looks = $looksIds = [];
-                    $res = CIBlockElement::GetList(['SORT'=>'ASC'],['IBLOCK_ID'=>55,'ACTIVE'=>'Y']);
-                    while ($record = $res->GetNextElement())
-                    {
-                        $fields = $record->GetFields();
-                        $props = $record->GetProperties();
-                        $looks[$fields['ID']] = $fields;
-                        $looks[$fields['ID']]['PROPERTIES'] = $props;
-                        $looksIds = array_merge($looksIds, $props['PRODUCTS']['VALUE']);
-                    }
-                    $params = [
-                        'LOOKS_IDS' => $looks,
-                        'IBLOCK_TYPE' => 'aspro_max_catalog',
-                        'IBLOCK_ID' => '21',
-                        'ELEMENT_SORT_FIELD' => 'ID',
-                        'ELEMENT_SORT_ORDER' => 'desc',
-                        'ELEMENT_SORT_FIELD2' => 'sort',
-                        'ELEMENT_SORT_ORDER2' => 'asc',
-                        'PROPERTY_CODE' => [
-                            0 => 'HIT',
-                            1 => 'BRAND',
-                            2 => 'CML2_ARTICLE',
-                            3 => 'PROP_2104',
-                            4 => 'PODBORKI',
-                            5 => 'PROP_2033',
-                            6 => 'COLOR_REF2',
-                            7 => 'PROP_305',
-                            8 => 'PROP_352',
-                            9 => 'PROP_317',
-                            10 => 'PROP_357',
-                            11 => 'PROP_2102',
-                            12 => 'PROP_318',
-                            13 => 'PROP_159',
-                            14 => 'PROP_349',
-                            15 => 'PROP_327',
-                            16 => 'PROP_2052',
-                            17 => 'PROP_370',
-                            18 => 'PROP_336',
-                            19 => 'PROP_2115',
-                            20 => 'PROP_346',
-                            21 => 'PROP_2120',
-                            22 => 'PROP_2053',
-                            23 => 'PROP_363',
-                            24 => 'PROP_320',
-                            25 => 'PROP_2089',
-                            26 => 'PROP_325',
-                            27 => 'PROP_2103',
-                            28 => 'PROP_2085',
-                            29 => 'PROP_300',
-                            30 => 'PROP_322',
-                            31 => 'PROP_362',
-                            32 => 'PROP_365',
-                            33 => 'PROP_359',
-                            34 => 'PROP_284',
-                            35 => 'PROP_364',
-                            36 => 'PROP_356',
-                            37 => 'PROP_343',
-                            38 => 'PROP_2083',
-                            39 => 'PROP_314',
-                            40 => 'PROP_348',
-                            41 => 'PROP_316',
-                            42 => 'PROP_350',
-                            43 => 'PROP_333',
-                            44 => 'PROP_332',
-                            45 => 'PROP_360',
-                            46 => 'PROP_353',
-                            47 => 'PROP_347',
-                            48 => 'PROP_25',
-                            49 => 'PROP_2114',
-                            50 => 'PROP_301',
-                            51 => 'PROP_2101',
-                            52 => 'PROP_2067',
-                            53 => 'PROP_323',
-                            54 => 'PROP_324',
-                            55 => 'PROP_355',
-                            56 => 'PROP_304',
-                            57 => 'PROP_358',
-                            58 => 'PROP_319',
-                            59 => 'PROP_344',
-                            60 => 'PROP_328',
-                            61 => 'PROP_338',
-                            62 => 'PROP_2065',
-                            63 => 'PROP_366',
-                            64 => 'PROP_302',
-                            65 => 'PROP_303',
-                            66 => 'PROP_2054',
-                            67 => 'PROP_341',
-                            68 => 'PROP_223',
-                            69 => 'PROP_283',
-                            70 => 'PROP_354',
-                            71 => 'PROP_313',
-                            72 => 'PROP_2066',
-                            73 => 'PROP_329',
-                            74 => 'PROP_342',
-                            75 => 'PROP_367',
-                            76 => 'PROP_2084',
-                            77 => 'PROP_340',
-                            78 => 'PROP_351',
-                            79 => 'PROP_368',
-                            80 => 'PROP_369',
-                            81 => 'PROP_331',
-                            82 => 'PROP_337',
-                            83 => 'PROP_345',
-                            84 => 'PROP_339',
-                            85 => 'PROP_310',
-                            86 => 'PROP_309',
-                            87 => 'PROP_330',
-                            88 => 'PROP_2017',
-                            89 => 'PROP_335',
-                            90 => 'PROP_321',
-                            91 => 'PROP_308',
-                            92 => 'PROP_206',
-                            93 => 'PROP_334',
-                            94 => 'PROP_2100',
-                            95 => 'PROP_311',
-                            96 => 'PROP_2132',
-                            97 => 'SHUM',
-                            98 => 'PROP_361',
-                            99 => 'PROP_326',
-                            100 => 'PROP_315',
-                            101 => 'PROP_2091',
-                            102 => 'PROP_2026',
-                            103 => 'PROP_307',
-                            104 => 'PROP_2027',
-                            105 => 'PROP_2098',
-                            106 => 'PROP_2122',
-                            107 => 'PROP_24',
-                            108 => 'PROP_2049',
-                            109 => 'PROP_22',
-                            110 => 'PROP_2095',
-                            111 => 'PROP_2044',
-                            112 => 'PROP_162',
-                            113 => 'PROP_2055',
-                            114 => 'PROP_2069',
-                            115 => 'PROP_2062',
-                            116 => 'PROP_2061',
-                            117 => 'CML2_LINK',
-                            118 => 'RZMER',
-                            119 => 'SOSTAV_SITE_RU',
-                            120 => 'SOSTAV_SITE_UA',
-                        ],
-                        'PROPERTY_CODE_MOBILE' => '',
-                        'META_KEYWORDS' => '-',
-                        'META_DESCRIPTION' => '-',
-                        'BROWSER_TITLE' => '-',
-                        'SET_LAST_MODIFIED' => 'Y',
-                        'INCLUDE_SUBSECTIONS' => 'Y',
-                        'BASKET_URL' => '/basket/',
-                        'ACTION_VARIABLE' => 'action',
-                        'PRODUCT_ID_VARIABLE' => 'id',
-                        'SECTION_ID_VARIABLE' => 'SECTION_ID',
-                        'PRODUCT_QUANTITY_VARIABLE' => 'quantity',
-                        'PRODUCT_PROPS_VARIABLE' => 'prop',
-                        'FILTER_NAME' => 'MAX_SMART_FILTER',
-                        'CACHE_TYPE' => 'A',
-                        'CACHE_TIME' => '3600000',
-                        'CACHE_FILTER' => 'Y',
-                        'CACHE_GROUPS' => 'Y',
-                        'SET_TITLE' => 'N',
-                        'MESSAGE_404' => '',
-                        'SET_STATUS_404' => 'Y',
-                        'SHOW_404' => 'Y',
-                        'FILE_404' => '',
-                        'DISPLAY_COMPARE' => 'Y',
-                        'PAGE_ELEMENT_COUNT' => '10',
-                        'LINE_ELEMENT_COUNT' => '4',
-                        'PRICE_CODE' => [0 => 'BASE',],
-                        'USE_PRICE_COUNT' => 'N',
-                        'SHOW_PRICE_COUNT' => '1',
-                        'PRICE_VAT_INCLUDE' => 'Y',
-                        'USE_PRODUCT_QUANTITY' => 'Y',
-                        'ADD_PROPERTIES_TO_BASKET' => 'N',
-                        'PARTIAL_PRODUCT_PROPERTIES' => 'Y',
-                        'PRODUCT_PROPERTIES' => '',
-                        'DISPLAY_TOP_PAGER' => 'N',
-                        'DISPLAY_BOTTOM_PAGER' => 'N',
-                        'PAGER_TITLE' => 'Товары',
-                        'PAGER_SHOW_ALWAYS' => 'N',
-                        'PAGER_TEMPLATE' => 'main',
-                        'PAGER_DESC_NUMBERING' => 'N',
-                        'PAGER_DESC_NUMBERING_CACHE_TIME' => '36000',
-                        'PAGER_SHOW_ALL' => 'N',
-                        'PAGER_BASE_LINK_ENABLE' => 'N',
-                        'PAGER_BASE_LINK' => null,
-                        'PAGER_PARAMS_NAME' => null,
-                        'LAZY_LOAD' => 'N',
-                        'MESS_BTN_LAZY_LOAD' => null,
-                        'LOAD_ON_SCROLL' => 'N',
-                        'OFFERS_CART_PROPERTIES' => '',
-                        'OFFERS_FIELD_CODE' => [0 => 'NAME',
-                                                1 => 'CML2_LINK',
-                                                2 => 'DETAIL_PAGE_URL',
-                                                3 => '',],
-                        'OFFERS_PROPERTY_CODE' => [0 => 'ARTICLE',
-                                                   1 => 'SPORT',
-                                                   2 => 'SIZES2',
-                                                   3 => 'MORE_PHOTO',
-                                                   4 => 'VOLUME',
-                                                   5 => 'SIZES',
-                                                   6 => 'SIZES5',
-                                                   7 => 'SIZES4',
-                                                   8 => 'SIZES3',
-                                                   9 => 'COLOR_REF',
-                                                   10 => 'RAZMER',],
-                        'OFFERS_SORT_FIELD' => 'ID',
-                        'OFFERS_SORT_ORDER' => 'desc',
-                        'OFFERS_SORT_FIELD2' => 'sort',
-                        'OFFERS_SORT_ORDER2' => 'asc',
-                        'OFFERS_LIMIT' => '10',
-                        'SECTION_ID' => '',
-                        'SECTION_CODE' => '',
-                        'SECTION_URL' => '/catalog/#SECTION_CODE_PATH#/',
-                        'DETAIL_URL' => '/catalog/#SECTION_CODE_PATH#/#ELEMENT_CODE#/',
-                        'USE_MAIN_ELEMENT_SECTION' => 'Y',
-                        'CONVERT_CURRENCY' => 'Y',
-                        'CURRENCY_ID' => 'UAH',
-                        'HIDE_NOT_AVAILABLE' => 'N',
-                        'HIDE_NOT_AVAILABLE_OFFERS' => 'N',
-                        'LABEL_PROP' => '',
-                        'LABEL_PROP_MOBILE' => null,
-                        'LABEL_PROP_POSITION' => null,
-                        'ADD_PICT_PROP' => 'MORE_PHOTO',
-                        'PRODUCT_DISPLAY_MODE' => 'Y',
-                        'PRODUCT_BLOCKS_ORDER' => 'price,props,sku,quantityLimit,quantity,buttons,compare',
-                        'PRODUCT_ROW_VARIANTS' => '[{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false},{\'VARIANT\':\'3\',\'BIG_DATA\':false}]',
-                        'ENLARGE_PRODUCT' => 'STRICT',
-                        'ENLARGE_PROP' => '',
-                        'SHOW_SLIDER' => 'Y',
-                        'SLIDER_INTERVAL' => '3000',
-                        'SLIDER_PROGRESS' => 'N',
-                        'OFFER_ADD_PICT_PROP' => 'MORE_PHOTO',
-                        'OFFER_TREE_PROPS' => [0 => 'COLOR_REF',
-                                               1 => 'RAZMER',],
-                        'PRODUCT_SUBSCRIPTION' => 'Y',
-                        'SHOW_DISCOUNT_PERCENT' => 'Y',
-                        'DISCOUNT_PERCENT_POSITION' => null,
-                        'SHOW_OLD_PRICE' => 'Y',
-                        'SHOW_MAX_QUANTITY' => 'N',
-                        'MESS_SHOW_MAX_QUANTITY' => '',
-                        'RELATIVE_QUANTITY_FACTOR' => '',
-                        'MESS_RELATIVE_QUANTITY_MANY' => '',
-                        'MESS_RELATIVE_QUANTITY_FEW' => '',
-                        'MESS_BTN_BUY' => 'Купить',
-                        'MESS_BTN_ADD_TO_BASKET' => 'В корзину',
-                        'MESS_BTN_SUBSCRIBE' => 'Подписаться',
-                        'MESS_BTN_DETAIL' => 'Подробнее',
-                        'MESS_NOT_AVAILABLE' => 'Нет в наличии',
-                        'MESS_BTN_COMPARE' => 'Сравнение',
-                        'USE_ENHANCED_ECOMMERCE' => 'N',
-                        'DATA_LAYER_NAME' => '',
-                        'BRAND_PROPERTY' => '',
-                        'TEMPLATE_THEME' => 'blue',
-                        'ADD_SECTIONS_CHAIN' => 'N',
-                        'ADD_TO_BASKET_ACTION' => 'ADD',
-                        'SHOW_CLOSE_POPUP' => 'N',
-                        'COMPARE_PATH' => '',
-                        'COMPARE_NAME' => 'CATALOG_COMPARE_LIST',
-                        'USE_COMPARE_LIST' => 'Y',
-                        'BACKGROUND_IMAGE' => '-',
-                        'COMPATIBLE_MODE' => 'Y',
-                        'DISABLE_INIT_JS_IN_COMPONENT' => 'N',
-                        'WRAP_CLASS' => 'main-googs-list',
-                        'BLOCK_CLASS' => 'main-googs-item-cont',
-                    ];
-                    global $arLooksIds, $looksProducts;
-                    $arLooksIds=$looksIds;
-                    $looksProducts=$looks;
 
-                    ?>
-
-                    <div class="look-list-cont swiper">
-                        <div class="swiper-wrapper">
-                            <?
-                            foreach($looks as $index => $look)
-                            {
-                                //$lookFile = CFile::GetFileArray($look['PREVIEW_PICTURE'])['SRC'];
-                                $lookFile = $img = CFile::ResizeImageGet($look['PREVIEW_PICTURE'], array('width'=>470, 'height'=>700), BX_RESIZE_IMAGE_PROPORTIONAL, true)['src'];
-                                ?>
-                                <div class="swiper-slide look-list-item-cont">
-                                    <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal_<?=$look['ID']?>">
-                                        <div class="look-list-item-img">
-                                            <img src="<?=$lookFile?>">
-                                        </div>
-                                    </a>
-                                </div>
-                                <?
-                            }
-                            ?>
-                            <?/*
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/lookimg1.jpg"></div>
-                                    
-                                </a>
-                            </div>
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/lookimg2.jpg">
-                                    </div>
-                                    
-                                </a>
-                            </div>
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/lookimg3.jpg">
-                                    </div>
-                                    
-                                </a>
-                            </div>
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/lookimg1.jpg">
-                                    </div>
-                                    
-                                </a>
-                            </div>
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img"><img src="/bitrix/templates/stimma_new/images/imgnew/lookimg2.jpg">
-                                    </div>
-                                    
-                                </a>
-                            </div>
-                            <div class="swiper-slide look-list-item-cont">
-                                <a href="javascript:void(0)" class="look-list-item" data-bs-toggle="modal" data-bs-target="#look-modal">
-                                    <div class="look-list-item-img">
-                                        <img src="/bitrix/templates/stimma_new/images/imgnew/lookimg3.jpg">
-                                    </div>
-                                    
-                                </a>
-                            </div>
-                            */?>
-                        </div>
-                        <div class="swiper-scrollbar look-list-scroll">
-                            
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        <?}?>
 
         <div class="marquee-cont">
             <div class="marquee-block">

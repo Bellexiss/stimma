@@ -881,6 +881,45 @@ if( $USER->isAdmin() ){
     echo "<pre>_".print_r($arResult, 1)."_</pre>";
 }*/
 
+$looksTanya = [
+    50987=>[62123,62099],
+    62222=>[62051,62075],
+    62221=>[62029,62112],
+    62220=>[62147,61938,61979],
+];
+
+foreach($arResult['JS_DATA']['GRID']['ROWS'] as $index => $Row)
+{
+    if(isset($_SESSION['IS_ADDED_LOOK']['IDS']))
+    {
+        foreach($_SESSION['IS_ADDED_LOOK']['IDS'] as $lookId)
+            unset($looksTanya[$lookId][$Row['data']['PRODUCT_ID']]);
+    }
+}
+
+$dontHaveLook=[];
+if(isset($_SESSION['IS_ADDED_LOOK']['IDS']))
+{
+    foreach($_SESSION['IS_ADDED_LOOK']['IDS'] as $lookId)
+        if(!empty($looksTanya[$lookId]))
+        {
+            $elRes = $DB->Query('select * from b_iblock_element where ID in '.implode(',',$looksTanya[$lookId]));
+            while ($el = $elRes -> Fetch())
+                $dontHaveLook[] = $el['NAME'];
+        }
+}
+
+if(!empty($dontHaveLook))
+{
+    $arResult['FREE_DELIVERY'] = false;
+    $dontHaveLook = implode(', ',$dontHaveLook);
+}
+else
+    {
+        $arResult['FREE_DELIVERY'] = true;
+        $dontHaveLook = false;
+    }
+
 
 // 2+1 літня
 $availableSections=[375,404,376,400,394,405,1170,1262,379];
@@ -975,6 +1014,8 @@ if(  false ){
         $arResult['IS_ACTION_08'] = $data['IS_ACTION_08'];
     }
 }
+
+
 
 
 /*$sql = 'select * from np_cities_new order by UF_NAME_UA asc';

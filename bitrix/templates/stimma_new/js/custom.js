@@ -5,6 +5,31 @@ It will not be overwritten when you upgrade solution.
 
 var hover = 0;
 
+function setCookie(name, value, options = {}) {
+
+    options = {
+        path: '/',
+        // при необходимости добавьте другие значения по умолчанию
+        //...options
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (let optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        let optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+}
+
 function initDopSlick()
 {
     $('.modal-basket-more-list .main-googs-list').slick({
@@ -913,6 +938,10 @@ $(document).ready(function()
             $('.header-icon-counter').html(response.basket.TOTAL_KOM);
             $('.mobile-control-basket-count').text(response.basket.TOTAL_KOM);
 
+            if($(".custom-select").length > 0){
+                $(".custom-select").select2();
+            }
+
             //initDopSlick();
             
               $('.header-goods-views-slider').slick({
@@ -965,6 +994,47 @@ $(document).ready(function()
     function sayHi(phrase, who) {
         //$('.card-basket-add').removeClass('added')
     }
+
+    $(document).on('change','.change-size',function()
+    {
+       var id = $(this).attr('data-id');
+       var val = $(this).val();
+
+       $(this).closest('.basket-header-item').addClass('loader');
+
+        $.ajax({
+            url: '/ajax/basket.php',
+            data: {'pprocess':'change_size','id':id, 'url':location.pathname, val:val
+            },
+            type: 'POST',
+            dataType:'json'
+        }).done(function(html)
+        {
+
+            $('.header-icon-counter').html(html.basket.TOTAL_KOM);
+            $('.mobile-control-basket-count').text(html.basket.TOTAL_KOM);
+
+            $('#basket-header').html(html.html_basket);
+            if(!parseInt(html.basket.TOTAL_KOM))
+            {
+                $('.header-icon-counter').hide();
+                //$('.header-new-elem-basket').removeClass('green-basket');
+            }
+            else
+            {
+                $('.header-icon-counter').show();
+                //$('.header-new-elem-basket').addClass('green-basket');
+            }
+
+            $('.header-basket-add-block').addClass('opened');
+
+            $('.basket-header-item').removeClass('loader');
+
+            if($(".custom-select").length > 0){
+                $(".custom-select").select2();
+            }
+        });
+    });
 
     // Готово
     $(document).on('click', '.buy_product', function()
