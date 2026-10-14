@@ -435,7 +435,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                                     </div>
                                     <?
                                 }
-                                if(!$item['PRODUCT']['QUANTITY'])
+                                if(!$item['PRODUCT']['QUANTITY'] && strpos($APPLICATION->GetCurPage(),'/catalog/novinki/') === false)
                                 {
                                     ?>
                                     <div class="catalog-item-badge no-available">

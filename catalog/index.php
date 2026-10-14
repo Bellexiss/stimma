@@ -25,7 +25,7 @@ $APPLICATION->SetPageProperty("title", "Розпродаж від 199 грн. К
                     $ids[$props['UF_PRODUCT_ID']['VALUE']] = $props['UF_PRODUCT_ID']['VALUE'];
 
                 $files[] = [
-                        'UF_FILE' => $userPhoto = CFile::ResizeImageGet($props['UF_FILE']['VALUE'], array('width'=>2000, 'height'=>2000), BX_RESIZE_IMAGE_PROPORTIONAL, true)['src'],
+                        'UF_FILE' => $userPhoto = CFile::ResizeImageGet($props['UF_FILE']['VALUE'], array('width'=>1000, 'height'=>1500), BX_RESIZE_IMAGE_PROPORTIONAL, true)['src'],
                         'UF_SIZE' => $props['UF_SIZE']['VALUE_XML_ID'],
                         'UF_PRODUCT_ID' => $props['UF_PRODUCT_ID']['VALUE']
                 ];

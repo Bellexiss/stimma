@@ -15,7 +15,6 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 $bIndex = (strpos($_SERVER['HTTP_USER_AGENT'], 'Lighthouse') !== false) || isset($_GET['google']);
-?><pre><?=print_r($arResult, 1)?></pre><?
 
 $sectionElement = $DB->Query('select * from b_iblock_section where IBLOCK_ID = 21 and CODE = \''.$arResult['VARIABLES']['SECTION_CODE'].'\'')->Fetch();
 

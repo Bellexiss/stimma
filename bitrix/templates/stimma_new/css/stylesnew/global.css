@@ -2355,3 +2355,9 @@ body .filter.label_block input+label {
   height: 34px;
   font-size: 16px;
 }
+
+@media(max-width: 600px){
+  .parts-pay-modal{
+    --bs-modal-margin: 70px;
+  }
+}

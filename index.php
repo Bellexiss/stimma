@@ -222,8 +222,8 @@ if(isset($_GET['newstimma']) || NEW_STIMMA )
                 </div>
                 <div class="look-info">
                     <div class="look-info-text-block">
-                        <div class="look-info-title" style="font-size: 40px;">
-                            GET THE LOOK з Тетяною Самбурською
+                        <div class="look-info-title">
+                            GET THE LOOK <br> з Тетяною Самбурською
                         </div>
                         <div class="look-info-text">
                             Тетяна обрала 4 образи з колекції FLOW STATE, які найбільше відгукнулися їй.<br>

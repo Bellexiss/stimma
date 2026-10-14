@@ -184,7 +184,7 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                         <a href="#" class="info-btn info-btn-black obraz_add_basket" data-lookid="<?=$item['ID']?>">
                                             Додати образ
                                         </a>
-                                        <div class="look-modal-total-parts">
+                                        <a href="#" class="look-modal-total-parts">
                                             <span class="icon">
                                                 <svg width="25" height="25" viewBox="0 0 16 16" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M1.92004 11.1955C1.06831 9.81362 0.794053 8.15752 1.15549 6.57872C1.51693 4.99993 2.48561 3.62276 3.85589 2.73957L7.28454 7.95419L1.92004 11.1955Z"></path>
@@ -201,9 +201,9 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                                 </svg>
                                             </span>
                                             <div class="text">
-                                                від <?=round($cntAmount/3)?> грн/міс
+                                                <span>Оплата частинами -</span> від <?=round($cntAmount/3)?> грн/міс
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

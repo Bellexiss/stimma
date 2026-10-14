@@ -562,7 +562,7 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
 ?>
 
 
-		<a href="#lookblock" class="gift-link">
+		<a href="/#lookblock" class="gift-link">
 			<!-- <img src="/bitrix/templates/stimma_new/images/imgnew/gift-img.png"> -->
 			ОБРАЗ ВІД ТЕТЯНИ- FREE DELIVERY!
 		</a>
