@@ -3893,7 +3893,7 @@ function sendForgetBasketEmailToClient()
     global $DB;
     $arBasket=[];
 
-    $timeX = strtotime(date('d.m.Y H:i:s')) - 86400;
+    $timeX = strtotime(date('d.m.Y H:i:s')) - 10800;
     $res = $DB->Query('select * from forget_basket where UF_TIME_X <= ' . $timeX . ' and UF_SEND = 0');
     while ($record = $res->Fetch())
     {

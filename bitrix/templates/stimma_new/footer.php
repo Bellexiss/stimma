@@ -442,7 +442,7 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
     ?>
     <div class="cookie-cont">
         <div class="cookie-block">
-            <div class="cookie-icon">
+            <!-- <div class="cookie-icon">
                 <svg height="50px" width="50px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 416.991 416.991" xml:space="preserve">
 						<g>
                             <g>
@@ -519,20 +519,20 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
                             </g>
                         </g>
 					</svg>
-            </div>
+            </div> -->
             <div class="cookie-info">
                 <div class="cookie-title">
-                    Ми використовуємо cookie
+                    Ми використовуємо <span>COOKIE 🍪</span>
                 </div>
                 <div class="cookie-text">
-                    Цей сайт використовує файли cookie для покращення вашого досвіду, аналітики та персоналізації контенту. Продовжуючи перегляд сайту, ви погоджуєтеся з нашою <a href="#">Політикою конфіденційності</a> та <a href="#">Політикою cookie</a>.
+                    ТАК САЙТ ПРАЦЮЄ ШВИДШЕ А ДОБІРКИ ПІДХОДЯТЬ САМЕ ТОБІ. ДЕТАЛЬНІШЕ У ПОЛІТИЦІ COOKIE.
                 </div>
                 <div class="cookie-btns">
-                    <a href="#" class="info-btn info-btn-black get_the_good_cookie">
-                        Прийняти
-                    </a>
                     <a href="#" class="info-btn cookies-no">
                         Відхилити
+                    </a>
+                    <a href="#" class="info-btn info-btn-black get_the_good_cookie">
+                        Прийняти
                     </a>
                 </div>
             </div>
@@ -2326,10 +2326,10 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && isset($_COOKIE['good_co
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
                     <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/600400.png?v=2">
+                        <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/600400.jpg?v=3">
                     </a>
                     <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/450300.png?v=2">
+                        <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/300450.jpg?v=3">
                     </a>
                 </div>
             </div>

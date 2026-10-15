@@ -2181,42 +2181,83 @@ body .filter.label_block input+label {
 }
 
 .cookie-block{
-  max-width: 700px;
-  padding: 10px;
-  border-radius: 10px;
-  background: var(--white);
+  max-width: 500px;
+  width: 100%;
+  padding: 20px ;
+  border-radius: 20px;
+  background: #FFFDF0;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
   border: 1px solid var(--graphite);
 }
 
 .cookie-info{
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .cookie-title{
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cookie-title span{
+  font-size: 30px;
+  line-height: 1.2;
   font-weight: 700;
 }
 
 .cookie-text{
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 600;
+  max-width: 455px;
 }
 
 .cookie-btns{
   display: flex;
   align-items: center;
-  gap: 5px;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 12px;
 }
 
 .cookie-btns .info-btn{
   height: 40px;
-  width: 150px;
+  width: 200px;
   font-size: 14px;
+  background: var(--peach);
+  border-color: var(--peach);
+  color: var(--graphite);
+  border-radius: 5px;
+  font-weight: 700;
+  letter-spacing: 0px;
+}
+
+.cookie-btns .info-btn:hover{
+   background: #9ca944;
+  border-color: #9ca944;
+}
+
+.cookie-btns .info-btn-black{
+  background: #9ca944;
+  border-color: #9ca944;
+}
+
+.cookie-btns .info-btn-black:hover{
+  background: var(--peach);
+  border-color: var(--peach);
 }
 
 .cookie-icon{
@@ -2232,11 +2273,24 @@ body .filter.label_block input+label {
     }
 
     .cookie-btns{
-      flex-direction: column;
+      gap: 10px;
     }
 
     .cookie-btns .info-btn{
-      width: 100%;
+      width: 150px;
+    }
+
+    .cookie-title{
+      font-size: 20px;
+    }
+
+    .cookie-title span{
+      font-size: 26px;
+    }
+
+    .cookie-text{
+      font-size: 14px;
+      max-width: 255px;
     }
 }
 

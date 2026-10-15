@@ -666,6 +666,29 @@ else
                         <div class="order-detail-cont">
                             
                             <div class="order-detail-item">
+                                <?
+                                if(!$USER->IsAuthorized())
+                                {
+                                    ?>
+                                    <div>
+                                        <span class="bonus" style="background: var(--beige); padding: 5px;">
+                                            <?
+                                            if(LANGUAGE_ID == 'ua')
+                                            {
+                                                ?><a style="color: var(--peach);" href="<?=$ru?>/personal/">Авторизуйтесь</a> та накопичуйте стімзи легко. 1 витрачена гривня = 1 стімз<?
+                                            }
+                                            else
+                                            {
+                                                ?><a style="color: var(--peach);" href="<?=$ru?>/personal/">Авторизируйтесь</a> и копите стимзы легко. 1 потраченная гривна = 1 стимз<?
+                                            }
+                                            ?>
+
+                                        </span>
+                                    </div>
+                                    <?
+                                }
+                                ?>
+
                                 <div class="order-detail-title">
 			        				<span class="icon">
 			        					<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

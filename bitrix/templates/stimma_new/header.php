@@ -1064,7 +1064,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=1">
                         </div>
                     </div>
 
@@ -1294,7 +1294,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=1">
                         </div>
                     </div>
                 </div>
