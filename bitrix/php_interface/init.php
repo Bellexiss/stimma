@@ -1661,6 +1661,89 @@ function getBasketNewHtml($basket = false)
                 </div>
             </div>
         </div>
+        <div class="order-bonus-cont" style="display:none;">
+            <div class="order-bonus-title">
+                Більше в кошику — більше бонусів!
+            </div>
+            <div class="order-bonus-line-block">
+                <div class="order-bonus-line-active" style="width: 16%"> <!-- 16%  50% 83%  -->
+                    
+                </div>
+                <div class="order-bonus-lvl active">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/ fill="currentcolor" ></svg>
+                </div>
+                <div class="order-bonus-lvl">
+                    
+                </div>
+                <div class="order-bonus-lvl">
+                    
+                </div>
+            </div>
+            <div class="order-bonus-info">
+                <div class="order-bonus-item">
+                    <div class="order-bonus-price">
+                        3 500 грн
+                    </div>
+                    <div class="order-bonus-img-block">
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
+                        </div>
+                    </div>
+                    <div class="order-bonus-item-text">
+                        Шопер
+                    </div>
+                </div>
+                <div class="order-bonus-item">
+                    <div class="order-bonus-price">
+                        4 500 грн
+                    </div>
+                    <div class="order-bonus-img-block">
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
+                        </div>
+                        +
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
+                        </div>
+                    </div>
+                    <div class="order-bonus-item-text">
+                        Шопер
+                        <br>+ Подвійні стімзи
+                    </div>
+                </div>
+                <div class="order-bonus-item">
+                    <div class="order-bonus-price">
+                        6 000 грн
+                    </div>
+                    <div class="order-bonus-img-block">
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
+                        </div>
+                        +
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
+                        </div>
+                        +
+                        <div class="order-bonus-img">
+                            <img src="/bitrix/templates/stimma_new/images/imgnew/mystery.png">
+                        </div>
+                    </div>
+                    <div class="order-bonus-item-text">
+                        Шопер
+                        <br>+ Подвійні стімзи
+                        <br>+ Таємний бонус
+                    </div>
+                </div>
+            </div>
+            <div class="order-bonus-text">
+                <span class="icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M385.5 132.8C393.1 119.9 406.9 112 421.8 112L424 112C446.1 112 464 129.9 464 152C464 174.1 446.1 192 424 192L350.7 192L385.5 132.8zM254.5 132.8L289.3 192L216 192C193.9 192 176 174.1 176 152C176 129.9 193.9 112 216 112L218.2 112C233.1 112 247 119.9 254.5 132.8zM344.1 108.5L320 149.5L295.9 108.5C279.7 80.9 250.1 64 218.2 64L216 64C167.4 64 128 103.4 128 152C128 166.4 131.5 180 137.6 192L96 192C78.3 192 64 206.3 64 224L64 256C64 273.7 78.3 288 96 288L544 288C561.7 288 576 273.7 576 256L576 224C576 206.3 561.7 192 544 192L502.4 192C508.5 180 512 166.4 512 152C512 103.4 472.6 64 424 64L421.8 64C389.9 64 360.3 80.9 344.1 108.4zM544 336L344 336L344 544L480 544C515.3 544 544 515.3 544 480L544 336zM296 336L96 336L96 480C96 515.3 124.7 544 160 544L296 544L296 336z" fill="currentcolor" /></svg>
+                </span>
+                <span class="text">
+                    Додай ще <span class="bold">800 грн</span> — і відкрий таємний бонус до <span class="bold">Black Friday.</span>
+                </span>
+            </div>
+        </div>
         <div class="offcanvas-footer">
             <div class="basket-header-total">
                 <div class="basket-header-total-key">
@@ -2849,6 +2932,13 @@ function clearEmpty(&$content)
         }
     }
 
+    // Заменяем в каноникале "/>" => ">"
+    $firstCanonical = $matches[0][0];
+    $fixedCanonical = str_replace('/>', '>', $firstCanonical);
+    $content = str_replace($firstCanonical, $fixedCanonical, $content);
+
+    // Убираем все пробелы в конце каждой строчки и в ее начале
+    $content = preg_replace('/^[ \t]+|[ \t]+$/m', '', $content);
      //  Заменяем год
     $content = str_replace('{year}', date('Y'), $content);
 
@@ -4012,6 +4102,93 @@ function sendForgetBasketEmailToClient()
             </tr>
             <?
             */
+            /*?>
+            <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                    <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Привіт ✨</h2>
+                            </td>
+                        </tr>
+
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Ти додала речі до корзини в STIMMA, але не встигла оформити замовлення.
+                                    Ми зберегли їх для тебе — вони все ще чекають 💛
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Можливо, ти просто відволіклась.
+                                    А можливо — це саме той знак повернутися й завершити покупку.
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Якщо маєш запитання — ми завжди поруч.
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <?
+                                $amount = 0;
+                                foreach ($items as $index => $item)
+                                {
+                                    $idimg=false;
+                                    if($item['PRODUCT']['IBLOCK_ID'] == 25)
+                                    {
+                                        $product = CIBlockElement::GetList([], ['IBLOCK_ID'=>25,'ID'=>$item['UF_PRODUCT_ID']],false,false,['ID','IBLOCK_ID','PROPERTY_CML2_LINK'])->Fetch();
+                                        $mainPRoduct = CIBlockElement::GetByID($product['PROPERTY_CML2_LINK_VALUE'])->Fetch();
+                                        $idimg = $mainPRoduct['PREVIEW_PICTURE'] ? $mainPRoduct['PREVIEW_PICTURE'] : $mainPRoduct['DETAIL_PICTURE'];
+                                    }
+                                    else
+                                        $idimg = $item['PRODUCT']['PREVIEW_PICTURE'] ? $item['PRODUCT']['PREVIEW_PICTURE'] : $item['PRODUCT']['DETAIL_PICTURE'];
+
+                                    $file = \CFile::GetFileArray($idimg)['SRC'];
+                                    $amount += $item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'];
+                                    $titleUA = CIBlockElement::GetProperty(25, $item['PRODUCT']['ID'], array("sort" => "asc"), Array("CODE"=>"NAME_UA"))->Fetch()['VALUE'];
+                                    ?>
+                                    <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
+                                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                </a>
+                                            </td>
+                                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-number" style="box-sizing: border-box; padding: 0; margin: 0; text-align: right; font-size: 16px;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE'], 'UAH')?> x <?=intval($item['BASKET']['QUANTITY'])?> шт
+                                                        </td>
+                                                        <td class="table-list-item-price" style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold; text-align: right;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'], 'UAH')?>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <?
+                                }
+                                ?>
+                                <table class="table-list-total" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-top: 30px; text-align: right; font-size: 16px;" width="100%" align="right">
+                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            Сума: <span style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold;"><?=FormatCurrency($amount,'UAH')?></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <?*/
             ?>
             <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                 <td style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -4121,6 +4298,345 @@ function sendForgetBasketEmailToClient()
     unset($_SESSION['CATALOG_USER_COUPONS']);
 
     return 'sendForgetBasketEmailToClient();';
+}
+function sendForgetBasketEmailToClient2()
+{
+    global $DB;
+    $arBasket=[];
+
+    $timeX = strtotime(date('d.m.Y H:i:s')) - 86400;
+    $res = $DB->Query('select * from forget_basket where UF_TIME_X <= ' . $timeX . ' and UF_SEND_2 = 0');
+    while ($record = $res->Fetch())
+    {
+        $find = $DB->Query('select * from b_sale_basket where ID = ' . $record['UF_BASKET_ID']);
+        if($find = $find->Fetch())
+        {
+            if($find['ORDER_ID']>0)
+                $DB->Query('delete from forget_basket where ID = ' . $record['ID']);
+            else
+            {
+                $record['BASKET']=$find;
+                $arBasket[$record['UF_USER_ID']][] = $record;
+            }
+        }
+    }
+
+    if(!empty($arBasket))
+    {
+        foreach ($arBasket as $uid => $items)
+        {
+            foreach ($items as $index => $item)
+            {
+                $arBasket[$uid][$index]['PRODUCT'] = \CIBlockElement::GetByID($item['UF_PRODUCT_ID']) -> GetNext();
+                $arBasket[$uid][$index]['PRODUCT']['NAME'] = \CIBlockElement::GetProperty(25, $item['UF_PRODUCT_ID'], '','', ['CODE' => 'NAME_UA']) -> Fetch()["VALUE"];
+            }
+        }
+
+        foreach ($arBasket as $uid => $items)
+        {
+            $user=CUser::GetByID($uid)->Fetch();
+            $name = $user['NAME'] . ' ' . $user['LAST_NAME'];
+            $email=$user['EMAIL'];
+            if(!$email) continue;
+
+            ob_start();
+            /*
+            ?>
+            <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                    <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Привіт ✨</h2>
+                            </td>
+                        </tr>
+
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Ти додала речі до кошика в STIMMA, але не встигла оформити замовлення.
+                                    Ми зберегли їх для тебе — вони все ще чекають 💌
+                                </h3>
+
+                            </td>
+                        </tr>
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <?
+                                $amount = 0;
+                                foreach ($items as $index => $item)
+                                {
+                                    $idimg=false;
+                                    if($item['PRODUCT']['IBLOCK_ID'] == 25)
+                                    {
+                                        $product = CIBlockElement::GetList([], ['IBLOCK_ID'=>25,'ID'=>$item['UF_PRODUCT_ID']],false,false,['ID','IBLOCK_ID','PROPERTY_CML2_LINK'])->Fetch();
+                                        $mainPRoduct = CIBlockElement::GetByID($product['PROPERTY_CML2_LINK_VALUE'])->Fetch();
+                                        $idimg = $mainPRoduct['PREVIEW_PICTURE'] ? $mainPRoduct['PREVIEW_PICTURE'] : $mainPRoduct['DETAIL_PICTURE'];
+                                    }
+                                    else
+                                        $idimg = $item['PRODUCT']['PREVIEW_PICTURE'] ? $item['PRODUCT']['PREVIEW_PICTURE'] : $item['PRODUCT']['DETAIL_PICTURE'];
+
+                                    $file = \CFile::GetFileArray($idimg)['SRC'];
+                                    $amount += $item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'];
+                                    $titleUA = CIBlockElement::GetProperty(25, $item['PRODUCT']['ID'], array("sort" => "asc"), Array("CODE"=>"NAME_UA"))->Fetch()['VALUE'];
+                                    ?>
+                                    <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
+                                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                </a>
+                                            </td>
+                                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-number" style="box-sizing: border-box; padding: 0; margin: 0; text-align: right; font-size: 16px;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE'], 'UAH')?> x <?=intval($item['BASKET']['QUANTITY'])?> шт
+                                                        </td>
+                                                        <td class="table-list-item-price" style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold; text-align: right;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'], 'UAH')?>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <?
+                                }
+                                ?>
+                                <table class="table-list-total" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-top: 30px; text-align: right; font-size: 16px;" width="100%" align="right">
+                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            Сума: <span style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold;"><?=FormatCurrency($amount,'UAH')?></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <?
+            */
+            /*?>
+            <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                    <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Привіт ✨</h2>
+                            </td>
+                        </tr>
+
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Ти додала речі до корзини в STIMMA, але не встигла оформити замовлення.
+                                    Ми зберегли їх для тебе — вони все ще чекають 💛
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Можливо, ти просто відволіклась.
+                                    А можливо — це саме той знак повернутися й завершити покупку.
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Якщо маєш запитання — ми завжди поруч.
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <?
+                                $amount = 0;
+                                foreach ($items as $index => $item)
+                                {
+                                    $idimg=false;
+                                    if($item['PRODUCT']['IBLOCK_ID'] == 25)
+                                    {
+                                        $product = CIBlockElement::GetList([], ['IBLOCK_ID'=>25,'ID'=>$item['UF_PRODUCT_ID']],false,false,['ID','IBLOCK_ID','PROPERTY_CML2_LINK'])->Fetch();
+                                        $mainPRoduct = CIBlockElement::GetByID($product['PROPERTY_CML2_LINK_VALUE'])->Fetch();
+                                        $idimg = $mainPRoduct['PREVIEW_PICTURE'] ? $mainPRoduct['PREVIEW_PICTURE'] : $mainPRoduct['DETAIL_PICTURE'];
+                                    }
+                                    else
+                                        $idimg = $item['PRODUCT']['PREVIEW_PICTURE'] ? $item['PRODUCT']['PREVIEW_PICTURE'] : $item['PRODUCT']['DETAIL_PICTURE'];
+
+                                    $file = \CFile::GetFileArray($idimg)['SRC'];
+                                    $amount += $item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'];
+                                    $titleUA = CIBlockElement::GetProperty(25, $item['PRODUCT']['ID'], array("sort" => "asc"), Array("CODE"=>"NAME_UA"))->Fetch()['VALUE'];
+                                    ?>
+                                    <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
+                                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                </a>
+                                            </td>
+                                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-number" style="box-sizing: border-box; padding: 0; margin: 0; text-align: right; font-size: 16px;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE'], 'UAH')?> x <?=intval($item['BASKET']['QUANTITY'])?> шт
+                                                        </td>
+                                                        <td class="table-list-item-price" style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold; text-align: right;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'], 'UAH')?>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <?
+                                }
+                                ?>
+                                <table class="table-list-total" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-top: 30px; text-align: right; font-size: 16px;" width="100%" align="right">
+                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            Сума: <span style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold;"><?=FormatCurrency($amount,'UAH')?></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <?*/
+            ?>
+            <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                    <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Привіт ✨</h2>
+                            </td>
+                        </tr>
+
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Ти додала речі до корзини в STIMMA, але не встигла оформити замовлення.
+                                    Ми зберегли їх для тебе — вони все ще чекають 💛
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Можливо, ти просто відволіклась.
+                                    А можливо — це саме той знак повернутися й завершити покупку.
+                                </h3>
+                                <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;font-weight: normal;">
+                                    Якщо маєш запитання — ми завжди поруч.
+                                </h3>
+                            </td>
+                        </tr>
+                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                <?
+                                $amount = 0;
+                                foreach ($items as $index => $item)
+                                {
+                                    $idimg=false;
+                                    if($item['PRODUCT']['IBLOCK_ID'] == 25)
+                                    {
+                                        $product = CIBlockElement::GetList([], ['IBLOCK_ID'=>25,'ID'=>$item['UF_PRODUCT_ID']],false,false,['ID','IBLOCK_ID','PROPERTY_CML2_LINK'])->Fetch();
+                                        $mainPRoduct = CIBlockElement::GetByID($product['PROPERTY_CML2_LINK_VALUE'])->Fetch();
+                                        $idimg = $mainPRoduct['PREVIEW_PICTURE'] ? $mainPRoduct['PREVIEW_PICTURE'] : $mainPRoduct['DETAIL_PICTURE'];
+                                    }
+                                    else
+                                        $idimg = $item['PRODUCT']['PREVIEW_PICTURE'] ? $item['PRODUCT']['PREVIEW_PICTURE'] : $item['PRODUCT']['DETAIL_PICTURE'];
+
+                                    $file = \CFile::GetFileArray($idimg)['SRC'];
+                                    $amount += $item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'];
+                                    $titleUA = CIBlockElement::GetProperty(25, $item['PRODUCT']['ID'], array("sort" => "asc"), Array("CODE"=>"NAME_UA"))->Fetch()['VALUE'];
+                                    ?>
+                                    <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
+                                        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
+                                                <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                    <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
+                                                </a>
+                                            </td>
+                                            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
+                                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                                        <td class="table-list-item-number" style="box-sizing: border-box; padding: 0; margin: 0; text-align: right; font-size: 16px;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE'], 'UAH')?> x <?=intval($item['BASKET']['QUANTITY'])?> шт
+                                                        </td>
+                                                        <td class="table-list-item-price" style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold; text-align: right;" align="right">
+                                                            <?=FormatCurrency($item['BASKET']['PRICE']*$item['BASKET']['QUANTITY'], 'UAH')?>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <?
+                                }
+                                ?>
+                                <table class="table-list-total" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-top: 30px; text-align: right; font-size: 16px;" width="100%" align="right">
+                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                                            Сума: <span style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold;"><?=FormatCurrency($amount,'UAH')?></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <?
+            $html = ob_get_clean();
+
+            if($email)
+            {
+                $arFieldsSend = [
+                        'TEXT' => $html,
+                        'EMAIL' => $email,
+                        'PREHEADER'=>'Повернутись до вибору можна тут'
+                ];
+                CEvent::SendImmediate("FORGET_BASKET", "s1", $arFieldsSend, 'Y', 132);
+            }
+
+            foreach ($items as $index => $item)
+            {
+                $DB->Query('update forget_basket set UF_SEND_2 = 1 where ID = ' . $item['ID']);
+            }
+        }
+    }
+
+    unset($_SESSION['CATALOG_USER_COUPONS']);
+
+    return 'sendForgetBasketEmailToClient();';
+}
+
+function sendEmailOrderPay($order_id)
+{
+    global $DB;
+    $order = $DB->Query('select * from b_sale_order where ID = ' . $order_id)->Fetch();
+    $email = $DB->Query('select * from b_sale_order_props_value  where ORDER_PROPS_ID = 2 and ORDER_ID = ' . $order_id)->Fetch()['VALUE'];
+
+    if($email)
+    {
+        $arFieldsSend = [
+            'EMAIL' => $email,
+            'ORDER_ID' => $order_id,
+            'ORDER_DATE' => date('d.m.Y', strtotime($order['DATE_INSERT']))
+        ];
+        CEvent::SendImmediate("SALE_ORDER_PAID", "s1", $arFieldsSend, 'Y', 48);
+    }
+
 }
 
 
@@ -6357,7 +6873,7 @@ function createRegisterCoupon($email, $json=false)
             'MAX_USE' => 1,
             'USER_ID' => '',//$arFields['ID'],
             'DESCRIPTION' => '(1) for email #'.$email,
-            "ACTIVE" => "Y",
+            "ACTIVE" => "N",
         ];
 
         $uId=0;
@@ -6379,13 +6895,13 @@ function createRegisterCoupon($email, $json=false)
         {
             $success=true;
 
-            $DB->Query('insert into subscribers (UF_EMAIL,UF_DATE,UF_DATE_X,UF_COUPON) values (\''.$email.'\',\''.$date.'\',\''.$dateX.'\', \''.$codeCoupon.'\')');
+            $DB->Query('insert into subscribers (UF_EMAIL,UF_DATE,UF_DATE_X,UF_COUPON,UF_VERIFIED) values (\''.$email.'\',\''.$date.'\',\''.$dateX.'\', \''.$codeCoupon.'\',0)');
 
             $arEventFields = array(
                 'EMAIL_TO' => $email,
                 'COUPON' => $codeCoupon,
-                //'CODE' => $code,
-                //'VERIFICATION_LINK' => 'https://'.$_SERVER['SERVER_NAME'].'/subscribe/verify.php?email='.$email.'&code='.$code,
+                'CODE' => $codeCoupon,
+                'VERIFICATION_LINK' => 'https://'.$_SERVER['SERVER_NAME'].'/subscribe/verify.php?email='.$email.'&code='.$codeCoupon,
                 'PREHEADER'=>'Підтвердь email і використай промокод'
             );
             Bitrix\Main\Diag\Debug::writeToFile('SUCCESS', "new generation " , '/debug_create_subscribe.txt');

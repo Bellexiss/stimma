@@ -291,3 +291,10 @@ while ($record= $cml2link->Fetch())
 
 
 $_SESSION['VIEWED_PRODUCTS'][] = $arResult['ID'];
+
+global $ogElementSlider,$ogElementName;
+$ogElementSlider = $arResult['OG']['SLIDER'];
+$ogElementName = $arResult['OG']['NAME'];
+?>
+
+<?

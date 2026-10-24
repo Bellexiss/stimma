@@ -2457,6 +2457,14 @@ if ( $arResult['SKIP_OFFERS'] ) {
             }
         }
     </script>
-
+    <script>
+        fbq('track', 'ViewContent', {
+            content_type: 'product',
+            content_ids: ['<?=$arResult['ID']?>'],
+            contents: [{id: '<?=$arResult['ID']?>', quantity: 1}],
+            value: <?=round($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE']).'.00'?>,
+            currency: 'UAH'
+        });
+    </script>
 <?php
 unset($actualItem, $itemIds, $jsParams);

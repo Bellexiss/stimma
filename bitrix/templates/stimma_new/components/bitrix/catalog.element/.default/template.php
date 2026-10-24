@@ -2027,7 +2027,7 @@ while($section = $res->Fetch())
 <?
 $slider = [];
 foreach ($arResult['SLIDER'] as $index => $item)
-    $slider[] = '"https://stimma.com.ua'.$item['ORIGINAL'].'"';
+    $slider[] = '"https://stimma.ua'.$item['ORIGINAL'].'"';
 
 $review = $jsonReview = [];
 $res = CIBlockSection::GetList([], ['IBLOCK_ID' => 35, 'ACTIVE' => 'Y', 'UF_PRODUCT' => $arResult['ID']]);

@@ -54,7 +54,7 @@ function GetById($record,$ua)
         $sizes .= '
             <label data-entity="scu-value" data-csize="L-XL" data-id="'.mb_strtoupper($props['RAZMER']['VALUE']).'" class="'.(!$indexOFfer ? 'active' : '').'">
                 <input type="radio" name="radio'.$fields['ID'].'">
-                <span aria-label="'.$fields['NAME'].'" class="catalog-item-size">
+                <span  class="catalog-item-size">
                                                 '.mb_strtoupper($props['RAZMER']['VALUE']).'                                      
                 </span>
             </label>

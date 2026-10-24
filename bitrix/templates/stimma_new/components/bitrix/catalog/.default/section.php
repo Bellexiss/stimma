@@ -170,8 +170,8 @@ else
 
 global $canonical;
 if(isset($_SERVER['REAL_URL']))
-    $canonical='https://www.stimma.com.ua'.str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REAL_URL']);
+    $canonical='https://stimma.ua'.str_replace('?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REAL_URL']);
 else
-    $canonical='https://www.stimma.com.ua'.$APPLICATION->GetCurPage();
+    $canonical='https://stimma.ua'.$APPLICATION->GetCurPage();
 
 ?>

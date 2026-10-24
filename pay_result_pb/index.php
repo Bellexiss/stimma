@@ -25,6 +25,7 @@ if($data['paymentState'] == 'SUCCESS')
         Bitrix\Main\Diag\Debug::writeToFile($orderId, "UPDATE STATUS :)", '/_debug_pay_PRIVAT.txt');
         //CSaleOrder::Update($orderId, array("PAYED" => "Y"/*, 'STATUS_ID'=>'P'*/));
         CSaleOrder::PayOrder($orderId, "Y");
+        sendEmailOrderPay($orderId);
     }
 }
 

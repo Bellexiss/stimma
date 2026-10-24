@@ -1664,6 +1664,7 @@ else
                                         else
                                         {
                                             ?>
+
                                             <button class="info-btn info-btn-black create_order">
                                                 <?=UA?'Перейти до оплати':'Перейти к оплате'?>
                                             </button>

@@ -48,6 +48,12 @@ $bIncludedModule = true;
 
 $basketCount = getBasketCount();
 ?>
+<?
+$textRunning = \Bitrix\Main\Config\Option::get('main', "running_line_text", "");
+$textRunning=trim($textRunning);
+$space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+$textRunning=str_replace('<>',$space,$textRunning);
+?>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?=LANGUAGE_ID == 'ua' ? 'uk' : 'ru'?>" lang="<?=LANGUAGE_ID == 'ua' ? 'uk' : 'ru'?>" <?=($htmlClass ? 'class="'.$htmlClass.'"' : '')?> >
@@ -68,7 +74,7 @@ $basketCount = getBasketCount();
     }
     ?>
 
-    <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+    <meta name="viewport" content="initial-scale=1, minimum-scale=1, width=device-width">
 
     <meta name="it-rating" content="it-rat-b31c927f11de7015e699d2428dbfcee5" />
 
@@ -96,7 +102,7 @@ $basketCount = getBasketCount();
 	<?//include_once(str_replace('//', '/', $_SERVER['DOCUMENT_ROOT'].'/'.SITE_DIR.'include/header_include/head.php'));?>
 
     <?
-    if(!$bIndex)
+    if(!$bIndex && $_SERVER['HTTP_HOST'] != 'dev.stimma.ua')
     {
         ?>
         <script src="<?=SITE_TEMPLATE_PATH?>/js/ecommerce.js?v=<?=strtotime(date('d.m.Y H:i:s'))?>" ></script>
@@ -122,11 +128,37 @@ $basketCount = getBasketCount();
                 s.parentNode.insertBefore(t, s)
             }(window, document, 'script',
                 'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '727255070184437');
+
+            //fbq('init', '727255070184437');
             fbq('track', 'PageView');
         </script>
 
         <?
+
+        if(!$USER->IsAuthorized())
+        {
+            ?>
+        <script>
+            fbq('init', '727255070184437');
+        </script>
+            <?
+        }
+        else
+        {
+            $user = $DB->Query('select * from b_user where ID = ' . $USER->GetID())->Fetch();
+            ?>
+        <script>
+            fbq('init', '727255070184437', {
+                em: '<?=$user['EMAIL']?>',
+                ph: '<?=str_replace('+','',$user['PERSONAL_PHONE'])?>',
+                fn: '<?=strtolower($user['NAME'])?>',
+                ln: '<?=strtolower($user['LAST_NAME'])?>',
+                external_id: '<?=$user['ID']?>'
+            });
+
+        </script>
+            <?
+        }
     }
     ?>
 
@@ -147,41 +179,50 @@ $basketCount = getBasketCount();
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/header.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
     <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/footer.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Політика, Угода , Гарантія та повернення, Доставка, Про Нас, Статі , Статі детально, Співпраця(переваги), Співпраця ( Опт), Співпраця (роздріб), догляд  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/text-page.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
-    
-    <!-- Хлібні крихти  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/breadcrambs.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
-    
-    <!-- Пагінація  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/pagination.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
-    
-    <!-- Авторизація і Регістрація -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/auth.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+    <?
+    //if($APPLICATION -> GetCurPage() != '/' && $APPLICATION -> GetCurPage() != '/ru/')
+    {
+        ?>
+        <!-- Політика, Угода , Гарантія та повернення, Доставка, Про Нас, Статі , Статі детально, Співпраця(переваги), Співпраця ( Опт), Співпраця (роздріб), догляд  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/text-page.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Головна  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/main.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
-    
-    <!-- Елемент каталогу  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog-element.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
-    
-    <!-- Карточка товару, сертифікат -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/card.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Хлібні крихти  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/breadcrambs.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Сама собі стіма -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/sama-sobi.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Пагінація  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/pagination.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Каталог -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Авторизація і Регістрація -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/auth.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Кошик -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/order.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Головна  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/main.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Пошук  -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/search.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Елемент каталогу  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog-element.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
 
-    <!-- Особистий кабінет -->
-    <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/personal.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <!-- Карточка товару, сертифікат -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/card.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+
+        <!-- Сама собі стіма -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/sama-sobi.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+
+        <!-- Каталог -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/catalog.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+
+        <!-- Кошик -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/order.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+
+        <!-- Пошук  -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/search.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+
+        <!-- Особистий кабінет -->
+        <link rel="stylesheet" href="<?=SITE_TEMPLATE_PATH?>/css/stylesnew/personal.css?v=<?=strtotime(date('d.m.Y H:i:s'));?>">
+        <?
+    }
+    ?>
+
+
 
     <?use Bitrix\Main\Page\Asset;?>
 
@@ -233,11 +274,11 @@ $basketCount = getBasketCount();
         ?>
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="STIMMA">
-        <meta property="og:title" content="<?=$APPLICATION->GetTitle()?>">
+        <meta property="og:title" content="<?=LANGUAGE_ID == 'ua' ? 'Інтернет-магазин жіночого одягу від виробника STIMMA' : 'Интернет-магазин женской одежды от производителя STIMMA'?>">
         <meta property="og:description" content="<?=$APPLICATION->GetProperty('description')?>">
         <meta property="og:image" content="https://stimma.ua/logo.png">
         <meta property="og:image:alt" content="STIMMA">
-        <meta property="og:url" content="<?=$APPLICATION->GetCurPage()?>">
+        <meta property="og:url" content="https://stimma.ua<?=$APPLICATION->GetCurPage()?>">
         <meta property="og:locale" content="<?=LANGUAGE_ID == 'ua' ? 'uk-UA' : 'ru-RU'?>">
         <?
     }
@@ -255,16 +296,88 @@ $basketCount = getBasketCount();
         </script>
         <?
     }*/
+
+    if(!empty($textRunning))
+    {
+        ?>
+        <style>
+            .running-line-cont{
+                height: 24px;
+            }
+            .running-line
+            {
+                width: 100%;
+                overflow: hidden;
+                background: var(--peach);
+                height: 24px;
+                display: flex;
+                align-items: center;
+                position: fixed;
+                left: 0;
+                right: 0;
+                z-index: 4;
+
+            }
+
+            .running-line-track
+            {
+                display: flex;
+                width: max-content;
+                animation: runningLine 120s linear infinite;
+            }
+            @media (max-width: 768px)
+            {
+                .running-line-track
+                {
+                    animation-duration: 120s;
+                }
+            }
+            .running-line-track span
+            {
+                color: #fff;
+                font-size: 14px;
+                font-weight: 700;
+                white-space: nowrap;
+                margin-right: 120px;
+                line-height: 24px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            @media(min-width: 1000px){
+                .running-line{
+                    height: 42px;
+                }
+
+                .running-line-cont{
+                    height: 42px;
+                }
+
+                .running-line-track span{
+                    font-size: 14px;
+                    line-height: 42px;
+                }
+            }
+
+            @keyframes runningLine
+            {
+                from
+                {
+                    transform: translateX(0);
+                }
+
+                to
+                {
+                    transform: translateX(-50%);
+                }
+            }
+        </style>
+        <?
+    }
     ?>
 
 </head>
-<?
-$textRunning = \Bitrix\Main\Config\Option::get('main', "running_line_text", "");
-$textRunning=trim($textRunning);
-$space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-$textRunning=str_replace('<>',$space,$textRunning);
 
-?>
 <?//$bIndexBot = CMax::checkIndexBot();?>
 
 <body class="<?=($bIndexBot || $bIndex ? "wbot" : "");?> <?=!empty($textRunning) ? 'run-line-body' : ''?>" id="main" data-site="<?=SITE_DIR?>">
@@ -313,78 +426,7 @@ $ru=LANGUAGE_ID=='ru'?'/ru':'';
 if(!empty($textRunning))
 {
     ?>
-    <style>
-        .running-line-cont{
-            height: 24px;
-        }
-        .running-line
-        {
-            width: 100%;
-            overflow: hidden;
-            background: var(--peach);
-            height: 24px;
-            display: flex;
-            align-items: center;
-            position: fixed;
-            left: 0;
-            right: 0;
-            z-index: 4;
 
-        }
-
-        .running-line-track
-        {
-            display: flex;
-            width: max-content;
-            animation: runningLine 120s linear infinite;
-        }
-        @media (max-width: 768px)
-        {
-            .running-line-track
-            {
-                animation-duration: 120s;
-            }
-        }
-        .running-line-track span
-        {
-            color: #fff;
-            font-size: 14px;
-            font-weight: 700;
-            white-space: nowrap;
-            margin-right: 120px;
-            line-height: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        @media(min-width: 1000px){
-            .running-line{
-                height: 42px;
-            }
-
-            .running-line-cont{
-                height: 42px;
-            }
-
-            .running-line-track span{
-                font-size: 14px;
-                line-height: 42px;
-            }
-        }
-
-        @keyframes runningLine
-        {
-            from
-            {
-                transform: translateX(0);
-            }
-
-            to
-            {
-                transform: translateX(-50%);
-            }
-        }
-    </style>
     <script>
         document.addEventListener('DOMContentLoaded', function ()
         {
@@ -608,11 +650,11 @@ if(!empty($textRunning))
         <div class="personal-menu-block">
             <div class="personal-menu-bonus-block">
                 <div class="personal-menu-bonus-img">
-                    <img src="/bitrix/templates/stimma_new/images/imgnew/ssshead.png">
+                    <img src="/bitrix/templates/stimma_new/images/imgnew/ssshead.png" alt="<?=LANGUAGE_ID == 'ua' ? 'Сама собі STIMMA' : 'Сама себе STIMMA'?>">
                 </div>
                 <div class="personal-menu-bonus-info">
                     <div class="personal-menu-bonus-text">
-                        <?=LANGUAGE_ID=='ua' ? 'Сама собі STIMMA - вигідно бути собою' : 'Сама себя STIMMA — выгодно быть собой'?>
+                        <?=LANGUAGE_ID=='ua' ? 'Сама собі STIMMA - вигідно бути собою' : 'Сама себе STIMMA — выгодно быть собой'?>
                     </div>
                     <div class="personal-menu-bonus-btn">
                         <a href="<?=$ru?>/personal/" class="info-btn info-btn-black">

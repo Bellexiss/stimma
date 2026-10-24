@@ -16,7 +16,8 @@ $novinki =
 ;
 
 $maneken = $novinki || strpos($APPLICATION->GetCurPage(), '/catalog/rasprodazha/') !== false
-           || strpos($APPLICATION->GetCurPage(), '/catalog/khity_prodazh/') !== false;
+           || strpos($APPLICATION->GetCurPage(), '/catalog/khity_prodazh/') !== false
+           || $arParams['VIEWED_BLOCK'] == 'Y';
 
 $arJsonProducts = $facebookIds = [];
 ?>
@@ -248,7 +249,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                     }
                 }
                 ?>
-                <div number_index="<?=$index?>" my_index="<?=$myIndex?>-<?=$arItem['UF_SIZE']?>-<?=$arItem['ID']?>" data-entity="scu" class="<?=$arParams['BLOCK_CLASS'] ? $arParams['BLOCK_CLASS'] : 'catalog-grid-item'?> <?//=$dopClass?>" data-item="<?=$arItem['ID']?>" offer-item="<?=$arItem['OFFERS'][0]['ID']?>" style="">
+                <div number_index="<?=$index?>" my_index="<?=$myIndex?>-<?=$arItem['UF_SIZE']?>-<?=$arItem['ID']?>" data-entity="scu" class="<?=$arParams['BLOCK_CLASS'] ? $arParams['BLOCK_CLASS'] : 'catalog-grid-item'?> <?//=$dopClass?>" data-item="<?=$arItem['ID']?>" offer-item="<?=$arItem['OFFERS'][0]['ID']?>">
                     <div class="catalog-item claude_photo <?=$stims ? 'catalog-item-stimz' : ''?>" data-entity="scu-values">
 
                         <div class="catalog-item-top">
@@ -468,7 +469,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                                             ?>
                                             <label data-entity="scu-value" data-csize="<?=$cSize?>" data-id="<?=$offer?>" class="<?=$offer==$cSize? 'active':''?>">
                                                 <input type="radio" name="radio<?=$arItem['ID']?>" <?//=$offer==$cSize? 'checked="checked"':''?>>
-                                                <span aria-label="<?=$arItem['NAME']?>" class="catalog-item-size">
+                                                <span  class="catalog-item-size">
                                                 <?=mb_strtoupper($offer)?>
                                             </span>
                                             </label>
@@ -650,7 +651,7 @@ if($arParams['SEND_STATISTIC'] == 'Y')
 
     <script>
         fbq ( 'track', 'ViewCategory', {content_ids: [<?=implode(',',$facebookIds)?>],
-            Content_type: 'view_category',
+            content_type: 'view_category',
         });
 
 

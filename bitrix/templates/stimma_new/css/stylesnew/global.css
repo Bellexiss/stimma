@@ -893,7 +893,7 @@ body .filter.label_block input+label {
   border-color: var(--peach);
 }
 
-.discount-input-block input::placeholeder{
+.discount-input-block input::placeholder{
   color: var(--graphite);
 }
 

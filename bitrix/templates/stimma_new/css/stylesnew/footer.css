@@ -71,7 +71,7 @@ footer{
 	padding: 0 20px;
 }
 
-.write-us-form-block input::placehold{
+.write-us-form-block input::placeholder{
 	color: var(--white);
 }
 

@@ -269,7 +269,7 @@ while ($record = $res -> Fetch())
              $productJson[] = "
                 {
                     'name': '".addslashes($mainFields['NAME'])."',
-                    'id': '".$mainPID."',
+                    'id': '".$record['PRODUCT_ID']."',
                     'baseId': '".$mainPID."',
                     'price': '".$record['PRICE']."',
                     'brand': 'STIMMA',
@@ -292,7 +292,7 @@ while ($record = $res -> Fetch())
                     quantity: ".$record['QUANTITY']." 
                 }
                 ";
-             $facebookIds[] = $mainPID;
+             $facebookIds[] = $record['PRODUCT_ID'];
             ?>
             <script>
                 //addViewItem(<?=$record['PRODUCT_ID']?>, '<?=addslashes($itemName)?>', <?=$record['PRICE']?>, '<?=addslashes($sectionName)?>', 1,'', false,'Checkout', <?=$record['QUANTITY']?>);

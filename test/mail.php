@@ -2,8 +2,21 @@
 
 require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
 
-/*
 ?>
+    <div style="display:none!important;
+visibility:hidden;
+opacity:0;
+color:transparent;
+height:0;
+width:0;
+overflow:hidden;
+mso-hide:all;
+font-size:1px;
+line-height:1px;
+max-height:0;
+max-width:0;">
+        #PREHEADER#
+    </div>
     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
         <td style="box-sizing: border-box; padding:0px 0; margin: 0; ">
             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; " width="100%">
@@ -43,8 +56,11 @@ require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
         </td>
     </tr>
 <?
-*/
-/*
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/footer.php';
+?><hr>
+<?
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
+
 ?>
     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
             <td style="box-sizing: border-box; padding:30px 0; margin: 0; font-size: 22px; font-weight: 700; text-align: center; border-bottom: 1px solid #000000;">
@@ -58,7 +74,7 @@ require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
         </tr>
         <tr style="box-sizing: border-box; padding: 0; margin: 0;">
             <td style="box-sizing: border-box; padding:30px 0; margin: 0; text-align: center; border-bottom: 1px solid #000000;">
-                <a href="#" style="box-sizing: border-box; margin: 0; padding: 7px 10px; font-size: 20px; text-decoration: none; text-transform: uppercase; border-radius: 50px; color: #ffffff; background: #9ca848;">
+                <a href="https://#SERVER_NAME#/auth/forgot/?forgot-password=yes&USER_CHECKWORD=#CHECKWORD#&USER_EMAIL=#USER_EMAIL#" style="box-sizing: border-box; margin: 0; padding: 7px 10px; font-size: 20px; text-decoration: none; text-transform: uppercase; border-radius: 50px; color: #ffffff; background: #9ca848;">
                     ЗМІНИТИ ПАРОЛЬ
                 </a>
             </td>
@@ -69,9 +85,13 @@ require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
             </td>
         </tr>
 <?
-*/
-sendNewEmailToClient(47699);
-/*?>
+
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/footer.php';
+?><hr><?
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
+
+//sendNewEmailToClient(47699);
+?>
     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
         <td style="box-sizing: border-box; padding: 0; margin: 0;">
             <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
@@ -158,10 +178,12 @@ sendNewEmailToClient(47699);
         </td>
     </tr>
 <?
-*/
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/footer.php';
+?><hr><?
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
 ?>
 
-   <?/* <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
         <td style="box-sizing: border-box; padding:0px 0; margin: 0; ">
             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; " width="100%">
                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -177,9 +199,15 @@ sendNewEmailToClient(47699);
 
             </table>
         </td>
-    </tr>*/?>
+    </tr>
 
-<?/*
+<?
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/footer.php';
+?><hr><?
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/header.php';
+?>
+
+
     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
         <td style="box-sizing: border-box; padding:0px 0; margin: 0; ">
             <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; " width="100%">
@@ -196,14 +224,14 @@ sendNewEmailToClient(47699);
                 <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                     <td style="box-sizing: border-box;  margin: 0; padding:20px 0; font-size: 16px; font-weight: 700; text-align: center;">
                         Для зміни паролю перейдіть за посиланням:<br>
-                        http://#SERVER_NAME#/auth/forgot/?forgot-password=yes&USER_CHECKWORD=#CHECKWORD#&USER_EMAIL=#USER_EMAIL#
+                        https://#SERVER_NAME#/auth/forgot/?forgot-password=yes&USER_CHECKWORD=#CHECKWORD#&USER_EMAIL=#USER_EMAIL#
                     </td>
                 </tr>
 
             </table>
         </td>
     </tr>
-*/?>
+
 
 <?
 require $_SERVER['DOCUMENT_ROOT'].'/bitrix/templates/stimma_mail/footer.php';

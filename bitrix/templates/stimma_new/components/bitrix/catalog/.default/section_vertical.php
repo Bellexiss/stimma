@@ -626,7 +626,7 @@ if(!$bIndex)
         $cnt = CIBlockElement::GetList(array(), $filter, array());
         $min = CIBlockElement::GetList(array('PROPERTY_MINIMUM_PRICE' => 'asc'), $filter+['>PROPERTY_MINIMUM_PRICE' => 0], false,['nTopCount' => 1], ['ID','IBLOCK_ID', 'CODE','PROPERTY_MINIMUM_PRICE','PREVIEW_PICTURE']) -> Fetch();
         $max = CIBlockElement::GetList(array('PROPERTY_MINIMUM_PRICE' => 'desc'), $filter+['>PROPERTY_MINIMUM_PRICE' => 0], false,['nTopCount' => 1], ['ID','IBLOCK_ID', 'PROPERTY_MINIMUM_PRICE']) -> Fetch()['PROPERTY_MINIMUM_PRICE_VALUE'];
-        $image = 'https://stimma.com.ua'.CFile::GetFileArray($min['PREVIEW_PICTURE'])['SRC'];
+        $image = 'https://stimma.ua'.CFile::GetFileArray($min['PREVIEW_PICTURE'])['SRC'];
 
         $idsRes = CIBlockElement::GetList(array(), $filter);
         $ids = [];
@@ -990,7 +990,7 @@ if($thisSection['ID'])
             "@type": "ListItem",
             "position": '.$number.',
             "name": "'.str_replace('"','',$item['name']).'",
-            "item": "htps://www.stimma.com.ua'.$item['code'].'"
+            "item": "https://stimma.ua'.$item['code'].'"
         }';
         $number++;
     }
@@ -1004,7 +1004,7 @@ if($thisSection['ID'])
             "@type": "ListItem",
             "position": 1,
             "name": "<?=LANGUAGE_ID=='ua'?'Головна':'Главная'?>",
-            "item": "https://www.stimma.com.ua"
+            "item": "https://stimma.ua"
         },<?=implode(',',$path)?>]
     }
 </script>

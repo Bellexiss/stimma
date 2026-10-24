@@ -444,7 +444,7 @@ if($arParams['SEND_STATISTIC'] == 'Y')
 
     <script>
         fbq ( 'track', 'ViewCategory', {content_ids: [<?=implode(',',$facebookIds)?>],
-            Content_type: 'view_category',
+            content_type: 'view_category',
         });
 
 

@@ -63,6 +63,9 @@ if($data['order_sub_state'] == 'WAITING_FOR_STORE_CONFIRM')
             {
                 Bitrix\Main\Diag\Debug::writeToFile(1, 'RESPONSE XML MONOBANK SUCCESS STEP 6', '/_debug_pay_monobank.txt');
                 CSaleOrder::PayOrder($find['UF_ORDER_ID'], "Y");
+
+                sendEmailOrderPay($find['UF_ORDER_ID']);
+
             }
             else
                 Bitrix\Main\Diag\Debug::writeToFile(1, 'RESPONSE XML MONOBANK SUCCESS STEP 7', '/_debug_pay_monobank.txt');

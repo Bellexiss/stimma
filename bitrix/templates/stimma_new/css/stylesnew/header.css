@@ -996,7 +996,6 @@ header.personal-opened .header-cont{
 
 .basket-header-item-price-bonus{
 	display: flex;
-	gap: ;
 	align-items: center;
 	color: var(--peach);
 	font-weight: 700;
@@ -1591,4 +1590,128 @@ header.personal-opened .header-cont{
     .header-goods-views-title {
         font-size: 22px;
     }
+}
+
+.order-bonus-cont{
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 0 30px;
+}
+
+.order-bonus-title{
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.order-bonus-line-block{
+	display: flex;
+	position: relative;
+	height: 5px;
+	border-radius: 5px;
+	background: var(--border-h);
+	align-items: center;
+	justify-content: space-around;
+}
+
+.order-bonus-lvl{
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: 2px solid var(--border-h);
+	background: var(--white);
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.order-bonus-lvl.active{
+	background: var(--peach);
+	border-color: var(--peach);
+	color: var(--white);
+}
+
+.order-bonus-lvl svg{
+	width: 20px;
+}
+
+.order-bonus-line-active{
+	position: absolute;
+	z-index: 1;
+	background: var(--peach);
+	border-radius: 5px;
+	height: 5px;
+	left: 0;
+	top: 0;
+}
+
+.order-bonus-info{
+	padding: 10px 0;
+	display: flex;
+	align-items: flex-start;
+}
+
+.order-bonus-item{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex-grow: 1;
+	max-width: 160px;
+
+}
+
+.order-bonus-item + .order-bonus-item .order-bonus-img-block{
+	border-left: 1px solid var(--border-h);
+}
+
+.order-bonus-img-block{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.order-bonus-img{
+	max-width: 40px;
+}
+
+.order-bonus-text{
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 10px 0 ;
+	border-top: 1px solid var(--border-h);
+}
+
+.order-bonus-text .icon{
+	display: flex;
+	align-items: center;
+	max-width: 20px;
+	width: 100%;
+	color: var(--peach);
+}
+
+.order-bonus-text .bold{
+	font-weight: 700;
+}
+
+.order-bonus-item-text{
+	text-align: center;
+	font-size: 14px;
+}
+
+.order-bonus-price{
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+}
+
+@media(max-width: 576px){
+	.order-bonus-item-text{
+		font-size: 12px;
+	}
+
+	.order-bonus-img{
+		max-width: 30px;
+	}
 }

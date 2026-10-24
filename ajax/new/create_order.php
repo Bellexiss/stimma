@@ -532,8 +532,6 @@ if($order_id > 0)
 
                     $element = CIBlockElement::GetByID( $stimsProductId)->GetNextElement()->GetProperties();
 
-                    //Bitrix\Main\Diag\Debug::writeToFile($item->getProductId(), "Find PRODUCT_ID " .$item->getProductId()  , '/debug_create_order_stims_1c.txt');
-                    //Bitrix\Main\Diag\Debug::writeToFile($element, "Array PRODUCT_ID [Element] "  , '/debug_create_order_stims_1c.txt');
 
                     $newId = $newItem->setFields([
                                                      'QUANTITY' => $item->getQuantity(),
@@ -545,20 +543,7 @@ if($order_id > 0)
                                                      'NAME' => $item->getField('NAME'),
                                                      'PRODUCT_PROVIDER_CLASS' => $item->getField('PRODUCT_PROVIDER_CLASS'),
                                                  ]);
-                    /*Bitrix\Main\Diag\Debug::writeToFile([
-                                                            'QUANTITY' => $item->getQuantity(),
-                                                            'PRICE' => intval($element['PROP_BONUS_PRICE']['VALUE']),            // сохраняем цену
-                                                            'BASE_PRICE' => intval($element['PROP_BONUS_PRICE']['VALUE']),   // сохраняем базовую цену
-                                                            'DISCOUNT_PRICE' => $item->getDiscountPrice(),
-                                                            'CURRENCY' => 'STI',
-                                                            'LID' => $siteId,
-                                                            'NAME' => $item->getField('NAME'),
-                                                            'PRODUCT_PROVIDER_CLASS' => $item->getField('PRODUCT_PROVIDER_CLASS'),
-                                                        ], "added ti basket item STIMS" , '/debug_create_order_stims_1c.txt');*/
 
-
-                    //$id = $newItem->getId();
-                    //$DB->Query('insert into basket_stims (UF_ID,UF_STIMS) values ('.$id.', '.intval($item->getPrice()).')');
                 }
 
                 $bonusOrder->setBasket($bonusBasket);
@@ -566,11 +551,13 @@ if($order_id > 0)
                 // Копируем свойства
                 $props = $order->getPropertyCollection();
                 $bonusProps = $bonusOrder->getPropertyCollection();
-                foreach ($props as $propItem) {
+                foreach ($props as $propItem)
+                {
                     $propId = $propItem->getField('ORDER_PROPS_ID');
                     $value = $propItem->getValue();
                     $targetProp = $bonusProps->getItemByOrderPropertyId($propId);
-                    if ($targetProp) {
+                    if ($targetProp)
+                    {
                         $targetProp->setValue($value);
                     }
                 }
@@ -606,6 +593,30 @@ if($order_id > 0)
 
                 $order->doFinalAction(true);
                 $order->save();
+
+
+                # Свойства
+                $propsDBOrder = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $orderId);
+                $propsOrder = [];
+                while ($recordOrder = $propsDBOrder->Fetch())
+                    $propsOrder[$recordOrder['CODE']] = $recordOrder;
+
+
+                $propsDBBonus = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $bonusOrderId);
+                $propsBonus = [];
+                while ($recordBonus = $propsDBBonus->Fetch())
+                    $propsBonus[$recordBonus['CODE']] = $recordBonus;
+
+                foreach($propsOrder as $codeOrder => $propOrder)
+                {
+                    if(isset($propsBonus[$codeOrder]))
+                        $DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($propOrder['VALUE']).'\' where ID = ' . $propsBonus[$codeOrder]['ID']);
+                    else
+                        $DB->Query(
+                            'insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) 
+                                        VALUES('.$bonusOrderId.','.$propOrder['ORDER_PROPS_ID'].', \''.$propOrder['NAME'].'\', \''.addslashes($propOrder['VALUE']).'\', \''.$propOrder['CODE'].'\', \''.$bonusOrderId.'\', \'ORDER\')');
+                }
+                # /Свойства
 
                 // Лог для проверки
                 //file_put_contents($_SERVER['DOCUMENT_ROOT'].'/local/log_bonus_orders.txt',

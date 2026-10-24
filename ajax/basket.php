@@ -112,7 +112,7 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
     {
         $time = date('d.m.Y H:i:s');
         $timeX = strtotime($time);
-        $DB->Query('insert into forget_basket (UF_BASKET_ID,UF_USER_ID,UF_TIME,UF_TIME_X,UF_SEND,UF_PRODUCT_ID) values ('.$status.', '.$USER->GetID().', \''.$time.'\','.$timeX.',0,'.$_REQUEST['id'].')');
+        $DB->Query('insert into forget_basket (UF_BASKET_ID,UF_USER_ID,UF_TIME,UF_TIME_X,UF_SEND,UF_PRODUCT_ID,UF_SEND_2) values ('.$status.', '.$USER->GetID().', \''.$time.'\','.$timeX.',0,'.$_REQUEST['id'].',0)');
     }
 
     if(isset($_REQUEST['bysert']) && $_REQUEST['bysert'])
@@ -159,7 +159,7 @@ elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'get_the_look')
         {
             $time = date('d.m.Y H:i:s');
             $timeX = strtotime($time);
-            $DB->Query('insert into forget_basket (UF_BASKET_ID,UF_USER_ID,UF_TIME,UF_TIME_X,UF_SEND,UF_PRODUCT_ID) values ('.$status.', '.$USER->GetID().', \''.$time.'\','.$timeX.',0,'.$product.')');
+            $DB->Query('insert into forget_basket (UF_BASKET_ID,UF_USER_ID,UF_TIME,UF_TIME_X,UF_SEND,UF_PRODUCT_ID,UF_SEND_2) values ('.$status.', '.$USER->GetID().', \''.$time.'\','.$timeX.',0,'.$product.',0)');
         }
     }
 

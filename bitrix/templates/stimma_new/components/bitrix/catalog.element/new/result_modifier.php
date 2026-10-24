@@ -115,6 +115,12 @@ $arParams = $component->applyTemplateModifications();
 
 $arResult['SLIDER'] = $slider;
 
+
+
+$arResult['OG']['SLIDER'] = $slider[0]['ORIGINAL'];
+$arResult['OG']['NAME'] = $arResult['NAME'];
+$this->__component->SetResultCacheKeys(['OG']);
+
 $razmers = CIBlockPropertyEnum::GetList(Array(), Array("IBLOCK_ID"=>25, "CODE"=>"RAZMER"));
 $sizes = [];
 while ($razmer = $razmers -> Fetch())

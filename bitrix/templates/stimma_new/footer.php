@@ -430,7 +430,7 @@ global $USER;
 			</div>
 			<div class="wrapper">
 				<div class="footer-copyright">
-					© 2021 STIMMA - <?=LANGUAGE_ID == 'ua' ? 'Інтернет магазин жіночого одягу від виробника' : 'Интернет магазин женской одежды от производителя'?>
+					© 2021-<?=date('Y')?> STIMMA - <?=LANGUAGE_ID == 'ua' ? 'Інтернет магазин жіночого одягу від виробника' : 'Интернет магазин женской одежды от производителя'?>
 				</div>
 			</div>
 		</footer>
@@ -567,7 +567,7 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
 			ОБРАЗ ВІД ТЕТЯНИ- FREE DELIVERY!
 		</a>
 
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#parts-pay-modal">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#parts-pay-modal" style="display: none;">
 		  Нова модал
 		</button>
 
@@ -1600,6 +1600,7 @@ if(!empty($looksIds))
     );
 
 ?>
+<?/*
 <div class="modal fade look-modal" id="look-modal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -1993,6 +1994,7 @@ if(!empty($looksIds))
     </div>
   </div>
 </div>
+*/?>
 
 
 <?
@@ -3720,6 +3722,7 @@ dataLayer.push({
                                 || $APPLICATION -> GetCurPage() == '/catalog/maska-aksessuar-4680-1-2-1/'
                                 || $APPLICATION -> GetCurPage() == '/ru/catalog/maska-aksessuar-4680-1-2-1/'
                                 || strpos($APPLICATION -> GetCurPage(),'/detskaya_odezhda/')!==false
+                                || strpos($APPLICATION -> GetCurPage(),'/catalog/aksessuary/nizhnee_belye/')!==false
                         )
                             $APPLICATION -> SetPageProperty('robots', 'noindex, nofollow');
                         else
@@ -3821,18 +3824,45 @@ dataLayer.push({
                            $APPLICATION -> GetCurPage() == '/ru/personal/' ||
                            $APPLICATION -> GetCurPage() == '/personal/' ||
                            $APPLICATION -> GetCurPage() == '/ru/personal/orders/' ||
-                           $APPLICATION -> GetCurPage() == '/personal/orders/')
+                           $APPLICATION -> GetCurPage() == '/personal/orders/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/winter_drop/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/events/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/soft_collection/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/cruise/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/comfort/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/match/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/ember_collection/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/love_sale/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/casual/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/essence_collection/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/outdoor/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/zhenskaya_odezhda/denim/dzhinsovye_yubki/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/zhenskaya_odezhda/denim/dzhinsovye_rubashki/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/aksessuary/nizhnee_belye/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/winter_drop/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/events/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/soft_collection/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/cruise/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/comfort/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/match/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/ember_collection/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/love_sale/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/casual/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/essence_collection/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/outdoor/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/zhenskaya_odezhda/denim/dzhinsovye_yubki/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/zhenskaya_odezhda/denim/dzhinsovye_rubashki/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/aksessuary/nizhnee_belye/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/zhenskaya_odezhda/kostyumy_i_zhakety/zhakety/filter/vid-is-zhaket/apply/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/zhenskaya_odezhda/kostyumy_i_zhakety/zhakety/filter/vid-is-zhilet/apply/'
+                        || $APPLICATION -> GetCurPage() == '/catalog/zhenskaya_odezhda/dzhinsy_bryuki_shorty/bryuki/filter/vid-is-shtani/apply/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/zhenskaya_odezhda/kostyumy_i_zhakety/zhakety/filter/vid-is-zhaket/apply/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/zhenskaya_odezhda/kostyumy_i_zhakety/zhakety/filter/vid-is-zhilet/apply/'
+                        || $APPLICATION -> GetCurPage() == '/ru/catalog/zhenskaya_odezhda/dzhinsy_bryuki_shorty/bryuki/filter/vid-is-shtani/apply/'
+                        )
                         {
                             $APPLICATION->SetPageProperty('robots','noindex, follow');
                         }
-
-
-
-
-
-
-
-
 
                         global $canonical;
                         if(isset($_GET['PAGEN_1']))
@@ -3882,6 +3912,33 @@ dataLayer.push({
                             $newPage = $APPLICATION->GetCurPageParam('',['mdrv']);
                             LocalRedirect($newPage);
                             exit();
+                        }
+
+                        global $ogSectionImage,$ogSectionName;
+                        if($ogSectionImage > 0)
+                        {
+                            $ogSectionImage = CFile::GetFileArray($ogSectionImage)['SRC'];
+                            $APPLICATION->AddHeadString('<meta property="og:type" content="website">');
+                            $APPLICATION->AddHeadString('<meta property="og:site_name" content="STIMMA">');
+                            $APPLICATION->AddHeadString('<meta property="og:title" content="'.$APPLICATION->GetPageProperty('title').'">');
+                            $APPLICATION->AddHeadString('<meta property="og:description" content="'.$APPLICATION->GetPageProperty('description').'">');
+                            $APPLICATION->AddHeadString('<meta property="og:image" content="https://stimma.ua'.$ogSectionImage.'">');
+                            $APPLICATION->AddHeadString('<meta property="og:image:alt" content="'.$ogSectionName.'">');
+                            $APPLICATION->AddHeadString('<meta property="og:url" content="https://stimma.ua'.$APPLICATION->GetCurPage().'">');
+                            $APPLICATION->AddHeadString('<meta property="og:locale" content="'.(LANGUAGE_ID == 'ua' ? 'uk-UA' : 'ru-RU').'">');
+                        }
+
+                        global $ogElementSlider,$ogElementName;
+                        if($ogElementSlider && $ogElementName)
+                        {
+                            $APPLICATION->AddHeadString('<meta property="og:type" content="website">');
+                            $APPLICATION->AddHeadString('<meta property="og:site_name" content="STIMMA">');
+                            $APPLICATION->AddHeadString('<meta property="og:title" content="'.$APPLICATION->GetPageProperty('title').'">');
+                            $APPLICATION->AddHeadString('<meta property="og:description" content="'.$APPLICATION->GetPageProperty('description').'">');
+                            $APPLICATION->AddHeadString('<meta property="og:image" content="https://stimma.ua'.$ogElementSlider.'">');
+                            $APPLICATION->AddHeadString('<meta property="og:image:alt" content="'.$ogElementName.'">');
+                            $APPLICATION->AddHeadString('<meta property="og:url" content="https://stimma.ua'.$APPLICATION->GetCurPage().'">');
+                            $APPLICATION->AddHeadString('<meta property="og:locale" content="'.(LANGUAGE_ID == 'ua' ? 'uk-UA' : 'ru-RU').'">');
                         }
 
                         ?>

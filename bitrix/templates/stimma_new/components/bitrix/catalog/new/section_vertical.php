@@ -560,22 +560,22 @@ while ($sectionFetch = $res->Fetch())
                             <?=LANGUAGE_ID == 'ua' ? 'Переглянути все' : 'Посмотреть все'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/zimnie_kurtki_/" class="<?=$originalSection['ID'] == 368 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Зимові куртки' : 'Кардиганы'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Зимові куртки' : 'Зимние куртки'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/demisezonnye_kurtki/" class="<?=$originalSection['ID'] == 369 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Демісезонні куртки' : 'Платья и юбки'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Демісезонні куртки' : 'Демисезонные куртки'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/bombery/" class="<?=$originalSection['ID'] == 370 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Бомбери' : 'Жилетки'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Бомбери' : 'Бомберы'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/palto/" class="<?=$originalSection['ID'] == 371 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Пальто' : 'Светры и джемперы'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Пальто' : 'Пальто'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/trenchi/" class="<?=$originalSection['ID'] == 1334 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Тренчі' : 'Костюмы и комплекты'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Тренчі' : 'Тренчи'?>
                         </a>
                         <a href="<?=$ru?>/catalog/zhenskaya_odezhda/verkhnyaya_odezhda/shuby/" class="<?=$originalSection['ID'] == 1322 ? 'active' : ''?>">
-                            <?=LANGUAGE_ID == 'ua' ? 'Шуби' : 'Костюмы и комплекты'?>
+                            <?=LANGUAGE_ID == 'ua' ? 'Шуби' : 'Шубы'?>
                         </a>
                     </div>
                 </div>
@@ -1044,7 +1044,7 @@ if(!$bIndex)
         $filter['ACTIVE'] = 'Y';
         $filter['>CATALOG_QUNATITY'] = 0;
 
-        $thisSection = CIBlockSection::GetList(array(), ['IBLOCK_ID' => 21, 'ID' => $arResult['VARIABLES']['SECTION_ID']], false, ['ID', 'NAME', 'UF_*']) -> Fetch();
+        $thisSection = CIBlockSection::GetList(array(), ['IBLOCK_ID' => 21, 'ID' => $arResult['VARIABLES']['SECTION_ID']], false, ['ID', 'NAME', 'UF_*','PICTURE']) -> Fetch();
         $reviewS = array();
         $cnt = CIBlockElement::GetList(array(), $filter, array());
         $min = CIBlockElement::GetList(array('PROPERTY_MINIMUM_PRICE' => 'asc'), $filter+['>PROPERTY_MINIMUM_PRICE' => 0], false,['nTopCount' => 1], ['ID','IBLOCK_ID', 'CODE','PROPERTY_MINIMUM_PRICE','PREVIEW_PICTURE']) -> Fetch();
@@ -1117,6 +1117,7 @@ $APPLICATION->AddViewContent('filter_counter_products','<div class="catalog-filt
                         'IBLOCK_TYPE' => 'aspro_max_catalog',
                         'IBLOCK_ID' => '21',
                         'NO_SLIDER' => 'Y',
+                        'VIEWED_BLOCK' => 'Y',
                         'ELEMENT_SORT_FIELD' => 'ID',
                         'ELEMENT_SORT_ORDER' => 'desc',
                         'ELEMENT_SORT_FIELD2' => 'sort',
@@ -1757,11 +1758,16 @@ if($thisSection['ID'])
             "@type": "ListItem",
             "position": '.$number.',
             "name": "'.str_replace('"','',$item['name']).'",
-            "item": "htps://www.stimma.com.ua'.$item['code'].'"
+            "item": "htps://stimma.ua'.$item['code'].'"
         }';
         $number++;
     }
 }
+
+global $ogSectionImage,$ogSectionName;
+$ogSectionImage = $thisSection['PICTURE'];
+$ogSectionName = $thisSection['NAME'];
+
 ?>
 <script type="application/ld+json">
     {
@@ -1771,7 +1777,7 @@ if($thisSection['ID'])
             "@type": "ListItem",
             "position": 1,
             "name": "<?=LANGUAGE_ID=='ua'?'Головна':'Главная'?>",
-            "item": "https://www.stimma.com.ua"
+            "item": "https://stimma.ua"
         },<?=implode(',',$path)?>]
     }
 </script>

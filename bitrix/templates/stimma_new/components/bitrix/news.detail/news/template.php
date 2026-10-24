@@ -71,3 +71,13 @@ $detailText = LANGUAGE_ID =='ua'&&$arResult['PROPERTIES']['WIDE_TEXT_UA']['~VALU
 </div>
 <?// form question?>
 
+<?
+$APPLICATION->AddHeadString('<meta property="og:type" content="website">');
+$APPLICATION->AddHeadString('<meta property="og:site_name" content="STIMMA">');
+$APPLICATION->AddHeadString('<meta property="og:title" content="'.$APPLICATION->GetPageProperty('title').'">');
+$APPLICATION->AddHeadString('<meta property="og:description" content="'.$APPLICATION->GetPageProperty('description').'">');
+$APPLICATION->AddHeadString('<meta property="og:image" content="https://stimma.ua'.$file1.'">');
+$APPLICATION->AddHeadString('<meta property="og:image:alt" content="'.$arResult['NAME'].'">');
+$APPLICATION->AddHeadString('<meta property="og:url" content="https://stimma.ua'.$APPLICATION->GetCurPage().'">');
+$APPLICATION->AddHeadString('<meta property="og:locale" content="'.(LANGUAGE_ID == 'ua' ? 'uk-UA' : 'ru-RU').'">');
+?>

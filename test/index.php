@@ -9,8 +9,9 @@ use Bitrix\Main\Loader;
 use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
-
-
+//createRegisterCoupon('company703@gmail.com');
+sendEmailOrderPay(48245);
+die();
 generateSitemap();
 
 global $DB;
