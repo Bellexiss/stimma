@@ -797,35 +797,39 @@ else
                                 <?
                             }
                             ?>
-                            <div class="order-detail-item">
-                                <div class="order-detail-title">
+                            <?
+                            if(!$onlySert)
+                            {
+                                ?>
+                                <div class="order-detail-item">
+                                    <div class="order-detail-title">
 			        				<span class="icon">
 			        					<svg width="30" height="25" viewBox="0 0 30 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M29.5312 5.91223L19.3465 0.123668C19.204 0.0426434 19.0423 -9.15536e-06 18.8777 1.47406e-09H13.1099C12.8612 1.47406e-09 12.6228 0.0972331 12.447 0.270309C12.2712 0.443385 12.1724 0.678127 12.1724 0.922893C12.1724 1.16766 12.2712 1.4024 12.447 1.57548C12.6228 1.74855 12.8612 1.84579 13.1099 1.84579H15.3789L8.44172 5.78856H0.9375C0.68886 5.78856 0.450403 5.88579 0.274587 6.05887C0.0987721 6.23195 0 6.46669 0 6.71145C0 6.95622 0.0987721 7.19096 0.274587 7.36404C0.450403 7.53711 0.68886 7.63435 0.9375 7.63435H8.44172L17.9402 13.0329V22.4788L9.16166 17.4894C9.01914 17.4084 8.85748 17.3658 8.69291 17.3657H0.9375C0.68886 17.3657 0.450403 17.463 0.274587 17.636C0.0987721 17.8091 0 18.0439 0 18.2886C0 18.5334 0.0987721 18.7681 0.274587 18.9412C0.450403 19.1143 0.68886 19.2115 0.9375 19.2115H8.44172L18.409 24.8764C18.5515 24.9574 18.7132 25 18.8777 25C19.0423 25 19.204 24.9574 19.3465 24.8764L29.5312 19.0879C29.6738 19.0069 29.7921 18.8903 29.8744 18.75C29.9567 18.6097 30 18.4506 30 18.2886V6.71145C30 6.54946 29.9567 6.39031 29.8744 6.25002C29.7921 6.10973 29.6738 5.99323 29.5312 5.91223ZM27.1875 6.71145L18.8777 11.4344L10.568 6.71145L18.8777 1.98855L27.1875 6.71145ZM19.8152 22.4788V13.0329L28.125 8.3099V17.7558L19.8152 22.4788ZM2.70023 0.922893C2.70023 0.678127 2.79901 0.443385 2.97482 0.270309C3.15064 0.0972331 3.38909 1.47406e-09 3.63773 1.47406e-09H9.70172C9.95036 1.47406e-09 10.1888 0.0972331 10.3646 0.270309C10.5404 0.443385 10.6392 0.678127 10.6392 0.922893C10.6392 1.16766 10.5404 1.4024 10.3646 1.57548C10.1888 1.74855 9.95036 1.84579 9.70172 1.84579H3.63773C3.38909 1.84579 3.15064 1.74855 2.97482 1.57548C2.79901 1.4024 2.70023 1.16766 2.70023 0.922893ZM3.63773 13.4229C3.38909 13.4229 3.15064 13.3257 2.97482 13.1526C2.79901 12.9795 2.70023 12.7448 2.70023 12.5C2.70023 12.2552 2.79901 12.0205 2.97482 11.8474C3.15064 11.6744 3.38909 11.5771 3.63773 11.5771H8.51309C8.76173 11.5771 9.00018 11.6744 9.176 11.8474C9.35181 12.0205 9.45059 12.2552 9.45059 12.5C9.45059 12.7448 9.35181 12.9795 9.176 13.1526C9.00018 13.3257 8.76173 13.4229 8.51309 13.4229H3.63773Z" fill="currentcolor"/>
 										</svg>
 			        				</span>
-                                    <?=UA?'Спосіб доставки':'Способ доставки'?>
-                                </div>
-                                <div class="order-detail-elements">
-                                    <label class="order-detail-element">
-                                        <input type="radio" checked id="delivery_method" name="delivery_method" value="14">
-                                        <div class="order-detail-block">
-                                            <div class="order-detail-radio">
+                                        <?=UA?'Спосіб доставки':'Способ доставки'?>
+                                    </div>
+                                    <div class="order-detail-elements">
+                                        <label class="order-detail-element">
+                                            <input type="radio" checked id="delivery_method" name="delivery_method" value="14">
+                                            <div class="order-detail-block">
+                                                <div class="order-detail-radio">
 
-                                            </div>
-                                            <div class="order-detail-text-cont">
-                                                <div class="order-detail-text-title">
-                                                    <?=UA?'Нова Пошта (відділення). Від 80 грн.':'Нова Почта (отделение). От 80 грн.'?>
                                                 </div>
-                                                <div class="order-detail-text-dropdown">
-                                                    <div class="order-detail-text">
-                                                        <p class="order-detail-text-del">
-                                                            терміни відправки до 5-ти днів.
-                                                            Номер ТТН буде надіслано у SMS-повідомленні.
-                                                            При відправленні вказуємо повну оголошену вартість товару.
-                                                            Оплата за доставку здійснюється при отриманні замовлення.
-                                                        </p>
-                                                        <!-- <p class="data_delivery_name" data-name="<?=LANGUAGE_ID=='ua' ? 'Дані отримувача' : 'Данные получаетеля'?>">
+                                                <div class="order-detail-text-cont">
+                                                    <div class="order-detail-text-title">
+                                                        <?=UA?'Нова Пошта (відділення). Від 80 грн.':'Нова Почта (отделение). От 80 грн.'?>
+                                                    </div>
+                                                    <div class="order-detail-text-dropdown">
+                                                        <div class="order-detail-text">
+                                                            <p class="order-detail-text-del">
+                                                                терміни відправки до 5-ти днів.
+                                                                Номер ТТН буде надіслано у SMS-повідомленні.
+                                                                При відправленні вказуємо повну оголошену вартість товару.
+                                                                Оплата за доставку здійснюється при отриманні замовлення.
+                                                            </p>
+                                                            <!-- <p class="data_delivery_name" data-name="<?=LANGUAGE_ID=='ua' ? 'Дані отримувача' : 'Данные получаетеля'?>">
                                                         <b>Дані отримувача</b>
                                                         <br>Данілова Наталія
                                                         <br>380999785789
@@ -834,88 +838,88 @@ else
                                                         <b>Відділення</b>
                                                         <br>Київ,Відділення №304 (до 30 кг): вул. Гришка, 6
                                                     </p> -->
-                                                    </div>
-                                                    <div>
-                                                        <div class="form-block ">
-                                                            <select class="custom-select" name="choose_city_np">
-                                                                <?
-                                                                if(isset($dost[14]['UF_CITY_ID']) && $dost[14]['UF_CITY_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[14]['UF_CITY_ID']?>">
-                                                                        <?=$dost[14]['CITY']?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                else
-                                                                {
-                                                                    ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                ?>
-                                                            </select>
                                                         </div>
-                                                        <div class="form-block choose_city">
-                                                            <select class="custom-select" name="choose_city_np_vid">
-                                                                <?
-                                                                if(isset($dost[14]['UF_VIDD_ID']) && $dost[14]['UF_VIDD_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[14]['UF_VIDD_ID']?>">
-                                                                        <?=$dost[14]['VIDD']?>
-                                                                    </option>
+                                                        <div>
+                                                            <div class="form-block ">
+                                                                <select class="custom-select" name="choose_city_np">
                                                                     <?
-                                                                }
-                                                                else
-                                                                {
+                                                                    if(isset($dost[14]['UF_CITY_ID']) && $dost[14]['UF_CITY_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[14]['UF_CITY_ID']?>">
+                                                                            <?=$dost[14]['CITY']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
                                                                     ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
-                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-block choose_city">
+                                                                <select class="custom-select" name="choose_city_np_vid">
                                                                     <?
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
+                                                                    if(isset($dost[14]['UF_VIDD_ID']) && $dost[14]['UF_VIDD_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[14]['UF_VIDD_ID']?>">
+                                                                            <?=$dost[14]['VIDD']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
 
+                                                        </div>
+                                                        <!-- <a href="#" class="change-address">
+                                                                <span class="icon">
+                                                                    <svg width="15" height="22" viewBox="0 0 15 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M13.9416 3.65877C12.5949 1.40196 10.124 0 7.49322 0C6.14587 0 4.81894 0.366789 3.65594 1.06062C0.104059 3.17996 -1.06146 7.79399 1.05788 11.3461L6.95377 21.2273C7.0685 21.4196 7.27587 21.5373 7.49977 21.5373C7.72367 21.5373 7.93105 21.4196 8.04568 21.2273L13.9422 11.3448C15.3529 8.96862 15.3525 6.02353 13.9416 3.65877ZM12.8497 10.6945L7.49982 19.6607L2.14984 10.6945C0.389692 7.74455 1.35767 3.91269 4.30756 2.15254C5.27354 1.57619 6.37509 1.27146 7.49327 1.27146C9.67876 1.27146 11.7313 2.43589 12.8497 4.31025C14.0215 6.27421 14.0212 8.72093 12.8497 10.6945Z" fill="currentcolor"/>
+                                                                        <path d="M7.49855 3.7373C5.4541 3.7373 3.79077 5.40068 3.79077 7.44523C3.79077 9.48973 5.4541 11.1531 7.49855 11.1531C9.5431 11.1531 11.2064 9.48973 11.2064 7.44523C11.2064 5.40068 9.5431 3.7373 7.49855 3.7373ZM7.49855 9.88155C6.15519 9.88155 5.06233 8.78864 5.06233 7.44528C5.06233 6.10182 6.15519 5.00886 7.49855 5.00886C8.84201 5.00886 9.93497 6.10182 9.93497 7.44528C9.93497 8.78859 8.84201 9.88155 7.49855 9.88155Z" fill="currentcolor"/>
+                                                                    </svg>
+                                                                </span>
+                                                            <span class="text">
+                                                                    Інша адреса
+                                                                </span>
+                                                        </a> -->
                                                     </div>
-                                                    <!-- <a href="#" class="change-address">
-                                                            <span class="icon">
-                                                                <svg width="15" height="22" viewBox="0 0 15 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path d="M13.9416 3.65877C12.5949 1.40196 10.124 0 7.49322 0C6.14587 0 4.81894 0.366789 3.65594 1.06062C0.104059 3.17996 -1.06146 7.79399 1.05788 11.3461L6.95377 21.2273C7.0685 21.4196 7.27587 21.5373 7.49977 21.5373C7.72367 21.5373 7.93105 21.4196 8.04568 21.2273L13.9422 11.3448C15.3529 8.96862 15.3525 6.02353 13.9416 3.65877ZM12.8497 10.6945L7.49982 19.6607L2.14984 10.6945C0.389692 7.74455 1.35767 3.91269 4.30756 2.15254C5.27354 1.57619 6.37509 1.27146 7.49327 1.27146C9.67876 1.27146 11.7313 2.43589 12.8497 4.31025C14.0215 6.27421 14.0212 8.72093 12.8497 10.6945Z" fill="currentcolor"/>
-                                                                    <path d="M7.49855 3.7373C5.4541 3.7373 3.79077 5.40068 3.79077 7.44523C3.79077 9.48973 5.4541 11.1531 7.49855 11.1531C9.5431 11.1531 11.2064 9.48973 11.2064 7.44523C11.2064 5.40068 9.5431 3.7373 7.49855 3.7373ZM7.49855 9.88155C6.15519 9.88155 5.06233 8.78864 5.06233 7.44528C5.06233 6.10182 6.15519 5.00886 7.49855 5.00886C8.84201 5.00886 9.93497 6.10182 9.93497 7.44528C9.93497 8.78859 8.84201 9.88155 7.49855 9.88155Z" fill="currentcolor"/>
-                                                                </svg>
-                                                            </span>
-                                                        <span class="text">
-                                                                Інша адреса
-                                                            </span>
-                                                    </a> -->
                                                 </div>
                                             </div>
-                                        </div>
-                                    </label>
-                                    <label class="order-detail-element">
-                                        <input type="radio" id="delivery_method3" name="delivery_method" value="17">
-                                        <div class="order-detail-block">
-                                            <div class="order-detail-radio">
+                                        </label>
+                                        <label class="order-detail-element">
+                                            <input type="radio" id="delivery_method3" name="delivery_method" value="17">
+                                            <div class="order-detail-block">
+                                                <div class="order-detail-radio">
 
-                                            </div>
-                                            <div class="order-detail-text-cont">
-                                                <div class="order-detail-text-title">
-                                                    <?=UA?'Нова Пошта (поштомат). Від 90 грн.':'Нова Почта (почтомат). От 90 грн.'?>
                                                 </div>
-                                                <div class="order-detail-text-dropdown">
-                                                    <div class="order-detail-text">
-                                                        <p class="order-detail-text-del">
-                                                            терміни відправки до 5-ти днів.
-                                                            Номер ТТН буде надіслано у SMS-повідомленні.
-                                                            При відправленні вказуємо повну оголошену вартість товару.
-                                                            Оплата за доставку здійснюється при отриманні замовлення.
-                                                        </p>
-                                                        <?/*<p>
+                                                <div class="order-detail-text-cont">
+                                                    <div class="order-detail-text-title">
+                                                        <?=UA?'Нова Пошта (поштомат). Від 90 грн.':'Нова Почта (почтомат). От 90 грн.'?>
+                                                    </div>
+                                                    <div class="order-detail-text-dropdown">
+                                                        <div class="order-detail-text">
+                                                            <p class="order-detail-text-del">
+                                                                терміни відправки до 5-ти днів.
+                                                                Номер ТТН буде надіслано у SMS-повідомленні.
+                                                                При відправленні вказуємо повну оголошену вартість товару.
+                                                                Оплата за доставку здійснюється при отриманні замовлення.
+                                                            </p>
+                                                            <?/*<p>
                                                         <b>Дані отримувача</b>
                                                         <br>Данілова Наталія
                                                         <br>380999785789
@@ -924,65 +928,65 @@ else
                                                         <b>Відділення</b>
                                                         <br>Київ,Відділення №304 (до 30 кг): вул. Гришка, 6
                                                     </p>*/?>
-                                                    </div>
-                                                    <div>
-                                                        <div class="form-block ">
-                                                            <select class="custom-select" name="choose_city_np">
-                                                                <?
-                                                                if(isset($dost[17]['UF_CITY_ID']) && $dost[17]['UF_CITY_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[17]['UF_CITY_ID']?>">
-                                                                        <?=$dost[17]['CITY']?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                else
-                                                                {
-                                                                    ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                ?>
-                                                                <?
-                                                                /*foreach ($arResult['CITIES'] as $index => $CITY)
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$CITY['ID']?>">
-                                                                        <?=LANGUAGE_ID=='ua'?$CITY['UF_NAME_UA']:$CITY['UF_NAME_RU']?>
-                                                                    </option>
-                                                                    <?
-                                                                }*/
-                                                                ?>
-                                                            </select>
                                                         </div>
-                                                        <div class="form-block choose_city">
-                                                            <select class="custom-select" name="choose_city_np_vid">
-                                                                <?
-                                                                if(isset($dost[17]['UF_VIDD_ID']) && $dost[17]['UF_VIDD_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[17]['UF_VIDD_ID']?>">
-                                                                        <?=$dost[17]['VIDD']?>
-                                                                    </option>
+                                                        <div>
+                                                            <div class="form-block ">
+                                                                <select class="custom-select" name="choose_city_np">
                                                                     <?
-                                                                }
-                                                                else
-                                                                {
+                                                                    if(isset($dost[17]['UF_CITY_ID']) && $dost[17]['UF_CITY_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[17]['UF_CITY_ID']?>">
+                                                                            <?=$dost[17]['CITY']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
                                                                     ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
-                                                                    </option>
                                                                     <?
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
+                                                                    /*foreach ($arResult['CITIES'] as $index => $CITY)
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$CITY['ID']?>">
+                                                                            <?=LANGUAGE_ID=='ua'?$CITY['UF_NAME_UA']:$CITY['UF_NAME_RU']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }*/
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-block choose_city">
+                                                                <select class="custom-select" name="choose_city_np_vid">
+                                                                    <?
+                                                                    if(isset($dost[17]['UF_VIDD_ID']) && $dost[17]['UF_VIDD_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[17]['UF_VIDD_ID']?>">
+                                                                            <?=$dost[17]['VIDD']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
 
-                                                    </div>
-                                                    <?/*<a href="#" class="change-address">
+                                                        </div>
+                                                        <?/*<a href="#" class="change-address">
 			        									<span class="icon">
 			        										<svg width="15" height="22" viewBox="0 0 15 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 																<path d="M13.9416 3.65877C12.5949 1.40196 10.124 0 7.49322 0C6.14587 0 4.81894 0.366789 3.65594 1.06062C0.104059 3.17996 -1.06146 7.79399 1.05788 11.3461L6.95377 21.2273C7.0685 21.4196 7.27587 21.5373 7.49977 21.5373C7.72367 21.5373 7.93105 21.4196 8.04568 21.2273L13.9422 11.3448C15.3529 8.96862 15.3525 6.02353 13.9416 3.65877ZM12.8497 10.6945L7.49982 19.6607L2.14984 10.6945C0.389692 7.74455 1.35767 3.91269 4.30756 2.15254C5.27354 1.57619 6.37509 1.27146 7.49327 1.27146C9.67876 1.27146 11.7313 2.43589 12.8497 4.31025C14.0215 6.27421 14.0212 8.72093 12.8497 10.6945Z" fill="currentcolor"/>
@@ -993,29 +997,29 @@ else
 			        										Інша адреса
 			        									</span>
                                                 </a>*/?>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </label>
-                                    <label class="order-detail-element">
-                                        <input type="radio" id="delivery_method4" name="delivery_method" value="18">
-                                        <div class="order-detail-block">
-                                            <div class="order-detail-radio">
+                                        </label>
+                                        <label class="order-detail-element">
+                                            <input type="radio" id="delivery_method4" name="delivery_method" value="18">
+                                            <div class="order-detail-block">
+                                                <div class="order-detail-radio">
 
-                                            </div>
-                                            <div class="order-detail-text-cont">
-                                                <div class="order-detail-text-title">
-                                                    <?=UA?'Нова Пошта (кур’єр). Від 130 грн.':'Нова Почта (курьер). От 130 грн.'?>
                                                 </div>
-                                                <div class="order-detail-text-dropdown">
-                                                    <div class="order-detail-text">
-                                                        <p class="order-detail-text-del">
-                                                            терміни відправки до 5-ти днів.
-                                                            Номер ТТН буде надіслано у SMS-повідомленні.
-                                                            При відправленні вказуємо повну оголошену вартість товару.
-                                                            Оплата за доставку здійснюється при отриманні замовлення.
-                                                        </p>
-                                                        <?/*<p>
+                                                <div class="order-detail-text-cont">
+                                                    <div class="order-detail-text-title">
+                                                        <?=UA?'Нова Пошта (кур’єр). Від 130 грн.':'Нова Почта (курьер). От 130 грн.'?>
+                                                    </div>
+                                                    <div class="order-detail-text-dropdown">
+                                                        <div class="order-detail-text">
+                                                            <p class="order-detail-text-del">
+                                                                терміни відправки до 5-ти днів.
+                                                                Номер ТТН буде надіслано у SMS-повідомленні.
+                                                                При відправленні вказуємо повну оголошену вартість товару.
+                                                                Оплата за доставку здійснюється при отриманні замовлення.
+                                                            </p>
+                                                            <?/*<p>
                                                         <b>Дані отримувача</b>
                                                         <br>Данілова Наталія
                                                         <br>380999785789
@@ -1024,26 +1028,26 @@ else
                                                         <b>Відділення</b>
                                                         <br>Київ,Відділення №304 (до 30 кг): вул. Гришка, 6
                                                     </p>*/?>
-                                                    </div>
-                                                    <div>
-                                                        <div class="form-block ">
-                                                            <input class="form-control" name="np_k_city" value="<?=$dost[18]['UF_CITY']?>" id="np_k_city" type="text" placeholder="<?=UA?'Місто':'Город'?>">
                                                         </div>
-                                                        <div class="form-block">
-                                                            <input class="form-control" name="np_k_street" value="<?=$dost[18]['UF_STREET']?>" id="np_k_street" type="text" placeholder="<?=UA?'Вулиця':'Улица'?>">
-                                                        </div>
+                                                        <div>
+                                                            <div class="form-block ">
+                                                                <input class="form-control" name="np_k_city" value="<?=$dost[18]['UF_CITY']?>" id="np_k_city" type="text" placeholder="<?=UA?'Місто':'Город'?>">
+                                                            </div>
+                                                            <div class="form-block">
+                                                                <input class="form-control" name="np_k_street" value="<?=$dost[18]['UF_STREET']?>" id="np_k_street" type="text" placeholder="<?=UA?'Вулиця':'Улица'?>">
+                                                            </div>
 
-                                                        <div class="form-block">
-                                                            <input class="form-control" name="np_k_dom" value="<?=$dost[18]['UF_DOM']?>" id="np_k_dom" type="text" placeholder="<?=UA?'Буд.':'Дом'?>">
+                                                            <div class="form-block">
+                                                                <input class="form-control" name="np_k_dom" value="<?=$dost[18]['UF_DOM']?>" id="np_k_dom" type="text" placeholder="<?=UA?'Буд.':'Дом'?>">
+                                                            </div>
+                                                            <div class="form-block">
+                                                                <input class="form-control" name="np_k_kv" value="<?=$dost[18]['UF_KV']?>" id="np_k_kv" type="text" placeholder="<?=UA?'Квартира':'Квартира'?>">
+                                                            </div>
+                                                            <div class="form-block">
+                                                                <textarea name="adress_comment" id="adress_comment" class="form-control" placeholder="<?=UA?'Коментар':'Комментарий'?>"></textarea>
+                                                            </div>
                                                         </div>
-                                                        <div class="form-block">
-                                                            <input class="form-control" name="np_k_kv" value="<?=$dost[18]['UF_KV']?>" id="np_k_kv" type="text" placeholder="<?=UA?'Квартира':'Квартира'?>">
-                                                        </div>
-                                                        <div class="form-block">
-                                                            <textarea name="adress_comment" id="adress_comment" class="form-control" placeholder="<?=UA?'Коментар':'Комментарий'?>"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <?/*<a href="#" class="change-address">
+                                                        <?/*<a href="#" class="change-address">
 			        									<span class="icon">
 			        										<svg width="15" height="22" viewBox="0 0 15 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 																<path d="M13.9416 3.65877C12.5949 1.40196 10.124 0 7.49322 0C6.14587 0 4.81894 0.366789 3.65594 1.06062C0.104059 3.17996 -1.06146 7.79399 1.05788 11.3461L6.95377 21.2273C7.0685 21.4196 7.27587 21.5373 7.49977 21.5373C7.72367 21.5373 7.93105 21.4196 8.04568 21.2273L13.9422 11.3448C15.3529 8.96862 15.3525 6.02353 13.9416 3.65877ZM12.8497 10.6945L7.49982 19.6607L2.14984 10.6945C0.389692 7.74455 1.35767 3.91269 4.30756 2.15254C5.27354 1.57619 6.37509 1.27146 7.49327 1.27146C9.67876 1.27146 11.7313 2.43589 12.8497 4.31025C14.0215 6.27421 14.0212 8.72093 12.8497 10.6945Z" fill="currentcolor"/>
@@ -1054,29 +1058,29 @@ else
 			        										Інша адреса
 			        									</span>
                                                 </a>*/?>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </label>
-                                    <label class="order-detail-element">
-                                        <input type="radio" id="delivery_method1" name="delivery_method" value="15">
-                                        <div class="order-detail-block">
-                                            <div class="order-detail-radio">
+                                        </label>
+                                        <label class="order-detail-element">
+                                            <input type="radio" id="delivery_method1" name="delivery_method" value="15">
+                                            <div class="order-detail-block">
+                                                <div class="order-detail-radio">
 
-                                            </div>
-                                            <div class="order-detail-text-cont">
-                                                <div class="order-detail-text-title">
-                                                    <?=UA?'УкрПошта Експрес':'УкрПочта Экспресс'?>
                                                 </div>
-                                                <div class="order-detail-text-dropdown">
-                                                    <div class="order-detail-text">
-                                                        <p class="order-detail-text-del">
-                                                            терміни відправки до 5-ти днів.
-                                                            Номер ТТН буде надіслано у SMS-повідомленні.
-                                                            При відправленні вказуємо повну оголошену вартість товару.
-                                                            Оплата за доставку здійснюється при отриманні замовлення.
-                                                        </p>
-                                                        <?/*<p>
+                                                <div class="order-detail-text-cont">
+                                                    <div class="order-detail-text-title">
+                                                        <?=UA?'УкрПошта Експрес':'УкрПочта Экспресс'?>
+                                                    </div>
+                                                    <div class="order-detail-text-dropdown">
+                                                        <div class="order-detail-text">
+                                                            <p class="order-detail-text-del">
+                                                                терміни відправки до 5-ти днів.
+                                                                Номер ТТН буде надіслано у SMS-повідомленні.
+                                                                При відправленні вказуємо повну оголошену вартість товару.
+                                                                Оплата за доставку здійснюється при отриманні замовлення.
+                                                            </p>
+                                                            <?/*<p>
                                                         <b>Дані отримувача</b>
                                                         <br>Данілова Наталія
                                                         <br>380999785789
@@ -1085,65 +1089,65 @@ else
                                                         <b>Відділення</b>
                                                         <br>Київ,Відділення №304 (до 30 кг): вул. Гришка, 6
                                                     </p>*/?>
-                                                    </div>
-                                                    <div>
-                                                        <div class="form-block ">
-                                                            <select class="custom-select" name="choose_city_np">
-                                                                <?
-                                                                if(isset($dost[15]['UF_CITY_ID']) && $dost[15]['UF_CITY_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[15]['UF_CITY_ID']?>">
-                                                                        <?=$dost[15]['CITY']?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                else
-                                                                {
-                                                                    ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
-                                                                    </option>
-                                                                    <?
-                                                                }
-                                                                ?>
-                                                                <?
-                                                                /*foreach ($arResult['CITIES'] as $index => $CITY)
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$CITY['ID']?>">
-                                                                        <?=LANGUAGE_ID=='ua'?$CITY['UF_NAME_UA']:$CITY['UF_NAME_RU']?>
-                                                                    </option>
-                                                                    <?
-                                                                }*/
-                                                                ?>
-                                                            </select>
                                                         </div>
-                                                        <div class="form-block choose_city">
-                                                            <select class="custom-select" name="choose_city_np_vid">
-                                                                <?
-                                                                if(isset($dost[15]['UF_VIDD_ID']) && $dost[15]['UF_VIDD_ID'])
-                                                                {
-                                                                    ?>
-                                                                    <option value="<?=$dost[15]['UF_VIDD_ID']?>">
-                                                                        <?=$dost[15]['VIDD']?>
-                                                                    </option>
+                                                        <div>
+                                                            <div class="form-block ">
+                                                                <select class="custom-select" name="choose_city_np">
                                                                     <?
-                                                                }
-                                                                else
-                                                                {
+                                                                    if(isset($dost[15]['UF_CITY_ID']) && $dost[15]['UF_CITY_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[15]['UF_CITY_ID']?>">
+                                                                            <?=$dost[15]['CITY']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Оберіть місто':'Выберите город'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
                                                                     ?>
-                                                                    <option value="0">
-                                                                        <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
-                                                                    </option>
                                                                     <?
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
+                                                                    /*foreach ($arResult['CITIES'] as $index => $CITY)
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$CITY['ID']?>">
+                                                                            <?=LANGUAGE_ID=='ua'?$CITY['UF_NAME_UA']:$CITY['UF_NAME_RU']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }*/
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-block choose_city">
+                                                                <select class="custom-select" name="choose_city_np_vid">
+                                                                    <?
+                                                                    if(isset($dost[15]['UF_VIDD_ID']) && $dost[15]['UF_VIDD_ID'])
+                                                                    {
+                                                                        ?>
+                                                                        <option value="<?=$dost[15]['UF_VIDD_ID']?>">
+                                                                            <?=$dost[15]['VIDD']?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <option value="0">
+                                                                            <?=LANGUAGE_ID=='ua'?'Виберіть відділення':'Выберите отделение'?>
+                                                                        </option>
+                                                                        <?
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
 
-                                                    </div>
-                                                    <?/*<a href="#" class="change-address">
+                                                        </div>
+                                                        <?/*<a href="#" class="change-address">
 			        									<span class="icon">
 			        										<svg width="15" height="22" viewBox="0 0 15 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 																<path d="M13.9416 3.65877C12.5949 1.40196 10.124 0 7.49322 0C6.14587 0 4.81894 0.366789 3.65594 1.06062C0.104059 3.17996 -1.06146 7.79399 1.05788 11.3461L6.95377 21.2273C7.0685 21.4196 7.27587 21.5373 7.49977 21.5373C7.72367 21.5373 7.93105 21.4196 8.04568 21.2273L13.9422 11.3448C15.3529 8.96862 15.3525 6.02353 13.9416 3.65877ZM12.8497 10.6945L7.49982 19.6607L2.14984 10.6945C0.389692 7.74455 1.35767 3.91269 4.30756 2.15254C5.27354 1.57619 6.37509 1.27146 7.49327 1.27146C9.67876 1.27146 11.7313 2.43589 12.8497 4.31025C14.0215 6.27421 14.0212 8.72093 12.8497 10.6945Z" fill="currentcolor"/>
@@ -1154,12 +1158,22 @@ else
 			        										Інша адреса
 			        									</span>
                                                 </a>*/?>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </label>
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                                <?
+                            }
+                            elseif($onlySert)
+                            {
+                                ?>
+                                <input type="radio" checked id="delivery_method12" name="delivery_method" value="12" style="display:none">
+                                <?
+                            }
+                            ?>
+
                             <div class="order-detail-item">
                                 <div class="order-detail-title">
 			        				<span class="icon">

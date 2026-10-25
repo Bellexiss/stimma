@@ -9,6 +9,10 @@ use Bitrix\Main\Loader;
 use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
+
+
+sendOrderTo1C(48260);
+
 //createRegisterCoupon('company703@gmail.com');
 sendEmailOrderPay(48245);
 die();

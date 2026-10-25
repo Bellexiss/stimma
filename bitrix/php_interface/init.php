@@ -325,7 +325,7 @@ function checkGlobalRedirect()
     if (strpos($page, '/index.php') !== false){$page = str_replace('/index.php','/', $page);$isRedirect=true;}
     if (strpos($page, '/index.html') !== false){$page = str_replace('/index.html','/', $page);$isRedirect=true;}
     if(isset($redirects[$page])){$page = $redirects[$page];$isRedirect=true;$cardRedirect=true;}
-    if(strpos($page, '.html') !== false || strpos($page, '.php') !== false || strpos($page, '.yml') !== false || strpos($page, '.xml') !== false /*|| (preg_match('/[0-9]+/',$page) && !$cardRedirect)*/) $isRedirect = false;
+    if(strpos($page, '.html') !== false || strpos($page, '.htm') !== false || strpos($page, '.php') !== false || strpos($page, '.yml') !== false || strpos($page, '.xml') !== false /*|| (preg_match('/[0-9]+/',$page) && !$cardRedirect)*/) $isRedirect = false;
 
 
     if ($isRedirect)
@@ -2036,6 +2036,8 @@ function setMinimumPrice()
         $bs->Update($record['ID'], ['UF_MIN_PRICE' => $min, 'UF_MAX_PRICE' => $max]);
     }
 
+    return 'setMinimumPrice();';
+
 }
 
 
@@ -2938,7 +2940,8 @@ function clearEmpty(&$content)
     $content = str_replace($firstCanonical, $fixedCanonical, $content);
 
     // Убираем все пробелы в конце каждой строчки и в ее начале
-    $content = preg_replace('/^[ \t]+|[ \t]+$/m', '', $content);
+    if(!$USER->IsAdmin())
+        $content = preg_replace('/^[ \t]+|[ \t]+$/m', '', $content);
      //  Заменяем год
     $content = str_replace('{year}', date('Y'), $content);
 
