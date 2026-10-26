@@ -6083,7 +6083,11 @@ function getOrderFor1C($order_id,$status,$debug)
         $delivery['name'] = 'Нова Пошта. Кур’єр';
         $delivery['city'] = $order['DELIVERY_ID'];
     }
-
+    elseif($order['DELIVERY_ID'] == 12) // "Другое"
+    {
+        $delivery['type'] = '';
+    }
+     
     $pay = CSalePaySystem::GetByID($order['PAY_SYSTEM_ID']);
     $pay = [
             'name' => $pay['NAME'],

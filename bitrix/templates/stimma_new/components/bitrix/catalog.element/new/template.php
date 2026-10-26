@@ -1461,7 +1461,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 else
                                 {
                                     ?>
-                                    <a href="#" class="info-btn info-btn-black buy_product"
+                                    <a href="#" class="info-btn info-btn-black buy_product <?=$isSert ? 'in_sert' : ''?>"
                                        onclick="addToCartEK(<?=$arResult['ID']?>, '<?=addslashes($itemName)?>', <?=$arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE']?>, '<?=addslashes($sectionName)?>', 1,'add_to_cart', true, 'Item View', 1,<?=$arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE']?>);"
                                        data-id="<?=$arResult['OFFERS'][$arResult['SELECTED_OFFER']]['ID']?>"
                                     >

@@ -10,6 +10,9 @@ use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
 
+$balance=GetBalance('1a204600-3a58-11f1-b17b-ac6e7568e201');
+?><pre><?=print_r($balance,1)?></pre><?
+die();
 
 sendOrderTo1C(48260);
 

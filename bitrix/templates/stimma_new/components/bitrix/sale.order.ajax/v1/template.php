@@ -675,11 +675,11 @@ else
                                             <?
                                             if(LANGUAGE_ID == 'ua')
                                             {
-                                                ?><a style="color: var(--peach);" href="<?=$ru?>/personal/">Авторизуйтесь</a> та накопичуйте стімзи легко. 1 витрачена гривня = 1 стімз<?
+                                                ?><a style="color: var(--peach);line-height:32px;" href="<?=$ru?>/personal/">Авторизуйтесь</a> та накопичуйте стімзи легко. 1 витрачена гривня = 1 стімз<?
                                             }
                                             else
                                             {
-                                                ?><a style="color: var(--peach);" href="<?=$ru?>/personal/">Авторизируйтесь</a> и копите стимзы легко. 1 потраченная гривна = 1 стимз<?
+                                                ?><a style="color: var(--peach);line-height:32px;" href="<?=$ru?>/personal/">Авторизируйтесь</a> и копите стимзы легко. 1 потраченная гривна = 1 стимз<?
                                             }
                                             ?>
 
