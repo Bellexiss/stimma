@@ -24,7 +24,7 @@ $json = file_get_contents('php://input');
 
 //$users = (array)$users;
 
-//Bitrix\Main\Diag\Debug::writeToFile($users, "start get order " , '/___1c_shi.txt');
+Bitrix\Main\Diag\Debug::writeToFile($json, "start get order " , '/___1c_pays_accept.txt');
 
 $url = 'http://195.201.245.102:22022/sklad/hs/list/orders/v1/pays_accept/';
 

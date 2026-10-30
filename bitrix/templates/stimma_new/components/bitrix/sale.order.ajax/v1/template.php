@@ -6,6 +6,8 @@ if(isset($_POST['action']) && $_POST['action'] == 'get_basket')
     $json=[];
 }
 
+$actionId = DEV ? 60766 : 62272;
+
 $ru=LANGUAGE_ID=='ru'?'/ru':'';
 if(isset($_GET['remove']) && intval($_GET['remove']) > 0)
 {
@@ -2770,7 +2772,7 @@ else
                                                 <div class="order-item-prop-cont">
                                                     <div class="order-item-prop">
                                                         <?
-                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs))
+                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs) && (HELL_2026 && $item['PRODUCT_ID'] != $actionId))
                                                         {
                                                             ?>
                                                             <div class="order-item-size">
@@ -2807,7 +2809,7 @@ else
                                                         ?>
 
                                                         <?
-                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs) && $colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE'])
+                                                        if(!in_array($item['PRODUCT_ID'],$sertIDs) && $colors[$basketProducts[$item['PRODUCT_ID']]['PROPERTIES']['COLOR_REF']['VALUE'][0]]['UF_COLOR_CODE']  && (HELL_2026 && $item['PRODUCT_ID'] != $actionId))
                                                             {
                                                                 ?>
                                                                 <div class="order-item-color">
@@ -2823,7 +2825,7 @@ else
 
                                             </div>
                                             <div class="order-item-control">
-                                                <div class="order-item-counter" style="<?=$item['PRODUCT_ID'] == 61376 ? 'display:none;' : ''?>">
+                                                <div class="order-item-counter" style="<?=HELL_2026 && $item['PRODUCT_ID'] == $actionId ? 'display:none;' : ''?>">
                                                     <button class="order-item-counter-btn minus_count" data-id="<?=$item['ID']?>">
                                                         <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"></rect>

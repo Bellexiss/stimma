@@ -2,115 +2,236 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
 
+$json = file_get_contents('php://input');
 
-// google_chat_action.php
+$json = preg_replace('/^\xEF\xBB\xBF/', '', $json);
+$json = str_replace("\xC2\xA0", ' ', $json);
+$json = trim($json);
 
-header('Content-Type: application/json; charset=utf-8');
 
-$input = file_get_contents('php://input');
+Bitrix\Main\Diag\Debug::writeToFile(date('d.m.Y H:i:s'), "start workspace " , '/___workspace.txt');
+Bitrix\Main\Diag\Debug::writeToFile($json, "data from 1c " , '/___workspace.txt');
 
-$input = '{
+/*$json = '{
     "Id": "14a62b5f-b8eb-11f1-b185-bdc5481eee0f",
     "file": "https://stimma.ua/coupon.png",
     "text": "Погодження оплати:\nРемонт \/ будівництво \nЗа дзеркала зг-но рахунка \nСумма135 400 грн",
     "fileName": "14a62b5f-b8eb-11f1-b185-bdc5481eee0f.png"
-}';
-
-$event = json_decode($input, true);
-
-if (!is_array($event)) {
-    http_response_code(400);
-    echo json_encode(['text' => 'Некорректный JSON']);
-    exit;
 }
+';*/
+$json = json_decode((array)$json);
 
-// Название действия может приходить в разных полях
-// в зависимости от формата события Google Chat.
-$function = $event['commonEventObject']['parameters']['function']
-            ?? $event['action']['actionMethodName']
-               ?? $event['common']['invokedFunction']
-                  ?? '';
+Bitrix\Main\Diag\Debug::writeToFile($json, "data from 1c unjson" , '/___workspace.txt');
 
-$params = $event['commonEventObject']['parameters']
-          ?? $event['action']['parameters']
-             ?? [];
+$fileName = $json['fileName'];
+$extension = pathinfo($fileName, PATHINFO_EXTENSION);
+file_put_contents($_SERVER['DOCUMENT_ROOT'].'/upload/workspace/'.$fileName, $json['file']);
 
-function array_is_list(array $arr): bool
+// send_google_chat.php
+// 1. Путь к новому JSON-ключу сервисного аккаунта.
+// Храни файл вне public_html / public.
+$credentialsFile = $_SERVER['DOCUMENT_ROOT'].'/api/workspace/google_workspace.json';
+// 2. Укажи реальное имя пространства из Google Chat API.
+$spaceName = 'spaces/5C8cmqAAAAE'; // zNmQcKAAAAE 6tJTyqAAAAE
+// 3. Публичный HTTPS URL PDF на твоём сервере.
+$pdfUrl = 'https://stimma.ua/upload/workspace/'.$fileName;
+// 4. Данные уведомления.
+$requestId = $json['Id']; //'14a62b5f-b8eb-11f1-b185-bdc5481eee0f';
+$messageText = $json['text'];
+Bitrix\Main\Diag\Debug::writeToFile($messageText, "ONLY TEXT" , '/___workspace.txt');
+
+// ---------- Читаем JSON ----------
+$credentials = json_decode(file_get_contents($credentialsFile), true);
+if(!$credentials || empty($credentials['client_email']) || empty($credentials['private_key']))
 {
-    $i = 0;
-    foreach ($arr as $k => $v) {
-        if ($k !== $i++) {
-            return false;
-        }
-    }
-    return true;
+    die('Ошибка чтения JSON сервисного аккаунта');
 }
-
-if (is_array($params) && array_is_list($params))
+// ---------- Создаём JWT ----------
+$base64url = function($data)
 {
-    $converted = [];
-
-    foreach ($params as $item) {
-        if (isset($item['key'])) {
-            $converted[$item['key']] = $item['value'] ?? '';
-        }
-    }
-
-    $params = $converted;
+    return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+};
+$now = time();
+$header = $base64url(json_encode([
+                                     'alg' => 'RS256',
+                                     'typ' => 'JWT'
+                                 ]));
+$claims = $base64url(json_encode([
+                                     'iss'   => $credentials['client_email'],
+                                     'scope' => 'https://www.googleapis.com/auth/chat.bot',
+                                     'aud'   => 'https://oauth2.googleapis.com/token',
+                                     'iat'   => $now,
+                                     'exp'   => $now + 3600
+                                 ]));
+$unsignedJwt = $header . '.' . $claims;
+if(!openssl_sign($unsignedJwt, $signature, $credentials['private_key'], OPENSSL_ALGO_SHA256))
+{
+    die('Ошибка создания подписи JWT');
 }
-
-$requestId = $params['request_id'] ?? '';
-$decision = $params['decision'] ?? '';
-
-if (!in_array($function, ['acceptRequest', 'rejectRequest'], true)) {
-    http_response_code(400);
-    echo json_encode(['text' => 'Неизвестное действие']);
-    exit;
+$jwt = $unsignedJwt . '.' . $base64url($signature);
+// ---------- Получаем OAuth access token ----------
+$ch = curl_init('https://oauth2.googleapis.com/token');
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_POSTFIELDS     => http_build_query([
+                                                   'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+                                                   'assertion'  => $jwt
+                                               ]),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CONNECTTIMEOUT => 10,
+    CURLOPT_TIMEOUT        => 20
+]);
+$tokenResponse = curl_exec($ch);
+$tokenHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$tokenError = curl_error($ch);
+curl_close($ch);
+if($tokenResponse === false)
+{
+    die('Ошибка cURL при получении токена: ' . $tokenError);
 }
-
-if ($requestId === '') {
-    http_response_code(400);
-    echo json_encode(['text' => 'Не указан ID заявки']);
-    exit;
+$tokenData = json_decode($tokenResponse, true);
+if($tokenHttpCode !== 200 || empty($tokenData['access_token']))
+{
+    die('Ошибка получения токена: ' . $tokenResponse);
 }
-
-if ($function === 'acceptRequest') {
-    $decision = 'accepted';
-} elseif ($function === 'rejectRequest') {
-    $decision = 'rejected';
-}
-
-// Папка должна быть доступна PHP для записи
-$logFile = __DIR__ . '/google_chat_decisions.jsonl';
-
-$record = [
-    'request_id' => $requestId,
-    'decision' => $decision,
-    'user' => $event['user']['name']
-              ?? $event['commonEventObject']['user']['name']
-                 ?? null,
-    'time' => date('c')
+$accessToken = $tokenData['access_token'];
+// ---------- Формируем одну карточку ----------
+$card = [
+    'text'    => 'Нове сповіщення про узгоду оплати',
+    'cardsV2' => [
+        [
+            'cardId' => 'payment_' . $requestId,
+            'card'   => [
+                'header'   => [
+                    'title'    => 'Погодження оплати',
+                    'subtitle' => 'Документ на погодження'
+                ],
+                'sections' => [
+                    [
+                        'widgets' => [
+                            [
+                                'textParagraph' => [
+                                    'text' => nl2br(htmlspecialchars($messageText, ENT_QUOTES, 'UTF-8'))
+                                ]
+                            ],
+                            [
+                                'decoratedText' => [
+                                    'startIcon'   => [
+                                        'knownIcon' => 'DESCRIPTION'
+                                    ],
+                                    'topLabel'    => 'Документ',
+                                    'text'        => 'PDF-файл',
+                                    'bottomLabel' => 'Відкрийте документ для перегляду'
+                                ]
+                            ],
+                            [
+                                'buttonList' => [
+                                    'buttons' => [
+                                        [
+                                            'text'    => 'Відкрити PDF',
+                                            'onClick' => [
+                                                'openLink' => [
+                                                    'url' => $pdfUrl
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            [
+                                'divider' => new stdClass()
+                            ],
+                            [
+                                'buttonList' => [
+                                    'buttons' => [
+                                        [
+                                            'text'    => 'Прийняти',
+                                            'type'    => 'FILLED',
+                                            'color'   => [
+                                                'red'   => 0.10,
+                                                'green' => 0.50,
+                                                'blue'  => 0.25
+                                            ],
+                                            'onClick' => [
+                                                'action' => [
+                                                    'function'   => 'acceptRequest',
+                                                    'parameters' => [
+                                                        [
+                                                            'key'   => 'request_id',
+                                                            'value' => $requestId
+                                                        ],
+                                                        [
+                                                            'key'   => 'decision',
+                                                            'value' => 'accepted'
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ],
+                                        [
+                                            'text'    => 'Відхилити',
+                                            'type'    => 'FILLED',
+                                            'color'   => [
+                                                'red'   => 0.75,
+                                                'green' => 0.15,
+                                                'blue'  => 0.15
+                                            ],
+                                            'onClick' => [
+                                                'action' => [
+                                                    'function'   => 'rejectRequest',
+                                                    'parameters' => [
+                                                        [
+                                                            'key'   => 'request_id',
+                                                            'value' => $requestId
+                                                        ],
+                                                        [
+                                                            'key'   => 'decision',
+                                                            'value' => 'rejected'
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
 ];
+Bitrix\Main\Diag\Debug::writeToFile($card, "CARD send" , '/___workspace.txt');
 
-$result = file_put_contents(
-    $logFile,
-    json_encode(
-        $record,
-        JSON_UNESCAPED_UNICODE |
-        JSON_UNESCAPED_SLASHES
-    ) . PHP_EOL,
-    FILE_APPEND | LOCK_EX
-);
-
-if ($result === false) {
-    http_response_code(500);
-    echo json_encode(['text' => 'Не удалось сохранить решение']);
-    exit;
+// ---------- Отправляем карточку ----------
+$url = 'https://chat.googleapis.com/v1/' . $spaceName . '/messages';
+$ch = curl_init($url);
+curl_setopt_array($ch, [
+    CURLOPT_POST           => true,
+    CURLOPT_HTTPHEADER     => [
+        'Authorization: Bearer ' . $accessToken,
+        'Content-Type: application/json; charset=utf-8'
+    ],
+    CURLOPT_POSTFIELDS     => json_encode($card, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_CONNECTTIMEOUT => 10,
+    CURLOPT_TIMEOUT        => 30
+]);
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$error = curl_error($ch);
+curl_close($ch);
+if($response === false)
+{
+    die('Ошибка отправки: ' . $error);
 }
-
-// Ответ Google Chat должен быть JSON.
+if($httpCode < 200 || $httpCode >= 300)
+{
+    die("Google Chat API HTTP {$httpCode}: " . $response);
+}
+header('Content-Type: application/json; charset=utf-8');
 echo json_encode([
-                     'text' => $decision === 'accepted'
-                         ? 'Заявка принята.'
-                         : 'Заявка отклонена.'
-                 ], JSON_UNESCAPED_UNICODE);
+                     'success' => true,
+                     'response' => json_decode($response, true)
+                 ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

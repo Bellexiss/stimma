@@ -26,6 +26,11 @@ $endAction = strtotime('23.09.2026 00:00:01');
 $isSepShortAction = $currtime >= $startAction && $currtime <= $endAction ? true : false;
 define('SEP_SHORT',$isSepShortAction);
 
+$startAction =strtotime('31.10.2026 00:00:01');
+$endAction = strtotime('31.10.2026 23:59:59');
+$isHell2026 = $currtime >= $startAction && $currtime <= $endAction ? true : false;
+define('HELL_2026',$isHell2026);
+define('DEV',$_SERVER['SERVER_NAME']) == 'dev.stimma.ua';
 
 EventManager::getInstance()->addEventHandler("main", "OnAfterUserRegister", "AddUserPhoneToHL");
 function getProfileFrom1C($phone) {
@@ -1497,6 +1502,10 @@ function getBasketNewHtml($basket = false)
                         if(($arItem['PRODUCT_ID'] == 47170 || $arItem['PRODUCT_ID'] == 47171) && ($isJulyAction || SEP_SHORT))
                             $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
 
+                        $actionId = DEV ? 60766 : 62272;
+                        if(HELL_2026 && $arItem['PRODUCT_ID'] == $actionId)
+                            $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.1;
+
                         $Uah[]= (int)$arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] * (int)$arItem['QUANTITY'];
 
                         ?>
@@ -1540,8 +1549,7 @@ function getBasketNewHtml($basket = false)
 
                                                 if(($isJulyAction || SEP_SHORT) && $arItem['PRODUCT_ID'] == 61376)
                                                     $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
-                                                ?>
-                                                    <?
+
 
                                                 if($price['PRICE'] > $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'])
                                                 {
@@ -1569,7 +1577,7 @@ function getBasketNewHtml($basket = false)
                                 </div>
                                 <div class="basket-header-control">
                                     <div class="basket-header-control-group">
-                                        <div class="basket-header-counter" style="<?=($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376) ? 'display:none;' : ''?>">
+                                        <div class="basket-header-counter" style="<?=/*($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376)*/ HELL_2026 && $arItem['PRODUCT_ID'] == $actionId ? 'display:none;' : ''?>">
                                             <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
                                                 <svg width="13" height="1" viewBox="0 0 13 1" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <rect x="13" width="1" height="13" transform="rotate(90 13 0)" fill="currentcolor"/>
@@ -1661,89 +1669,144 @@ function getBasketNewHtml($basket = false)
                 </div>
             </div>
         </div>
-        <div class="order-bonus-cont" style="display:none;">
-            <div class="order-bonus-title">
-                Більше в кошику — більше бонусів!
-            </div>
-            <div class="order-bonus-line-block">
-                <div class="order-bonus-line-active" style="width: 16%"> <!-- 16%  50% 83%  -->
-                    
+
+        <?
+        if(HELL_2026)
+        {
+            ?>
+            <div class="order-bonus-cont">
+                <div class="order-bonus-title" style="font-weight: bold;">
+                    Більше в кошику — більше бонусів!
                 </div>
-                <div class="order-bonus-lvl active">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/ fill="currentcolor" ></svg>
-                </div>
-                <div class="order-bonus-lvl">
-                    
-                </div>
-                <div class="order-bonus-lvl">
-                    
-                </div>
-            </div>
-            <div class="order-bonus-info">
-                <div class="order-bonus-item">
-                    <div class="order-bonus-price">
-                        3 500 грн
+                <?
+                //$amountSum = $TOTAL_UAH_PRICE - $minus_price < 3500 ? 3500 : ($TOTAL_UAH_PRICE - $minus_price >= 3500 && $TOTAL_UAH_PRICE - $minus_price < 4500 ? 4500 : ($TOTAL_UAH_PRICE - $minus_price >= 4500 && $TOTAL_UAH_PRICE - $minus_price < 6000 ? 6000 : 6000));
+                $percent = $TOTAL_UAH_PRICE - $minus_price < 3500 ? 0 : ($TOTAL_UAH_PRICE - $minus_price >= 3500 && $TOTAL_UAH_PRICE - $minus_price < 4500 ? 20 : ($TOTAL_UAH_PRICE - $minus_price >= 4500 && $TOTAL_UAH_PRICE - $minus_price < 6000 ? 50 : 100));
+                //$amountSum = 6000;
+                //$total = $TOTAL_UAH_PRICE - $minus_price;
+                //$percent =  round(($total / $amountSum) * 100);
+
+                /*$total = $TOTAL_UAH_PRICE - $minus_price;
+
+                $minPrice = 3500;
+                $maxPrice = 6000;
+
+                $percent = min(100, max(0, (($total - $minPrice) / ($maxPrice - $minPrice)) * 100));*/
+                ?>
+                <div class="order-bonus-line-block">
+                    <div class="order-bonus-line-active" style="width: <?=$percent?>%"> <!-- 16%  50% 83%  -->
+
                     </div>
-                    <div class="order-bonus-img-block">
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
+                    <div class="order-bonus-lvl <?=$TOTAL_UAH_PRICE - $minus_price >= 3500 ? 'active' : ''?>">
+                        <?
+                        if($TOTAL_UAH_PRICE - $minus_price >= 3500)
+                        {
+                            ?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/ fill="currentcolor" ></svg><?
+                        }
+                        ?>
+                    </div>
+                    <div class="order-bonus-lvl <?=$TOTAL_UAH_PRICE - $minus_price >= 4500 ? 'active' : ''?>">
+                        <?
+                        if($TOTAL_UAH_PRICE - $minus_price >= 4500)
+                        {
+                            ?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/ fill="currentcolor" ></svg><?
+                        }
+                        ?>
+                    </div>
+                    <div class="order-bonus-lvl <?=$TOTAL_UAH_PRICE - $minus_price >= 6000 ? 'active' : ''?>">
+                        <?
+                        if($TOTAL_UAH_PRICE - $minus_price >= 6000)
+                        {
+                            ?><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/ fill="currentcolor" ></svg><?
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="order-bonus-info">
+                    <div class="order-bonus-item">
+                        <div class="order-bonus-price">
+                            3 500 грн
+                        </div>
+                        <div class="order-bonus-img-block">
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png?v=1">
+                            </div>
+                        </div>
+                        <div class="order-bonus-item-text">
+                            Шопер
                         </div>
                     </div>
-                    <div class="order-bonus-item-text">
-                        Шопер
+                    <div class="order-bonus-item">
+                        <div class="order-bonus-price">
+                            4 500 грн
+                        </div>
+                        <div class="order-bonus-img-block">
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png?v=1">
+                            </div>
+                            +
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
+                            </div>
+                        </div>
+                        <div class="order-bonus-item-text">
+                            Шопер
+                            <br>+ Подвійні стімзи
+                        </div>
+                    </div>
+                    <div class="order-bonus-item">
+                        <div class="order-bonus-price">
+                            6 000 грн
+                        </div>
+                        <div class="order-bonus-img-block">
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png?v=1">
+                            </div>
+                            +
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
+                            </div>
+                            +
+                            <div class="order-bonus-img">
+                                <img src="/bitrix/templates/stimma_new/images/imgnew/mystery.png?v=1">
+                            </div>
+                        </div>
+                        <div class="order-bonus-item-text">
+                            Шопер
+                            <br>+ Подвійні стімзи
+                            <br>+ Таємний бонус
+                        </div>
                     </div>
                 </div>
-                <div class="order-bonus-item">
-                    <div class="order-bonus-price">
-                        4 500 грн
-                    </div>
-                    <div class="order-bonus-img-block">
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
-                        </div>
-                        +
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
-                        </div>
-                    </div>
-                    <div class="order-bonus-item-text">
-                        Шопер
-                        <br>+ Подвійні стімзи
-                    </div>
-                </div>
-                <div class="order-bonus-item">
-                    <div class="order-bonus-price">
-                        6 000 грн
-                    </div>
-                    <div class="order-bonus-img-block">
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/shoper.png">
-                        </div>
-                        +
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/stimz.png">
-                        </div>
-                        +
-                        <div class="order-bonus-img">
-                            <img src="/bitrix/templates/stimma_new/images/imgnew/mystery.png">
-                        </div>
-                    </div>
-                    <div class="order-bonus-item-text">
-                        Шопер
-                        <br>+ Подвійні стімзи
-                        <br>+ Таємний бонус
-                    </div>
-                </div>
-            </div>
-            <div class="order-bonus-text">
+                <div class="order-bonus-text">
                 <span class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M385.5 132.8C393.1 119.9 406.9 112 421.8 112L424 112C446.1 112 464 129.9 464 152C464 174.1 446.1 192 424 192L350.7 192L385.5 132.8zM254.5 132.8L289.3 192L216 192C193.9 192 176 174.1 176 152C176 129.9 193.9 112 216 112L218.2 112C233.1 112 247 119.9 254.5 132.8zM344.1 108.5L320 149.5L295.9 108.5C279.7 80.9 250.1 64 218.2 64L216 64C167.4 64 128 103.4 128 152C128 166.4 131.5 180 137.6 192L96 192C78.3 192 64 206.3 64 224L64 256C64 273.7 78.3 288 96 288L544 288C561.7 288 576 273.7 576 256L576 224C576 206.3 561.7 192 544 192L502.4 192C508.5 180 512 166.4 512 152C512 103.4 472.6 64 424 64L421.8 64C389.9 64 360.3 80.9 344.1 108.4zM544 336L344 336L344 544L480 544C515.3 544 544 515.3 544 480L544 336zM296 336L96 336L96 480C96 515.3 124.7 544 160 544L296 544L296 336z" fill="currentcolor" /></svg>
                 </span>
-                <span class="text">
-                    Додай ще <span class="bold">800 грн</span> — і відкрий таємний бонус до <span class="bold">Black Friday.</span>
-                </span>
+
+                    <?
+                    if($TOTAL_UAH_PRICE-$minus_price < 3500)
+                    {
+                        ?><span class="text">Додай ще <span class="bold"><?=FormatCurrency(3500-$TOTAL_UAH_PRICE-$minus_price,'UAH')?></span> — і отримай <span class="orange">помаранчевий шопер </span></span><?
+                    }
+                    elseif($TOTAL_UAH_PRICE-$minus_price >= 3500 && $TOTAL_UAH_PRICE-$minus_price < 4500)
+                    {
+                        ?><span class="text">Додай ще <span class="bold"><?=FormatCurrency(4500-$TOTAL_UAH_PRICE-$minus_price,'UAH')?></span> — і отримай <span class="orange">подвійні стімзи</span></span><?
+                    }
+                    elseif($TOTAL_UAH_PRICE-$minus_price >= 4500 && $TOTAL_UAH_PRICE-$minus_price < 6000)
+                    {
+                        ?><span class="text">Додай ще <span class="bold"><?=FormatCurrency(6000-$TOTAL_UAH_PRICE-$minus_price,'UAH')?></span> — і відкрий <span class="orange">таємний бонус до <span class="bold">Black Friday</span></span></span><?
+                    }
+                    elseif($TOTAL_UAH_PRICE-$minus_price >= 6000)
+                    {
+                        ?><span class="text">Таємний бонус до <span class="bold">Black Friday</span> уже твій!</span><?
+                    }
+                    ?>
+                </div>
             </div>
-        </div>
+            <?
+        }
+        ?>
+
+
         <div class="offcanvas-footer">
             <div class="basket-header-total">
                 <div class="basket-header-total-key">
@@ -3451,41 +3514,9 @@ function sendNewSmsToClient($id)
             {
                 $phoneValue = str_replace([' ',')','(','-'],['','','',''],$phoneValue);
 
-                //sendSmsTelikom($phoneValue, "Опрацьовуємо Ваше замовлення №'".$id.". Менеджер зв'яжеться найближчим часом");
                 sendSmsTelikom($phoneValue, "Усе добре - замовлення №".$id." в роботі. Скоро, нарешті, приміряєш особисто.");
-
-                /*$apiKey = 'CCECFE951999D570AEC5638B3DC9CF45';
-                $senderName = 'STIMMA';
-                $phoneNumber = $phoneValue;
-                $data = [
-                    'phoneNumbers' => [$phoneNumber],
-                    "from" => "STIMMA",
-                    "text" => "Опрацьовуємо Ваше замовлення №'".$id.". Менеджер зв'яжеться найближчим часом"
-                ];
-
-                $headers = [
-                    'Authorization: Basic ' . base64_encode("STIMMA:".$apiKey),
-                    'Content-Type: application/json',
-                ];
-
-                $options = [
-                    CURLOPT_URL => 'https://esputnik.com/api/v1/message/sms',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => json_encode($data),
-                    CURLOPT_HTTPHEADER => $headers,
-                ];
-                $curl = curl_init();
-                curl_setopt_array($curl, $options);
-                $response = curl_exec($curl);
-                Bitrix\Main\Diag\Debug::writeToFile($response, "phoneValue" , '/z_send_new.txt');
-                curl_close($curl);*/
-
             }
         }
-
-        //$_SESSION['sertificate_phone']
-        //$_SESSION['sertificate_date']
 
         if($_REQUEST['sertificate_phone'] && $_REQUEST['sertificate_date'])
         {

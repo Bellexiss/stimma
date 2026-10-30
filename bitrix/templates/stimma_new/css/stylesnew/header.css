@@ -1601,6 +1601,8 @@ header.personal-opened .header-cont{
 
 .order-bonus-title{
 	text-align: center;
+	font-weight: 700;
+	margin-top: 15px;
 	margin-bottom: 10px;
 }
 
@@ -1693,6 +1695,10 @@ header.personal-opened .header-cont{
 
 .order-bonus-text .bold{
 	font-weight: 700;
+}
+
+.order-bonus-text .orange{
+	color: var(--peach);
 }
 
 .order-bonus-item-text{

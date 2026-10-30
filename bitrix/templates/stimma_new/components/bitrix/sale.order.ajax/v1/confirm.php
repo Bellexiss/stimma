@@ -335,6 +335,9 @@ if(!$facebookFind['UF_STATUS'])
                 content_ids: [<?=implode(',',$facebookIds)?>],
                 content_type: 'Purchase',
                 content_category: 'Purchase' ,
+                // num_items
+                // contents
+                // order_id
             });
     </script>
 

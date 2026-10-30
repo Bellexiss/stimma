@@ -29,6 +29,43 @@ if($id <= 0 && isset($_REQUEST['id']))
     die();
 }
 $status = 0;
+
+function checkProductHell2026($site_id)
+{
+    global $DB;
+
+    $fuserID = CSaleBasket::GetBasketUserID();
+    $lastBasket = $DB->Query('select * from b_sale_basket where FUSER_ID = ' . $fuserID .' and ORDER_ID is null');
+
+    $cAmount = 0;
+    $isShopper = false;
+    $actionId = DEV ? 60766 : 62272;
+
+    while ($lb = $lastBasket->Fetch())
+    {
+        if($lb['PRODUCT_ID'] == $actionId)
+            $isShopper = true;
+        else
+            $cAmount += $lb['PRICE']*$lb['QUANTITY'];
+    }
+
+    if($cAmount >= 3500 && !$isShopper)
+    {
+        CSaleBasket::Add(array(
+                             'PRODUCT_ID' => $actionId,
+                             'QUANTITY' => 1,
+                             'PRICE' => 0.1,
+                             'PRICE_TYPE_ID' => 1,
+                             'CURRENCY' => 'UAH',
+                             'LID' => $site_id,
+                             'NAME' => 'Шопер',
+                             //'NOTES' => isset($_REQUEST['bys']) && $_REQUEST['bys'] ? 'S' : '',
+                         ));
+    }
+    if($cAmount < 3500 && $isShopper)
+        $DB->Query('delete from b_sale_basket where PRODUCT_ID = ' . $actionId . ' and FUSER_ID = ' . $fuserID . ' and ORDER_ID is null');
+}
+
 if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
 {
     $arGroups = $USER -> GetUserGroupArray();
@@ -55,6 +92,7 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
 
     if(($id == 47170 || $id == 47171) && $isJulyAction) $price = 0.01;
 
+
     $status = CSaleBasket::Add(array(
                                 'PRODUCT_ID' => $_REQUEST['id'],
                                 'QUANTITY' => $_POST['cnt'],
@@ -65,6 +103,10 @@ if(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'add')
                                 'NAME' => $element['NAME'],
                                 //'NOTES' => isset($_REQUEST['bys']) && $_REQUEST['bys'] ? 'S' : '',
                             ));
+
+    if(HELL_2026)
+        checkProductHell2026($site_id);
+
     if(SEP_SHORT && in_array($_REQUEST['id'],[61369,61370,61371]))
     {
         $productId = 61376;
@@ -155,6 +197,9 @@ elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'get_the_look')
                                        'NAME' => $element['NAME'],
                                    ));
 
+        if(HELL_2026)
+            checkProductHell2026($site_id);
+
         if($USER->IsAuthorized())
         {
             $time = date('d.m.Y H:i:s');
@@ -171,10 +216,16 @@ elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'delete')
 {
     CSaleBasket::Delete($_POST['id']);
     $DB->Query('delete from basket_stims where UF_ID = '.$_POST['id']);
+
+    if(HELL_2026)
+        checkProductHell2026($site_id);
 }
 elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'change_size')
 {
     $DB->Query('update b_sale_basket set PRODUCT_ID = '.$_POST['val'].' where ID = '.$_POST['id']);
+
+    if(HELL_2026)
+        checkProductHell2026($site_id);
 }
 elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'change')
 {
@@ -183,6 +234,9 @@ elseif(isset($_REQUEST['pprocess']) && $_REQUEST['pprocess'] == 'change')
 
     if($val > 0)
         CSaleBasket::Update($id, ['QUANTITY' => $val]);
+
+    if(HELL_2026)
+        checkProductHell2026($site_id);
 }
 
 $basket = getBasket($_POST['url']);

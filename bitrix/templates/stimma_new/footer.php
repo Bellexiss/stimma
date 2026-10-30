@@ -525,7 +525,7 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
                     Ми використовуємо <span>COOKIE 🍪</span>
                 </div>
                 <div class="cookie-text">
-                    ТАК САЙТ ПРАЦЮЄ ШВИДШЕ А ДОБІРКИ ПІДХОДЯТЬ САМЕ ТОБІ. ДЕТАЛЬНІШЕ У ПОЛІТИЦІ COOKIE.
+                    ТАК САЙТ ПРАЦЮЄ ШВИДШЕ, А ДОБІРКИ ПІДХОДЯТЬ САМЕ ТОБІ. ДЕТАЛЬНІШЕ У ПОЛІТИЦІ COOKIE.
                 </div>
                 <div class="cookie-btns">
                     <a href="#" class="info-btn cookies-no">
