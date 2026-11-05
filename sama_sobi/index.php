@@ -99,6 +99,7 @@ $APPLICATION->SetTitle("");?>
                                 </div>
                             </div>
                         </div>
+                        <?/*
                         <div class="sama-sobi-tutorial-item">
                             <div class="sama-sobi-tutorial-item-icon">
                                 <span class="icon">
@@ -108,6 +109,7 @@ $APPLICATION->SetTitle("");?>
                                     </svg>
                                 </span>
                             </div>
+
                             <div class="sama-sobi-tutorial-text-block">
                                 <div class="sama-sobi-tutorial-item-title">
                                     Отримуй стімзи за різноманітні активності: <br> Відгуки, підписки, публікації тощо
@@ -117,7 +119,9 @@ $APPLICATION->SetTitle("");?>
                                     одяг, аксесуари й товари для дому від STIMMA та брендів-партнерів
                                 </div>
                             </div>
+
                         </div>
+    */?>
                     </div>
                 </div>
             </div>

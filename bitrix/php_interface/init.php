@@ -32,6 +32,34 @@ $isHell2026 = $currtime >= $startAction && $currtime <= $endAction ? true : fals
 define('HELL_2026',$isHell2026);
 define('DEV',$_SERVER['SERVER_NAME']) == 'dev.stimma.ua';
 
+
+$utmFields = [
+    '_fbc',
+    '_fbp',
+    '_ga'
+];
+
+foreach ($utmFields as $field)
+{
+    if (!empty($_GET[$field]))
+    {
+        setcookie(
+            $field,
+            $_GET[$field],
+            time() + 60 * 60 * 24 * 90,
+            '/'
+        );
+
+        $_COOKIE[$field] = $_GET[$field];
+    }
+}
+
+
+$_COOKIE['utm_ip'] = $_SERVER['REMOTE_ADDR'];
+$_COOKIE['utm_uagent'] = $_SERVER['HTTP_USER_AGENT'];
+setcookie('utm_ip', $_SERVER['REMOTE_ADDR'], time() + 60 * 60 * 24 * 90, '/');
+setcookie('utm_uagent', $_SERVER['HTTP_USER_AGENT'], time() + 60 * 60 * 24 * 90, '/');
+
 EventManager::getInstance()->addEventHandler("main", "OnAfterUserRegister", "AddUserPhoneToHL");
 function getProfileFrom1C($phone) {
     $url = 'http://195.201.245.102:22022/sklad/hs/list/GetCard';
@@ -3485,7 +3513,8 @@ function sendNewSmsToClient($id)
                 if(!$newQuantity)
                 {
                     $DB->Query('update b_catalog_product set QUANTITY = ' . $newQuantity . ', AVAILABLE = \'N\' where ID = ' . $record['ID']);
-                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                    //$DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID']);
                 }
                 else
                 {
@@ -3552,7 +3581,8 @@ function sendSmsToClient(\Bitrix\Main\Event $event)
                 if(!$newQuantity)
                 {
                     $DB->Query('update b_catalog_product set QUANTITY = ' . $newQuantity . ', AVAILABLE = \'N\' where ID = ' . $record['ID']);
-                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] . ' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                    //$DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID'] . ' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                    $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $record['ID']);
                 }
                 else
                 {
@@ -5017,7 +5047,8 @@ function updateSortingProduct()
             if(!$available)
             {
                 $DB->Query('update b_catalog_product set AVAILABLE = \'N\' where ID = ' . $product['ID']);
-                $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $product['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                //$DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $product['ID'] .' and (SORT = 500 or SORT = 1000 or SORT = 0)');
+                $DB->Query('update b_iblock_element set SORT = 0 where ID = ' . $product['ID']);
             }
             else
                 $DB->Query('update b_iblock_element set SORT = 500 where ID = ' . $product['ID'] . ' and (SORT = 500 or SORT = 1000 or SORT = 0)');
@@ -6071,7 +6102,7 @@ function getOrderFor1C($order_id,$status,$debug)
         $delivery['post'] = $post['UF_REF_ID'];
         $delivery['adress'] = '№'.$post['UF_NUMBER'].' ' .$post['UF_SHORT_ADRESS_UA'];
     }
-    if($order['DELIVERY_ID'] == 18 ) // Нова пошта Курєр
+    elseif($order['DELIVERY_ID'] == 18 ) // Нова пошта Курєр
     {
         $city=$DB->Query('select * from b_sale_order_props_value where ORDER_ID = '.$order_id.' and ORDER_PROPS_ID = 24')->Fetch();
         $city2=$DB->Query('select * from b_sale_order_props_value where ORDER_ID = '.$order_id.' and ORDER_PROPS_ID = 4')->Fetch();
@@ -6118,6 +6149,8 @@ function getOrderFor1C($order_id,$status,$debug)
     {
         $delivery['type'] = '';
     }
+    else
+        $delivery['type'] = '';
      
     $pay = CSalePaySystem::GetByID($order['PAY_SYSTEM_ID']);
     $pay = [
@@ -6966,3 +6999,5 @@ function getSertIDs()
 {
     return [35434,35432,35430,35428,35425,35433,35424,35427,35429,35431];
 }
+
+

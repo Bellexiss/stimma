@@ -823,6 +823,12 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     ?>
                                     <div class="card-warning-block" >
                                         <b>Зверніть увагу:</b> <span data-entity="og_block"><?/*ОГ - 82-92, ОБ - 94-98*/?></span>
+                                        <?
+                                        if(!empty($arResult['PROPERTIES']['ZEDNANNYA_'.strtoupper(LANGUAGE_ID)]['VALUE']))
+                                        {
+                                            echo '<br>'.$arResult['PROPERTIES']['ZEDNANNYA_'.strtoupper(LANGUAGE_ID)]['~VALUE'];
+                                        }
+                                        ?>
                                     </div>
                                     <?
                                 }
@@ -1011,6 +1017,28 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <?
+                                if(!empty($arResult['PROPERTIES']['POEDNANNYA_'.strtoupper(LANGUAGE_ID)]['VALUE']))
+                                    {
+                                      ?>
+                                      <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-poed" aria-expanded="false" aria-controls="card-poed">
+                                            Поєднання
+                                        </button>
+                                    </div>
+                                    <div id="card-poed" class="accordion-collapse collapse" data-bs-parent="#card-accord">
+                                        <div class="accordion-body">
+                                            <?=$arResult['PROPERTIES']['POEDNANNYA_'.strtoupper(LANGUAGE_ID)]['VALUE']?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?  
+                                    }
+                                ?>
+
                                 <?
                                 //if($arResult['OFFERS'][0]['PROPERTIES']['SOSTAV_SITE_'.strtoupper(LANGUAGE_ID)]['VALUE'])
                                 {

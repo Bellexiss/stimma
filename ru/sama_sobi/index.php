@@ -106,6 +106,7 @@ $APPLICATION->SetTitle("");?>
                             </div>
                         </div>
 
+                        <?/*
                         <div class="sama-sobi-tutorial-item">
                             <div class="sama-sobi-tutorial-item-icon">
                                 <span class="icon">
@@ -129,6 +130,7 @@ $APPLICATION->SetTitle("");?>
 
                             </div>
                         </div>
+                        */?>
 
                     </div>
                 </div>

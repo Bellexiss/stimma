@@ -10,6 +10,61 @@ use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
 
+require $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
+$sp = new AnalyticsServerSide();
+
+$orderId = 48261;
+global $DB;
+
+$propsDB = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $orderId);
+$props = [];
+while ($record = $propsDB->Fetch())
+    $props[$record['CODE']] = $record['VALUE'];
+
+$basket = [];
+$res = $DB->Query('select * from b_sale_basket where ORDER_ID = ' . $orderId);
+while ($record = $res->Fetch())
+    $basket[] = ['item_id' => $record['PRODUCT_ID'], 'price' => round($record['PRICE'],2), 'quantity' => intval($record['QUANTITY'])];
+
+$order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
+
+// ==========================================
+// ПРИМЕР ИСПОЛЬЗОВАНИЯ (в обработчике Webhook оплаты)
+// ==========================================
+?><pre><?=print_r($props, 1)?></pre><?
+
+// Эти данные вы достаете из своей БД по ID заказа, который пришел в Webhook
+$orderFromDb = [
+    'order_id'      => $orderId,
+    'total_amount'  => $order['PRICE'],
+    'email'         => $props['EMAIL'],
+    'phone'         => $props['PHONE'],
+    'fbc'           => $orderFromDb['fbc'] = $props['FBC'],
+    'fbp'           => $orderFromDb['fpb'] = $props['FBP'],
+    'ga_client_id'   => $orderFromDb['ga_client_id'] = $props['GA'],
+    'ip'            => $orderFromDb['user_agent'] = $props['UAGENT'],
+    'user_agent'    => $orderFromDb['ip'] = $props['IP'],
+    'items'         => $basket
+];
+
+//if($props['FBC']) $orderFromDb['fbc'] = $props['FBC'];
+//if($props['FBP']) $orderFromDb['fpb'] = $props['FBP'];
+//if($props['GA']) $orderFromDb['ga_client_id'] = $props['GA'];
+//if($props['UAGENT']) $orderFromDb['user_agent'] = $props['UAGENT'];
+//if($props['IP']) $orderFromDb['ip'] = $props['IP'];
+
+?><pre><?=print_r($orderFromDb, 1)?></pre><?
+
+$analytics = new AnalyticsServerSide();
+
+// Отправляем в обе системы
+$fb_response = $analytics->sendFacebookPurchase($orderFromDb);
+$ga_response = $analytics->sendGooglePurchase($orderFromDb);
+
+?><pre>$fb_response <?=print_r($fb_response, 1)?></pre><?
+?><pre>$ga_response <?=print_r($ga_response, 1)?></pre><?
+
+die();
 $balance=GetBalance('1a204600-3a58-11f1-b17b-ac6e7568e201');
 ?><pre><?=print_r($balance,1)?></pre><?
 die();

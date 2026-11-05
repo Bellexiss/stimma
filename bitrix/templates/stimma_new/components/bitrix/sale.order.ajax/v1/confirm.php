@@ -314,7 +314,8 @@ if(!$facebookFind['UF_STATUS'])
     <script>
         dataLayer.push({ ecommerce: null });
         dataLayer.push({
-            event: "purchase",
+            <?/*event: "purchase",*/?>
+            event: "order_created",
             ecommerce: {
                 transaction_id: "<?=$orderData['ID']?>", // id замовлення. Унікальне для кожного замовлення
                 value: <?=$orderData['PRICE']?>,
@@ -327,8 +328,10 @@ if(!$facebookFind['UF_STATUS'])
     </script>
 
     <script>
-        fbq ( 'track', 'Purchase',
+        <?/*fbq ( 'track', 'Purchase',*/?>
+        fbq ( 'track', 'order_created',
             {
+                order_id: '<?=$orderData['ID']?>',
                 <?/*value:<?=round($orderData['PRICE']/$usdRate,2)?>,*/?>
                 value:<?=$orderData['PRICE']?>,
                 currency: 'UAH',
