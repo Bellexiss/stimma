@@ -914,11 +914,14 @@ if(!empty($dontHaveLook))
     $arResult['FREE_DELIVERY'] = false;
     $dontHaveLook = implode(', ',$dontHaveLook);
 }
-else
+elseif(isset($_SESSION['IS_ADDED_LOOK']['IDS']))
     {
         $arResult['FREE_DELIVERY'] = true;
         $dontHaveLook = false;
     }
+
+if(isset($_SESSION['tssstimma']) && $_SESSION['tssstimma'])
+    $arResult['FREE_DELIVERY'] = true;
 
 
 // 2+1 літня

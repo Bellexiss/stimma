@@ -1521,7 +1521,7 @@ else
                                             <div class="order-total-price-key">
                                                 Доставка:
                                             </div>
-                                            <div class="order-total-price-value">
+                                            <div class="order-total-price-value otpvdelivery">
                                                 <?
                                                 if($USER->IsAuthorized())
                                                 {

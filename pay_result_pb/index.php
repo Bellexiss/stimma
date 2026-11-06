@@ -26,6 +26,8 @@ if($data['paymentState'] == 'SUCCESS')
         //CSaleOrder::Update($orderId, array("PAYED" => "Y"/*, 'STATUS_ID'=>'P'*/));
         CSaleOrder::PayOrder($orderId, "Y");
         sendEmailOrderPay($orderId);
+        sendNewEmailToClient($orderId);
+        sendNewSmsToClient($orderId);
     }
 }
 

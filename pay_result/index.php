@@ -96,6 +96,10 @@ if ($orderID > 0 && !$hasError)
             CSaleOrder ::PayOrder($matches[1], 'Y');
             $DB->Query('update b_sale_order set PAYED = \'Y\' where ID = ' . $matches[1]);
             $DB -> Query('insert into payments (UF_ORDER_ID,UF_DATA,UF_TO_1C) values('.$matches[1].', \''.$xml.'\',0)');
+
+            sendNewEmailToClient($matches[1]);
+            sendNewSmsToClient($matches[1]);
+            sendEmailOrderPay($matches[1]);
         }
         else
             Bitrix\Main\Diag\Debug::writeToFile(var_export($matches, 1), "ERROR FOR " . $matches[1] , '/_debug_pay.txt');

@@ -32,6 +32,26 @@ echo json_encode(['status' => 0, 'msg' => $isUa ? 'Введіть промоко
 die();
 }
 
+# Окремий блок
+$currtime = strtotime(date('d.m.Y H:i:s'));
+$startAction =strtotime('21.11.2026 00:00:01');
+$endAction = strtotime('22.11.2026 23:59:59');
+$isFreeDelivery = $currtime >= $startAction && $currtime <= $endAction ? true : false;
+if(strtolower($coupon) == 'tssstimma' && $isFreeDelivery)
+{
+    $_SESSION['tssstimma'] = true;
+    $msg = $isUa ? 'Промокод успішно застосований'        : 'Промокод успешно применен';
+    echo json_encode(['status' => 1, 'msg' => $msg, 'coupon'=>'tssstimma']);
+    die();
+}
+elseif(strtolower($coupon) == 'tssstimma' && !$isFreeDelivery)
+{
+    $msg = $isUa ? 'Промокод не може бути застосований' : 'Промокод не может быть применен';
+    echo json_encode(['status' => 0, 'msg' => $msg, 'coupon'=>'tssstimma']);
+    die();
+}
+# /Окремий блок
+
 $msgCouponActionNotApply  = $isUa ? 'Промокод не може бути застосований' : 'Промокод не может быть применен';
 $msgCouponOnActionItem    = $isUa ? 'Промокод не діє на акційний товар'    : 'Промокод не действует на акционный товар';
 $msgNeedAuth              = $isUa ? 'Для активації промокоду авторизуйтесь': 'Для активации промокода авторизуйтесь';

@@ -10,6 +10,9 @@ use Bitrix\Sale;
 use Bitrix\Sale\Order;
 use Bitrix\Sale\Basket;
 
+sendEmailSmsNotPayedOrder();
+die();
+
 require $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
 $sp = new AnalyticsServerSide();
 
@@ -39,11 +42,11 @@ $orderFromDb = [
     'total_amount'  => $order['PRICE'],
     'email'         => $props['EMAIL'],
     'phone'         => $props['PHONE'],
-    'fbc'           => $orderFromDb['fbc'] = $props['FBC'],
-    'fbp'           => $orderFromDb['fpb'] = $props['FBP'],
-    'ga_client_id'   => $orderFromDb['ga_client_id'] = $props['GA'],
-    'ip'            => $orderFromDb['user_agent'] = $props['UAGENT'],
-    'user_agent'    => $orderFromDb['ip'] = $props['IP'],
+    'fbc'           => $props['FBC'],
+    'fbp'           => $props['FBP'],
+    'ga_client_id'   => $props['GA'],
+    'ip'            => $props['IP'],
+    'user_agent'    => $props['UAGENT'],
     'items'         => $basket
 ];
 
@@ -2554,7 +2557,8 @@ if($email)
     $arFieldsSend = [
         'TEXT' => $html,
         'NUMBER' => $id,
-        'EMAIL' => $email
+        'EMAIL' => $email,
+        'TEMA'=>'Замовлення №#NUMBER# отримано'
     ];
     if(CEvent::SendImmediate("BS_SALE_NEW_ORDER", "s1", $arFieldsSend, 'Y', 102))echo '+++';
     else echo '----';

@@ -620,6 +620,10 @@ $(document).ready(function()
                     //$('[name=coupon]').before('<span class="error_coupon">'+json.msg+'</span>');
 					$('.order-prom-block').after('<span class="error_coupon" style="color:var(--peach);">'+json.msg+'</span>');
                 }
+				else if(json.status == 1 && json.coupon == 'tssstimma')
+				{
+					$('.otpvdelivery').text('Безкоштовно');
+				}
                 //else
                     //location.reload();
                 console.log('location.href',location.href)

@@ -3556,6 +3556,25 @@ function sendNewSmsToClient($id)
     }
 }
 
+function sendNewSmsToClientNotPayed($id)
+{
+    Bitrix\Main\Diag\Debug::writeToFile('start send new sms for id = ' . $id, "start" , '/z_send_new.txt');
+
+    global $DB;
+    $phoneValue = $DB -> Query('select * from b_sale_order_props_value where ORDER_ID = '.$id. ' and ORDER_PROPS_ID = 3');
+
+    if($phoneValue = $phoneValue -> Fetch())
+    {
+        $phoneValue = $phoneValue['VALUE'];
+        Bitrix\Main\Diag\Debug::writeToFile($phoneValue, "phoneValue" , '/z_send_new.txt');
+        if(!empty($phoneValue))
+        {
+            $phoneValue = str_replace([' ',')','(','-'],['','','',''],$phoneValue);
+            sendSmsTelikom($phoneValue, "Замовлення №".$id." чекає! Оплати зараз, доки все в наявності.");
+        }
+    }
+}
+
 function sendSmsToClient(\Bitrix\Main\Event $event)
 {
     $order = $event->getParameter("ENTITY");
@@ -3728,90 +3747,6 @@ function sendNewEmailToClient($id, $send = true)
     }
 
     ob_start();
-    /*
-    if($send)
-    {
-        ?>
-        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-            <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
-                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
-
-                            <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Дякуємо за замовлення !</h2>
-                        </td>
-                    </tr>
-
-                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                            <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0;">
-                                Зовсім скоро ми зателефонуємо для уточнення деталей.
-                            </h3>
-                        </td>
-                    </tr>
-                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                            <?
-                            $amount = 0;
-                            foreach ($arBasket as $index => $item)
-                            {
-                                if($item['PRODUCT']['IBLOCK_ID'] == 25)
-                                {
-                                    $product = CIBlockElement::GetList([], ['IBLOCK_ID'=>25,'ID'=>$item['PRODUCT_ID']],false,false,['ID','IBLOCK_ID','PROPERTY_CML2_LINK'])->Fetch();
-                                    $mainPRoduct = CIBlockElement::GetByID($product['PROPERTY_CML2_LINK_VALUE'])->Fetch();
-                                    $idimg = $mainPRoduct['PREVIEW_PICTURE'] ? $mainPRoduct['PREVIEW_PICTURE'] : $mainPRoduct['DETAIL_PICTURE'];
-                                }
-                                else
-                                    $idimg = $item['PRODUCT']['PREVIEW_PICTURE'] ? $item['PRODUCT']['PREVIEW_PICTURE'] : $item['PRODUCT']['DETAIL_PICTURE'];
-
-                                $file = \CFile::GetFileArray($idimg)['SRC'];
-                                $amount += $item['PRICE']*$item['QUANTITY'];
-                                $titleUA = CIBlockElement::GetProperty(25, $item['PRODUCT']['ID'], array("sort" => "asc"), Array("CODE"=>"NAME_UA"))->Fetch()['VALUE'];
-                                ?>
-                                <table class="table-list-item" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #333333;" width="100%">
-                                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                                        <td class="table-list-item-img" style="box-sizing: border-box; padding: 0; margin: 0; padding-right: 15px;">
-                                            <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                <img src="https://stimma.ua<?=$file?>" style="box-sizing: border-box; padding: 0; margin: 0; max-width: 100px;">
-                                            </a>
-                                        </td>
-                                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                                            <table style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000;" width="100%">
-                                                <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                    <td class="table-list-item-name" colspan="2" style="box-sizing: border-box; padding: 0; margin: 0; padding-bottom: 30px;">
-                                                        <a href="https://stimma.ua<?=$item['PRODUCT']['DETAIL_PAGE_URL']?>" style="box-sizing: border-box; padding: 0; margin: 0; color: #000000; font-size: 16px; text-decoration: none; font-weight: bold;"><?=$titleUA?></a>
-                                                    </td>
-                                                </tr>
-                                                <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                                                    <td class="table-list-item-number" style="box-sizing: border-box; padding: 0; margin: 0; text-align: right; font-size: 16px;" align="right">
-                                                        <?=FormatCurrency($item['PRICE'], 'UAH')?> x <?=intval($item['QUANTITY'])?> шт
-                                                    </td>
-                                                    <td class="table-list-item-price" style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold; text-align: right;" align="right">
-                                                        <?=FormatCurrency($item['PRICE']*$item['QUANTITY'], 'UAH')?>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <?
-                            }
-                            ?>
-                            <table class="table-list-total" style="box-sizing: border-box; padding: 0; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding-top: 30px; text-align: right; font-size: 16px;" width="100%" align="right">
-                                <tr style="box-sizing: border-box; padding: 0; margin: 0;">
-                                    <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                                        Сума: <span style="box-sizing: border-box; padding: 0; margin: 0; font-size: 22px; font-weight: bold;"><?=FormatCurrency($amount,'UAH')?></span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <?
-    }
-    else*/
     {
         ?>
         <tr style="box-sizing: border-box; padding: 0; margin: 0;">
@@ -3926,6 +3861,7 @@ function sendNewEmailToClient($id, $send = true)
                             </table>
                         </td>
                     </tr>
+                    <?/*
                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                         <td style="box-sizing: border-box; padding: 0; margin: 0;">
                             <table style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 0" width="100%">
@@ -3941,7 +3877,7 @@ function sendNewEmailToClient($id, $send = true)
                                 </tr>
                             </table>
                         </td>
-                    </tr>
+                    </tr>*/?>
                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                         <td style="box-sizing: border-box; margin: 0; padding: 20px 0; font-size: 20px; font-weight: 700; text-align: center;">
                             Скоро нарешті приміряєш особисто. А поки можеш уявляти з чим поєднаєш нові речі 💌
@@ -3986,7 +3922,91 @@ function sendNewEmailToClient($id, $send = true)
             'NUMBER' => $id,
             //'EMAIL' => $id == 47699 ? "marushevskiy.petr@gmail.com" : $email,
             'EMAIL' => $email,
-            'PREHEADER' => 'Найближчим часом зв\'яжемось з тобою, щоб підтвердити деталі'
+            'PREHEADER' => 'Найближчим часом зв\'яжемось з тобою, щоб підтвердити деталі',
+            'TEMA'=>'Замовлення №'.$id.' отримано'
+        ];
+        CEvent::SendImmediate("BS_SALE_NEW_ORDER", "s1", $arFieldsSend, 'Y', 102);
+    }
+    else
+        echo $html;
+
+    if($send)
+        unset($_SESSION['CATALOG_USER_COUPONS']);
+}
+
+function sendNewEmailToClientNotPayed($id, $send = true)
+{
+    Bitrix\Main\Diag\Debug::writeToFile('start sendNewEmailToClient for id = ' . $id, "start" , '/z_send_new.txt');
+    global $DB;
+
+    $email = $DB -> Query('select * from b_sale_order_props_value where ORDER_ID = '.$id.' and ORDER_PROPS_ID = 2') -> Fetch()['VALUE'];
+
+    if(!$email)
+    {
+        $orderRecord = $DB -> Query('select * from b_sale_order where ID = ' . $id)->Fetch();
+        $user = \CUser::GetByID($orderRecord['USER_ID']) -> Fetch();
+        $email = $user['EMAIL'];
+        Bitrix\Main\Diag\Debug::writeToFile($email, "New Email find" , '/z_send_new.txt');
+    }
+
+
+    ob_start();
+    {
+        ?>
+        <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+            <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 20px 10px;" width="100%">
+                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <?/*<h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Доброго дня<?=$name ? ', '.$name : '!'?></h2>*/?>
+                            <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Дякуємо за замовлення !</h2>
+                        </td>
+                    </tr>
+                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <h3 class="table-list-title" style="box-sizing: border-box; margin: 0; font-size: 20px; padding: 20px 0; text-align: center;">
+                                Ми вже уявляємо, скільки класних образів ти складеш із новими речами! 🤍
+                            </h3>
+                        </td>
+                    </tr>
+
+                    <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                        <td style="box-sizing: border-box; padding: 0; margin: 0;">
+                            <table style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #000000; padding: 0" width="100%">
+                                <tr style="box-sizing: border-box; padding: 0; margin: 0;">
+                                    <td style="box-sizing: border-box; margin: 0; padding: 10px 0;width: 100%; font-weight: 700; font-size: 20px;">
+                                        Твоє замовлення №<?=$id?> ще не оплачене. Заверши покупку, поки обрані моделі та розміри є в наявності ⏳
+                                    </td>
+                                    <td style="box-sizing: border-box; margin: 0; padding: 10px 0;">
+                                        <a href="https://stimma.ua/order/?ORDER_ID=<?=$id?>" style="box-sizing: border-box; margin: 0; padding: 7px 10px; font-size: 20px; text-decoration: none; text-transform: uppercase; border-radius: 50px; color: #ffffff; background: #9ca848;">
+                                          СПЛАТИТИ
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </td>
+        </tr>
+        <?
+    }
+
+
+    $html = ob_get_clean();
+    //$email = 'company703@gmail.com';
+    //$email = 'linkevych.o.v@gmail.com';
+    if($email && $send)
+    {
+        $arFieldsSend = [
+            'TEXT' => $html,
+            'NUMBER' => $id,
+            //'EMAIL' => $id == 47699 ? "marushevskiy.petr@gmail.com" : $email,
+            'EMAIL' => $email,
+            'PREHEADER' => 'Найближчим часом зв\'яжемось з тобою, щоб підтвердити деталі',
+            'TEMA'=>'Майже готово! Залишилося оплатити'
         ];
         CEvent::SendImmediate("BS_SALE_NEW_ORDER", "s1", $arFieldsSend, 'Y', 102);
     }
@@ -4703,7 +4723,7 @@ function sendEmailOrderPay($order_id)
 
 }
 
-
+/*
 function sendEmailToClient(\Bitrix\Main\Event $event)
 {
     $order = $event->getParameter("ENTITY");
@@ -4751,7 +4771,6 @@ function sendEmailToClient(\Bitrix\Main\Event $event)
                 <table class="table-body" style="box-sizing: border-box; width: 100%; max-width: 600px; margin: 0 auto; border-spacing: 0; color: #3d441d; padding: 20px 10px;" width="100%">
                     <tr style="box-sizing: border-box; padding: 0; margin: 0;">
                         <td style="box-sizing: border-box; padding: 0; margin: 0;">
-                            <?/*<h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Доброго дня<?=$name ? ', '.$name : '!'?></h2>*/?>
                             <h2 class="table-body-title" style="box-sizing: border-box; margin: 0; font-size: 24px; padding: 10px 0; text-align: center;">Дякуємо за замовлення</h2>
                         </td>
                     </tr>
@@ -4845,6 +4864,7 @@ function sendEmailToClient(\Bitrix\Main\Event $event)
             }
     }
 }
+*/
 
 function addCrmContact()
 {
@@ -7000,4 +7020,30 @@ function getSertIDs()
     return [35434,35432,35430,35428,35425,35433,35424,35427,35429,35431];
 }
 
+function sendEmailSmsNotPayedOrder()
+{
+    global $DB;
+
+    $time = 60*4;
+    $now = strtotime(date('d.m.Y H:i:s'));
+
+    $res = $DB->Query("SELECT * FROM b_sale_order where PAYED = 'N' order by ID desc limit 10");
+
+    while ($order = $res->Fetch())
+    {
+        $timeOrder = strtotime($order['DATE_INSERT']);
+        if($now - $timeOrder > $time)
+        {
+            $fb = $DB->Query('select * from facebook_purchase where UF_ORDER_ID = ' . $order['ID'])->Fetch();
+            if($fb['UF_SEND_SMS'] != 1)
+            {
+                sendNewSmsToClientNotPayed($order['ID']);
+                sendNewEmailToClientNotPayed($order['ID']);
+                $DB->Query('update facebook_purchase set UF_SEND_SMS = 1 where UF_ORDER_ID = ' . $order['ID']);
+            }
+        }
+    }
+
+    return 'sendEmailSmsNotPayedOrder();';
+}
 

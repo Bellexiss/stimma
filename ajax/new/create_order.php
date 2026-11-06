@@ -1,9 +1,4 @@
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/include/prolog_before.php");
-if($_SERVER['REMOTE_ADDR'] == '109.95.48.150')
-{
-    //require_once 'create_order_new.php';
-    //die();
-}
 
 if($_POST['email'] == 'tyhtuh@gmail.com')die();
 
@@ -155,6 +150,12 @@ if (isset($_POST['payment_method_part']) && $_POST['payment_method_part'] == 1 &
 $comment = $_POST['comment'];
 if(!empty($_POST['adress_comment']))
     $comment .= '. Коментар до адреси: '.$_POST['adress_comment'];
+
+if(isset($_SESSION['tssstimma']) && $_SESSION['tssstimma'])
+{
+    $comment .= ' --> Застосовано промо-код на безкоштовну доставку (TSSSTIMMA) ';
+    unset($_SESSION['tssstimma']);
+}
 
 $arFields = array(
     "LID" => $site_id,
@@ -384,15 +385,15 @@ if ($ORDER_ID > 0)
     }
 
 
-    sendNewEmailToClient($ORDER_ID);
-    sendNewSmsToClient($ORDER_ID);
+    //sendNewEmailToClient($ORDER_ID);
+    //sendNewSmsToClient($ORDER_ID);
 
 
 
 
     $order_id = $ORDER_ID;
 
-    $DB->Query('insert into facebook_purchase (UF_ORDER_ID,UF_STATUS) values ('.$order_id.',0)');
+    $DB->Query('insert into facebook_purchase (UF_ORDER_ID,UF_STATUS,UF_SEND_SMS) values ('.$order_id.',0,0)');
 
     $orderDB = $DB->Query('select * from b_sale_order where ID = ' . $order_id);
     if($order = $orderDB -> Fetch())
