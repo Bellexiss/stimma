@@ -2720,6 +2720,7 @@ else
                                     $alLSum += $item['PRICE']*$item['QUANTITY'];
 
                                     $product = CIBlockElement::GetByID($item['PRODUCT_ID'])->GetNextElement();
+
                                     ?>
                                     <div class="order-item">
                                         <div class="order-item-img">

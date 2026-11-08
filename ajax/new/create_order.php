@@ -240,6 +240,11 @@ if ($ORDER_ID > 0)
         if($props['UAGENT'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_uagent']).'\' where ID = ' . $props['UAGENT']);
         else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',38, \'UAGENT\', \''.addslashes($_COOKIE['utm_uagent']).'\', \'UAGENT\', \''.$ORDER_ID.'\', \'ORDER\')');
     }
+    if(isset($_COOKIE['ttclid']) && !empty($_COOKIE['ttclid']))
+    {
+        if($props['TTCLID'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['ttclid']).'\' where ID = ' . $props['TTCLID']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',39, \'TTCLID\', \''.addslashes($_COOKIE['ttclid']).'\', \'TTCLID\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
 
 
 

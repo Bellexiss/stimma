@@ -36,7 +36,8 @@ define('DEV',$_SERVER['SERVER_NAME']) == 'dev.stimma.ua';
 $utmFields = [
     '_fbc',
     '_fbp',
-    '_ga'
+    '_ga',
+    'ttclid'
 ];
 
 foreach ($utmFields as $field)

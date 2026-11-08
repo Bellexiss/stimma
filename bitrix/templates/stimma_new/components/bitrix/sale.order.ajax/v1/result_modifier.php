@@ -360,18 +360,32 @@ if(isset($_GET['sub']))
 
 // 2+1 (-30 на другий товар та -20 на другий найдешевший в чеку , Акція була до 31,03,2026)
 
+// Термін дії: з 15.11 по 31.12.2026 включно
+//Друга річ -15%
+//Третя річ -30%
+//Знижка -15% на другу річ і -30% на третю річ у чеку з 3+ речей одягу різних категорій.
+//Не діє на товари зі знижками та аксесуари.
+
 $arResult['IS_ACTION_SELFDATE'] = 0;
-if (!in_array(9, $uGroups) && false)
+$time1 = strtotime(date('30.12.2026 23:59:59'));
+$time2 = strtotime(date('31.03.2027 23:59:59'));
+$isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
+
+if (!in_array(9, $uGroups) && $isActionSekfdate) 
 {
-    $time1 = strtotime(date('13.02.2026 23:59:59'));
-    $time2 = strtotime(date('31.03.2026 23:59:59'));
-    if(isset($_GET['sub']) /*|| $USER->IsAdmin()*/ || (strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2))
+    
     {
         global $DB,$USER;
 
         $uGroups = explode(',',$USER -> GetGroups());
         $allAmountLeft = 0;
         $allQuantityLeft=3;
+
+        $allQuantityLeftSection=$allQuantityLeftSectionAccs=[];
+        $activeIndex = -1;
+        $excludeSections=[361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311]; // sale + Аксесури + Бонусна шафа
+        $bottomSections=[];
+        $quantityProduct = 0;
 
         if(!in_array(9,$uGroups))
         {
@@ -402,6 +416,12 @@ if (!in_array(9, $uGroups) && false)
 
                 if(!$isSale)
                 {
+                    $product = $DB->Query('select * from b_iblock_element where ID = ' . $productId)->Fetch();
+                    if(!in_array($product['IBLOCK_SECTION_ID'], $excludeSections) && $product['IBLOCK_SECTION_ID'])
+                        $allQuantityLeftSection[] = $product['IBLOCK_SECTION_ID'];
+                    elseif($product['IBLOCK_SECTION_ID'])
+                        $allQuantityLeftSectionAccs[] = $product['IBLOCK_SECTION_ID'];
+
                     $allSum += $Row['data']['PRICE']*$Row['data']['QUANTITY'];
                     $countInAction++;
                     $allAmountLeft -= $Row['data']['PRICE']*$Row['data']['QUANTITY'];
@@ -411,14 +431,15 @@ if (!in_array(9, $uGroups) && false)
                     $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['IS_SALE'] = true;
             }
 
+            $arResult['ALL_QUANTITY_LEFT_SECTION'] = $allQuantityLeftSection;
+            $arResult['ALL_QUANTITY_LEFT_SECTION_ACCS'] = $allQuantityLeftSectionAccs;
+            $arResult['QUANTITY_PRODUCTS'] = $quantityProduct;
+
             //if($allSum >= 3000)
-            if($allQuantityLeft <= 0 && $allSum >= 3000)
+            if($allQuantityLeft <= 0 && $allSum >= 0 && count(array_unique($allQuantityLeftSection)) >= 3)
             {
-                $firstPercent = $countInAction > 2 ? 0.3 : 0.2;
-                if(isset($_GET['sub']) && $debug)
-                {
-                    ?><pre><?=print_r($arResult['JS_DATA']['GRID']['ROWS'], 1)?></pre><?
-                }
+                $firstPercent = $countInAction > 2 ? 0.15 : 0.3;
+
                 uasort($arResult['JS_DATA']['GRID']['ROWS'], function ($a, $b) {
                     return $a['data']['PRICE'] <=> $b['data']['PRICE'];
                 });
@@ -439,9 +460,10 @@ if (!in_array(9, $uGroups) && false)
 
                 $sqls = [];
                 $start = $first = $second = false;
+                
                 foreach($arResult['JS_DATA']['GRID']['ROWS'] as $index => $row)
                 {
-                    if($row['data']['IS_SALE']) continue;
+                    if($row['data']['IS_SALE'] ||!$index) continue;
                     //if($index) $start = true;
                     if(!$start && !$index && $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY'] == 1)
                     {
@@ -493,7 +515,7 @@ if (!in_array(9, $uGroups) && false)
                             $second['data']['QUANTITY'] = 1;
 
                             $second['data']['BASE_PRICE'] = $second['data']['PRICE'];
-                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.2);
+                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.15);
 
                             $sqls[] = 'update b_sale_basket set QUANTITY = ' . $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY'] . ' where ID = ' . $row['id'];
                             $sqls[] = 'insert into b_sale_basket (FUSER_ID,PRODUCT_ID,PRICE,CURRENCY,BASE_PRICE,VAT_INCLUDED,DATE_INSERT,DATE_UPDATE,QUANTITY,LID,DELAY,NAME,CAN_BUY,DISCOUNT_PRICE,VAT_RATE,SUBSCRIBE,DEDUCTED,RESERVED,BARCODE_MULTI,CUSTOM_PRICE,SORT)
@@ -507,7 +529,7 @@ if (!in_array(9, $uGroups) && false)
                             $second['data']['QUANTITY'] = 1;
 
                             $second['data']['BASE_PRICE'] = $second['data']['PRICE'];
-                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.2);
+                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.30);
 
                             $sqls[] = 'update b_sale_basket set PRICE = '.$second['data']['PRICE'].', BASE_PRICE = '.$second['data']['BASE_PRICE'] . ' where ID = ' . $second['id'];
 
@@ -535,6 +557,7 @@ if (!in_array(9, $uGroups) && false)
                     //$second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.2);
                     $arResult['JS_DATA']['GRID']['ROWS'][] = $second;
                 }
+                ?><pre> sqls <?print_r($sqls, 1)?></pre><?
 
                 $arResult['SQLS'] = $sqls;
                 $arResult['IS_ACTION_SELFDATE'] = 1;
@@ -638,7 +661,7 @@ if (!in_array(9, $uGroups))
 
 // -16% грн для замовлення від 3000 з 21,08,2026 до 23,08,2026 включно
 global $isJulyAction;
-if($isJulyAction)
+if($isJulyAction && false)
 {
     if (!in_array(9, $uGroups))
     {
@@ -932,7 +955,7 @@ $giftNotAvailableProducts = [37310,37311,37312,37305,37306,37307,39414,39415];
 $isGift = false;
 $countProducts=0;
 $indexForAction = -1;
-if(isset($_GET['sub']))
+if(isset($_GET['sub'])&& false)
 {
     global $DB,$USER;
 
