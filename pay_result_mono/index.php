@@ -67,6 +67,7 @@ if($data['order_sub_state'] == 'WAITING_FOR_STORE_CONFIRM')
                 sendEmailOrderPay($find['UF_ORDER_ID']);
                 sendNewEmailToClient($find['UF_ORDER_ID']);
                 sendNewSmsToClient($find['UF_ORDER_ID']);
+                sendPurchaseData($find['UF_ORDER_ID']);
 
             }
             else

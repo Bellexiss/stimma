@@ -38,7 +38,10 @@ class AnalyticsServerSide
                 'currency' => 'UAH',
                 'order_id' => $orderData['order_id'],
             ],
+            'test_event_code'=>'TEST54709'
         ];
+
+        Bitrix\Main\Diag\Debug::writeToFile($event, "purchase FB ". $orderData['order_id'], '/___purchase.txt');
 
         return $this->curlRequest($url, [
             'access_token' => $this->fb_access_token,
@@ -78,6 +81,10 @@ class AnalyticsServerSide
             ],
         ];
 
+        $log = $payload;
+        $log['access_token'] = $this->tt_access_token;
+        Bitrix\Main\Diag\Debug::writeToFile($log, "purchase tiktok ". $orderData['order_id'], '/___purchase.txt');
+
         return $this->curlRequest($url, [
             'access_token' => $this->tt_access_token,
             //'mail'         => $orderData['email'],
@@ -106,6 +113,8 @@ class AnalyticsServerSide
                 ]
             ],
         ];
+
+        Bitrix\Main\Diag\Debug::writeToFile($payload, "purchase GA ". $orderData['order_id'], '/___purchase.txt');
 
         return $this->curlRequest($url, $payload);
     }

@@ -47,7 +47,7 @@ $orderFromDb = [
     'ga_client_id'   => $props['GA'],
     'ip'            => $props['IP'],
     'user_agent'    => $props['UAGENT'],
-    'tt_click_id'    => $props['TT_CLICK_ID'],
+    'tt_click_id'    => $props['TTCLID'],
     'items'         => $basket
 ];
 

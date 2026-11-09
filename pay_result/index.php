@@ -100,6 +100,7 @@ if ($orderID > 0 && !$hasError)
             sendNewEmailToClient($matches[1]);
             sendNewSmsToClient($matches[1]);
             sendEmailOrderPay($matches[1]);
+            sendPurchaseData($matches[1]);
         }
         else
             Bitrix\Main\Diag\Debug::writeToFile(var_export($matches, 1), "ERROR FOR " . $matches[1] , '/_debug_pay.txt');

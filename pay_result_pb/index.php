@@ -28,6 +28,7 @@ if($data['paymentState'] == 'SUCCESS')
         sendEmailOrderPay($orderId);
         sendNewEmailToClient($orderId);
         sendNewSmsToClient($orderId);
+        sendPurchaseData($orderId);
     }
 }
 
