@@ -111,7 +111,7 @@ if ($orderID > 0 && !$hasError)
 {
     Bitrix\Main\Diag\Debug::writeToFile(1, 'var 1', '/_debug_pay.txt');
     // 🔍 Определяем тип платежа
-    if (($smchID === 15740 || $smchID == 16932 || $smchID == 18597) && $loadOrderData['PAY_SYSTEM_ID'] == 9)
+    if (($smchID === 15740 || $smchID == 16932 || $smchID == 18597 || $smchID == 19983) && $loadOrderData['PAY_SYSTEM_ID'] == 9)
     {
         // 🟡 Это предоплата — записываем в свойство заказа
         $propertyCode = "PREDOPLATA"; // Замените на ваш код свойства

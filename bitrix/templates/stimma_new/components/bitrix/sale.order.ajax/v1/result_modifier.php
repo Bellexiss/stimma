@@ -367,11 +367,11 @@ if(isset($_GET['sub']))
 //Не діє на товари зі знижками та аксесуари.
 
 $arResult['IS_ACTION_SELFDATE'] = 0;
-$time1 = strtotime(date('30.12.2026 23:59:59'));
+$time1 = strtotime(date('15.11.2026 23:59:59'));
 $time2 = strtotime(date('31.03.2027 23:59:59'));
 $isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
 
-if (!in_array(9, $uGroups) && $isActionSekfdate) 
+if (!in_array(9, $uGroups) && $isActionSekfdate)  
 {
     
     {
@@ -435,10 +435,18 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
             $arResult['ALL_QUANTITY_LEFT_SECTION_ACCS'] = $allQuantityLeftSectionAccs;
             $arResult['QUANTITY_PRODUCTS'] = $quantityProduct;
 
+            if(count(array_unique($allQuantityLeftSection)) == 2)
+                $arResult['TEXT']=LANGUAGE_ID == 'ua' ? 'Додай речі ще з однієї категорії, щоб отримати знижку -15%': 'Добавьте вещи еще из одной категории, чтобы получить скидку -15%';
+            elseif(count(array_unique($allQuantityLeftSection)) == 1)
+                $arResult['TEXT']=LANGUAGE_ID == 'ua' ? 'Додай речі ще з двох різних категорій, щоб отримати знижки -15% та -30%': 'Добавьте вещи еще из двух разных категорий, чтобы получить скидки -15% и -30%';
+            elseif(count(array_unique($allQuantityLeftSection)) >= 3)
+                $arResult['TEXT_SUCC']=LANGUAGE_ID == 'ua' ? 'Вітаємо! Знижка -15% на другу річ та -30% на третю вже твоя' : 'Поздравляем! Скидка -15% на вторую вещь и -30% на третью уже ваша';
+
             //if($allSum >= 3000)
             if($allQuantityLeft <= 0 && $allSum >= 0 && count(array_unique($allQuantityLeftSection)) >= 3)
             {
-                $firstPercent = $countInAction > 2 ? 0.15 : 0.3;
+                $firstPercent = $countInAction > 2 ? 0.3 : 0.15;
+                $secondPercent = $countInAction > 2 ? 0.15 : 0.15;
 
                 uasort($arResult['JS_DATA']['GRID']['ROWS'], function ($a, $b) {
                     return $a['data']['PRICE'] <=> $b['data']['PRICE'];
@@ -459,11 +467,11 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
                 $arResult['JS_DATA']['GRID']['ROWS'][count($arResult['JS_DATA']['GRID']['ROWS']) - 1] = $temp;*/
 
                 $sqls = [];
-                $start = $first = $second = false;
+                $start = $first = $second = $fDel = $sDel = false;
                 
                 foreach($arResult['JS_DATA']['GRID']['ROWS'] as $index => $row)
                 {
-                    if($row['data']['IS_SALE'] ||!$index) continue;
+                    if($row['data']['IS_SALE']) continue;
                     //if($index) $start = true;
                     if(!$start && !$index && $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY'] == 1)
                     {
@@ -477,6 +485,7 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
                     {
                         if($row['data']['QUANTITY'] > 1)
                         {
+                            $fDel = true;
                             if($debug) echo $index.' <- index<br>';
                             if($debug) echo '1<br>';
                             $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY']--;
@@ -509,13 +518,14 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
                     {
                         if($row['data']['QUANTITY'] > 1)
                         {
+                            $sDel = true;
                             if($debug) echo '3<br>';
                             $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY']--;
                             $second = $row;
                             $second['data']['QUANTITY'] = 1;
 
                             $second['data']['BASE_PRICE'] = $second['data']['PRICE'];
-                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.15);
+                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*$secondPercent);
 
                             $sqls[] = 'update b_sale_basket set QUANTITY = ' . $arResult['JS_DATA']['GRID']['ROWS'][$index]['data']['QUANTITY'] . ' where ID = ' . $row['id'];
                             $sqls[] = 'insert into b_sale_basket (FUSER_ID,PRODUCT_ID,PRICE,CURRENCY,BASE_PRICE,VAT_INCLUDED,DATE_INSERT,DATE_UPDATE,QUANTITY,LID,DELAY,NAME,CAN_BUY,DISCOUNT_PRICE,VAT_RATE,SUBSCRIBE,DEDUCTED,RESERVED,BARCODE_MULTI,CUSTOM_PRICE,SORT)
@@ -529,7 +539,7 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
                             $second['data']['QUANTITY'] = 1;
 
                             $second['data']['BASE_PRICE'] = $second['data']['PRICE'];
-                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.30);
+                            $second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*$secondPercent);
 
                             $sqls[] = 'update b_sale_basket set PRICE = '.$second['data']['PRICE'].', BASE_PRICE = '.$second['data']['BASE_PRICE'] . ' where ID = ' . $second['id'];
 
@@ -543,24 +553,29 @@ if (!in_array(9, $uGroups) && $isActionSekfdate)
 
                 $arResult['JS_DATA']['GRID']['ROWS'] = array_values($arResult['JS_DATA']['GRID']['ROWS']);
 
+                $amountDiscount = 0;
                 if($first)
                 {
-                    $first['id'] = $first['data']['ID'] = 0;
-                    //$first['data']['BASE_PRICE'] = $first['data']['PRICE'];
-                    //$first['data']['PRICE'] = $first['data']['PRICE']-($first['data']['PRICE']*0.3);
+                    if($fDel)
+                        $first['id'] = $first['data']['ID'] = 0;
+                    //$first['data']['BASE_PRICE'] = $first['data']['BASE_PRICE'];
+                    //$first['data']['PRICE'] = $first['data']['PRICE'];
                     $arResult['JS_DATA']['GRID']['ROWS'][] = $first;
+                    $amountDiscount += $first['data']['BASE_PRICE'] - $first['data']['PRICE'];
                 }
                 if($second)
                 {
-                    $second['id'] = $second['data']['ID'] = 0;
-                    //$second['data']['BASE_PRICE'] = $second['data']['PRICE'];
-                    //$second['data']['PRICE'] = $second['data']['PRICE']-($second['data']['PRICE']*0.2);
+                    if($sDel)
+                        $second['id'] = $second['data']['ID'] = 0;
+                    //$second['data']['BASE_PRICE'] = $second['data']['BASE_PRICE'];
+                    //$second['data']['PRICE'] = $second['data']['PRICE'];
                     $arResult['JS_DATA']['GRID']['ROWS'][] = $second;
+                    $amountDiscount += $second['data']['BASE_PRICE'] - $second['data']['PRICE'];
                 }
-                ?><pre> sqls <?print_r($sqls, 1)?></pre><?
 
                 $arResult['SQLS'] = $sqls;
                 $arResult['IS_ACTION_SELFDATE'] = 1;
+                $arResult['AMOUNT_DISCOUNT'] = $amountDiscount;
             }
         }
     }

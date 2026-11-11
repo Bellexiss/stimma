@@ -245,6 +245,31 @@ if ($ORDER_ID > 0)
         if($props['TTCLID'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['ttclid']).'\' where ID = ' . $props['TTCLID']);
         else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',39, \'TTCLID\', \''.addslashes($_COOKIE['ttclid']).'\', \'TTCLID\', \''.$ORDER_ID.'\', \'ORDER\')');
     }
+    if(isset($_COOKIE['utm_source']) && !empty($_COOKIE['utm_source']))
+    {
+        if($props['UTM_SOURCE'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_source']).'\' where ID = ' . $props['UTM_SOURCE']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',40, \'UTM_SOURCE\', \''.addslashes($_COOKIE['utm_source']).'\', \'UTM_SOURCE\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
+    if(isset($_COOKIE['utm_medium']) && !empty($_COOKIE['utm_medium']))
+    {
+        if($props['UTM_MEDIUM'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_medium']).'\' where ID = ' . $props['UTM_MEDIUM']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',41, \'UTM_MEDIUM\', \''.addslashes($_COOKIE['utm_medium']).'\', \'UTM_MEDIUM\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
+    if(isset($_COOKIE['utm_campaign']) && !empty($_COOKIE['utm_campaign']))
+    {
+        if($props['UTM_CAMPAIGN'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_campaign']).'\' where ID = ' . $props['UTM_CAMPAIGN']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',42, \'UTM_CAMPAIGN\', \''.addslashes($_COOKIE['utm_campaign']).'\', \'UTM_CAMPAIGN\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
+    if(isset($_COOKIE['utm_content']) && !empty($_COOKIE['utm_content']))
+    {
+        if($props['UTM_CONTENT'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_content']).'\' where ID = ' . $props['UTM_CONTENT']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',43, \'UTM_CONTENT\', \''.addslashes($_COOKIE['utm_content']).'\', \'UTM_CONTENT\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
+    if(isset($_COOKIE['utm_term']) && !empty($_COOKIE['utm_term']))
+    {
+        if($props['UTM_TERM'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_term']).'\' where ID = ' . $props['UTM_TERM']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',44, \'UTM_TERM\', \''.addslashes($_COOKIE['utm_term']).'\', \'UTM_TERM\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
 
 
 

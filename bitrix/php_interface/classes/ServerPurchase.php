@@ -8,6 +8,7 @@ class AnalyticsServerSide
     private $ga_api_secret     = 'XC4UkbAAS0u8RLFjwM9EGQ';
     private $tt_pixel_id        = 'D3ODO9RC77U53GBVNT2G';
     private $tt_access_token    = 'bc04931d3c5a744fd201faa88509ae33b8f26a8d';
+
     /**
      * Хеширование данных для Facebook (SHA256)
      */
@@ -25,6 +26,7 @@ class AnalyticsServerSide
         $event = [
             'event_name'  => 'Purchase',
             'event_time'  => time(),
+            'action_source' => 'website',
             'user_data'   => [
                 'em'                => $this->hashData($orderData['email']),
                 'ph'                => $this->hashData($orderData['phone']),
@@ -36,9 +38,15 @@ class AnalyticsServerSide
             'custom_data' => [
                 'value'    => $orderData['total_amount'],
                 'currency' => 'UAH',
-                'order_id' => $orderData['order_id'],
+                'event_id' => $orderData['order_id'],
+                'items'          => $orderData['items'],
+
+                'utm_source' => $orderData['UTM_SOURCE'],
+                'utm_medium' => $orderData['UTM_MEDIUM'],
+                'utm_campaign' => $orderData['UTM_CAMPAIGN'],
+                'utm_content' => $orderData['UTM_CONTENT'],
+                'utm_term' => $orderData['UTM_TERM'],
             ],
-            'test_event_code'=>'TEST54709'
         ];
 
         Bitrix\Main\Diag\Debug::writeToFile($event, "purchase FB ". $orderData['order_id'], '/___purchase.txt');
@@ -48,6 +56,7 @@ class AnalyticsServerSide
             'data'         => [$event]
         ]);
     }
+
     public function sendTikTokPurchase($orderData)
     {
         $url = "https://business-api.tiktok.com/open_api/v1.3/event/track/";
@@ -78,20 +87,28 @@ class AnalyticsServerSide
                     'value'    => $orderData['total_amount'],
                     'currency' => 'UAH',
                 ],
+
             ],
+            //'access_token' => $this->tt_access_token,
         ];
 
-        $log = $payload;
-        $log['access_token'] = $this->tt_access_token;
-        Bitrix\Main\Diag\Debug::writeToFile($log, "purchase tiktok ". $orderData['order_id'], '/___purchase.txt');
+        $addtionalHeaders = [
+            'Access-Token: ' . $this->tt_access_token,
+            'access_token: ' . $this->tt_access_token,
+            'Content-Type: application/json',
+        ];
 
-        return $this->curlRequest($url, [
-            'access_token' => $this->tt_access_token,
+        Bitrix\Main\Diag\Debug::writeToFile($payload, "purchase tiktok ". $orderData['order_id'], '/___purchase.txt');
+
+        return $this->curlRequest($url, $payload, $addtionalHeaders
+            //'access_token' => $this->tt_access_token,
             //'mail'         => $orderData['email'],
             // TikTok иногда требует email отправителя в корне
-            'payload'      => $payload
-        ]);
+            //'payload'      =>  $payload
+
+        );
     }
+
     /**
      * Отправка события в Google Analytics 4 (Measurement Protocol)
      */
@@ -99,7 +116,7 @@ class AnalyticsServerSide
     {
         $url = "https://www.google-analytics.com/mp/collect?measurement_id={$this->ga_measurement_id}&api_secret={$this->ga_api_secret}";
         $payload = [
-            'client_id' => $orderData['ga_client_id'],
+            'client_id' => str_replace('GA1.1.', '', $orderData['ga_client_id']), // Убираем точки из client_id
             'events'    => [
                 [
                     'name'   => 'purchase',
@@ -119,12 +136,20 @@ class AnalyticsServerSide
         return $this->curlRequest($url, $payload);
     }
 
-    private function curlRequest($url, $data)
+    private function curlRequest($url, $data, $headersParam=false)
     {
+
+        $headers = ['Content-Type: application/json'];
+        if($headersParam) $headers = $headersParam;
+
         $ch = curl_init($url);
         $payload = json_encode($data);
+
+        Bitrix\Main\Diag\Debug::writeToFile($url, "url curlRequest ", '/___purchase.txt');
+        Bitrix\Main\Diag\Debug::writeToFile($payload, "curlRequest ", '/___purchase.txt');
+
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         $result = curl_exec($ch);

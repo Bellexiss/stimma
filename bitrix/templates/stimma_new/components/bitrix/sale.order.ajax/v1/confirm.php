@@ -331,7 +331,7 @@ if(!$facebookFind['UF_STATUS'])
         <?/*fbq ( 'track', 'Purchase',*/?>
         fbq ( 'track', 'order_created',
             {
-                order_id: '<?=$orderData['ID']?>',
+                event_id: '<?=$orderData['ID']?>',
                 <?/*value:<?=round($orderData['PRICE']/$usdRate,2)?>,*/?>
                 value:<?=$orderData['PRICE']?>,
                 currency: 'UAH',
@@ -437,7 +437,7 @@ if($amount-$minus_price > 0)
                 <info>{"dogovor":'.$orderID.',"view_params": {
 "retry_button": true
 }}</info>
-                <smch_id>18597</smch_id>
+                <smch_id>19983</smch_id>
             </transaction>
         </transactions>
         <trademark>{"ru":"Stimma","ua":"Stimma","en":"Stimma"}</trademark>

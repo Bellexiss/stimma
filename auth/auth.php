@@ -4,30 +4,47 @@ if(!empty($_POST))
     global $DB,$USER;
     if(isset($_POST['ENTER']))
     {
-        $phoneNumber = \Bitrix\Main\UserPhoneAuthTable::normalizePhoneNumber($_POST['CLIENT']['LOGIN']);
-        $user=$DB->Query('select * from b_user where LOGIN = \''.$_POST['CLIENT']['LOGIN'].'\' or EMAIL = \''.$_POST['CLIENT']['LOGIN'].'\' or PERSONAL_PHONE = \''.$phoneNumber.'\'')->Fetch();
+        $phoneNumberNormalize = \Bitrix\Main\UserPhoneAuthTable::normalizePhoneNumber($_POST['CLIENT']['LOGIN']);
+        $phoneNumber = $_POST['CLIENT']['LOGIN'];
 
-        if(isset($user['ID']))
+        if(empty($_POST['CLIENT']['LOGIN']) || empty(trim($_POST['CLIENT']['PASSWORD'])))
         {
-            $_POST['CLIENT']['PASSWORD'] = trim($_POST['CLIENT']['PASSWORD']);
+            $arResult['TYPE'] = 'ERROR';
+            $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Введіть коректні логін та пароль' : 'Введите корректные логин и пароль';
+        }
+        else
+        {
+            $user=$DB->Query('select * from b_user where LOGIN = \''.$_POST['CLIENT']['LOGIN'].'\' or EMAIL = \''.$_POST['CLIENT']['LOGIN'].'\' or PERSONAL_PHONE = \''.$phoneNumber.'\'or PERSONAL_PHONE = \''.$phoneNumberNormalize.'\'')->Fetch();
 
-            $remember = isset($_POST['remember_me']) ? 'Y' : 'N';
-            $arAuthResult = $USER->Login($user['LOGIN'], $_POST['CLIENT']['PASSWORD'], $remember);
-
-            if($arAuthResult['TYPE'] != 'ERROR')
-                LocalRedirect($APPLICATION->GetCurPageParam());
-            else
+            if(isset($user['ID']))
             {
-                $user=CUser::GetByID($user['ID'])->Fetch();
+                $_POST['CLIENT']['PASSWORD'] = trim($_POST['CLIENT']['PASSWORD']);
 
-                if($user['UF_PHONE_CODE'] == $_POST['CLIENT']['PASSWORD'])
-                {
-                    $USER->Authorize($user['ID']);
+                $remember = isset($_POST['remember_me']) ? 'Y' : 'N';
+                $arAuthResult = $USER->Login($user['LOGIN'], $_POST['CLIENT']['PASSWORD'], $remember);
+
+                if($arAuthResult['TYPE'] != 'ERROR')
                     LocalRedirect($APPLICATION->GetCurPageParam());
-                    exit();
+                else
+                {
+                    $user=CUser::GetByID($user['ID'])->Fetch();
+
+                    if($user['UF_PHONE_CODE'] == $_POST['CLIENT']['PASSWORD'])
+                    {
+                        $USER->Authorize($user['ID']);
+                        LocalRedirect($APPLICATION->GetCurPageParam());
+                        exit();
+                    }
                 }
             }
+            else
+            {
+                $arResult['TYPE'] = 'ERROR';
+                $arResult['MESSAGE'] = LANGUAGE_ID == 'ua' ? 'Користувач не знайдений' : 'Пользователь не найден';
+            }
         }
+
+
     }
 
     if(isset($_POST['REGISTER_ME']))

@@ -263,7 +263,7 @@ $APPLICATION->SetTitle("");?>
                                     <div class="sama-sobi-loyalty-info">
                                         <div class="sama-sobi-loyalty-rang">
                                             <div class="sama-sobi-loyalty-rang-key">
-                                                Діва
+                                                Дева
                                             </div>
                                             <div class="sama-sobi-loyalty-rang-value">
                                                 5000 - 9999 ₴*
@@ -382,7 +382,7 @@ $APPLICATION->SetTitle("");?>
                                     <div class="sama-sobi-loyalty-info">
                                         <div class="sama-sobi-loyalty-rang">
                                             <div class="sama-sobi-loyalty-rang-key">
-                                                Ікона стилю
+                                                Икона стиля
                                             </div>
                                             <div class="sama-sobi-loyalty-rang-value">
                                                 10000–19999 ₴*

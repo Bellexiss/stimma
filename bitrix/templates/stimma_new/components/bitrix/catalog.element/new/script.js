@@ -134,9 +134,11 @@ $(document).ready(function()
 
 	var blockScu = $('[data-entity="scu"]');
 
+	var OS = location.href.indexOf('/ru/') == -1 ? 'ОС' : 'ОБ';
+
 	var clickedSize = $('[name="card-radio"]:checked').closest('label').attr('data-size-check')
 	if(typeof clickedSize != 'undefined')
-		$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
+		$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', '+OS+' - '+jsSizes[clickedSize][1]);
 
 	$(document).on('click','.buy_mobile_button',function()
 	{
@@ -148,7 +150,7 @@ $(document).ready(function()
 	{
 		var clickedSize = $(this).attr('data-size-check');
 		if(typeof clickedSize != 'undefined')
-			$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', ОС - '+jsSizes[clickedSize][1]);
+			$('[data-entity="og_block"]').text('ОГ - '+jsSizes[clickedSize][0]+', ОТ - '+jsSizes[clickedSize][2]+', '+OS+' - '+jsSizes[clickedSize][1]);
 	});
 
 	//initScu();

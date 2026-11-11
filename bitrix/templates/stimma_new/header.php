@@ -542,7 +542,7 @@ if(!empty($textRunning))
                             </a>
                             <div class="header-bonus-dropdown-cont">
                                 <div class="header-bonus-dropdown">
-                                    Кількість накопичених стмімзів
+                                    <?= LANGUAGE_ID == 'ua' ? 'Кількість накопичених стмімзів' : 'Количество накопленных стмимзов' ?>
                                 </div>
                             </div>
                         </div>
@@ -946,7 +946,7 @@ if(!empty($textRunning))
                         <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"/>
                     </svg>
                 </span>
-                Закрити
+                <?= LANGUAGE_ID == 'ua' ? 'Закрити' : 'Закрыть' ?>
             </button>
             <div class="language-block">
                 <?
@@ -1264,7 +1264,7 @@ if(!empty($textRunning))
                 <div class="header-menu-item">
                     <a href="#" class="header-menu-link dropdown click_show_click_collection">
                         <span>
-                          КОЛЕКЦІЇ
+                          <?= LANGUAGE_ID == 'ua' ? 'КОЛЕКЦІЇ' : 'КОЛЛЕКЦИИ' ?>
                         </span>
                         <span class="icon">
                             <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1350,7 +1350,7 @@ if(!empty($textRunning))
                 <div class="header-menu-item">
                     <a href="<?=$ru?>/catalog/rasprodazha/" class="header-menu-link">
                         <span>
-                            ЗНИЖКИ
+                            <?= LANGUAGE_ID == 'ua' ? 'ЗНИЖКИ' : 'СКИДКИ' ?>
                         </span>
                         <span class="header-menu-badge">
                             SALE

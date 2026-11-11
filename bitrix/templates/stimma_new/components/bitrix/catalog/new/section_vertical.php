@@ -1586,10 +1586,10 @@ if(!isset($_GET['PAGEN_1']) && !$bIndex)
                     <div class="seo_block_toggler_block">
                         <div class="seo_block_toggler">
                             <span class="seo_open">
-                                Показати більше
+                                <?= LANGUAGE_ID == 'ua' ? 'Показати більше' : 'Показать больше' ?>
                             </span>
                             <span class="seo_close">
-                                Сховати
+                                <?= LANGUAGE_ID == 'ua' ? 'Сховати' : 'Скрыть' ?>
                             </span>
                         </div>
                     </div>
@@ -1608,10 +1608,10 @@ if(!isset($_GET['PAGEN_1']) && !$bIndex)
                     <div class="seo_block_toggler_block">
                         <div class="seo_block_toggler">
                             <span class="seo_open">
-                                Показати більше
+                                <?= LANGUAGE_ID == 'ua' ? 'Показати більше' : 'Показать больше' ?>
                             </span>
                             <span class="seo_close">
-                                Сховати
+                                <?= LANGUAGE_ID == 'ua' ? 'Сховати' : 'Скрыть' ?>
                             </span>
                         </div>
                     </div>
@@ -1649,10 +1649,10 @@ if(!isset($_GET['PAGEN_1']) && !$bIndex)
                             <div class="seo_block_toggler_block">
                                 <div class="seo_block_toggler">
                                     <span class="seo_open">
-                                        Показати більше
+                                        <?= LANGUAGE_ID == 'ua' ? 'Показати більше' : 'Показать больше' ?>
                                     </span>
                                     <span class="seo_close">
-                                        Сховати
+                                        <?= LANGUAGE_ID == 'ua' ? 'Сховати' : 'Скрыть' ?>
                                     </span>
                                 </div>
                             </div>
@@ -1676,10 +1676,10 @@ if(!isset($_GET['PAGEN_1']) && !$bIndex)
                     <div class="seo_block_toggler_block">
                         <div class="seo_block_toggler">
                             <span class="seo_open">
-                                Показати більше
+                                <?= LANGUAGE_ID == 'ua' ? 'Показати більше' : 'Показать больше' ?>
                             </span>
                             <span class="seo_close">
-                                Сховати
+                                <?= LANGUAGE_ID == 'ua' ? 'Сховати' : 'Скрыть' ?>
                             </span>
                         </div>
                     </div>

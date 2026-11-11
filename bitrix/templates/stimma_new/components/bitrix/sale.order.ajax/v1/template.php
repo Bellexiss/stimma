@@ -1587,7 +1587,7 @@ else
                                                 </div>
                                                 <?
                                             }
-                                            if($arResult['IS_ACTION_APRIL_2026'] == 1 && $isAprilAction)
+                                            elseif($arResult['IS_ACTION_APRIL_2026'] == 1 && $isAprilAction)
                                             {
                                                 $minus_price += 1000;
                                                 ?>
@@ -1597,6 +1597,19 @@ else
                                                     </div>
                                                     <div class="order-total-price-value">
                                                         -1000 ₴
+                                                    </div>
+                                                </div>
+                                                <?
+                                            }
+                                            elseif($arResult['AMOUNT_DISCOUNT'])
+                                            {
+                                                ?>
+                                                <div class="order-total-price-item">
+                                                    <div class="order-total-price-key">
+                                                        Знижка
+                                                    </div>
+                                                    <div class="order-total-price-value">
+                                                        -<?= FormatCurrency($arResult['AMOUNT_DISCOUNT'], 'UAH') ?>
                                                     </div>
                                                 </div>
                                                 <?
@@ -1668,6 +1681,14 @@ else
                                             ?>
 
                                             <?
+                                        }
+                                        elseif($arResult['TEXT'])
+                                        {
+                                            ?><div style="color: red;text-align: center;"><?= $arResult['TEXT'] ?></div><?
+                                        }
+                                        elseif($arResult['TEXT_SUCC'])
+                                        {
+                                            ?><div style="color: green;text-align: center;"><?= $arResult['TEXT_SUCC'] ?></div><?
                                         }
                                         ?>
                                         <?

@@ -588,7 +588,9 @@ if (isset($templateData['TEMPLATE_THEME']))
                     ?>
                     <div class="accordion-item" data-code="SOZRTING" data-role="bx_filter_block">
                         <div class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-block0" aria-expanded="true">Сортування</button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#filter-block0" aria-expanded="true">
+                                <?= LANGUAGE_ID == 'ua' ? 'Сортування' : 'Сортировка' ?>
+                            </button>
                         </div>
                         <div id="filter-block0" class="accordion-collapse collapse ">
                             <div class="accordion-body">
@@ -601,12 +603,16 @@ if (isset($templateData['TEMPLATE_THEME']))
                                     <label class="checkbox-label">
                                         <input type="checkbox" value="" name="" id="" <?=$_GET['by']=='PROPERTY_MINIMUM_PRICE' && $_GET['sort']=='asc' ? 'checked' : ''?> onclick="setSort('<?=$APPLICATION->GetCurPageParam('by=PROPERTY_MINIMUM_PRICE&sort=asc', ['by','sort'])?>')">
                                         <span class="checkbox"></span>
-                                        <span class="text">Від найнижчої ціни</span>
+                                        <span class="text">
+                                            <?= LANGUAGE_ID == 'ua' ? 'Від найнижчої ціни' : 'От самой низкой цены' ?>
+                                        </span>
                                     </label>
                                     <label class="checkbox-label">
                                         <input type="checkbox" value="" name="" id="" <?=$_GET['by']=='PROPERTY_MINIMUM_PRICE' && $_GET['sort']=='desc' ? 'checked' : ''?> onclick="setSort('<?=$APPLICATION->GetCurPageParam('by=PROPERTY_MINIMUM_PRICE&sort=desc', ['by','sort'])?>')">
                                         <span class="checkbox"></span>
-                                        <span class="text">Від найвищої ціни</span>
+                                        <span class="text">
+                                            <?= LANGUAGE_ID == 'ua' ? 'Від найвищої ціни' : 'От самой высокой цены' ?>
+                                        </span>
                                     </label>
                                 </div>
                             </div>
@@ -1243,10 +1249,10 @@ if (isset($templateData['TEMPLATE_THEME']))
         </div>
         <div class="offcanvas-footer">
             <a href="#" class="info-btn info-btn-black show_filter_button">
-                Показати товари
+                <?= LANGUAGE_ID == 'ua' ? 'Показати товари' : 'Показать товары' ?>
             </a>
             <a href="#" class="info-btn ">
-                видалити фільтри
+                <?= LANGUAGE_ID == 'ua' ? 'видалити фільтри' : 'удалить фильтры' ?>
             </a>
         </div>
     </form>

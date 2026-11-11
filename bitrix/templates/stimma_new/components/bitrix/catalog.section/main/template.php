@@ -522,7 +522,7 @@ if($arParams['FAVORITE'] == 'Y' && empty($arResult['ITEMS']))
                                         if($arItem['PROPERTIES']['PROP_BONUS_PRICE']['VALUE'])
                                         {
                                             ?>
-                                            <?=number_format($arItem['PROPERTIES']['PROP_BONUS_PRICE']['VALUE'],0,'', ' ')?> <span class="bonus">стімзів</span>
+                                            <?=number_format($arItem['PROPERTIES']['PROP_BONUS_PRICE']['VALUE'],0,'', ' ')?> <span class="bonus"><?= LANGUAGE_ID == 'ua' ? 'стімзів' : 'стимзов' ?></span>
                                             <span class="catalog-item-price-sep">
                                                 |
                                             </span>

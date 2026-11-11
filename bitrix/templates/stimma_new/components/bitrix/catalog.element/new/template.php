@@ -619,7 +619,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                             <path d="M4.21015 6.15683C4.20071 6.68144 4.08271 7.09392 3.74761 7.44631C3.29452 7.91887 2.59599 8.02703 1.97298 7.72663C0.826079 7.17001 0.42962 5.62422 1.19894 4.71916C1.65204 4.18254 2.41192 4.03837 3.07269 4.38678C3.87505 4.80726 4.15823 5.47204 4.21015 6.15683Z"/>
                                         </svg>
                                     </div>
-                                    <span>від <?=round($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE']/3)?> грн/міс</span>
+                                    <span><?=LANGUAGE_ID == 'ua' ? 'від' : 'от'?> <?=round($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE']/3)?> грн/міс</span>
                                 </div>
                             <?}
                             ?>
@@ -627,7 +627,11 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                         {?>
                             <div class="card-infom-cont claude_photo">
                                 <div class="card-infom-block">
-                                    <span class="bonus">+<?=number_format($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE'], 0,'.',' ')?> стімзів</span> для учасників програми лояльності <a href="<?=$ru?>/sama_sobi/">Сама собі STIMMA</a>
+                                    <span class="bonus">+<?=number_format($arResult['OFFERS'][$arResult['SELECTED_OFFER']]['MIN_PRICE']['DISCOUNT_VALUE'], 0,'.',' ')?> 
+                                    <?= LANGUAGE_ID == 'ua' ? 'стімзів' : 'стимзов' ?></span> 
+                                    <?= LANGUAGE_ID == 'ua' ? 'для учасників програми лояльності' : 'для участников программы лояльности' ?> <a href="<?=$ru?>/sama_sobi/">
+                                    <?= LANGUAGE_ID == 'ua' ? 'Сама собі STIMMA' : 'Сама себе STIMMA' ?>
+                                    </a>
                                 </div>
                             </div>
                         <?}?>
@@ -772,7 +776,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 ?>
                                 <div class="card-size-list-block claude_photo" >
                                     <button class="card-size-list-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#size-canvas">
-                                        Розмірна сітка та заміри виробу
+                                        <?= LANGUAGE_ID == 'ua' ? 'Розмірна сітка та заміри виробу' : 'Размерная сетка и замеры изделия' ?>
                                     </button>
                                 </div>
                                 <?
@@ -822,7 +826,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 {
                                     ?>
                                     <div class="card-warning-block" >
-                                        <b>Зверніть увагу:</b> <span data-entity="og_block"><?/*ОГ - 82-92, ОБ - 94-98*/?></span>
+                                        <b><?= LANGUAGE_ID == 'ua' ? 'Зверніть увагу:' : 'Обратите внимание:' ?></b> <span data-entity="og_block"></span>
                                         <?
                                         if(!empty($arResult['PROPERTIES']['ZEDNANNYA_'.strtoupper(LANGUAGE_ID)]['VALUE']))
                                         {
@@ -838,7 +842,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 {?>
                                     <div class="card-color-type-block">
                                         <div class="card-color-type-title">
-                                            Колір: <span><?=$arResult['COLOR_LIST'][$arResult['PROPERTIES']['COLOR']['VALUE']]?></span>
+                                            <?= LANGUAGE_ID == 'ua' ? 'Колір:' : 'Цвет:' ?> <span><?=$arResult['COLOR_LIST'][$arResult['PROPERTIES']['COLOR']['VALUE']]?></span>
                                         </div>
                                         <div class="card-color-type-list">
                                             <?
@@ -1008,7 +1012,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 <div class="accordion-item">
                                     <div class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord1" aria-expanded="false" aria-controls="card-accord1">
-                                            Опис товару
+                                            <?= LANGUAGE_ID == 'ua' ? 'Опис товару' : 'Описание товара' ?>
                                         </button>
                                     </div>
                                     <div id="card-accord1" class="accordion-collapse collapse" data-bs-parent="#card-accord">
@@ -1026,7 +1030,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                       <div class="accordion-item">
                                     <div class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-poed" aria-expanded="false" aria-controls="card-poed">
-                                            Поєднання
+                                            <?= LANGUAGE_ID == 'ua' ? 'Поєднання' : 'Сочетание' ?>
                                         </button>
                                     </div>
                                     <div id="card-poed" class="accordion-collapse collapse" data-bs-parent="#card-accord">
@@ -1440,7 +1444,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     <div class="accordion-item">
                                         <div class="accordion-header">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord6" aria-expanded="false" aria-controls="card-accord6">
-                                                Параметри моделі
+                                                <?= LANGUAGE_ID == 'ua' ? 'Параметри моделі' : 'Параметры модели' ?>
                                             </button>
                                         </div>
                                         <div id="card-accord6" class="accordion-collapse collapse" data-bs-parent="#card-accord">

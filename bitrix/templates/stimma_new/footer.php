@@ -370,7 +370,9 @@ global $USER;
 					</div>
 	                <div class="footer-block footer-block-email">
 						<div class="footer-block-menu">
-							<div class="write-us-title">Підпишись на нашу розсилку та дізнавайся першою про новинки </div>
+							<div class="write-us-title">
+                                <?= LANGUAGE_ID == 'ua' ? 'Підпишись на нашу розсилку та дізнавайся першою про новинки' : 'Подпишись на нашу рассылку и узнавай первой о новинках' ?>
+                            </div>
 							<form>
 	                            <div class="write-us-form-block">
 	                                <input type="text" placeholder="Ваш E-mail" name="subscribe_email">

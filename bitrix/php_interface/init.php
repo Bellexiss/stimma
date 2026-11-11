@@ -37,7 +37,11 @@ $utmFields = [
     '_fbc',
     '_fbp',
     '_ga',
-    'ttclid'
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_content',
+    'utm_term'
 ];
 
 foreach ($utmFields as $field)
@@ -60,6 +64,67 @@ $_COOKIE['utm_ip'] = $_SERVER['REMOTE_ADDR'];
 $_COOKIE['utm_uagent'] = $_SERVER['HTTP_USER_AGENT'];
 setcookie('utm_ip', $_SERVER['REMOTE_ADDR'], time() + 60 * 60 * 24 * 90, '/');
 setcookie('utm_uagent', $_SERVER['HTTP_USER_AGENT'], time() + 60 * 60 * 24 * 90, '/');
+
+if (empty($_COOKIE['utm_source']) && !isset($_GET['utm_source']))
+{
+    $source = 'direct'; // прямой заход или реферер скрыт (мессенджеры, приложения)
+    $medium = 'none';
+
+    if (!empty($_SERVER['HTTP_REFERER']))
+    {
+        $host = strtolower(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) ?? '');
+        // убираем www. и поддомены: m.google.com -> google.com
+        if ($host !== '')
+        {
+            $parts = explode('.', $host);
+            if (count($parts) >= 2)
+            {
+                $host = $parts[count($parts) - 2] . '.' . end($parts);
+            }
+        }
+
+        $known = [
+            'google.com'    => ['google', 'organic'],
+            'google.ru'     => ['google', 'organic'],
+            'yandex.ru'     => ['yandex', 'organic'],
+            'ya.ru'         => ['yandex', 'organic'],
+            'bing.com'      => ['bing', 'organic'],
+            'duckduckgo.com'=> ['duckduckgo', 'organic'],
+            'mail.ru'       => ['mail.ru', 'organic'],
+            'facebook.com'  => ['facebook', 'social'],
+            'instagram.com'=> ['instagram', 'social'],
+            'vk.com'        => ['vk', 'social'],
+            'ok.ru'         => ['odnoklassniki', 'social'],
+            't.me'          => ['telegram', 'social'],
+            'x.com'         => ['x', 'social'],
+            'twitter.com'   => ['twitter', 'social'],
+            'youtube.com'   => ['youtube', 'social'],
+            'tiktok.com'    => ['tiktok', 'social'],
+            'linkedin.com'  => ['linkedin', 'social'],
+            'pinterest.com' => ['pinterest', 'social'],
+            'chatgpt.com'   => ['chatgpt', 'referral'],
+            'reddit.com'    => ['reddit', 'referral'],
+        ];
+
+        if (isset($known[$host]))
+        {
+            [$source, $medium] = $known[$host];
+        }
+        elseif ($host !== '' && $host !== strtolower($_SERVER['HTTP_HOST'] ?? ''))
+        {
+            // чужой сайт — берём просто домен как источник
+            $source = $host;
+            $medium = 'referral';
+        }
+        // если реферер — наш же сайт, остаётся direct/none, чтобы не затирать
+    }
+
+    setcookie('utm_source', $source, time() + 60 * 60 * 24 * 90, '/');
+    setcookie('utm_medium', $medium, time() + 60 * 60 * 24 * 90, '/');
+    $_COOKIE['utm_source'] = $source;
+    $_COOKIE['utm_medium'] = $medium;
+}
+
 
 EventManager::getInstance()->addEventHandler("main", "OnAfterUserRegister", "AddUserPhoneToHL");
 function getProfileFrom1C($phone) {
@@ -436,9 +501,7 @@ function getBasket($url = false)
         ),
         false,
         false,
-        array("ID", "CALLBACK_FUNC", "MODULE",
-              "PRODUCT_ID", "QUANTITY", "DELAY",
-              "CAN_BUY", "PRICE", "WEIGHT")
+        array("*")
     );
 
     while ($arItems = $dbBasketItems->Fetch())
@@ -1022,6 +1085,12 @@ function getBasketNewHtml($basket = false)
     $endAction = strtotime('22.08.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
+
+    $time1 = strtotime(date('15.11.2026 23:59:59'));
+    $time2 = strtotime(date('31.03.2027 23:59:59'));
+    $isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
+
+    if($isActionSekfdate) require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/actions/sekfdate.php';
 
     $param = UA ? '/' : '/ru/';
     if(!$basket)
@@ -1641,16 +1710,24 @@ function getBasketNewHtml($basket = false)
 
                                     </div>
                                     <div class="basket-header-control-item basket_favorite">
-                                        <a href="#" class="basket-header-item-delete" data-id="<?=$arItem['ID']?>">
-                                            <span class="icon">
-                                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
-                                                </svg>
-                                            </span>
-                                            <span class="text">
-                                                <?=UA ? 'Видалити' : 'Удалить'?>
-                                            </span>
-                                        </a>
+                                        <?
+                                        if($arItem['ID'])
+                                        {
+                                            ?>
+                                            <a href="#" class="basket-header-item-delete" data-id="<?=$arItem['ID']?>">
+                                                <span class="icon">
+                                                    <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
+                                                    </svg>
+                                                </span>
+                                                <span class="text">
+                                                    <?=UA ? 'Видалити' : 'Удалить'?>
+                                                </span>
+                                            </a>
+                                            <?
+                                        }
+                                        ?>
+                                        
                                         <?//if(isset($_GET['bfavorite']))
                                         {?>
                                             <a href="#" class="basket-header-item-favorite <?=isset($_SESSION['FAVORITE'][$arItem['PRODUCT_ID']]) ? 'active' : ''?>" data-id="<?=$arItem['PRODUCT_ID']?>">
@@ -1972,6 +2049,47 @@ function getBasketNewHtml($basket = false)
                     ?><span>Акція діє лише на одяг. Додай речі з категорії одягу, щоб отримати -1000 грн.</span><?
                 }
             }
+            if($basket['ACTION']['AMOUNT_DISCOUNT'])
+            {
+                ?>
+                <div class="basket-header-total">
+                        <div class="basket-header-total-key">
+                            Знижка
+                        </div>
+                        <div class="basket-header-total-value">
+                            <?=FormatCurrency(-$basket['ACTION']['AMOUNT_DISCOUNT'],'UAH')?>
+                        </div>
+                    </div>
+                    <div class="basket-header-total">
+                        <div class="basket-header-total-key">
+                            Разом
+                        </div>
+                        <div class="basket-header-total-value">
+                            <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price-$basket['ACTION']['AMOUNT_DISCOUNT'],'UAH')?>
+                        </div>
+                    </div>
+
+                    <?
+                    
+                    
+            }
+
+            if($basket['ACTION']['TEXT_SUCC'])
+                    {
+                        ?>
+                        <span class="basket-header-add-more card-infom-block" style="background: var(--beige);">
+                            <span class="bonus"><?= $basket['ACTION']['TEXT_SUCC'] ?></span>
+                        </span>
+                        <?
+                    }
+                    if($basket['ACTION']['TEXT'])
+                    {
+                        ?>
+                        <span class="basket-header-add-more card-infom-block">
+                            <span class="bonus"><?= $basket['ACTION']['TEXT'] ?></span>
+                        </span>
+                        <?
+                    }
             ?>
             <div class="basket-header-btn">
                 <a href="<?=UA?'':'/ru'?>/order/" class="info-btn info-btn-black">
@@ -7048,58 +7166,3 @@ function sendEmailSmsNotPayedOrder()
     return 'sendEmailSmsNotPayedOrder();';
 }
 
-function sendPurchaseData($orderId)
-{
-    require $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
-    $sp = new AnalyticsServerSide();
-    //53660
-    global $DB;
-    $resOrder = $DB->Query('select * from b_sale_order where ID > 53660 and PAYED = \'Y\'');
-    $analytics = new AnalyticsServerSide();
-
-    $propsDB = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $orderId);
-    $props = [];
-    while ($record = $propsDB->Fetch())
-        $props[$record['CODE']] = $record['VALUE'];
-
-    $basket = [];
-    $res = $DB->Query('select * from b_sale_basket where ORDER_ID = ' . $orderId);
-    while ($record = $res->Fetch())
-        $basket[] = ['item_id' => $record['PRODUCT_ID'], 'price' => round($record['PRICE'],2), 'quantity' => intval($record['QUANTITY'])];
-
-    $order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
-
-    // ==========================================
-    // ПРИМЕР ИСПОЛЬЗОВАНИЯ (в обработчике Webhook оплаты)
-    // ==========================================
-
-    // Эти данные вы достаете из своей БД по ID заказа, который пришел в Webhook
-    $orderFromDb = [
-        'order_id'      => $orderId,
-        'total_amount'  => $order['PRICE'],
-        'email'         => $props['EMAIL'],
-        'phone'         => $props['PHONE'],
-        'fbc'           => $props['FBC'],
-        'fbp'           => $props['FBP'],
-        'ga_client_id'   => $props['GA'],
-        'ip'            => $props['IP'],
-        'user_agent'    => $props['UAGENT'],
-        'tt_click_id'    => $props['TTCLID'],
-        'items'         => $basket
-    ];
-
-    //if($props['FBC']) $orderFromDb['fbc'] = $props['FBC'];
-    //if($props['FBP']) $orderFromDb['fpb'] = $props['FBP'];
-    //if($props['GA']) $orderFromDb['ga_client_id'] = $props['GA'];
-    //if($props['UAGENT']) $orderFromDb['user_agent'] = $props['UAGENT'];
-    //if($props['IP']) $orderFromDb['ip'] = $props['IP'];
-
-    // Отправляем в обе системы
-    $fb_response = $analytics->sendFacebookPurchase($orderFromDb);
-    $ga_response = $analytics->sendGooglePurchase($orderFromDb);
-    $tt_response = $analytics->sendTikTokPurchase($orderFromDb);
-
-    Bitrix\Main\Diag\Debug::writeToFile($fb_response, "response purchase FB ". $orderData['order_id'], '/___purchase.txt');
-    Bitrix\Main\Diag\Debug::writeToFile($ga_response, "response purchase GA ". $orderData['order_id'], '/___purchase.txt');
-    Bitrix\Main\Diag\Debug::writeToFile($tt_response, "response purchase TikTok ". $orderData['order_id'], '/___purchase.txt');
-}
