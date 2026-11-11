@@ -37,6 +37,7 @@ $utmFields = [
     '_fbc',
     '_fbp',
     '_ga',
+    'ttclid',
     'utm_source',
     'utm_medium',
     'utm_campaign',
@@ -7166,3 +7167,60 @@ function sendEmailSmsNotPayedOrder()
     return 'sendEmailSmsNotPayedOrder();';
 }
 
+
+
+function sendPurchaseData($orderId)
+{
+    require $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
+    $sp = new AnalyticsServerSide();
+    //53660
+    global $DB;
+    $resOrder = $DB->Query('select * from b_sale_order where ID > 53660 and PAYED = \'Y\'');
+    $analytics = new AnalyticsServerSide();
+
+    $propsDB = $DB->Query('select * from b_sale_order_props_value where ORDER_ID = ' . $orderId);
+    $props = [];
+    while ($record = $propsDB->Fetch())
+        $props[$record['CODE']] = $record['VALUE'];
+
+    $basket = [];
+    $res = $DB->Query('select * from b_sale_basket where ORDER_ID = ' . $orderId);
+    while ($record = $res->Fetch())
+        $basket[] = ['item_id' => $record['PRODUCT_ID'], 'price' => round($record['PRICE'],2), 'quantity' => intval($record['QUANTITY'])];
+
+    $order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
+
+    // ==========================================
+    // ПРИМЕР ИСПОЛЬЗОВАНИЯ (в обработчике Webhook оплаты)
+    // ==========================================
+
+    // Эти данные вы достаете из своей БД по ID заказа, который пришел в Webhook
+    $orderFromDb = [
+        'order_id'      => $orderId,
+        'total_amount'  => $order['PRICE'],
+        'email'         => $props['EMAIL'],
+        'phone'         => $props['PHONE'],
+        'fbc'           => $props['FBC'],
+        'fbp'           => $props['FBP'],
+        'ga_client_id'   => $props['GA'],
+        'ip'            => $props['IP'],
+        'user_agent'    => $props['UAGENT'],
+        'tt_click_id'    => $props['TTCLID'],
+        'items'         => $basket
+    ];
+
+    //if($props['FBC']) $orderFromDb['fbc'] = $props['FBC'];
+    //if($props['FBP']) $orderFromDb['fpb'] = $props['FBP'];
+    //if($props['GA']) $orderFromDb['ga_client_id'] = $props['GA'];
+    //if($props['UAGENT']) $orderFromDb['user_agent'] = $props['UAGENT'];
+    //if($props['IP']) $orderFromDb['ip'] = $props['IP'];
+
+    // Отправляем в обе системы
+    $fb_response = $analytics->sendFacebookPurchase($orderFromDb);
+    $ga_response = $analytics->sendGooglePurchase($orderFromDb);
+    $tt_response = $analytics->sendTikTokPurchase($orderFromDb);
+
+    Bitrix\Main\Diag\Debug::writeToFile($fb_response, "response purchase FB ". $orderData['order_id'], '/___purchase.txt');
+    Bitrix\Main\Diag\Debug::writeToFile($ga_response, "response purchase GA ". $orderData['order_id'], '/___purchase.txt');
+    Bitrix\Main\Diag\Debug::writeToFile($tt_response, "response purchase TikTok ". $orderData['order_id'], '/___purchase.txt');
+}
