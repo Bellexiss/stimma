@@ -33,6 +33,11 @@ define('HELL_2026',$isHell2026);
 define('DEV',$_SERVER['SERVER_NAME']) == 'dev.stimma.ua';
 
 
+$time1 = strtotime(date('14.11.2026 23:59:59'));
+$time2 = strtotime(date('31.12.2027 23:59:59'));
+$isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
+define('SEKFDATE',$isActionSekfdate);
+
 $utmFields = [
     '_fbc',
     '_fbp',
@@ -1086,10 +1091,7 @@ function getBasketNewHtml($basket = false)
     $endAction = strtotime('22.08.2026 23:59:59');
     $isJulyAction = $currtime >= $startAction && $currtime <= $endAction ? 1 : 0;
 
-
-    $time1 = strtotime(date('15.11.2026 23:59:59'));
-    $time2 = strtotime(date('31.03.2027 23:59:59'));
-    $isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
+    $isActionSekfdate = SEKFDATE;
 
     if($isActionSekfdate) require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/actions/sekfdate.php';
 
@@ -1447,6 +1449,18 @@ function getBasketNewHtml($basket = false)
             </button>
         </div>
         <div class="offcanvas-body">
+            <div class="basket-buy-more-block">
+                <div class="basket-buy-more-icon-block">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="GIFT" width="40px" height="40px" viewBox="0 0 1800 1800" enable-background="new 0 0 1800 1800" xml:space="preserve">
+                        <path fill="currentcolor" d="M1767.367,358.009h-276.059c0.318-51.483-6-101.019-19.174-146.457  c-30.153-104.006-92.074-174.999-174.359-199.906c-82.275-24.902-173.179-0.171-255.948,69.653  c-59.842,50.483-110.403,120.564-146.689,202.113c-36.296-81.549-86.849-151.63-146.699-202.113  c-82.77-69.825-173.664-94.547-255.949-69.653c-82.276,24.907-144.199,95.899-174.353,199.906  c-13.174,45.438-19.492,94.974-19.179,146.457H32.633c-17.443,0-31.582,14.139-31.582,31.582v342.886  c0,17.443,14.139,31.582,31.582,31.582h103.769v1002.154c0,17.439,14.138,31.582,31.581,31.582h593.286h277.465h593.284  c17.438,0,31.581-14.143,31.581-31.582V764.059h103.769c17.438,0,31.581-14.139,31.581-31.582V389.591  C1798.948,372.148,1784.805,358.009,1767.367,358.009z M1082.556,129.576c65.877-55.563,135.808-75.976,196.927-57.471  c61.109,18.496,107.988,74.267,131.983,157.036c11.543,39.794,17.059,83.374,16.751,128.869h-389.483H933.538  C966.159,264.106,1018.466,183.646,1082.556,129.576z M378.802,229.141c23.993-82.77,70.872-138.54,131.991-157.036  c61.119-18.518,131.049,1.912,196.927,57.471c64.088,54.07,116.387,134.53,149.017,228.434h-95.468H362.055  C361.742,312.514,367.263,268.935,378.802,229.141z M64.215,700.896V421.172h238.4h63.538h363.535v279.723H167.983H64.215z   M199.565,764.059h530.122v970.573H199.565V764.059z M792.851,1734.632V764.059v-63.163V421.172h214.301v279.723v63.163v970.573  H792.851z M1600.436,1734.632h-530.12V764.059h530.12V1734.632z M1735.786,700.896h-103.769h-561.702V421.172h353.795h63.551  h248.125V700.896z"/>
+                    </svg>
+                </div>
+                <div class="basket-buy-more-text-block">
+                    <div class="basket-buy-more-title"><?= LANGUAGE_ID == 'ua' ? 'Більше речей - більша знижка' : 'Больше вещей - большая скидка' ?></div>
+                    <div class="basket-buy-more-text"><?= LANGUAGE_ID == 'ua' ? 'Друга річ -15% та третя -30% у чеку з 3 речей з різних категорій' : 'Вторая вещь -15% и третья -30% в чеке из 3 вещей из разных категорий' ?></div>
+                </div>
+                
+            </div>
             <div class="basket-header-list-cont">
                 <div class="basket-header-list">
                     <?
@@ -1649,20 +1663,28 @@ function getBasketNewHtml($basket = false)
                                                 if(($isJulyAction || SEP_SHORT) && $arItem['PRODUCT_ID'] == 61376)
                                                     $price['PRICE'] = $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'] = 0.01;
 
-
+                                                $percentD = 0;
                                                 if($price['PRICE'] > $arItem['CURRENT_PRICE']['DISCOUNT_PRICE'])
                                                 {
+                                                    $percentD = round(($price['PRICE'] - $arItem['CURRENT_PRICE']['DISCOUNT_PRICE']) / $price['PRICE'] * 100);
                                                     ?>
                                                     <div class="order-list-price-old"><?=FormatCurrency($price['PRICE'],'UAH')?></div>
+                                                    
                                                     <?
                                                 }
                                                 ?>
-
-                                                <div class="basket-header-item-price">
-                                                    <?=FormatCurrency($arItem['CURRENT_PRICE']['DISCOUNT_PRICE'],'UAH')?>
+                                                <div class="basket-header-item-price-group">
+                                                    <?
+                                                    if($percentD > 0)
+                                                        {
+                                                            ?><div class="basket-header-item-discount">-<?= $percentD ?>%</div><?
+                                                        }?>
+                                                    <div class="basket-header-item-price">
+                                                        <?=FormatCurrency($arItem['CURRENT_PRICE']['DISCOUNT_PRICE'],'UAH')?>
+                                                    </div>
+                                                            
                                                 </div>
-                                                <?
-                                            }
+                                            <?}
                                             ?>
 
                                         </div>
@@ -1675,6 +1697,54 @@ function getBasketNewHtml($basket = false)
                                     </div>
                                 </div>
                                 <div class="basket-header-control">
+                                    <div class="basket-header-control-item basket_favorite">
+                                        <?
+                                        if($arItem['ID'])
+                                        {
+                                            ?>
+                                            <a href="#" class="basket-header-item-delete" data-id="<?=$arItem['ID']?>">
+                                                <span class="icon">
+                                                    <!-- <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
+                                                    </svg> -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                        <path d="M10 10V16M14 10V16M18 6V18C18 19.1046 17.1046 20 16 20H8C6.89543 20 6 19.1046 6 18V6M4 6H20M15 6V5C15 3.89543 14.1046 3 13 3H11C9.89543 3 9 3.89543 9 5V6" stroke="currentcolor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                </span>
+                                                <?/*<span class="text">
+                                                    <?=UA ? 'Видалити' : 'Удалить'?>
+                                                </span>*/?>
+                                            </a>
+                                            <?
+                                        }
+                                        ?>
+                                        
+                                        <?//if(isset($_GET['bfavorite']))
+                                        {?>
+                                            <a href="#" class="basket-header-item-favorite <?=isset($_SESSION['FAVORITE'][$arItem['PRODUCT_ID']]) ? 'active' : ''?>" data-id="<?=$arItem['PRODUCT_ID']?>">
+                                                <span class="icon">
+                                                    <svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M21.1211 1C22.8573 1.00008 24.5177 1.67362 25.7998 2.9082C27.2066 4.26283 28.013 6.18547 28 8.18164C27.9901 9.6702 27.4064 11.3444 26.1465 13.1729L25.8857 13.541C24.7731 15.0644 23.2108 16.6732 21.2246 18.3184C18.0759 20.9262 14.9727 22.7134 14.499 22.9814C14.0197 22.7121 10.8967 20.9249 7.73828 18.3184C5.74455 16.673 4.18144 15.0637 3.07324 13.541C1.63737 11.5682 0.98956 9.7706 1 8.18457C1.01286 6.2594 1.73204 4.46171 3.01465 3.11328C4.31718 1.744 6.04209 1.0001 7.87891 1C10.2274 1 12.3954 2.25905 13.6504 4.28418C13.8327 4.5784 14.1539 4.7578 14.5 4.75781C14.8461 4.75781 15.1673 4.57841 15.3496 4.28418C16.6046 2.25908 18.7726 1 21.1211 1Z" stroke="currentcolor" stroke-width="2" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                </span>
+                                                <?/*
+                                                <span class="text">
+                                                    <?
+                                                    if(isset($_SESSION['FAVORITE'][$arItem['PRODUCT_ID']]))
+                                                    {
+                                                        echo LANGUAGE_ID == 'ua' ? 'В обраному' : 'В избранном';
+                                                    }
+                                                    else
+                                                    {
+                                                        echo LANGUAGE_ID == 'ua' ? 'В обране' : 'В избранное';
+                                                    }
+                                                    ?>
+                                                </span>
+                                                */?>
+                                            </a>
+                                        <?}?>
+
+                                    </div>
                                     <div class="basket-header-control-group">
                                         <div class="basket-header-counter" style="<?=/*($isJulyAction || SEP_SHORT) && ($arItem['PRODUCT_ID'] == 61376)*/ HELL_2026 && $arItem['PRODUCT_ID'] == $actionId ? 'display:none;' : ''?>">
                                             <button class="basket-header-counter-btn minus_count" data-id="<?=$arItem['ID']?>">
@@ -1685,8 +1755,8 @@ function getBasketNewHtml($basket = false)
                                             <input type="text" name="" value="<?=$arItem['QUANTITY']?>" data-id="<?=$arItem['ID']?>">
                                             <button class="basket-header-counter-btn plus_count" data-id="<?=$arItem['ID']?>">
                                                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <rect x="6" width="1" height="13" fill="white"/>
-                                                    <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="white"/>
+                                                    <rect x="6" width="1" height="13" fill="currentcolor"/>
+                                                    <rect x="13" y="6" width="1" height="13" transform="rotate(90 13 6)" fill="currentcolor"/>
                                                 </svg>
                                             </button>
                                         </div>
@@ -1710,49 +1780,7 @@ function getBasketNewHtml($basket = false)
                                         ?>
 
                                     </div>
-                                    <div class="basket-header-control-item basket_favorite">
-                                        <?
-                                        if($arItem['ID'])
-                                        {
-                                            ?>
-                                            <a href="#" class="basket-header-item-delete" data-id="<?=$arItem['ID']?>">
-                                                <span class="icon">
-                                                    <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M13.4365 12.0225L25.4561 0.00292969L26.8701 1.41699L14.8506 13.4365L26.8701 25.4561L25.4561 26.8701L13.4365 14.8506L1.41406 26.873L0 25.459L12.0225 13.4365L0 1.41406L1.41406 0L13.4365 12.0225Z" fill="currentcolor"></path>
-                                                    </svg>
-                                                </span>
-                                                <span class="text">
-                                                    <?=UA ? 'Видалити' : 'Удалить'?>
-                                                </span>
-                                            </a>
-                                            <?
-                                        }
-                                        ?>
-                                        
-                                        <?//if(isset($_GET['bfavorite']))
-                                        {?>
-                                            <a href="#" class="basket-header-item-favorite <?=isset($_SESSION['FAVORITE'][$arItem['PRODUCT_ID']]) ? 'active' : ''?>" data-id="<?=$arItem['PRODUCT_ID']?>">
-                                                <span class="icon">
-                                                    <svg width="29" height="24" viewBox="0 0 29 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M21.1211 1C22.8573 1.00008 24.5177 1.67362 25.7998 2.9082C27.2066 4.26283 28.013 6.18547 28 8.18164C27.9901 9.6702 27.4064 11.3444 26.1465 13.1729L25.8857 13.541C24.7731 15.0644 23.2108 16.6732 21.2246 18.3184C18.0759 20.9262 14.9727 22.7134 14.499 22.9814C14.0197 22.7121 10.8967 20.9249 7.73828 18.3184C5.74455 16.673 4.18144 15.0637 3.07324 13.541C1.63737 11.5682 0.98956 9.7706 1 8.18457C1.01286 6.2594 1.73204 4.46171 3.01465 3.11328C4.31718 1.744 6.04209 1.0001 7.87891 1C10.2274 1 12.3954 2.25905 13.6504 4.28418C13.8327 4.5784 14.1539 4.7578 14.5 4.75781C14.8461 4.75781 15.1673 4.57841 15.3496 4.28418C16.6046 2.25908 18.7726 1 21.1211 1Z" stroke="currentcolor" stroke-width="2" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </span>
-                                                <span class="text">
-                                                    <?
-                                                    if(isset($_SESSION['FAVORITE'][$arItem['PRODUCT_ID']]))
-                                                    {
-                                                        echo LANGUAGE_ID == 'ua' ? 'В обраному' : 'В избранном';
-                                                    }
-                                                    else
-                                                    {
-                                                        echo LANGUAGE_ID == 'ua' ? 'В обране' : 'В избранное';
-                                                    }
-                                                    ?>
-                                                </span>
-                                            </a>
-                                        <?}?>
-
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -1915,15 +1943,21 @@ function getBasketNewHtml($basket = false)
 
 
         <div class="offcanvas-footer">
-            <div class="basket-header-total">
-                <div class="basket-header-total-key">
-                    Разом <?=$basket['TOTAL_KOM']?> од.
-                </div>
-                <div class="basket-header-total-value">
-                    <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price,'UAH')?>
-                </div>
-            </div>
             <?
+            if(!$basket['ACTION']['AMOUNT_DISCOUNT'])
+            {
+                ?>
+                <div class="basket-header-total">
+                    <div class="basket-header-total-key">
+                        Разом <?=$basket['TOTAL_KOM']?> од.
+                    </div>
+                    <div class="basket-header-total-value">
+                        <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price,'UAH')?>
+                    </div>
+                </div>
+            <?
+            }
+
             if($isJulyAction && $percentJuly)
             {
                 ?>
@@ -2053,9 +2087,22 @@ function getBasketNewHtml($basket = false)
             if($basket['ACTION']['AMOUNT_DISCOUNT'])
             {
                 ?>
-                <div class="basket-header-total">
+                <div class="basket-header-total action-no">
+                    <div class="basket-header-total-key">
+                        <?= LANGUAGE_ID == 'ua' ? 'Вартість без акції' : 'Стоимость без акции' ?>
+                    </div>
+                    <div class="basket-header-total-value">
+                        <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price+$basket['ACTION']['AMOUNT_DISCOUNT'],'UAH')?>
+                    </div>
+                </div>
+                <div class="basket-header-total total-profit">
                         <div class="basket-header-total-key">
-                            Знижка
+                            <span class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="currentcolor"/>
+                               </svg>
+                            </span>
+                            <?= LANGUAGE_ID == 'ua' ? 'Твоя вигода' : 'Твоя выгода' ?>
                         </div>
                         <div class="basket-header-total-value">
                             <?=FormatCurrency(-$basket['ACTION']['AMOUNT_DISCOUNT'],'UAH')?>
@@ -2063,16 +2110,14 @@ function getBasketNewHtml($basket = false)
                     </div>
                     <div class="basket-header-total">
                         <div class="basket-header-total-key">
-                            Разом
+                            <?= LANGUAGE_ID == 'ua' ? 'До сплати' : 'К оплате' ?>
                         </div>
                         <div class="basket-header-total-value">
-                            <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price-$basket['ACTION']['AMOUNT_DISCOUNT'],'UAH')?>
+                            <?=FormatCurrency($TOTAL_UAH_PRICE-$minus_price,'UAH')?>
                         </div>
                     </div>
 
                     <?
-                    
-                    
             }
 
             if($basket['ACTION']['TEXT_SUCC'])
@@ -2108,8 +2153,65 @@ function getBasketNewHtml($basket = false)
     return $htmlBasket;
 }
 
+
+function checkDiscountSekfdate($arFields)
+{
+    //if(in_array($arFields['ID'], [50660, 50661, 50662, 52642, 62631]))
+    {
+        global $DB;
+        CModule::IncludeModule('iblock');
+
+        $result = $sections = [];
+        $excludeSections=[361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410,1311]; // sale + Аксесури + Бонусна шафа
+        $products = CIBlockElement::GetList([], ['IBLOCK_ID' => 55, 'ID' => $arFields['ID']])->GetNextElement()->GetProperties()['PRODUCTS']['VALUE'];
+
+        if(!empty($products))
+        {
+            foreach($products as $index => $product)
+            {
+                $priceData = CCatalogProduct::GetOptimalPrice($product);
+                $price = $priceData['PRICE']['PRICE'];
+                $element = $DB->Query('select * from b_iblock_element where ID = '.$product)->Fetch();
+                if(!in_array($element['IBLOCK_SECTION_ID'], $excludeSections)) 
+                    $sections[$element['IBLOCK_SECTION_ID']] = $element['IBLOCK_SECTION_ID'];
+                $result[$product] = $price;
+            }
+        }
+
+        if(count($products) >= 3 && count($sections) >= 3)
+        {
+            asort($result);
+
+            $index = 0;
+
+            CIBlockElement::SetPropertyValuesEx($arFields['ID'], false, ["DISCOUNT_30" => false]);                    
+            CIBlockElement::SetPropertyValuesEx($arFields['ID'], false, ["DISCOUNT_15" => false]); 
+
+            foreach($result as $key=>$value)
+            {
+                if(!$index)
+                    CIBlockElement::SetPropertyValuesEx($arFields['ID'], false, ["DISCOUNT_30" => $key]);
+                elseif($index == 1)
+                    CIBlockElement::SetPropertyValuesEx($arFields['ID'], false, ["DISCOUNT_15" => $key]);
+                $index++;
+            }
+        }
+    }
+    
+}
+
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("RClass", "ratingHandler"));
 AddEventHandler("iblock", "OnAfterIBlockElementDelete", Array("RClass", "ratingHandler"));
+AddEventHandler("iblock", "OnAfterIBlockElementAdd", Array("RClass2", "checkItem"));
+
+class RClass2
+{
+    function ratingHandler(&$arFields)
+    {
+        if($arFields['IBLOCK_ID'] == 55 && SEKFDATE)
+            checkDiscountSekfdate($arFields);
+    }
+}
 
 class RClass
 {
@@ -2162,6 +2264,9 @@ class RClass
                 }
             }
         }
+
+        if($arFields['IBLOCK_ID'] == 55 && SEKFDATE)
+            checkDiscountSekfdate($arFields);
     }
 }
 if(strpos($GLOBALS["APPLICATION"]->GetCurPage(), '/bitrix/') !== false)
@@ -7171,10 +7276,20 @@ function sendEmailSmsNotPayedOrder()
 
 function sendPurchaseData($orderId)
 {
-    require $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
+    global $DB;
+
+    CModule::IncludeModule('sale');
+    CModule::IncludeModule('iblock');
+    CModule::IncludeModule('catalog');
+
+    $order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
+
+    if(!$order) return;
+
+    require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/php_interface/classes/ServerPurchase.php';
     $sp = new AnalyticsServerSide();
     //53660
-    global $DB;
+
     $resOrder = $DB->Query('select * from b_sale_order where ID > 53660 and PAYED = \'Y\'');
     $analytics = new AnalyticsServerSide();
 
@@ -7188,7 +7303,7 @@ function sendPurchaseData($orderId)
     while ($record = $res->Fetch())
         $basket[] = ['item_id' => $record['PRODUCT_ID'], 'price' => round($record['PRICE'],2), 'quantity' => intval($record['QUANTITY'])];
 
-    $order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
+
 
     // ==========================================
     // ПРИМЕР ИСПОЛЬЗОВАНИЯ (в обработчике Webhook оплаты)
@@ -7220,7 +7335,7 @@ function sendPurchaseData($orderId)
     $ga_response = $analytics->sendGooglePurchase($orderFromDb);
     $tt_response = $analytics->sendTikTokPurchase($orderFromDb);
 
-    Bitrix\Main\Diag\Debug::writeToFile($fb_response, "response purchase FB ". $orderData['order_id'], '/___purchase.txt');
-    Bitrix\Main\Diag\Debug::writeToFile($ga_response, "response purchase GA ". $orderData['order_id'], '/___purchase.txt');
-    Bitrix\Main\Diag\Debug::writeToFile($tt_response, "response purchase TikTok ". $orderData['order_id'], '/___purchase.txt');
+    Bitrix\Main\Diag\Debug::writeToFile($fb_response, "response purchase FB ". $orderFromDb['order_id'], '/___purchase.txt');
+    Bitrix\Main\Diag\Debug::writeToFile($ga_response, "response purchase GA ". $orderFromDb['order_id'], '/___purchase.txt');
+    Bitrix\Main\Diag\Debug::writeToFile($tt_response, "response purchase TikTok ". $orderFromDb['order_id'], '/___purchase.txt');
 }

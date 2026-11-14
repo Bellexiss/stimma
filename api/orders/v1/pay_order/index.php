@@ -27,4 +27,18 @@ $json = file_get_contents('php://input');
 Bitrix\Main\Diag\Debug::writeToFile($json, "start get order " , '/___pay_order.txt');
 
 
+$json = json_decode($json);
+Bitrix\Main\Diag\Debug::writeToFile($json, "start get order 2" , '/___pay_order.txt');
+
+foreach($json as $index => $item)
+{
+    $amount = $item->amount;
+    $order_id = $item->order_id;
+
+    CSaleOrder ::PayOrder($order_id, 'Y');
+    sendPurchaseData($order_id);
+}
+
+
+
 

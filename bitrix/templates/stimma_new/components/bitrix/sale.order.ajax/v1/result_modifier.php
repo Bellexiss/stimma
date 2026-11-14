@@ -367,9 +367,7 @@ if(isset($_GET['sub']))
 //Не діє на товари зі знижками та аксесуари.
 
 $arResult['IS_ACTION_SELFDATE'] = 0;
-$time1 = strtotime(date('15.11.2026 23:59:59'));
-$time2 = strtotime(date('31.03.2027 23:59:59'));
-$isActionSekfdate = strtotime(date('d.m.Y H:i:s')) >= $time1 && strtotime(date('d.m.Y H:i:s')) <= $time2;
+$isActionSekfdate = SEKFDATE;
 
 if (!in_array(9, $uGroups) && $isActionSekfdate)  
 {

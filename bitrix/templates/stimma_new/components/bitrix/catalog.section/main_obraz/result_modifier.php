@@ -21,7 +21,8 @@ foreach($arResult['ITEMS'] as $index => $arItem)
         }
     }
     $arResult['ITEMS'][$index]['OFFERS'] = array_values($arResult['ITEMS'][$index]['OFFERS']);
-}
+} 
+
 
 $arParams = array_merge($arDefaultParams, $arParams);
 
@@ -167,7 +168,7 @@ $arResult['COLOR_IDS'] = $Ids;
 $offerTreeProps = $arParams['OFFER_TREE_PROPS'];
 foreach ($offerTreeProps as $index => $offerTreeProp)
     if(!$offerTreeProp) unset($offerTreeProps[$index]);
-$items = $arResult['ITEMS'];
+//$items = $arResult['ITEMS'];
 $tree = $colors = $fileColors = $ids = $jsData = [];
 
 $res = CIBlockPropertyEnum::GetList([], ['IBLOCK_ID' => 25, 'CODE' => 'RAZMER']);
@@ -196,7 +197,8 @@ $arResult['FILE_COLORS'] = $fileColors;
 $cp = $this->__component;
 $cp->SetResultCacheKeys( array('NAV_RESULT') );
 
-$res = CIBlockSection::GetList(
+// todo відгуки скрізь не треба (12,11,2026)
+/*$res = CIBlockSection::GetList(
     array(),
     array(
         'IBLOCK_ID' => 35,
@@ -218,7 +220,9 @@ while ($record = $res -> Fetch())
         $arResult['AVERAGE'][$record['UF_PRODUCT']] = 0;
     else
         $arResult['AVERAGE'][$record['UF_PRODUCT']] = round(($r1+$r2+$r3+$r4+$r5)/$sumRatings,1);
-}
+}*/
+
+/*
 $relation = [];
 foreach ($arResult['ITEMS'] as $index => $arItem)
 {
@@ -226,13 +230,19 @@ foreach ($arResult['ITEMS'] as $index => $arItem)
 }
 
 $arResult['RELATION'] = $relation;
+*/
 
 
 $newResultItems = [];
 foreach($arResult['ITEMS'] as $index => $arItem)
 {
+    if(SEKFDATE && $arItem['PROPERTIES']['DISCOUNT_30']['VALUE'] > 0)
+        $newResultItems[$arItem['ID']] = $arItem;
     $newResultItems[$arItem['ID']] = $arItem;
 }
 
 $arResult['ITEMS'] = $newResultItems;
+
+?><pre><?= print_r($arParams['LOOKS_IDS'], 1) ?></pre><?
+
 ?>

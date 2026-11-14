@@ -74,6 +74,9 @@ if ($orderID > 0 && !$hasError)
 
             $order->save();
 
+            CSaleOrder ::PayOrder($orderID, 'Y');
+            $DB->Query('update b_sale_order set PAYED = \'Y\' where ID = ' . $orderID);
+
             Bitrix\Main\Diag\Debug::writeToFile("Предоплата добавлена через D7", "PREPAY FOR ORDER {$orderID}", '/debug_pay.txt');
         } else {
             Bitrix\Main\Diag\Debug::writeToFile("Ошибка загрузки заказа", "ORDER {$orderID}", '/debug_pay.txt');
@@ -115,6 +118,11 @@ if ($orderID > 0 && !$hasError)
             CSaleOrder::Update($orderID, array("PAYED" => "Y"/*, 'STATUS_ID'=>'P'*/));
             $DB->Query('update b_sale_order set PAYED = \'Y\' where ID = ' . $orderID);
             $DB -> Query('insert into payments (UF_ORDER_ID,UF_DATA,UF_TO_1C) values('.$orderID.', \''.$_REQUEST['data'].'\',0)');
+
+            sendNewEmailToClient($orderID);
+            sendNewSmsToClient($orderID);
+            sendEmailOrderPay($orderID);
+            sendPurchaseData($orderID);
         }
     }
 

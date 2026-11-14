@@ -2,7 +2,7 @@
 if(!empty($_POST))
 {
     global $DB,$USER;
-    if(isset($_POST['ENTER']))
+    if(isset($_POST['ENTER'])) 
     {
         $phoneNumberNormalize = \Bitrix\Main\UserPhoneAuthTable::normalizePhoneNumber($_POST['CLIENT']['LOGIN']);
         $phoneNumber = $_POST['CLIENT']['LOGIN'];
@@ -160,7 +160,7 @@ if(!empty($_POST))
             if(isset($_GET['status']) && $_GET['status']== 'ok')
             {
                 ?><div style="color: green; text-align: center; margin-bottom: 15px;" class="error_message">
-                    <?=LANGUAGE_ID=='ua'?'Ви успішно зареєструвалися. Промокод на першу покупку був висланий на вказаний Email':'Вы успешно зарегистрировались. Промокод на первую покупку был выслан на указанный Email'?>
+                    <?=LANGUAGE_ID=='ua'?'Ви успішно зареєструвалися! Промокод на першу покупку вже надіслано на вашу пошту. Приємного шопінгу🛍':'Вы успешно зарегистрировались! Промокод на первую покупку уже выслан на вашу почту🛍'?>
                 </div><?
             }
             ?>

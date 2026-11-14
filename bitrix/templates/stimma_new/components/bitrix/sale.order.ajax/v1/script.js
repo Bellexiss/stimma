@@ -485,7 +485,7 @@ BX.saleOrderAjax = { // bad solution, actually, a singleton at the page
 
 function checkOrderForm(typeClick)
 {
-	$npDelivery = $('#delivery_method').prop('checked');
+	$npDelivery = $('#delivery_method').prop('checked') || $('#delivery_method3').prop('checked');
 	$ukrDelivery = $('#delivery_method1').prop('checked');
 	$pickupDelivery = $('#delivery_method2').prop('checked');
 
@@ -690,7 +690,7 @@ $(document).ready(function()
 		
 		
 
-		if ( id_shipping != 14 ) {
+		if ( id_shipping != 14 && id_shipping != 17) {
 			$('.svNovaPoshta').hide();
 			console.log('hide');
 		} else {

@@ -62,31 +62,35 @@ class AnalyticsServerSide
         $url = "https://business-api.tiktok.com/open_api/v1.3/event/track/";
         $payload = [
             'pixel_code' => $this->tt_pixel_id,
-            'event'      => [
-                'event'        => 'CompletePayment',
-                // Стандартное событие покупки в TikTok
-                'event_id'     => $orderData['order_id'],
-                'event_source' => 'web',
-                'timestamp'    => time(),
-                'context'      => [
-                    'ad'   => [
-                        'callback' => $orderData['tt_click_id'] ?? '',
-                        // Аналог fbc для TikTok
+            'event_source_id' => $this->tt_pixel_id,
+            'event_source' => 'web',
+            'data'      => [
+                [
+                    'event'        => 'CompletePayment',
+                    // Стандартное событие покупки в TikTok
+                    'event_id'     => $orderData['order_id'],
+                    'event_source' => 'web',
+                    'event_time'    => time(),
+                    'context'      => [
+                        'ad'   => [
+                            'callback' => $orderData['tt_click_id'] ?? '',
+                            // Аналог fbc для TikTok
+                        ],
+                        'user' => [
+                            'email'      => $this->hashData($orderData['email']),
+                            'phone_code' => '380',
+                            // Рекомендуется передавать код страны отдельно, если есть
+                            'phone'      => $this->hashData($orderData['phone']),
+                            'ip'         => $orderData['ip'],
+                            'user_agent' => $orderData['user_agent'],
+                            'ttclid'     => $orderData['tt_click_id'] ?? '',
+                        ],
                     ],
-                    'user' => [
-                        'email'      => $this->hashData($orderData['email']),
-                        'phone_code' => '380',
-                        // Рекомендуется передавать код страны отдельно, если есть
-                        'phone'      => $this->hashData($orderData['phone']),
-                        'ip'         => $orderData['ip'],
-                        'user_agent' => $orderData['user_agent'],
-                        'ttclid'     => $orderData['tt_click_id'] ?? '',
+                    'properties'   => [
+                        'value'    => $orderData['total_amount'],
+                        'currency' => 'UAH',
                     ],
-                ],
-                'properties'   => [
-                    'value'    => $orderData['total_amount'],
-                    'currency' => 'UAH',
-                ],
+                ]
 
             ],
             //'access_token' => $this->tt_access_token,
@@ -100,13 +104,7 @@ class AnalyticsServerSide
 
         Bitrix\Main\Diag\Debug::writeToFile($payload, "purchase tiktok ". $orderData['order_id'], '/___purchase.txt');
 
-        return $this->curlRequest($url, $payload, $addtionalHeaders
-            //'access_token' => $this->tt_access_token,
-            //'mail'         => $orderData['email'],
-            // TikTok иногда требует email отправителя в корне
-            //'payload'      =>  $payload
-
-        );
+        return $this->curlRequest($url, $payload, $addtionalHeaders);
     }
 
     /**

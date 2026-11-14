@@ -32,13 +32,44 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                 <div class="modal-body">
                     <div class="look-modal-cont">
                         <div class="look-modal-title-block">
-                            <div class="look-modal-title">
+                            <?/*<div class="look-modal-title">
                                 <?
                                 if(in_array($item['ID'],[50987,62220,62221,62222]))
                                     echo LANGUAGE_ID == 'ua' ? 'Образ від Тетяни - FREE DELIVERY' : 'Образ от Татьяны - FREE DELIVERY';
                                 else
                                     echo LANGUAGE_ID == 'ua' ? 'Готовий образ' : 'Готовый образ';
                                 ?>
+                            </div>*/?>
+                            <div class="look-modal-more-block">
+                                <div class="look-modal-more-icon-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentcolor" height="40px" width="40px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xml:space="preserve">
+                                        <g>
+                                            <g>
+                                                <path d="M512,34.88c0.039-9.349-3.569-18.126-10.159-24.716S486.457-0.028,477.126,0.006c-9.322,0.039-18.098,3.702-24.711,10.314    c-2.8,2.8-7.893,8.848-10.679,12.205c-2.926,3.525-2.442,8.755,1.083,11.68c3.524,2.926,8.754,2.442,11.68-1.083    c4.364-5.256,7.971-9.395,9.646-11.071c3.498-3.497,8.132-5.435,13.05-5.456c0.027,0,0.052,0,0.079,0    c4.862,0,9.419,1.88,12.837,5.299c3.437,3.437,5.32,8.024,5.299,12.916c-0.021,4.917-1.959,9.551-5.456,13.05    c-3.131,3.131-13.893,11.668-29.312,22.439c-9.121-15.594-26.037-26.099-45.37-26.099H293.808    c-16.396,0-31.81,6.385-43.405,17.978L7.613,304.971C2.704,309.88,0,316.407,0,323.349c0,6.942,2.704,13.47,7.613,18.378    l162.667,162.667c5.068,5.067,11.722,7.6,18.378,7.6c6.656,0,13.312-2.534,18.378-7.6l242.792-242.791    c11.593-11.594,17.978-27.008,17.978-43.405V96.735c0-3.585-0.363-7.085-1.051-10.47c17.551-12.077,30.435-22.18,34.929-26.674    C508.298,52.979,511.961,44.203,512,34.88z M451.217,218.198c0,11.965-4.66,23.214-13.119,31.673L195.306,492.664    c-3.664,3.665-9.63,3.665-13.295,0L19.344,329.997c-1.775-1.775-2.754-4.136-2.754-6.648s0.978-4.872,2.754-6.647L262.135,73.911    c8.461-8.46,19.709-13.119,31.673-13.119h121.463c13.64,0,25.53,7.637,31.618,18.859c-9.798,6.488-20.769,13.387-32.408,20.171    c-0.363-0.398-0.734-0.792-1.119-1.177c-13.584-13.584-35.686-13.584-49.27,0c-13.584,13.584-13.584,35.686,0,49.27    c6.792,6.792,15.714,10.187,24.635,10.187c8.921,0,17.843-3.395,24.635-10.187c9.067-9.067,12.072-21.926,9.036-33.517    c10.123-5.893,19.844-11.916,28.815-17.743c0.001,0.028,0.003,0.054,0.003,0.081V218.198z M381.319,127.007    c1.457,2.897,4.381,4.569,7.417,4.569c1.253,0,2.526-0.285,3.722-0.887c4.862-2.446,9.707-4.99,14.504-7.596    c0.048,4.735-1.722,9.485-5.328,13.091c-7.116,7.115-18.692,7.115-25.808,0c-7.115-7.116-7.115-18.692,0-25.808    c3.558-3.558,8.231-5.336,12.904-5.336c3.7,0,7.389,1.134,10.536,3.363c-4.695,2.552-9.46,5.051-14.263,7.468    C380.908,117.928,379.259,122.915,381.319,127.007z"/>
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path d="M247.162,168.962c-4.581,0-8.295,3.713-8.295,8.295v175.179c0,4.581,3.714,8.295,8.295,8.295s8.295-3.714,8.295-8.295    V177.257C255.457,172.675,251.743,168.962,247.162,168.962z"/>
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path d="M209.231,240.213c-13.583-13.586-35.686-13.585-49.268-0.001c-13.584,13.584-13.584,35.686,0,49.27    c6.793,6.793,15.713,10.188,24.635,10.187c8.92,0,17.843-3.397,24.634-10.187c6.581-6.581,10.205-15.329,10.205-24.635    S215.812,246.792,209.231,240.213z M197.501,277.75c-7.116,7.116-18.692,7.115-25.807,0c-7.115-7.116-7.115-18.692,0-25.808    c3.558-3.558,8.231-5.336,12.904-5.336s9.346,1.778,12.904,5.336c3.447,3.447,5.345,8.029,5.345,12.904    C202.846,269.721,200.948,274.303,197.501,277.75z"/>
+                                            </g>
+                                        </g>
+                                        <g>
+                                            <g>
+                                                <path d="M334.36,240.212c-13.584-13.585-35.687-13.584-49.268,0c-13.584,13.584-13.584,35.686,0,49.27    c6.792,6.792,15.713,10.187,24.635,10.187c8.921,0,17.843-3.395,24.634-10.187C347.944,275.898,347.944,253.796,334.36,240.212z     M322.629,277.75c-7.116,7.116-18.692,7.115-25.807,0c-7.115-7.116-7.115-18.692,0-25.808c3.558-3.558,8.231-5.336,12.904-5.336    s9.346,1.778,12.904,5.336C329.745,259.058,329.745,270.634,322.629,277.75z"/>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <div class="look-modal-more-text-block">
+                                    <div class="look-modal-more-title">Більше речей - більша знижка</div>
+                                    <div class="look-modal-more-text orange">2-га річ — 15% · 3-тя річ — 30%</div>
+                                    <div class="look-modal-more-text">Для 3+ речей одягу з різних категорій</div>
+                                </div>
                             </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +96,7 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                             <div class="look-modal-item-list-cont">
                                 <div class="look-modal-item-list">
                                     <?
-                                    $cntItems = $cntAmount = 0;
+                                    $cntItems = $cntAmount = $economy = 0;
                                     foreach($item['PROPERTIES']['PRODUCTS']['VALUE'] as $index => $product)
                                     {
                                         if(!isset($arResult['ITEMS'][$product]))
@@ -101,6 +132,27 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                                         <a href="<?=$arItem['DETAIL_PAGE_URL']?>" aria-label="<?=$arItem['NAME']?>" tabindex="-1">
                                                             <img class="simg2" src="<?=$img?>">
                                                         </a>
+                                                    </div>
+                                                    <div class="catalog-item-badges">
+                                                        <?
+                                                        
+                                                        if(SEKFDATE && $item['PROPERTIES']['DISCOUNT_15']['VALUE'] == $arItem['ID'])
+                                                        {
+                                                            ?>
+                                                            <div class="catalog-item-discount">
+                                                                -15%
+                                                            </div>
+                                                            <?
+                                                        }
+                                                        if(SEKFDATE && $item['PROPERTIES']['DISCOUNT_30']['VALUE'] == $arItem['ID'])
+                                                        {
+                                                            ?>
+                                                            <div class="catalog-item-discount">
+                                                                -30%
+                                                            </div>
+                                                            <?
+                                                        }
+                                                        ?>
                                                     </div>
                                                     <div class="catalog-item-favorite">
                                                         <a href="<?=$arItem['DETAIL_PAGE_URL']?>" data-id="<?=$arItem['ID']?>" aria-label="Додати в обране">
@@ -143,25 +195,75 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                                     </a>
                                                     <div class="catalog-item-details">
                                                         <div class="catalog-item-price-block">
-                                                            <div class="catalog-item-price" data-entity="price">
+                                                            
                                                                 <?
-                                                                $minPrice['DISCOUNT_DIFF_PERCENT'] = $minPrice['DISCOUNT_DIFF'] = 0;
-                                                                if(!$arParams['IS_NEW'] && !$arParams['IS_SALE'])
+                                                                if(!SEKFDATE)
                                                                 {
-                                                                    $gGroups = explode(',',$USER -> GetGroups());
-                                                                    if(in_array(9,$gGroups) && $arItem['PRICES']['DISCOUNT']) $arItem['PRICES']['BASE'] = $arItem['PRICES']['DISCOUNT'];
-                                                                    elseif(in_array(9,$gGroups) && $arItem['PRICES']['OPT']) $arItem['PRICES']['BASE'] = $arItem['PRICES']['OPT'];
-                                                                }
+                                                                    ?><div class="catalog-item-price" data-entity="price"><?
+                                                                        $minPrice['DISCOUNT_DIFF_PERCENT'] = $minPrice['DISCOUNT_DIFF'] = 0;
+                                                                        if(!$arParams['IS_NEW'] && !$arParams['IS_SALE'])
+                                                                        {
+                                                                            $gGroups = explode(',',$USER -> GetGroups());
+                                                                            if(in_array(9,$gGroups) && $arItem['PRICES']['DISCOUNT']) $arItem['PRICES']['BASE'] = $arItem['PRICES']['DISCOUNT'];
+                                                                            elseif(in_array(9,$gGroups) && $arItem['PRICES']['OPT']) $arItem['PRICES']['BASE'] = $arItem['PRICES']['OPT'];
+                                                                        }
 
-                                                                if($arItem['PRICES']['BASE']['DISCOUNT_VALUE'] > $minPrice['DISCOUNT_VALUE'])
+                                                                        if($arItem['PRICES']['BASE']['DISCOUNT_VALUE'] > $minPrice['DISCOUNT_VALUE'])
+                                                                        {
+                                                                            $minPrice['DISCOUNT_DIFF'] = $arItem['PRICES']['BASE']['DISCOUNT_VALUE'] - $minPrice['DISCOUNT_VALUE'];
+                                                                            $minPrice['DISCOUNT_DIFF_PERCENT'] = round(100-($minPrice['DISCOUNT_VALUE']/$arItem['PRICES']['BASE']['DISCOUNT_VALUE'])*100);
+                                                                        }
+                                                                        ?>
+                                                                        <?=$minPrice['PRINT_DISCOUNT_VALUE'];?>
+                                                                        <?$cntAmount += $minPrice['DISCOUNT_VALUE']?>
+                                                                    </div>
+                                                                    <?
+                                                                }
+                                                                else
                                                                 {
-                                                                    $minPrice['DISCOUNT_DIFF'] = $arItem['PRICES']['BASE']['DISCOUNT_VALUE'] - $minPrice['DISCOUNT_VALUE'];
-                                                                    $minPrice['DISCOUNT_DIFF_PERCENT'] = round(100-($minPrice['DISCOUNT_VALUE']/$arItem['PRICES']['BASE']['DISCOUNT_VALUE'])*100);
+                                                                    if($item['PROPERTIES']['DISCOUNT_30']['VALUE'] == $arItem['ID'])
+                                                                    {
+                                                                        $economy += $minPrice['DISCOUNT_VALUE'] * 30 / 100;
+                                                                        $newPrice = $minPrice['DISCOUNT_VALUE'] - ($minPrice['DISCOUNT_VALUE'] * 30 / 100);
+                                                                        ?>
+                                                                        <div class="catalog-item-price catalog-item-price-old" data-entity="price">
+                                                                            <?=FormatCurrency($minPrice['DISCOUNT_VALUE'],'UAH');?>
+                                                                        </div>
+                                                                        <div class="catalog-item-price" data-entity="price">
+                                                                            <?=FormatCurrency($newPrice,'UAH');?>
+                                                                        </div>
+                                                                        
+                                                                        <?
+                                                                    }
+                                                                    elseif($item['PROPERTIES']['DISCOUNT_15']['VALUE'] == $arItem['ID'])
+                                                                    {
+                                                                        $economy += $minPrice['DISCOUNT_VALUE'] * 15 / 100;
+                                                                        $newPrice = $minPrice['DISCOUNT_VALUE'] - ($minPrice['DISCOUNT_VALUE'] * 15 / 100);
+                                                                        ?>
+                                                                        <div class="catalog-item-price catalog-item-price-old" data-entity="price">
+                                                                            <?=FormatCurrency($minPrice['DISCOUNT_VALUE'],'UAH')?>
+                                                                        </div>
+                                                                        <div class="catalog-item-price" data-entity="price">
+                                                                            <?=FormatCurrency($newPrice,'UAH');?>
+                                                                        </div>
+                                                                        
+                                                                        <?
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        $newPrice = $minPrice['DISCOUNT_VALUE'];
+                                                                        ?>
+                                                                        <div class="catalog-item-price" data-entity="price">
+                                                                            <?=FormatCurrency($newPrice,'UAH');?>
+                                                                        </div>
+                                                                    <?
+                                                                    }
+                                                                    $cntAmount += $newPrice;
                                                                 }
                                                                 ?>
-                                                                <?=$minPrice['PRINT_DISCOUNT_VALUE'];?>
-                                                                <?$cntAmount += $minPrice['DISCOUNT_VALUE']?>
-                                                            </div>
+                                                                
+                                                                
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -171,6 +273,23 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                     }
                                     ?>
                                 </div>
+                                <?
+                                if(SEKFDATE && $economy > 0)
+                                {
+                                    ?>
+                                    <div class="look-modal-badge">
+                                        <div class="look-modal-badge-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+                                                <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="currentcolor"></path>
+                                           </svg>
+                                        </div>
+                                        <div class="look-modal-badge-text">
+                                            <?= LANGUAGE_ID == 'ua' ? 'Вітаємо! Знижка -15% на другу річ та -30% на третю вже твоя' : 'Поздравляем! Скидка -15% на вторую вещь и -30% на третью уже ваша' ?>
+                                        </div>
+                                    </div>
+                                    <?
+                                }
+                                ?>
                                 <div class="look-modal-footer">
                                     <div class="look-modal-total-block">
                                         <div class="look-modal-total-key">
@@ -180,6 +299,21 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                             <?=FormatCurrency($cntAmount, 'UAH')?>
                                         </div>
                                     </div>
+                                    <?
+                                    if(SEKFDATE && $economy > 0)
+                                    {
+                                        ?>
+                                        <div class="look-modal-econom-block">
+                                            <div class="look-modal-econom-key">
+                                                Економія
+                                            </div>
+                                            <div class="look-modal-econom-value">
+                                                <?=FormatCurrency($economy, 'UAH')?>
+                                            </div>
+                                        </div>
+                                        <?
+                                    }
+                                    ?>
                                     <div class="look-modal-total-btns">
                                         <a href="#" class="info-btn info-btn-black obraz_add_basket" data-lookid="<?=$item['ID']?>">
                                             Додати образ
