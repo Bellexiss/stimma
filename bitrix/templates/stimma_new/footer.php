@@ -2330,10 +2330,10 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && isset($_COOKIE['good_co
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
                     <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/600400.jpg?v=3">
+                        <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/pk_ng.jpg?v=3">
                     </a>
                     <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/300450.jpg?v=3">
+                        <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/mob_ng.jpg?v=3">
                     </a>
                 </div>
             </div>
