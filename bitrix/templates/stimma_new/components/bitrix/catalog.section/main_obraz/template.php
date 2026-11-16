@@ -274,7 +274,7 @@ foreach ($arParams['LOOKS_IDS'] as $key => $item)
                                     ?>
                                 </div>
                                 <?
-                                if(SEKFDATE && $economy > 0)
+                                if(SEKFDATE && $economy > 0 && false)
                                 {
                                     ?>
                                     <div class="look-modal-badge">

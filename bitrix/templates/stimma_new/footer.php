@@ -564,10 +564,10 @@ if(!isset($_COOKIE['good_cookie']) && !$bIndex)
 ?>
 
 
-		<a href="/#lookblock" class="gift-link">
+		<?/*<a href="/#lookblock" class="gift-link">
 			<!-- <img src="/bitrix/templates/stimma_new/images/imgnew/gift-img.png"> -->
 			ОБРАЗ ВІД ТЕТЯНИ- FREE DELIVERY!
-		</a>
+		</a>*/?>
 
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#parts-pay-modal" style="display: none;">
 		  Нова модал

@@ -1585,7 +1585,7 @@ body .filter.label_block input+label {
 } 
 
 .modal-banner .modal-dialog{
-  max-width: 600px;
+  max-width: 900px;
 }
 
 @media(max-width: 1000px){

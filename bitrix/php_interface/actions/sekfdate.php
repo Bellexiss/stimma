@@ -36,8 +36,11 @@ $quantityProduct = 0;
         $isSale = $DB->Query('select * from b_iblock_section_element where IBLOCK_ELEMENT_ID = ' . $productId . ' and IBLOCK_SECTION_ID in (352,361,1286,1276,1262,411,407,1290,1170,1277,413,409,408,410)'); // sale + Аксесури
         $isSale = $isSale->Fetch() ? true : false;
 
-        $fetch=$DB->Query('select* from basket_stims where UF_ID = ' . $Row['ID']);
-        $isSale = $fetch->Fetch() ? true : false;
+        if(!$isSale)
+        {
+            $fetch=$DB->Query('select* from basket_stims where UF_ID = ' . $Row['ID']);
+            $isSale = $fetch->Fetch() ? true : false;
+        }
 
 
         if(!$isSale)
@@ -136,6 +139,8 @@ $quantityProduct = 0;
             }
 
         }
+
+
 
         $basket['ITEMS'] = array_values($basket['ITEMS']);
 
