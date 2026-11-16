@@ -2436,6 +2436,7 @@ if(!isset($_COOKIE['show_marketing_img2']) && !$bIndex && false)
 
 
 
+
                         <?
                         if($USER->IsAdmin() && !$bIndex)
                         {

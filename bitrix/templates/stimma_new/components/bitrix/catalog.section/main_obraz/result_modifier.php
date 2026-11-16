@@ -242,7 +242,4 @@ foreach($arResult['ITEMS'] as $index => $arItem)
 }
 
 $arResult['ITEMS'] = $newResultItems;
-
-?><pre><?= print_r($arParams['LOOKS_IDS'], 1) ?></pre><?
-
 ?>

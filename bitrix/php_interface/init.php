@@ -6318,7 +6318,11 @@ function getOrderFor1C($order_id,$status,$debug)
         if($fetch=$fetch->Fetch())
             $stims = $fetch['UF_STIMS'];
 
-        $props = CIBlockElement::GetByID($record['PRODUCT_ID'])->GetNextElement()->GetProperties();
+        $props = CIBlockElement::GetByID($record['PRODUCT_ID']);
+        if($props = $props->GetNextElement())
+            $props = $props->GetProperties();
+        else
+            continue;
 
 
         $basket[] = $record;
@@ -7281,6 +7285,8 @@ function sendPurchaseData($orderId)
     CModule::IncludeModule('sale');
     CModule::IncludeModule('iblock');
     CModule::IncludeModule('catalog');
+
+    if(!is_numeric($orderId)) return;
 
     $order = $DB->Query('select * from b_sale_order where ID = ' . $orderId)->Fetch();
 
