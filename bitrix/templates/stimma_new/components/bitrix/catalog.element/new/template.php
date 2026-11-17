@@ -525,10 +525,13 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                         <?
                         if(!empty($dopObrazElement))
                         {
+                            $text = LANGUAGE_ID=='ua'?'доповни свій образ':'дополни свой образ';
+                            if(in_array($arResult['ID'],[62041,62046,62051,62056,62060,62065,62070,62075,62024,62029,62106,62112,62099,62123,62147,61938,61979]) && SEKFDATE)
+                                $text = LANGUAGE_ID == 'ua' ? 'БЕЗКОШТОВНА ДОСТАВКА НА ОБРАЗ' : 'БЕСПЛАТНАЯ ДОСТАВКА НА ОБРАЗ';
                             ?>
                             <div class="card-img-btn">
                                 <div class="info-btn" data-bs-toggle="modal" data-bs-target="#look-dop-modal">
-                                    <?=LANGUAGE_ID=='ua'?'доповни свій образ':'дополни свой образ'?>
+                                    <?=$text?>
                                 </div>
                             </div>
                             <?
@@ -1012,11 +1015,25 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 <div class="accordion-item">
                                     <div class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord1" aria-expanded="false" aria-controls="card-accord1">
-                                            <?= LANGUAGE_ID == 'ua' ? 'Опис товару' : 'Описание товара' ?>
+                                            <?= LANGUAGE_ID == 'ua' ? 'Опис' : 'Описание' ?>
                                         </button>
                                     </div>
                                     <div id="card-accord1" class="accordion-collapse collapse" data-bs-parent="#card-accord">
                                         <div class="accordion-body">
+                                            <p>
+                                                <?
+                                                foreach ($arResult['OFFERS'][0]['DISPLAY_PROPERTIES'] as $index => $arProp)
+                                                    {
+                                                        if($arProp['CODE'] != 'COLOR_REF') continue;
+                                                        $arProp['VALUE'] = $arProp['DISPLAY_VALUE'];
+                                                        ?>
+                                                        <p style="margin: 1px 0;color:black;" code="<?=$arProp['CODE']?>"><?=$arProp['NAME']?>: <span style="color:#333333;"><?=is_array($arProp['VALUE']) ? implode(', ',$arProp['VALUE']) : $arProp['VALUE']?></span></p>
+                                                        <br>
+                                                        <?
+                                                        break;
+                                                    }
+                                                ?>
+                                            </p>
                                             <?=LANGUAGE_ID == 'ua' ? $arResult['PROPERTIES']['DETAIL_TEXT_UA']['~VALUE']['TEXT'] : $arResult['DETAIL_TEXT']?>
                                         </div>
                                     </div>
@@ -1030,7 +1047,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                       <div class="accordion-item">
                                     <div class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-poed" aria-expanded="false" aria-controls="card-poed">
-                                            <?= LANGUAGE_ID == 'ua' ? 'Поєднання' : 'Сочетание' ?>
+                                            <?= LANGUAGE_ID == 'ua' ? 'Стиліст рекомендує' : 'Стилист рекомендует' ?>
                                         </button>
                                     </div>
                                     <div id="card-poed" class="accordion-collapse collapse" data-bs-parent="#card-accord">
@@ -1050,7 +1067,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     <div class="accordion-item">
                                         <div class="accordion-header">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord2" aria-expanded="false" aria-controls="card-accord2">
-                                                <?=LANGUAGE_ID=='ua'?'Характеристики товару':'Характеристики товара'?>
+                                                <?=LANGUAGE_ID=='ua'?'Склад та догляд':'Состав и уход'?>
                                             </button>
                                         </div>
                                         <div id="card-accord2" class="accordion-collapse collapse" data-bs-parent="#card-accord">
@@ -1063,7 +1080,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                     }
                                                     foreach ($arResult['OFFERS'][0]['DISPLAY_PROPERTIES'] as $index => $arProp)
                                                     {
-                                                        if(!$arProp['VALUE']) continue;
+                                                        if(!$arProp['VALUE'] || $arProp['CODE'] == 'COLOR_REF') continue;
                                                         if($arProp['CODE'] != 'MATERIAL' && $arProp['CODE'] != 'SOSTAV' && $arProp['CODE'] != 'COLOR_REF') continue;
                                                         if($arProp['CODE'] == 'COLOR_REF' && LANGUAGE_ID == 'ru') $arProp['VALUE'] = $arProp['DISPLAY_VALUE'];
                                                         ?>
@@ -1073,10 +1090,16 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                     ?>
                                                 </p>
                                                 <?
+                                                if($arResult['OFFERS'][0]['PROPERTIES']['DOGLYAD_'.strtoupper(LANGUAGE_ID)]['VALUE'])
+                                                {
+                                                    ?><p style="margin: 1px 0;color:black;" code="<?=$arProp['CODE']?>"><?= LANGUAGE_ID == 'ua' ? 'Догляд' : 'Уход' ?>: <span style="color:#333333;"><?=htmlspecialchars($arResult['OFFERS'][0]['PROPERTIES']['DOGLYAD_'.strtoupper(LANGUAGE_ID)]['VALUE'])?></span></p><?
+                                                }
+
                                                 if($arResult['OFFERS'][0]['PROPERTIES']['TEXT_MATERIAL_'.strtoupper(LANGUAGE_ID)]['VALUE'])
                                                 {
                                                     ?><p><i><?=$arResult['OFFERS'][0]['PROPERTIES']['TEXT_MATERIAL_'.strtoupper(LANGUAGE_ID)]['VALUE']?></i></p><?
                                                 }
+                                                
                                                 ?>
 
                                             </div>
@@ -1086,68 +1109,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                 }
                                 ?>
 
-                                <div class="accordion-item">
-                                    <div class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord3" aria-expanded="false" aria-controls="card-accord3">
-                                            <?=LANGUAGE_ID=='ua'?'Доставка та оплата':'Доставка и оплата'?>
-                                        </button>
-                                    </div>
-                                    <div id="card-accord3" class="accordion-collapse collapse" data-bs-parent="#card-accord">
-                                        <div class="accordion-body">
-                                            <?
-                                            if(LANGUAGE_ID == 'ua')
-                                            {
-                                                ?>
-
-                                                <p>Здійснюємо доставку по всій території України, за винятком тимчасово окупованих територій.</p>
-                                                <p><b>Замовлення відправляються службами:</b></p>
-                                                <ul>
-                                                    <li>Нова Пошта (відділення/поштомат/адресна доставка кур’єром)</li>
-                                                    <li>Укрпошта</li>
-                                                </ul>
-                                                <p>Відправлення замовлень здійснюється до <b>5 робочих днів</b> після підтвердження оплати. Якщо замовлення потрібне до певної дати, вкажіть це при оформленні.</p>
-                                                <p>Вартість доставки визначається відповідно до тарифів обраного перевізника тa oплaчуєтьcя пpи oтpимaнні. Після прибуття посилки до відділення перевізника <b>просимо отримати її протягом 5 днів</b>. Якщо замовлення не буде забране у встановлений термін, воно автоматично повертається до інтернет-магазину.</p>
-                                                <p><b>ОПЛАТА:</b></p>
-                                                <p>Оплатити замовлення можна онлайн банківською карткою <b>Visa</b> або <b>Mastercard</b> під час оформлення покупки на сайті.</p>
-                                                <p>Платежі здійснюються через захищений сервіс <b>iPay.ua</b>, що гарантує безпеку та конфіденційність фінансових операцій.</p>
-                                                <p><b>Доступні варіанти оплати:</b></p>
-                                                <ul>
-                                                    <li>— повна онлайн-оплата замовлення банківською карткою;</li>
-                                                    <li>—післяплата (оплата при отриманні). Лише при передоплаті 200 грн через iPay з подальшою доплатою.</li>
-                                                    <li>—  покупка частинами monobank | Universal Bank та Приват Банк</li>
-                                                </ul>
-                                                <p><b>Зверніть увагу:</b> служба доставки може стягувати додаткову комісію за післяплату.</p>
-
-                                                <?
-                                            }
-                                            else
-                                            {
-                                                ?>
-                                                <p>Осуществляем доставку по всей территории Украины, за исключением временно оккупированных территорий.</p>
-                                                <p><b>Заказы отправляются службами:</b></p>
-                                                <ul>
-                                                <li>Новая Почта (отделение/почтомат/адресная доставка курьером)</li>
-                                                <li>Укрпочта</li>
-                                                </ul>
-                                                <p>Отправка заказов осуществляется до <b>5 рабочих дней</b> после подтверждения оплаты. Если заказ нужен к определенной дате, укажите это при оформлении.</p>
-                                                <p>Стоимость доставки определяется в соответствии с тарифами выбранного перевозчика и оплачивается при получении. После прибытия посылки в отделение перевозчика <b>просим получить ее в течение 5 дней</b>. Если заказ не будет забрать в установленный срок, он автоматически возвращается в интернет-магазин.</p>
-                                                <p><b>ОПЛАТА:</b></p>
-                                                <p>Оплатить заказ можно онлайн банковской картой <b>Visa</b> или <b>Mastercard</b> при оформлении покупки на сайте.</p>
-                                                <p>Платежи осуществляются через защищенный сервис <b>iPay.ua</b>, что гарантирует безопасность и конфиденциальность финансовых операций.</p>
-                                                <p><b>Доступные варианты оплаты:</b></p>
-                                                <ul>
-                                                    <li>полная онлайн-оплата заказа банковской картой;</li>
-                                                    <li>послеплата (оплата при получении). Только при предоплате 200 грн через iPay с последующей доплатой.</li>
-                                                    <li>покупка в рассрочку в monobank | Universal Bank и ПриватБанк.</li>
-                                                </ul>
-                                                <p><b>Обратите внимание:</b> служба доставки может взимать дополнительную комиссию за послеплату.</p>
-
-                                                <?
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <?
                                 /*if(!$isAcsesuaries && !$shoes)
                                 {
@@ -1457,6 +1419,68 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                     <?
                                 }
                                 ?>
+                                <div class="accordion-item">
+                                    <div class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#card-accord3" aria-expanded="false" aria-controls="card-accord3">
+                                            <?=LANGUAGE_ID=='ua'?'Доставка та оплата':'Доставка и оплата'?>
+                                        </button>
+                                    </div>
+                                    <div id="card-accord3" class="accordion-collapse collapse" data-bs-parent="#card-accord">
+                                        <div class="accordion-body">
+                                            <?
+                                            if(LANGUAGE_ID == 'ua')
+                                            {
+                                                ?>
+
+                                                <p>Здійснюємо доставку по всій території України, за винятком тимчасово окупованих територій.</p>
+                                                <p><b>Замовлення відправляються службами:</b></p>
+                                                <ul>
+                                                    <li>Нова Пошта (відділення/поштомат/адресна доставка кур’єром)</li>
+                                                    <li>Укрпошта</li>
+                                                </ul>
+                                                <p>Відправлення замовлень здійснюється до <b>5 робочих днів</b> після підтвердження оплати. Якщо замовлення потрібне до певної дати, вкажіть це при оформленні.</p>
+                                                <p>Вартість доставки визначається відповідно до тарифів обраного перевізника тa oплaчуєтьcя пpи oтpимaнні. Після прибуття посилки до відділення перевізника <b>просимо отримати її протягом 5 днів</b>. Якщо замовлення не буде забране у встановлений термін, воно автоматично повертається до інтернет-магазину.</p>
+                                                <p><b>ОПЛАТА:</b></p>
+                                                <p>Оплатити замовлення можна онлайн банківською карткою <b>Visa</b> або <b>Mastercard</b> під час оформлення покупки на сайті.</p>
+                                                <p>Платежі здійснюються через захищений сервіс <b>iPay.ua</b>, що гарантує безпеку та конфіденційність фінансових операцій.</p>
+                                                <p><b>Доступні варіанти оплати:</b></p>
+                                                <ul>
+                                                    <li>— повна онлайн-оплата замовлення банківською карткою;</li>
+                                                    <li>—післяплата (оплата при отриманні). Лише при передоплаті 200 грн через iPay з подальшою доплатою.</li>
+                                                    <li>—  покупка частинами monobank | Universal Bank та Приват Банк</li>
+                                                </ul>
+                                                <p><b>Зверніть увагу:</b> служба доставки може стягувати додаткову комісію за післяплату.</p>
+
+                                                <?
+                                            }
+                                            else
+                                            {
+                                                ?>
+                                                <p>Осуществляем доставку по всей территории Украины, за исключением временно оккупированных территорий.</p>
+                                                <p><b>Заказы отправляются службами:</b></p>
+                                                <ul>
+                                                <li>Новая Почта (отделение/почтомат/адресная доставка курьером)</li>
+                                                <li>Укрпочта</li>
+                                                </ul>
+                                                <p>Отправка заказов осуществляется до <b>5 рабочих дней</b> после подтверждения оплаты. Если заказ нужен к определенной дате, укажите это при оформлении.</p>
+                                                <p>Стоимость доставки определяется в соответствии с тарифами выбранного перевозчика и оплачивается при получении. После прибытия посылки в отделение перевозчика <b>просим получить ее в течение 5 дней</b>. Если заказ не будет забрать в установленный срок, он автоматически возвращается в интернет-магазин.</p>
+                                                <p><b>ОПЛАТА:</b></p>
+                                                <p>Оплатить заказ можно онлайн банковской картой <b>Visa</b> или <b>Mastercard</b> при оформлении покупки на сайте.</p>
+                                                <p>Платежи осуществляются через защищенный сервис <b>iPay.ua</b>, что гарантирует безопасность и конфиденциальность финансовых операций.</p>
+                                                <p><b>Доступные варианты оплаты:</b></p>
+                                                <ul>
+                                                    <li>полная онлайн-оплата заказа банковской картой;</li>
+                                                    <li>послеплата (оплата при получении). Только при предоплате 200 грн через iPay с последующей доплатой.</li>
+                                                    <li>покупка в рассрочку в monobank | Universal Bank и ПриватБанк.</li>
+                                                </ul>
+                                                <p><b>Обратите внимание:</b> служба доставки может взимать дополнительную комиссию за послеплату.</p>
+
+                                                <?
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>

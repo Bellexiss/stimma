@@ -34,6 +34,7 @@ class AnalyticsServerSide
                 'fbp'               => $orderData['fbp'],
                 'client_ip_address' => $orderData['ip'],
                 'client_user_agent' => $orderData['user_agent'],
+                'external_id'       => $this->hashData($orderData['user_id']),
             ],
             'custom_data' => [
                 'value'    => $orderData['total_amount'],
@@ -79,6 +80,7 @@ class AnalyticsServerSide
                         'user' => [
                             'email'      => $this->hashData($orderData['email']),
                             'phone_code' => '380',
+                            'external_id' => $this->hashData($orderData['user_id']),
                             // Рекомендуется передавать код страны отдельно, если есть
                             'phone'      => $this->hashData($orderData['phone']),
                             'ip'         => $orderData['ip'],
@@ -112,6 +114,16 @@ class AnalyticsServerSide
      */
     public function sendGooglePurchase($orderData)
     {
+        $gaClientId = preg_replace('/^GA\d+\.\d+\./', '', $orderData['ga_session_id'] ?? '');
+
+        // Session ID
+        $gaCookie = $_COOKIE['_ga_XXXXXXXXXX'] ?? '';
+
+        preg_match('/(?:^|[.$])s(\d+)/', $gaCookie, $matches);
+
+        $gaSessionId = $matches[1] ?? null;
+
+
         $url = "https://www.google-analytics.com/mp/collect?measurement_id={$this->ga_measurement_id}&api_secret={$this->ga_api_secret}";
         $payload = [
             'client_id' => str_replace('GA1.1.', '', $orderData['ga_client_id']), // Убираем точки из client_id
@@ -119,6 +131,7 @@ class AnalyticsServerSide
                 [
                     'name'   => 'purchase',
                     'params' => [
+                        'session_id'     =>  $gaSessionId,
                         'transaction_id' => $orderData['order_id'],
                         'value'          => $orderData['total_amount'],
                         'currency'       => 'UAH',

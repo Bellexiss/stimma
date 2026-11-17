@@ -270,6 +270,11 @@ if ($ORDER_ID > 0)
         if($props['UTM_TERM'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['utm_term']).'\' where ID = ' . $props['UTM_TERM']);
         else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',44, \'UTM_TERM\', \''.addslashes($_COOKIE['utm_term']).'\', \'UTM_TERM\', \''.$ORDER_ID.'\', \'ORDER\')');
     }
+    if(isset($_COOKIE['_ga_T0Q9YGZFLZ']) && !empty($_COOKIE['_ga_T0Q9YGZFLZ']))
+    {
+        if($props['GA_SESS'])$DB -> Query('update b_sale_order_props_value set VALUE = \''.addslashes($_COOKIE['_ga_T0Q9YGZFLZ']).'\' where ID = ' . $props['GA_SESS']);
+        else $DB->Query('insert into b_sale_order_props_value (ORDER_ID,ORDER_PROPS_ID,NAME,VALUE,CODE,ENTITY_ID,ENTITY_TYPE) VALUES('.$ORDER_ID.',45, \'GA_SESS\', \''.addslashes($_COOKIE['_ga_T0Q9YGZFLZ']).'\', \'GA_SESS\', \''.$ORDER_ID.'\', \'ORDER\')');
+    }
 
 
 

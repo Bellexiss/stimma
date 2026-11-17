@@ -122,7 +122,7 @@ if ($orderID > 0 && !$hasError)
             sendNewEmailToClient($orderID);
             sendNewSmsToClient($orderID);
             sendEmailOrderPay($orderID);
-            sendPurchaseData($orderID);
+            //sendPurchaseData($orderID);
         }
     }
 

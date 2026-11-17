@@ -47,7 +47,8 @@ $utmFields = [
     'utm_medium',
     'utm_campaign',
     'utm_content',
-    'utm_term'
+    'utm_term',
+    '_ga_T0Q9YGZFLZ'
 ];
 
 foreach ($utmFields as $field)
@@ -7318,12 +7319,14 @@ function sendPurchaseData($orderId)
     // Эти данные вы достаете из своей БД по ID заказа, который пришел в Webhook
     $orderFromDb = [
         'order_id'      => $orderId,
+        'user_id'       => $order['USER_ID'],
         'total_amount'  => $order['PRICE'],
         'email'         => $props['EMAIL'],
         'phone'         => $props['PHONE'],
         'fbc'           => $props['FBC'],
         'fbp'           => $props['FBP'],
         'ga_client_id'   => $props['GA'],
+        'ga_session_id'   => $props['GA_SESS'],
         'ip'            => $props['IP'],
         'user_agent'    => $props['UAGENT'],
         'tt_click_id'    => $props['TTCLID'],

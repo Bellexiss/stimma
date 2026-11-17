@@ -1428,7 +1428,7 @@ if(!empty($textRunning))
                 <div class="header-menu-item">
                     <div class="header-menu-item-dropdown-title">
                         <a href="<?=$ru?>/catalog/bonusna_shafa/" class="header-menu-link">
-                            <span>
+                            <span style="color:var(--peach)">
                                 <?=LANGUAGE_ID=='ua' ? 'БОНУСНА ШАФА' : 'БОНУСНАЯ ШАФА'?>
                             </span>
                         </a>
