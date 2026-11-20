@@ -1008,6 +1008,11 @@ if(!empty($textRunning))
     {
         $accsesouries[$section['ID']] = $section;
     }
+
+    $start = strtotime(date('21.11.2026 00:00:01'));
+    $end = strtotime(date('23.11.2026 23:59:59'));
+    $cur = strtotime(date('d.m.Y H:i:s'));
+    $isTask316 = $cur >= $start && $cur <= $end;
     ?>
   <div class="offcanvas-body">
     <div class="header-menu-body">
@@ -1020,6 +1025,23 @@ if(!empty($textRunning))
                         </span>
                     </a>
                 </div>
+                <?
+                if($isTask316)
+                {
+                    ?>
+                    <div class="header-menu-item">
+                        <a href="<?=$ru?>/catalog/rasprodazha/" class="header-menu-link">
+                            <span style="color:var(--peach)">
+                                <?= LANGUAGE_ID == 'ua' ? 'BLACK FRIDAY' : 'BLACK FRIDAY' ?>
+                            </span>
+                            <span class="header-menu-badge">
+                                SALE
+                            </span>
+                        </a>
+                    </div>
+                    <?
+                }
+                ?>
                 <div class="header-menu-item">
 
                     <a href="#" class="header-menu-link dropdown click_show_click_catalog">
@@ -1106,7 +1128,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=1">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=2">
                         </div>
                     </div>
 
@@ -1336,7 +1358,7 @@ if(!empty($textRunning))
                             </div>
                         </div>
                         <div class="header-menu-img">
-                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=1">
+                            <img src="/bitrix/templates/stimma_new/images/photo_img_new.jpg?v=2">
                         </div>
                     </div>
                 </div>
@@ -1347,16 +1369,24 @@ if(!empty($textRunning))
                         </span>
                     </a>
                 </div>
-                <div class="header-menu-item">
-                    <a href="<?=$ru?>/catalog/rasprodazha/" class="header-menu-link">
-                        <span>
-                            <?= LANGUAGE_ID == 'ua' ? 'ЗНИЖКИ' : 'СКИДКИ' ?>
-                        </span>
-                        <span class="header-menu-badge">
-                            SALE
-                        </span>
-                    </a>
-                </div>
+                <?
+                if(!$isTask316)
+                {
+                    ?>
+                    <div class="header-menu-item">
+                        <a href="<?=$ru?>/catalog/rasprodazha/" class="header-menu-link">
+                            <span>
+                                <?= LANGUAGE_ID == 'ua' ? 'ЗНИЖКИ' : 'СКИДКИ' ?>
+                            </span>
+                            <span class="header-menu-badge">
+                                SALE
+                            </span>
+                        </a>
+                    </div>
+                    <?
+                }
+                ?>
+                
                 <div class="header-menu-item">
                     <a href="<?=$ru?>/catalog/zhenskaya_odezhda/" class="header-menu-link">
                         <span>

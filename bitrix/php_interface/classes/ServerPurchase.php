@@ -114,14 +114,11 @@ class AnalyticsServerSide
      */
     public function sendGooglePurchase($orderData)
     {
-        $gaClientId = preg_replace('/^GA\d+\.\d+\./', '', $orderData['ga_session_id'] ?? '');
+         $gaSessionId = null;
 
-        // Session ID
-        $gaCookie = $_COOKIE['_ga_XXXXXXXXXX'] ?? '';
-
-        preg_match('/(?:^|[.$])s(\d+)/', $gaCookie, $matches);
-
-        $gaSessionId = $matches[1] ?? null;
+        if (preg_match('/\.s(\d+)/', $orderData['ga_session_id'], $matches)) {
+            $gaSessionId = $matches[1];
+        }
 
 
         $url = "https://www.google-analytics.com/mp/collect?measurement_id={$this->ga_measurement_id}&api_secret={$this->ga_api_secret}";

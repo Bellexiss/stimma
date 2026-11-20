@@ -2317,6 +2317,12 @@ if(!isset($_COOKIE['show_marketing_img_sent']) && !$bIndex && $isAprilAction)
     <?
     setcookie("show_marketing_img_sent", 'y', time()+(3600*7), "/");
 }
+
+ $start = strtotime(date('21.11.2026 00:00:01'));
+    $end = strtotime(date('23.11.2026 23:59:59'));
+    $cur = strtotime(date('d.m.Y H:i:s'));
+    $isTask316 = $cur >= $start && $cur <= $end;
+
 if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && isset($_COOKIE['good_cookie']))
 {
     ?>
@@ -2329,12 +2335,31 @@ if(!isset($_COOKIE['show_marketing_img']) && !$bIndex && isset($_COOKIE['good_co
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="c-biXJmc c-biXJmc-ulsnn-size-medium"><g><rect width="24" height="24" fill="none"></rect><polygon points="20.8 3.9 20.1 3.2 12 11.3 3.9 3.2 3.2 3.9 11.3 12 3.2 20.1 3.9 20.8 12 12.7 20.1 20.8 20.8 20.1 12.7 12 20.8 3.9"></polygon></g></svg>
                     </button>
-                    <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/pk_ng.jpg?v=3">
-                    </a>
-                    <a href="#lookblock" onclick="this.previousElementSibling?.click();">
-                        <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/mob_ng.jpg?v=3">
-                    </a>
+                    <?
+                    if(!$isTask316)
+                        {
+                            ?>
+                            <a href="#lookblock" onclick="this.previousElementSibling?.click();">
+                                <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/pk_ng.jpg?v=3">
+                            </a>
+                            <a href="#lookblock" onclick="this.previousElementSibling?.click();">
+                                <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/mob_ng.jpg?v=3">
+                            </a> 
+                            <?
+                        }
+                        else 
+                            {
+                                ?>
+                                <a href="#lookblock" onclick="this.previousElementSibling?.click();">
+                                <img class="bonus-modal-desc" src="<?=SITE_TEMPLATE_PATH?>/images/pk_ng2.png?v=4">
+                            </a>
+                            <a href="#lookblock" onclick="this.previousElementSibling?.click();">
+                                <img class="bonus-modal-mob" src="<?=SITE_TEMPLATE_PATH?>/images/mob_ng2.jpg?v=4">
+                            </a>
+                                <?
+                            }
+                    ?>
+                    
                 </div>
             </div>
         </div>

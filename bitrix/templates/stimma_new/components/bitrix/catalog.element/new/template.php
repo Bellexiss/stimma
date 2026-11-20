@@ -1092,7 +1092,7 @@ if ($selOffer['PRICES']['BASE']['DISCOUNT_VALUE'] > $selOffer['MIN_PRICE']['DISC
                                                 <?
                                                 if($arResult['OFFERS'][0]['PROPERTIES']['DOGLYAD_'.strtoupper(LANGUAGE_ID)]['VALUE'])
                                                 {
-                                                    ?><p style="margin: 1px 0;color:black;" code="<?=$arProp['CODE']?>"><?= LANGUAGE_ID == 'ua' ? 'Догляд' : 'Уход' ?>: <span style="color:#333333;"><?=htmlspecialchars($arResult['OFFERS'][0]['PROPERTIES']['DOGLYAD_'.strtoupper(LANGUAGE_ID)]['VALUE'])?></span></p><?
+                                                    ?><p style="margin: 1px 0;color:black;" code="<?=$arProp['CODE']?>"><?= LANGUAGE_ID == 'ua' ? 'Догляд' : 'Уход' ?>: <span style="color:#333333;"><?=str_replace(['&lt;','&gt;'],['<','>'],$arResult['OFFERS'][0]['PROPERTIES']['DOGLYAD_'.strtoupper(LANGUAGE_ID)]['VALUE'])?></span></p><?
                                                 }
 
                                                 if($arResult['OFFERS'][0]['PROPERTIES']['TEXT_MATERIAL_'.strtoupper(LANGUAGE_ID)]['VALUE'])
